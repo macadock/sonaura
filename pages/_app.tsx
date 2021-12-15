@@ -6,7 +6,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Global styles={css`body {margin: 0;}`} />
-      <Header/>
       <Component {...pageProps} />
     </>
   )

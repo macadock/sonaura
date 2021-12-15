@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import styled from '@emotion/styled'
 import { Box } from '@mui/system'
+import { Typography } from '@mui/material'
 
 const Home: NextPage = () => {
   return (
     <Wrapper>
-      <Image src="/assets/image/XL.jpg" />
-      <Image src="/assets/image/XL.jpg" />
+      <StyledText variant='h1'>Nous serons<br/> bientôt là.</StyledText>
     </Wrapper>
   )
 }
@@ -14,12 +14,15 @@ const Home: NextPage = () => {
 const Wrapper = styled(Box)`
   width: 100%;
   height: 100vh;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 `
 
-const Image = styled('img')`
-  width: 100%;
-  height:100%;
-  object-fit:cover;
+const StyledText = styled(Typography)`
+  color: #fff;
 `
 
 export default Home
