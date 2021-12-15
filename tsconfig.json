@@ -13,7 +13,19 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "ts-graphql-plugin",
+        "schema": {
+          "http": {
+            "url": "https://api-eu-central-1.graphcms.com/v2/ckwrje2vf3jfo01xr9uvc0thg/master",
+            "method": "POST"
+          }
+        },
+        "tag": "gql"
+      }
+    ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

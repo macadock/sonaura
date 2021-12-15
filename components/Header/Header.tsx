@@ -5,8 +5,8 @@ import styled from '@emotion/styled'
 import Drawer from '../Drawer';
 import { useState } from 'react';
 import { Box } from '@mui/system';
-import List from '../List';
-import { ItemList } from '../List/List.types';
+import List from './List';
+import { ItemList } from './List/List.types';
 
 interface Props {
 
@@ -60,7 +60,7 @@ const Header: React.FC<Props> = () => {
           <MenuIcon />
         </StyledIconButton>
         <Drawer open={drawerState} onClose={onClose}>
-          <List items={menuItems} />
+          <List items={menuItems} onClick={onClose} />
         </Drawer>
       </Wrapper>
     )

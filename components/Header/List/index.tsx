@@ -8,9 +8,11 @@ import Link from 'next/link'
 
 interface Props {
   items:ItemList;
+  onClick: () => void;
 }
 const List: React.FC<Props> =({
-  items
+  items,
+  onClick,
 }) => {
 
 
@@ -23,7 +25,7 @@ const List: React.FC<Props> =({
     >
       {items.map((item) => 
       <Link href={item.url} key={item.name} passHref>
-        <ListItemButton>
+        <ListItemButton onClick={onClick}>
           <ListItemIcon>
             <SendIcon />
           </ListItemIcon>
