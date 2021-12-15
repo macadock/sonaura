@@ -1,13 +1,21 @@
 import type { NextPage } from 'next'
+import Head from 'next/head'
 import styled from '@emotion/styled'
 import { Box } from '@mui/system'
 import { Typography } from '@mui/material'
 
 const Home: NextPage = () => {
   return (
-    <Wrapper>
-      <StyledText variant='h1'>Nous serons<br/> bientôt là.</StyledText>
-    </Wrapper>
+    <>
+      <Head>
+        <title>Nous serons bientôt là | Sonaura</title>
+        <meta property="og:title" content="Nous serons bientôt là | Sonaura" key="title" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <Wrapper>
+        <StyledText variant='h1'>Nous serons<br/> bientôt là.</StyledText>
+      </Wrapper>
+    </>
   )
 }
 
