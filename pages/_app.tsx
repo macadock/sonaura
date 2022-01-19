@@ -4,24 +4,38 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 
-import { css, Global } from '@emotion/react'
-import type { AppProps } from 'next/app'
-import Header from '../components/Header/Header'
+/* eslint-disable react/prop-types */
+import React from 'react';
+import Head from 'next/head';
+
+import Page from '../src/components/Page';
+
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import 'react-image-lightbox/style.css';
+import 'aos/dist/aos.css';
+import { AppProps } from "next/app";
 
 const client = new ApolloClient({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
   cache: new InMemoryCache()
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
-
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
-      <Global styles={css`body {margin: 0;}`} />
-      <Header/>
-      <Component {...pageProps} />
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <title>Sonaura</title>
+      </Head>
+      <Page>
+        <Component {...pageProps} />
+      </Page>
     </ApolloProvider>
-  )
+  );
 }
-
-export default MyApp
