@@ -32,10 +32,10 @@ export default class MyDocument extends Document {
           />
           <meta property="og:locale" content="en_US" />
           <meta property="og:type" content="website" />
-          <meta
+          {/* <meta
             property="og:image"
             content="https://assets.maccarianagency.com/screenshots/the-front/social.png"
-          />
+          /> */}
           <meta
             property="og:title"
             content="theFront | UI Kit by Maccarian Agency."
