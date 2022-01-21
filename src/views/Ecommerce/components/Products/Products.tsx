@@ -81,7 +81,7 @@ const Products: React.FC = () => {
           Vivez une expérience audiovisuelle comme jamais auparavant.
         </Typography>
         <Box display="flex" justifyContent={'center'} marginTop={2}>
-          <Button variant="contained" color="primary" size="large">
+          <Button variant="outlined" color="primary" size="large">
             Tout afficher
           </Button>
         </Box>

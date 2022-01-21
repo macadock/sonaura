@@ -163,7 +163,7 @@ const LeftSide: React.FC<ShopProps> = ({ shop }) => {
               </svg>
             </Box>
           </Box>
-          <ListItemText primary={'Email'} secondary={'contact@beoalpes.fr'} />
+          <ListItemText primary={'Email'} secondary={shop.email} />
         </Box>
         <Box component={ListItem} disableGutters width={'auto'} padding={0}>
           <Box
@@ -214,7 +214,7 @@ const RightSide: React.FC<ShopProps> = ({ shop }) => {
       marginHeight={0}
       marginWidth={0}
       scrolling="no"
-      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11247.168374633728!2d5.7255587!3d45.1913047!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6bcc7cd1d90fb7be!2sBang%20%26%20Olufsen!5e0!3m2!1sfr!2sfr!4v1642574425948!5m2!1sfr!2sfr"
+      src={shop.googleMapsUrl}
       style={{
         minHeight: 300,
         filter:

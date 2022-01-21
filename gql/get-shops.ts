@@ -4,15 +4,13 @@ export const SHOP_FRAGMENT = gql`
   fragment ShopFragment on Shop {
     id
     name
+    email
     address
     city
     postalCode
     country
     phoneNumber
-    location {
-      latitude
-      longitude
-    }
+    googleMapsUrl
     image {
       id
       url

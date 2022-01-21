@@ -44,12 +44,12 @@ const FeaturedProducts: React.FC = () => {
       </Grid>
       <Box
         component={'img'}
-        src={'https://assets.maccarianagency.com/backgrounds/img33.png'}
+        src={'https://images.ctfassets.net/8cd2csgvqd3m/5prVp155k2D9mTTeNayQC1/ba075fd5e50c90514ec70d60c7390390/Hamorny_Fabric_65_open_cms.png?q=90&fm=webp&w=1200&h=1200&fit=fill'}
         sx={{
-          maxWidth: 390,
+          maxWidth: 500,
           height: 'auto',
           position: 'absolute',
-          bottom: '-164px',
+          bottom: '-190px',
           right: 0,
           display: { xs: 'none', sm: 'block' },
         }}

@@ -3,15 +3,13 @@
 export type ShopFragment = {
     id: string;
     name: string;
+    email: string | null;
     address: string;
     city: string;
     postalCode: string;
     country: string;
     phoneNumber: string;
-    location: {
-        latitude: number;
-        longitude: number;
-    };
+    googleMapsUrl: string | null;
     image: ({
         id: string;
         url: string;

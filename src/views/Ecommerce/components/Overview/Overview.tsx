@@ -9,18 +9,18 @@ const Overview: React.FC = () => {
     <Box
       bgcolor={'primary.main'}
       borderRadius={2}
-      paddingBottom={{ xs: 2, md: 0 }}
     >
       <Grid container data-aos="fade-up">
         <Grid item container alignItems="flex-start" xs={12} md={4}>
           <Box
             component={'img'}
-            src={'https://assets.maccarianagency.com/backgrounds/img35.png'}
+            src={'https://home-cinema-alpes.fr/wp-content/uploads/2020/09/Capture-decran-2020-09-23-a-12.35.53.png'}
+            borderRadius={2}
             alt="..."
             sx={{
               objectFit: 'cover',
-              maxWidth: '90%',
-              width: 300,
+              maxWidth: {xs: '100%', md: '90%'},
+              width: {md: 300},
             }}
           />
         </Grid>
@@ -42,23 +42,24 @@ const Overview: React.FC = () => {
               align={'center'}
               sx={{ fontWeight: 700, color: 'common.white' }}
             >
-              Fide more products
+              Passionnés.
             </Typography>
             <Typography align={'center'} sx={{ color: 'common.white' }}>
-              If we're no longer the right solution for you, we'll allow you to
-              export and take your data at anytime for any reason.
+            Vos boutiques de Lyon et Grenoble sont gérées par des passionnés qui sont présents pour partager leur passion et leur savoir-faire autour de Bang &amp; Olufsen.
+{/* Pour toute question, contactez un de nos collaborateurs qui vous accompagnera tout au long de votre expérience Bang & Olufsen pour faire de celle-ci une expérience unique.. */}
             </Typography>
           </Box>
         </Grid>
         <Grid item container justifyContent="flex-end" xs={12} md={4}>
           <Box
             component={'img'}
-            src={'https://assets.maccarianagency.com/backgrounds/img36.png'}
+            src={'https://home-cinema-alpes.fr/wp-content/uploads/2020/09/DSC5555.jpg'}
+            borderRadius={2}
             alt="..."
             sx={{
               objectFit: 'contain',
-              maxWidth: '90%',
-              width: 300,
+              maxWidth: {xs: '100%', md: '90%'},
+              width: {md: 300},
             }}
           />
         </Grid>
