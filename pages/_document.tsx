@@ -22,10 +22,10 @@ export default class MyDocument extends Document {
             href="https://assets.maccarianagency.com/favicons/thefront/favicon.ico"
           />
           <meta name="theme-color" content="#ffffff" />
-          <meta
+          {/* <meta
             name="description"
             content="A modern design system for your new landing and web pages."
-          />
+          /> */}
           <meta
             name="robots"
             content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
@@ -38,7 +38,7 @@ export default class MyDocument extends Document {
           /> */}
           <meta
             property="og:title"
-            content="theFront | UI Kit by Maccarian Agency."
+            content="Sonaura"
           />
           <meta
             property="og:description"
