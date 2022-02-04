@@ -1,19 +1,21 @@
-import { useQuery } from '@apollo/client';
+import React from 'react';
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/system';
-import Container from 'components/Container';
-import { Main } from 'layouts';
-import { GET_SHOPS } from '../../../gql/get-shops';
+import Contact from 'components/core/Contact/Contact';
+import Form from 'components/core/Contact/Form';
+import Hero from 'components/core/Contact/Hero';
+import Container from 'components/system/Container';
 import { Shops } from '../../../gql/__generated__/shops';
-import { Contact, Form, Hero } from './components';
 
-const ContactView: React.FC = () => {
+interface Props {
+  shops: Shops;
+}
+
+const ContactView: React.FC<Props> = ({ shops }) => {
   const theme = useTheme();
 
-  const { data: shops, loading } = useQuery<Shops>(GET_SHOPS);
-
   return (
-    <Main>
+    <React.Fragment>
       <Box
         sx={{
           position: 'relative',
@@ -33,7 +35,7 @@ const ContactView: React.FC = () => {
           <Form />
         </Container>
       </Box>
-    </Main>
+    </React.Fragment>
   );
 };
 

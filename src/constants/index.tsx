@@ -1,0 +1,3 @@
+const TIME_TO_INVALIDATE_CACHE_SEC = 86400; // 1 day
+
+export default TIME_TO_INVALIDATE_CACHE_SEC;

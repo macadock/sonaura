@@ -1,14 +1,14 @@
 import { Box, Typography } from '@mui/material';
-import { Main } from 'layouts';
+import React from 'react';
 import styled from 'styled-components';
 
 const InstallationView: React.FC = () => {
   return (
-    <Main>
+    <React.Fragment>
       <Container>
         <Typography variant="h1">Réalisations</Typography>
       </Container>
-    </Main>
+    </React.Fragment>
   );
 };
 

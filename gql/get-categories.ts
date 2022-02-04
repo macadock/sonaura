@@ -8,6 +8,16 @@ export const CATEGORY_FRAGMENT = gql`
     file {
       url
     }
+    products {
+      id
+      slug
+      name
+      description
+      price
+      assets {
+        url
+      }
+    }
   }
 `
 

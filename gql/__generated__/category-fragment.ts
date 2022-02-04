@@ -7,4 +7,14 @@ export type CategoryFragment = {
     file: ({
         url: string;
     }) | null;
+    products: ({
+        id: string;
+        slug: string;
+        name: string;
+        description: string | null;
+        price: number;
+        assets: ({
+            url: string;
+        })[];
+    })[];
 };

@@ -1,25 +1,21 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 /* eslint-disable react/prop-types */
 import React from 'react';
 import Head from 'next/head';
 
-import Page from '../src/components/Page';
+import Page from '../src/components/system/Page';
 
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'react-image-lightbox/style.css';
 import 'aos/dist/aos.css';
-import { AppProps } from "next/app";
+import { AppProps } from 'next/app';
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

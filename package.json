@@ -9,7 +9,7 @@
     "typegen": "ts-graphql-plugin typegen",
     "storybook": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook",
-    "prettier": "prettier './src/**/*.{tsx,ts}' --write",
+    "prettier": "prettier {src,pages} --write",
     "lint": "eslint ./src --fix",
     "codeStyle:fix": "npm run prettier:fix && npm run eslint:fix",
     "clear-all": "rimraf ./node_modules ./.next"

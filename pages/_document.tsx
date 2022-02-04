@@ -36,10 +36,7 @@ export default class MyDocument extends Document {
             property="og:image"
             content="https://assets.maccarianagency.com/screenshots/the-front/social.png"
           /> */}
-          <meta
-            property="og:title"
-            content="Sonaura"
-          />
+          <meta property="og:title" content="Sonaura" />
           {/* <meta
             property="og:description"
             content="A modern design system for your new landing and web pages."
@@ -50,7 +47,7 @@ export default class MyDocument extends Document {
           /> */}
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
             rel="stylesheet"
           />
         </Head>
@@ -62,7 +59,6 @@ export default class MyDocument extends Document {
     );
   }
 }
-
 
 // `getInitialProps` belongs to `_document` (instead of `_app`),
 // it's compatible with static-site generation (SSG).
@@ -98,11 +94,12 @@ MyDocument.getInitialProps = async (ctx) => {
   ctx.renderPage = () =>
     originalRenderPage({
       // Take precedence over the CacheProvider in our custom _app.js
-      enhanceComponent: (Component) => (props) => (
-        <CacheProvider value={cache}>
-          <Component {...props} />
-        </CacheProvider>
-      ),
+      enhanceComponent: (Component) => (props) =>
+        (
+          <CacheProvider value={cache}>
+            <Component {...props} />
+          </CacheProvider>
+        ),
     });
 
   const initialProps = await Document.getInitialProps(ctx);
