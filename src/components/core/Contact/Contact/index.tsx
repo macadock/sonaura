@@ -221,7 +221,7 @@ const RightSide: React.FC<ShopProps> = ({ shop }) => {
         marginHeight={0}
         marginWidth={0}
         scrolling="no"
-        src={shop.googleMapsUrl}
+        data-src={shop.googleMapsUrl}
         style={{
           display: 'none',
           minHeight: 300,
@@ -263,7 +263,7 @@ const RightSide: React.FC<ShopProps> = ({ shop }) => {
               .forEach(el => {
                 const vendor = el.getAttribute('data-requires-vendor-consent');
                 if (choices[vendor]) {
-                  // el.setAttribute('src', el.getAttribute('data-src'));
+                  el.setAttribute('src', el.getAttribute('data-src'));
                   el.style.display = 'block';
                 }
               });
