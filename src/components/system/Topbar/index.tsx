@@ -73,7 +73,7 @@ const Topbar: React.FC<Props> = ({
                 underline="none"
                 component="a"
                 href={page.url}
-                color="text.primary"
+                color={colorInvert ? 'common.white' : 'text.primary'}
               >
                 {page.title}
               </Link>

@@ -17,16 +17,9 @@ export type ProductFragment = {
         slug: string;
     }) | null;
 };
-export type CategoryFragment = {
-    id: string;
-    name: string;
+export type Product = {
+    product: (ProductFragment) | null;
+};
+export type ProductVariables = {
     slug: string;
-    file: ({
-        url: string;
-    }) | null;
-    products: (ProductFragment)[];
 };
-export type Categories = {
-    categories: (CategoryFragment)[];
-};
-export type CategoriesVariables = {};

@@ -11032,6 +11032,13 @@ react-modal@^3.11.1:
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
 
+react-number-format@^4.9.1:
+  version "4.9.1"
+  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-4.9.1.tgz#62b3450b43c911f9227e770a8ea9fa606696e52e"
+  integrity sha512-v49XqXv7SpwYZKGkghNJjoDUr6lIUozlPLrObcxre7GfcLx7qD4TCvArn3GozN/Y4FVbLyEYCwJoBCiChdBh5A==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-popper-tooltip@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-popper-tooltip/-/react-popper-tooltip-3.1.1.tgz#329569eb7b287008f04fcbddb6370452ad3f9eac"

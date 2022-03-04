@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from '@apollo/client';
 
 export const SHOP_FRAGMENT = gql`
   fragment ShopFragment on Shop {
@@ -16,13 +16,13 @@ export const SHOP_FRAGMENT = gql`
       url
     }
   }
-`
+`;
 
 export const GET_SHOPS = gql`
-${SHOP_FRAGMENT}
-query Shops {
-  shops(stage: PUBLISHED) {
-    ...ShopFragment
+  ${SHOP_FRAGMENT}
+  query Shops {
+    shops(stage: PUBLISHED) {
+      ...ShopFragment
+    }
   }
-}
-`
+`;

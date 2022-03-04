@@ -36,6 +36,7 @@ module.exports = {
       2,
       { 'SwitchCase': 1 },
     ],
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "@next/next/no-img-element": "off"
   }
 };

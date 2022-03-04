@@ -12,7 +12,6 @@ import Container from 'components/system/Container';
 import { ShopFragment } from '../../../../../gql/__generated__/shop-fragment';
 import Script from 'next/script';
 import { Button } from '@mui/material';
-import { flexbox } from '@mui/system';
 
 interface Props {
   shops: ShopFragment[];
@@ -207,6 +206,7 @@ const RightSide: React.FC<ShopProps> = ({ shop }) => {
   const theme = useTheme();
 
   const handleGoogleMapsCookies = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).axeptioSDK.requestConsent('gmaps');
   };
 
@@ -236,6 +236,7 @@ const RightSide: React.FC<ShopProps> = ({ shop }) => {
         sx={{
           height: '100%',
           width: '100%',
+          display: 'flex',
           backgroundColor: theme.palette.grey[100],
           justifyContent: 'center',
           alignItems: 'center',

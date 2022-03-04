@@ -1,22 +1,23 @@
-import { Box, Typography } from '@mui/material';
 import React from 'react';
-import styled from 'styled-components';
 
-const InstallationView: React.FC = () => {
+import { Container } from '@mui/material';
+import Hero from '../../components/core/Installations/Hero';
+import Main from '../../components/core/Installations/Main';
+import { Installations } from '../../../gql/__generated__/installations';
+
+interface Props {
+  installations: Installations;
+}
+
+const PortfolioMasonry: React.FC<Props> = ({ installations }) => {
   return (
     <React.Fragment>
+      <Hero />
       <Container>
-        <Typography variant="h1">Réalisations</Typography>
+        <Main installations={installations} />
       </Container>
     </React.Fragment>
   );
 };
 
-const Container = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-`;
-
-export default InstallationView;
+export default PortfolioMasonry;

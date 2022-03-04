@@ -1,13 +1,13 @@
-import TIME_TO_INVALIDATE_CACHE_SEC from '../src/constants';
-import type { NextPage } from 'next';
+import TIME_TO_INVALIDATE_CACHE_SEC from '../../src/constants';
+import type { GetStaticPropsContext, NextPage } from 'next';
 import CategoryView from 'views/CategoryView';
-import { GET_CATEGORIES, GET_CATEGORY } from '../gql/get-categories';
-import { Category } from '../gql/__generated__/category';
-import { client } from './_app';
-import { Categories } from '../gql/__generated__/categories';
-import getNavbarItems from '../src/components/system/_getNavbarItems';
+import { GET_CATEGORIES, GET_CATEGORY } from '../../gql/get-categories';
+import { Category } from '../../gql/__generated__/category';
+import { client } from '../_app';
+import { Categories } from '../../gql/__generated__/categories';
+import getNavbarItems from '../../src/components/system/_getNavbarItems';
 import Main from 'layouts/Main';
-import { Pages } from '../gql/__generated__/pages';
+import { Pages } from '../../gql/__generated__/pages';
 
 const Category: NextPage<{
   category: Category;
@@ -21,7 +21,7 @@ const Category: NextPage<{
   );
 };
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async (context: GetStaticPropsContext) => {
   const slug = context.params.category;
 
   const { categories, pages } = await getNavbarItems();

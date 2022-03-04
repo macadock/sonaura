@@ -14,6 +14,9 @@ const getTheme = (mode: string, themeToggler: () => void): Theme =>
           textTransform: 'none',
           fontWeight: 'medium' as React.CSSProperties['fontWeight'],
         },
+        h1: {
+          fontSize: '4rem',
+        },
       },
       zIndex: {
         appBar: 1200,

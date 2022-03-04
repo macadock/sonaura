@@ -9,42 +9,28 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { useTheme } from '@mui/material/styles';
-
-const mock = [
-  {
-    media: 'https://assets.maccarianagency.com/backgrounds/img37.png',
-    title: 'Enceinte portable',
-    price: '320 €',
-  },
-  {
-    media: 'https://assets.maccarianagency.com/backgrounds/img38.png',
-    title: 'Ecouteurs',
-    price: '450 €',
-  },
-  {
-    media: 'https://assets.maccarianagency.com/backgrounds/img39.png',
-    title: 'Ecouteurs sans fil',
-    price: '280 €',
-  },
-  {
-    media: 'https://assets.maccarianagency.com/backgrounds/img40.png',
-    title: 'Ecouteurs Bluetooth',
-    price: '300 €',
-  },
-  {
-    media: 'https://assets.maccarianagency.com/backgrounds/img41.png',
-    title: 'Ecouteurs',
-    price: '280 €',
-  },
-  {
-    media: 'https://assets.maccarianagency.com/backgrounds/img42.png',
-    title: 'Enceinte portable',
-    price: '340 €',
-  },
-];
+import { useQuery } from '@apollo/client';
+import { GET_PRODUCTS } from '../../../../../gql/get-products';
+import { Products } from '../../../../../gql/__generated__/products';
+import { CircularProgress } from '@mui/material';
+import NumberFormat from 'react-number-format';
 
 const Products: React.FC = () => {
   const theme = useTheme();
+
+  const { data: products, loading, error } = useQuery<Products>(GET_PRODUCTS);
+
+  if (error) {
+    return null;
+  }
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box>
@@ -58,7 +44,7 @@ const Products: React.FC = () => {
           color={'secondary'}
           align={'center'}
         >
-          Products
+          Produits
         </Typography>
         <Typography
           variant="h4"
@@ -86,7 +72,7 @@ const Products: React.FC = () => {
         </Box>
       </Box>
       <Grid container spacing={4}>
-        {mock.map((item, i) => (
+        {products.products.map((product, i) => (
           <Grid
             item
             xs={12}
@@ -122,10 +108,11 @@ const Products: React.FC = () => {
                   <Box
                     component={LazyLoadImage}
                     effect="blur"
-                    src={item.media}
+                    src={product.mainAsset.url}
                     sx={{
+                      width: '100%',
                       '& img': {
-                        objectFit: 'contain',
+                        objectFit: 'cover',
                       },
                     }}
                   />
@@ -138,32 +125,7 @@ const Products: React.FC = () => {
                     right={0}
                     padding={2}
                     width={1}
-                  >
-                    {/* <Box
-                      component={IconButton}
-                      color="secondary"
-                      bgcolor={'background.paper'}
-                      size={'large'}
-                    >
-                      <Box
-                        component={'svg'}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        width={20}
-                        height={20}
-                        color={'secondary.main'}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                        />
-                      </Box>
-                    </Box> */}
-                  </Box>
+                  ></Box>
                 </CardMedia>
                 <CardContent>
                   <Typography
@@ -171,32 +133,18 @@ const Products: React.FC = () => {
                     align={'left'}
                     sx={{ fontWeight: 700 }}
                   >
-                    {item.title}
+                    {product.name}
                   </Typography>
-                  <Box
-                    display={'flex'}
-                    justifyContent={'flex-start'}
-                    marginY={1}
-                  >
-                    <Box display={'flex'} justifyContent={'center'}>
-                      {[1, 2, 3, 4, 5].map((item) => (
-                        <Box key={item} color={theme.palette.secondary.main}>
-                          <svg
-                            width={18}
-                            height={18}
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        </Box>
-                      ))}
-                    </Box>
-                  </Box>
+
                   <CardActions sx={{ justifyContent: 'space-between' }}>
                     <Typography sx={{ fontWeight: 700 }} color={'primary'}>
-                      {item.price}
+                      <NumberFormat
+                        value={product.price}
+                        displayType="text"
+                        thousandSeparator=" "
+                        suffix=" €"
+                        decimalSeparator=","
+                      />
                     </Typography>
                     <Button
                       variant={'outlined'}

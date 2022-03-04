@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-const Overview: React.FC = () => {
+const People: React.FC = () => {
   return (
     <Box bgcolor={'primary.main'} borderRadius={2}>
       <Grid container data-aos="fade-up">
@@ -18,8 +18,8 @@ const Overview: React.FC = () => {
             alt="..."
             sx={{
               objectFit: 'cover',
-              maxWidth: { xs: '100%', md: '90%' },
-              width: { md: 300 },
+              width: { xs: '100%', md: '90%' },
+              height: '100%',
             }}
           />
         </Grid>
@@ -34,7 +34,7 @@ const Overview: React.FC = () => {
             paddingX: 2,
           }}
         >
-          <Box marginBottom={2}>
+          <Box>
             <Typography
               variant="h4"
               color="text.primary"
@@ -47,7 +47,6 @@ const Overview: React.FC = () => {
               Vos boutiques de Lyon et Grenoble sont gérées par des passionnés
               qui sont présents pour partager leur passion et leur savoir-faire
               autour de Bang &amp; Olufsen.
-              {/* Pour toute question, contactez un de nos collaborateurs qui vous accompagnera tout au long de votre expérience Bang & Olufsen pour faire de celle-ci une expérience unique.. */}
             </Typography>
           </Box>
         </Grid>
@@ -60,9 +59,9 @@ const Overview: React.FC = () => {
             borderRadius={2}
             alt="..."
             sx={{
-              objectFit: 'contain',
-              maxWidth: { xs: '100%', md: '90%' },
-              width: { md: 300 },
+              objectFit: 'cover',
+              width: { xs: '100%', md: '90%' },
+              height: '100%',
             }}
           />
         </Grid>
@@ -71,4 +70,4 @@ const Overview: React.FC = () => {
   );
 };
 
-export default Overview;
+export default People;

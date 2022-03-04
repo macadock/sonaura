@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from '@apollo/client';
 
 export const SETTING_FRAGMENT = gql`
   fragment SettingFragment on Setting {
@@ -7,13 +7,13 @@ export const SETTING_FRAGMENT = gql`
       url
     }
   }
-`
+`;
 
 export const GET_SETTINGS = gql`
-${SETTING_FRAGMENT}
-query Settings {
+  ${SETTING_FRAGMENT}
+  query Settings {
     settings {
       ...SettingFragment
+    }
   }
-}
-`
+`;

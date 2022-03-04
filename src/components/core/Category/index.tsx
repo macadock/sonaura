@@ -9,51 +9,32 @@ import CardMedia from '@mui/material/CardMedia';
 import { useTheme } from '@mui/material/styles';
 
 import Container from 'components/system/Container';
+import { ProductFragment } from '../../../../gql/__generated__/categories';
+import NumberFormat from 'react-number-format';
 
-const mock = [
-  {
-    media: 'https://assets.maccarianagency.com/backgrounds/img56.jpg',
-    title: 'Chaussure Adidas',
-    description: 'Découvrez la nouvelle collection.',
-    price: '69,90 €',
-    href: '#',
-    reviewScore: 5,
-    reviewCount: 12,
-  },
-  {
-    media: 'https://assets.maccarianagency.com/backgrounds/img63.jpg',
-    title: 'Chaussures colorées',
-    description: 'Des chaussures colorées pour tous.',
-    price: '39,90 €',
-    reviewScore: 4,
-    reviewCount: 6,
-  },
-  {
-    media: 'https://assets.maccarianagency.com/backgrounds/img57.jpg',
-    title: 'Nike',
-    description: 'Nouvel arrivage de Nike.',
-    price: '49,90 €',
-    href: '#',
-    reviewScore: 5,
-    reviewCount: 8,
-  },
-  {
-    media: 'https://assets.maccarianagency.com/backgrounds/img58.jpg',
-    title: 'Sneakers',
-    description: 'Sneakers à la mode.',
-    price: '59,90 €',
-    reviewScore: 4,
-    reviewCount: 10,
-  },
-];
+interface Props {
+  products: ProductFragment[];
+}
 
-const ProductGrid: React.FC = () => {
+const ProductGrid: React.FC<Props> = ({ products }) => {
   const theme = useTheme();
+
+  if (products.length === 0) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', padding: '5rem' }}>
+        <Typography>Aucuns produits</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Container>
-      <Grid container spacing={4}>
-        {mock.map((item, i) => (
+      <Grid
+        container
+        spacing={4}
+        sx={{ display: 'flex', justifyContent: 'center' }}
+      >
+        {products.map((product, i) => (
           <Grid item xs={12} sm={6} md={3} key={i}>
             <Box display={'block'} width={1} height={1}>
               <Card
@@ -67,56 +48,33 @@ const ProductGrid: React.FC = () => {
                   backgroundImage: 'none',
                 }}
               >
-                <CardMedia
-                  title={item.title}
-                  image={item.media}
-                  sx={{
-                    position: 'relative',
-                    height: 320,
-                    overflow: 'hidden',
-                    borderRadius: 2,
-                  }}
-                >
-                  {/* <Box
-                    padding={2}
-                    bgcolor={'background.paper'}
-                    boxShadow={2}
-                    borderRadius={2}
-                    position={'absolute'}
-                    top={16}
-                    right={16}
-                    display={'flex'}
-                    alignItems={'center'}
-                    sx={{ cursor: 'pointer' }}
-                  >
-                    <Box
-                      component={'svg'}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      width={20}
-                      height={20}
-                      color={'text.primary'}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      />
-                    </Box>
-                  </Box> */}
-                </CardMedia>
+                <Link href={`/${product.category.slug}/${product.slug}`}>
+                  <CardMedia
+                    title={product.name}
+                    image={product.mainAsset.url}
+                    sx={{
+                      position: 'relative',
+                      height: 320,
+                      overflow: 'hidden',
+                      borderRadius: 2,
+                    }}
+                  ></CardMedia>
+                </Link>
                 <Box marginTop={2}>
-                  <Typography
-                    fontWeight={700}
-                    sx={{ textTransform: 'uppercase' }}
+                  <Link
+                    href={`/${product.category.slug}/${product.slug}`}
+                    underline="none"
+                    color="inherit"
                   >
-                    {item.title}
-                  </Typography>
+                    <Typography
+                      fontWeight={700}
+                      sx={{ textTransform: 'uppercase' }}
+                    >
+                      {product.name}
+                    </Typography>
+                  </Link>
                   <Typography variant={'subtitle2'} color={'text.secondary'}>
-                    {item.description}
+                    {product.description}
                   </Typography>
                 </Box>
                 <Box
@@ -125,15 +83,23 @@ const ProductGrid: React.FC = () => {
                   alignItems={'center'}
                   justifyContent={'space-between'}
                 >
-                  <Typography fontWeight={700}>{item.price}</Typography>
-                  <Box display={'flex'} alignItems={'center'}>
+                  <Typography fontWeight={700}>
+                    <NumberFormat
+                      value={product.price}
+                      displayType="text"
+                      thousandSeparator=" "
+                      suffix=" €"
+                      decimalSeparator=","
+                    />
+                  </Typography>
+                  {/* <Box display={'flex'} alignItems={'center'}>
                     <Box display={'flex'} alignItems={'center'}>
                       {[1, 2, 3, 4, 5].map((r) => (
                         <Box
                           key={r}
                           component={'svg'}
                           color={
-                            r <= item.reviewScore
+                            r <= product.reviewScore
                               ? theme.palette.secondary.main
                               : theme.palette.divider
                           }
@@ -152,9 +118,9 @@ const ProductGrid: React.FC = () => {
                       color={'text.secondary'}
                       marginLeft={0.5}
                     >
-                      {item.reviewCount} avis
+                      {product.reviewCount} avis
                     </Typography>
-                  </Box>
+                  </Box> */}
                 </Box>
                 <Box marginTop={2}>
                   <Button
@@ -178,7 +144,7 @@ const ProductGrid: React.FC = () => {
                   </Button>
                   <Button
                     component={Link}
-                    href={item.href}
+                    href={`/${product.category.slug}/${product.slug}`}
                     size={'large'}
                     sx={{
                       color: theme.palette.text.primary,

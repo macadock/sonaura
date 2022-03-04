@@ -101,7 +101,7 @@ const NavItem: React.FC<Props> = ({
             <Grid item key={i} xs={items.length > 12 ? 6 : 12}>
               <Button
                 component={'a'}
-                href={p.slug}
+                href={`/${p.slug}`}
                 fullWidth
                 sx={{
                   justifyContent: 'flex-start',

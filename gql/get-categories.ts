@@ -1,6 +1,8 @@
-import gql from "graphql-tag";
+import { gql } from '@apollo/client';
+import { PRODUCT_FRAMGENT } from './get-products';
 
 export const CATEGORY_FRAGMENT = gql`
+  ${PRODUCT_FRAMGENT}
   fragment CategoryFragment on Category {
     id
     name
@@ -9,38 +11,25 @@ export const CATEGORY_FRAGMENT = gql`
       url
     }
     products {
-      id
-      slug
-      name
-      description
-      price
-      assets {
-        url
-      }
+      ...ProductFragment
     }
   }
-`
+`;
 
 export const GET_CATEGORIES = gql`
-${CATEGORY_FRAGMENT}
-query Categories {
+  ${CATEGORY_FRAGMENT}
+  query Categories {
     categories {
       ...CategoryFragment
     }
   }
-`
+`;
 
 export const GET_CATEGORY = gql`
-${CATEGORY_FRAGMENT}
-query Category ($slug: String!) {
-  category(where: {slug: $slug}) {
-    ...CategoryFragment
+  ${CATEGORY_FRAGMENT}
+  query Category($slug: String!) {
+    category(where: { slug: $slug }) {
+      ...CategoryFragment
+    }
   }
-}
-
-
-`
-
-
-  
-  
+`;

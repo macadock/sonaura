@@ -5,14 +5,18 @@ import InstallationView from 'views/InstallationsView';
 import getNavbarItems from '../../src/components/system/_getNavbarItems';
 import { Categories } from '../../gql/__generated__/categories';
 import { Pages } from '../../gql/__generated__/pages';
+import { GET_INSTALLATIONS } from '../../gql/get-installations';
+import { client } from '../_app';
+import { Installations } from '../../gql/__generated__/installations';
 
-const Realisations: NextPage<{ categories: Categories; pages: Pages }> = ({
-  categories,
-  pages,
-}) => {
+const Realisations: NextPage<{
+  installations: Installations;
+  categories: Categories;
+  pages: Pages;
+}> = ({ installations, categories, pages }) => {
   return (
-    <Main categories={categories} pages={pages}>
-      <InstallationView />
+    <Main colorInvert={true} categories={categories} pages={pages}>
+      <InstallationView installations={installations} />
     </Main>
   );
 };
@@ -20,8 +24,13 @@ const Realisations: NextPage<{ categories: Categories; pages: Pages }> = ({
 export const getStaticProps = async () => {
   const { categories, pages } = await getNavbarItems();
 
+  const { data: installations } = await client.query<Installations>({
+    query: GET_INSTALLATIONS,
+  });
+
   return {
     props: {
+      installations,
       categories,
       pages,
     },

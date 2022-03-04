@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-const FeaturedProducts: React.FC = () => {
+const Banner: React.FC = () => {
   return (
     <Box position={'relative'}>
       <Grid container>
@@ -60,4 +60,4 @@ const FeaturedProducts: React.FC = () => {
   );
 };
 
-export default FeaturedProducts;
+export default Banner;
