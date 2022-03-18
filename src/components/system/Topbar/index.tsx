@@ -55,7 +55,7 @@ const Topbar: React.FC<Props> = ({
       </Box>
 
       <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems={'center'}>
-        {categories && (
+        {categories.categories.length !== 0 && (
           <Box>
             <NavItem
               title={'Catégories'}

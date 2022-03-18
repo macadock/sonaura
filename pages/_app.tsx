@@ -1,4 +1,10 @@
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 /* eslint-disable react/prop-types */
 import React from 'react';
@@ -14,8 +20,22 @@ import 'aos/dist/aos.css';
 import { AppProps } from 'next/app';
 import Script from 'next/script';
 
-export const client = new ApolloClient({
+const httpLink = createHttpLink({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = process.env.NEXT_PUBLIC_GRAPHCMS_PUBLIC_KEY;
+  return {
+    headers: {
+      ...headers,
+      Authorization: `Bearer ${token}`,
+    },
+  };
+});
+
+export const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

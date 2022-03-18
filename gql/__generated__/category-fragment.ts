@@ -5,7 +5,7 @@ export type ProductFragment = {
     slug: string;
     name: string;
     description: string | null;
-    price: number;
+    price: number | null;
     mainAsset: {
         url: string;
     };
@@ -21,8 +21,8 @@ export type CategoryFragment = {
     id: string;
     name: string;
     slug: string;
-    file: ({
+    file: {
         url: string;
-    }) | null;
+    };
     products: (ProductFragment)[];
 };

@@ -20,7 +20,7 @@ const Products: React.FC = () => {
 
   const { data: products, loading, error } = useQuery<Products>(GET_PRODUCTS);
 
-  if (error) {
+  if (products?.products.length === 0 || error) {
     return null;
   }
 
@@ -111,9 +111,8 @@ const Products: React.FC = () => {
                     src={product.mainAsset.url}
                     sx={{
                       width: '100%',
-                      '& img': {
-                        objectFit: 'cover',
-                      },
+                      objectFit: 'cover',
+                      '& img': {},
                     }}
                   />
                   <Box
@@ -137,15 +136,17 @@ const Products: React.FC = () => {
                   </Typography>
 
                   <CardActions sx={{ justifyContent: 'space-between' }}>
-                    <Typography sx={{ fontWeight: 700 }} color={'primary'}>
-                      <NumberFormat
-                        value={product.price}
-                        displayType="text"
-                        thousandSeparator=" "
-                        suffix=" €"
-                        decimalSeparator=","
-                      />
-                    </Typography>
+                    {product.price && (
+                      <Typography sx={{ fontWeight: 700 }} color={'primary'}>
+                        <NumberFormat
+                          value={product.price}
+                          displayType="text"
+                          thousandSeparator=" "
+                          suffix=" €"
+                          decimalSeparator=","
+                        />
+                      </Typography>
+                    )}
                     <Button
                       variant={'outlined'}
                       startIcon={

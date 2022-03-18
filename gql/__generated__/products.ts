@@ -5,7 +5,7 @@ export type ProductFragment = {
     slug: string;
     name: string;
     description: string | null;
-    price: number;
+    price: number | null;
     mainAsset: {
         url: string;
     };
@@ -20,6 +20,4 @@ export type ProductFragment = {
 export type Products = {
     products: (ProductFragment)[];
 };
-export type ProductsVariables = {
-    slug: string;
-};
+export type ProductsVariables = {};

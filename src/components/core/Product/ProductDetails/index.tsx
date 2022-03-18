@@ -43,16 +43,17 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
           >
             $199.90
           </Typography> */}
-          <Typography variant={'h5'} fontWeight={700}>
-            <NumberFormat
-              value={product.product.price}
-              displayType="text"
-              thousandSeparator=" "
-              suffix=" €"
-              decimalSeparator=","
-            />
-            {/* {`${product.product.price} €`} */}
-          </Typography>
+          {product.product.price && (
+            <Typography variant={'h5'} fontWeight={700}>
+              <NumberFormat
+                value={product.product.price}
+                displayType="text"
+                thousandSeparator=" "
+                suffix=" €"
+                decimalSeparator=","
+              />
+            </Typography>
+          )}
         </Box>
       </Box>
       <Typography variant={'subtitle2'} color={'text.secondary'}>

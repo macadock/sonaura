@@ -42,9 +42,11 @@ const SidebarNav: React.FC<Props> = ({ pages, categories }) => {
         </Box>
       </Box>
       <Box paddingX={2} paddingY={2}>
-        <Box>
-          <NavItem title={'Categories'} items={categories} />
-        </Box>
+        {categories.length !== 0 && (
+          <Box>
+            <NavItem title={'Categories'} items={categories} />
+          </Box>
+        )}
         {pages.map((page) => (
           <Box key={page.id} sx={{ marginBottom: '.8rem' }}>
             <Link

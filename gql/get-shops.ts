@@ -13,7 +13,7 @@ export const SHOP_FRAGMENT = gql`
     googleMapsUrl
     image {
       id
-      url
+      url(transformation: { image: { resize: { fit: max, width: 1920 } } })
     }
   }
 `;

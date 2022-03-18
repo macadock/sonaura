@@ -8,10 +8,10 @@ export const PRODUCT_FRAMGENT = gql`
     description
     price
     mainAsset {
-      url
+      url(transformation: { image: { resize: { fit: max, width: 1920 } } })
     }
     assets {
-      url
+      url(transformation: { image: { resize: { fit: max, width: 1920 } } })
     }
     category {
       name
