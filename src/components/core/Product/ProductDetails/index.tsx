@@ -269,7 +269,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
           </Box>
         )}
       </Box>
-      <Stack marginTop={3} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+      {/* <Stack marginTop={3} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
         <Button
           variant={'outlined'}
           color={'primary'}
@@ -312,7 +312,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
         >
           Ajouter au panier
         </Button>
-      </Stack>
+      </Stack> */}
       <Box marginY={3}>
         <Typography>Nous sommes à votre écoute.</Typography>
         <Stack direction={'row'} spacing={2} marginTop={0.5}>
@@ -320,6 +320,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
             sx={{
               color: 'text.secondary',
             }}
+            href="/contact"
             startIcon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -338,6 +339,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
             sx={{
               color: 'text.secondary',
             }}
+            href="/contact"
             startIcon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"

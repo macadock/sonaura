@@ -146,7 +146,7 @@ const ProfessionalsView: React.FC = () => {
         <Box
           className={'jarallax-img'}
           sx={styles(
-            'https://videos.ctfassets.net/8cd2csgvqd3m/6o1hWeFE0Rm4EzEjI42mmF/fd38fa8b66a96ad1e74a227412d92ff9/Harmony_motorised_floor_stand.m4v',
+            'https://images.ctfassets.net/8cd2csgvqd3m/3Z6yoO08OjU5GgZzMsLUes/b407e75154fd4398290a61f44b0f975f/beolab_18_home_launch_2.png',
           )}
         />
         <Container>
