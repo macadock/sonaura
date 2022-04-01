@@ -71,6 +71,7 @@ const Hero: React.FC = () => {
               size="large"
               height={54}
               marginTop={'2rem'}
+              href={'#products'}
             >
               Découvrez nos produits
             </Box>

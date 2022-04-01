@@ -19,6 +19,7 @@ import 'react-image-lightbox/style.css';
 import 'aos/dist/aos.css';
 import { AppProps } from 'next/app';
 import Script from 'next/script';
+import './styles.css';
 
 const httpLink = createHttpLink({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
@@ -56,14 +57,14 @@ export default function App({ Component, pageProps }: AppProps) {
           id="axeptio-consent"
           dangerouslySetInnerHTML={{
             __html: `
-            window.axeptioSettings={clientId:"62052fbc77a363af5605a75d",
-            };
-            (function(d,s) {
-              var t = d.getElementsByTagName(s)[0], e = d.createElement(s);
-              e.async = true; e.src = "//static.axept.io/sdk-slim.js";
-              t.parentNode.insertBefore(e, t);
-            })(document, "script");
-            `,
+              window.axeptioSettings={clientId:"62052fbc77a363af5605a75d",
+              };
+              (function(d,s) {
+                var t = d.getElementsByTagName(s)[0], e = d.createElement(s);
+                e.async = true; e.src = "//static.axept.io/sdk-slim.js";
+                t.parentNode.insertBefore(e, t);
+              })(document, "script");
+              `,
           }}
         />
       </Page>

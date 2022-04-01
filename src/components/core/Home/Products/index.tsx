@@ -12,7 +12,7 @@ import { useTheme } from '@mui/material/styles';
 import { useQuery } from '@apollo/client';
 import { GET_PRODUCTS } from '../../../../../gql/get-products';
 import { Products } from '../../../../../gql/__generated__/products';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Link } from '@mui/material';
 import NumberFormat from 'react-number-format';
 
 const Products: React.FC = () => {
@@ -33,7 +33,7 @@ const Products: React.FC = () => {
   }
 
   return (
-    <Box>
+    <Box id="products">
       <Box marginBottom={4}>
         <Typography
           sx={{
@@ -65,11 +65,6 @@ const Products: React.FC = () => {
         >
           Vivez une expérience audiovisuelle comme jamais auparavant.
         </Typography>
-        <Box display="flex" justifyContent={'center'} marginTop={2}>
-          <Button variant="outlined" color="primary" size="large">
-            Tout afficher
-          </Button>
-        </Box>
       </Box>
       <Grid container spacing={4}>
         {products.products.map((product, i) => (
@@ -148,6 +143,8 @@ const Products: React.FC = () => {
                       </Typography>
                     )}
                     <Button
+                      component={Link}
+                      href={`/${product.category.slug}/${product.slug}`}
                       variant={'outlined'}
                       startIcon={
                         <Box
@@ -167,7 +164,7 @@ const Products: React.FC = () => {
                         </Box>
                       }
                     >
-                      Ajouter au panier
+                      Plus en détail
                     </Button>
                   </CardActions>
                 </CardContent>

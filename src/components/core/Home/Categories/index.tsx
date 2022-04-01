@@ -2,7 +2,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import Link from 'next/link';
@@ -38,17 +37,6 @@ const Categories: React.FC<Props> = ({ categories }) => {
         >
           Explorez nos produits
         </Typography>
-
-        <Box marginTop={2} display={'flex'} justifyContent={'center'}>
-          <Button
-            variant="outlined"
-            color="primary"
-            size="large"
-            href="/categories"
-          >
-            Voir toutes les catégories
-          </Button>
-        </Box>
       </Box>
       <Box>
         <Grid container spacing={4} sx={{ justifyContent: 'center' }}>

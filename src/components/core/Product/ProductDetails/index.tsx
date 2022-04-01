@@ -13,10 +13,17 @@ interface Props {
 
 const ProductDetails: React.FC<Props> = ({ product }) => {
   const theme = useTheme();
-  const [size, setSize] = useState('65"');
-  const [color, setColor] = useState('blanc');
-  const [quantity, setQuantity] = useState(1);
-  const quantityLimit = 4;
+  const [size, setSize] = useState<Product['product']['sizes'][number]>(null);
+  const [color, setColor] =
+    useState<Product['product']['colors'][number]>(null);
+  const [positionning, setPositionning] =
+    useState<Product['product']['positionnings'][number]>(null);
+  const [frameColor, setFrameColor] =
+    useState<Product['product']['frameColors'][number]>(null);
+  const [sounbarColor, setSoundbarColor] =
+    useState<Product['product']['sounbarColors'][number]>(null);
+  const [supportColor, setSupportColor] =
+    useState<Product['product']['supportColors'][number]>(null);
 
   return (
     <Box>
@@ -36,13 +43,6 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
       </Typography>
       <Box marginY={3}>
         <Box display={'flex'}>
-          {/* <Typography
-            variant={'h5'}
-            color={'text.secondary'}
-            sx={{ textDecoration: 'line-through', marginRight: 1 }}
-          >
-            $199.90
-          </Typography> */}
           {product.product.price && (
             <Typography variant={'h5'} fontWeight={700}>
               <NumberFormat
@@ -60,117 +60,214 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
         {product.product.description}
       </Typography>
       <Box marginY={3}>
-        <Box>
-          <Typography>
-            Taille :{' '}
-            <Typography component={'span'} fontWeight={700}>
-              {size || ''}
+        {product?.product.sizes.length > 0 && (
+          <Box>
+            <Typography>
+              Taille :{' '}
+              <Typography component={'span'} fontWeight={700}>
+                {size?.name || ''}
+              </Typography>
             </Typography>
-          </Typography>
-          <Stack direction={'row'} spacing={1} marginTop={0.5}>
-            {['65"', '77"', '88"'].map((item) => (
-              <Box
-                key={item}
-                onClick={() => setSize(item)}
-                sx={{
-                  borderRadius: 1,
-                  padding: 1,
-                  border: `2px solid ${
-                    size === item
-                      ? theme.palette.primary.main
-                      : theme.palette.divider
-                  }`,
-                  cursor: 'pointer',
-                }}
-              >
-                <Typography>{item}</Typography>
-              </Box>
-            ))}
-          </Stack>
-        </Box>
-        <Box marginY={2}>
-          <Typography>
-            Couleur :{' '}
-            <Typography component={'span'} fontWeight={700}>
-              {color || ''}
-            </Typography>
-          </Typography>
-          <Stack direction={'row'} spacing={1} marginTop={0.5}>
-            {['noir', 'gris', 'blanc'].map((item) => (
-              <Box
-                key={item}
-                onClick={() => setColor(item)}
-                sx={{
-                  borderRadius: '100%',
-                  padding: 0.5,
-                  border: `2px solid ${
-                    color === item
-                      ? theme.palette.primary.main
-                      : theme.palette.divider
-                  }`,
-                  cursor: 'pointer',
-                }}
-              >
+            <Stack direction={'row'} spacing={1} marginTop={0.5}>
+              {product.product.sizes.map((item) => (
                 <Box
+                  key={item.id}
+                  onClick={() => setSize(item)}
+                  sx={{
+                    borderRadius: 1,
+                    padding: 1,
+                    border: `2px solid ${
+                      size?.id === item.id
+                        ? theme.palette.primary.main
+                        : theme.palette.divider
+                    }`,
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Typography>{item.name}</Typography>
+                </Box>
+              ))}
+            </Stack>
+          </Box>
+        )}
+        {product?.product.colors.length > 0 && (
+          <Box marginY={2}>
+            <Typography>
+              Couleur :{' '}
+              <Typography component={'span'} fontWeight={700}>
+                {color?.name || ''}
+              </Typography>
+            </Typography>
+            <Stack direction={'row'} spacing={1} marginTop={0.5}>
+              {product.product.colors.map((item) => (
+                <Box
+                  key={item.id}
+                  onClick={() => setColor(item)}
                   sx={{
                     borderRadius: '100%',
-                    padding: 1.5,
-                    bgcolor: item,
-                    border: `1px solid ${theme.palette.divider}`,
+                    padding: 0.5,
+                    border: `2px solid ${
+                      color?.id === item.id
+                        ? theme.palette.primary.main
+                        : theme.palette.divider
+                    }`,
+                    cursor: 'pointer',
                   }}
-                />
-              </Box>
-            ))}
-          </Stack>
-        </Box>
-        <Box>
-          <Typography>
-            Quantité :{' '}
-            <Typography component={'span'} fontWeight={700}>
-              {quantity || 1}
+                >
+                  <Box
+                    sx={{
+                      borderRadius: '100%',
+                      padding: 1.5,
+                      bgcolor: item.colorCode.hex,
+                      border: `1px solid ${theme.palette.divider}`,
+                    }}
+                  />
+                </Box>
+              ))}
+            </Stack>
+          </Box>
+        )}
+        {product?.product.frameColors.length > 0 && (
+          <Box marginY={2}>
+            <Typography>
+              Couleur du cadre :{' '}
+              <Typography component={'span'} fontWeight={700}>
+                {frameColor?.name || ''}
+              </Typography>
             </Typography>
-          </Typography>
-          <Stack direction={'row'} spacing={2} marginTop={0.5}>
-            <Box
-              onClick={() => setQuantity(quantity - 1 >= 1 ? quantity - 1 : 1)}
-              sx={{
-                borderRadius: 1,
-                paddingY: 1,
-                paddingX: 2,
-                border: `1px solid ${theme.palette.divider}`,
-                cursor: quantity === 1 ? 'not-allowed' : 'pointer',
-              }}
-            >
-              <Typography
-                color={quantity === 1 ? 'text.secondary' : 'text.primary'}
-              >
-                -
+            <Stack direction={'row'} spacing={1} marginTop={0.5}>
+              {product.product.frameColors.map((item) => (
+                <Box
+                  key={item.id}
+                  onClick={() => setFrameColor(item)}
+                  sx={{
+                    borderRadius: '100%',
+                    padding: 0.5,
+                    border: `2px solid ${
+                      frameColor?.id === item.id
+                        ? theme.palette.primary.main
+                        : theme.palette.divider
+                    }`,
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      borderRadius: '100%',
+                      padding: 1.5,
+                      bgcolor: item.colorCode.hex,
+                      border: `1px solid ${theme.palette.divider}`,
+                    }}
+                  />
+                </Box>
+              ))}
+            </Stack>
+          </Box>
+        )}
+        {product?.product.sounbarColors.length > 0 && (
+          <Box marginY={2}>
+            <Typography>
+              Couleur de la barre de son :{' '}
+              <Typography component={'span'} fontWeight={700}>
+                {sounbarColor?.name || ''}
               </Typography>
-            </Box>
-            <Box
-              onClick={() =>
-                setQuantity(
-                  quantity + 1 <= quantityLimit ? quantity + 1 : quantityLimit,
-                )
-              }
-              sx={{
-                borderRadius: 1,
-                paddingY: 1,
-                paddingX: 2,
-                border: `1px solid ${theme.palette.divider}`,
-                cursor: quantity === quantityLimit ? 'not-allowed' : 'pointer',
-              }}
-            >
-              <Typography
-                color={
-                  quantity === quantityLimit ? 'text.secondary' : 'text.primary'
-                }
-              >
-                +
+            </Typography>
+            <Stack direction={'row'} spacing={1} marginTop={0.5}>
+              {product.product.sounbarColors.map((item) => (
+                <Box
+                  key={item.id}
+                  onClick={() => setSoundbarColor(item)}
+                  sx={{
+                    borderRadius: '100%',
+                    padding: 0.5,
+                    border: `2px solid ${
+                      sounbarColor?.id === item.id
+                        ? theme.palette.primary.main
+                        : theme.palette.divider
+                    }`,
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      borderRadius: '100%',
+                      padding: 1.5,
+                      bgcolor: item.colorCode.hex,
+                      border: `1px solid ${theme.palette.divider}`,
+                    }}
+                  />
+                </Box>
+              ))}
+            </Stack>
+          </Box>
+        )}
+        {product?.product.supportColors.length > 0 && (
+          <Box marginY={2}>
+            <Typography>
+              Couleur du support :{' '}
+              <Typography component={'span'} fontWeight={700}>
+                {supportColor?.name || ''}
               </Typography>
-            </Box>
-          </Stack>
-        </Box>
+            </Typography>
+            <Stack direction={'row'} spacing={1} marginTop={0.5}>
+              {product.product.supportColors.map((item) => (
+                <Box
+                  key={item.id}
+                  onClick={() => setSupportColor(item)}
+                  sx={{
+                    borderRadius: '100%',
+                    padding: 0.5,
+                    border: `2px solid ${
+                      supportColor?.id === item.id
+                        ? theme.palette.primary.main
+                        : theme.palette.divider
+                    }`,
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      borderRadius: '100%',
+                      padding: 1.5,
+                      bgcolor: item.colorCode.hex,
+                      border: `1px solid ${theme.palette.divider}`,
+                    }}
+                  />
+                </Box>
+              ))}
+            </Stack>
+          </Box>
+        )}
+        {product?.product.positionnings.length > 0 && (
+          <Box>
+            <Typography>
+              Support :{' '}
+              <Typography component={'span'} fontWeight={700}>
+                {positionning?.name || ''}
+              </Typography>
+            </Typography>
+            <Stack direction={'row'} spacing={1} marginTop={0.5}>
+              {product.product.positionnings.map((item) => (
+                <Box
+                  key={item.id}
+                  onClick={() => setPositionning(item)}
+                  sx={{
+                    borderRadius: 1,
+                    padding: 1,
+                    border: `2px solid ${
+                      positionning?.id === item.id
+                        ? theme.palette.primary.main
+                        : theme.palette.divider
+                    }`,
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Typography>{item.name}</Typography>
+                </Box>
+              ))}
+            </Stack>
+          </Box>
+        )}
       </Box>
       <Stack marginTop={3} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
         <Button
@@ -217,7 +314,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
         </Button>
       </Stack>
       <Box marginY={3}>
-        <Typography>Nous sommes à votre écoute ?</Typography>
+        <Typography>Nous sommes à votre écoute.</Typography>
         <Stack direction={'row'} spacing={2} marginTop={0.5}>
           <Button
             sx={{
