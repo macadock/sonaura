@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const Goby: React.FC = () => {
+const Design: React.FC = () => {
   const theme = useTheme();
 
   return (
@@ -19,7 +19,7 @@ const Goby: React.FC = () => {
           textTransform: 'uppercase',
         }}
       >
-        Intégration
+        Design
       </Typography>
       <Typography
         variant="h6"
@@ -30,11 +30,10 @@ const Goby: React.FC = () => {
           color: theme.palette.common.white,
         }}
       >
-        Tous nos produits communiquent entre eux et sont capables de jouer
-        ensemble.
+        Des matériaux de qualité, un design irréprochable.
       </Typography>
     </Box>
   );
 };
 
-export default Goby;
+export default Design;

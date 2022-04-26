@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const Nike: React.FC = () => {
+const Elegance: React.FC = () => {
   const theme = useTheme();
 
   return (
@@ -36,4 +36,4 @@ const Nike: React.FC = () => {
   );
 };
 
-export default Nike;
+export default Elegance;

@@ -5,8 +5,9 @@ import Box from '@mui/material/Box';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import { Link } from '@mui/material';
 
-const Process: React.FC = () => {
+const Contact: React.FC = () => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
@@ -20,17 +21,20 @@ const Process: React.FC = () => {
           data-aos={isMd ? 'fade-right' : 'fade-up'}
           sx={{ width: '100%' }}
         >
-          <Box marginBottom={2} sx={{ textAlign: 'center' }}>
+          <Box
+            marginBottom={2}
+            sx={{
+              textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
             <Typography variant={'h4'} sx={{ fontWeight: 700 }} gutterBottom>
               Contactez-nous
             </Typography>
-            <Typography color="text.secondary">
-              Frank VILIN
-              <br />
-              06 89 21 09 78
-              <br />
-              frank@beostore.fr
-            </Typography>
+            <Typography color="text.secondary">Frank VILIN</Typography>
+            <Link href="tel:+33689210978">06 89 21 09 78</Link>
+            <Link href="mailto:frank@beostore.fr">frank@beostore.fr</Link>
           </Box>
         </Grid>
       </Grid>
@@ -38,4 +42,4 @@ const Process: React.FC = () => {
   );
 };
 
-export default Process;
+export default Contact;

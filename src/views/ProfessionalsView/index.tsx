@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Box, Container, NoSsr, useTheme } from '@mui/material';
 import Welcome from '../../components/core/Professionals/Welcome';
-import Goby from '../../components/core/Professionals/Goby';
-import Larq from '../../components/core/Professionals/Larq';
-import Process from '../../components/core/Professionals/Process';
-import Nike from '../../components/core/Professionals/Nike';
+import Integration from '../../components/core/Professionals/Integration';
+import Design from '../../components/core/Professionals/Design';
+import Contact from '../../components/core/Professionals/Contact';
+import Elegance from '../../components/core/Professionals/Elegance';
 
 const ProfessionalsView: React.FC = () => {
   useEffect(() => {
@@ -103,7 +103,7 @@ const ProfessionalsView: React.FC = () => {
           sx={styles('https://media.graphassets.com/PSUppvkmQdWDzjlNJmxh')}
         />
         <Container>
-          <Goby />
+          <Integration />
         </Container>
       </Box>
       <Box
@@ -120,17 +120,7 @@ const ProfessionalsView: React.FC = () => {
           sx={styles('https://media.graphassets.com/jPoZthdR6qwNsfe5Ipuw')}
         />
         <Container>
-          <Larq />
-        </Container>
-      </Box>
-      <Box
-        minHeight={'100vh'}
-        display={'flex'}
-        alignItems={'center'}
-        bgcolor={'alternate.main'}
-      >
-        <Container>
-          <Process />
+          <Design />
         </Container>
       </Box>
       <Box
@@ -150,7 +140,17 @@ const ProfessionalsView: React.FC = () => {
           )}
         />
         <Container>
-          <Nike />
+          <Elegance />
+        </Container>
+      </Box>
+      <Box
+        minHeight={'100vh'}
+        display={'flex'}
+        alignItems={'center'}
+        bgcolor={'alternate.main'}
+      >
+        <Container>
+          <Contact />
         </Container>
       </Box>
     </React.Fragment>

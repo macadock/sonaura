@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const Larq: React.FC = () => {
+const Integration: React.FC = () => {
   const theme = useTheme();
 
   return (
@@ -19,7 +19,7 @@ const Larq: React.FC = () => {
           textTransform: 'uppercase',
         }}
       >
-        Design
+        Intégration
       </Typography>
       <Typography
         variant="h6"
@@ -30,10 +30,11 @@ const Larq: React.FC = () => {
           color: theme.palette.common.white,
         }}
       >
-        Des matériaux de qualité, un design irréprochable.
+        Tous nos produits communiquent entre eux et sont capables de jouer
+        ensemble.
       </Typography>
     </Box>
   );
 };
 
-export default Larq;
+export default Integration;
