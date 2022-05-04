@@ -58,6 +58,7 @@ export type ProductFragment = {
         name: string;
         slug: string;
     }) | null;
+    isNew: boolean;
     colors: (ColorsFragment)[];
     sizes: (SizesFragment)[];
     positionnings: (PositionningsFragment)[];

@@ -10,19 +10,23 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { useTheme } from '@mui/material/styles';
 import { useQuery } from '@apollo/client';
-import { GET_PRODUCTS } from '../../../../../gql/get-products';
-import { Products } from '../../../../../gql/__generated__/products';
+import { GET_PREOWNED_PRODUCTS } from '../../../../../gql/get-products';
 import { CircularProgress, Link } from '@mui/material';
 import NumberFormat from 'react-number-format';
+import { PreOwnedProducts } from '../../../../../gql/__generated__/pre-owned-products';
 
-const Products: React.FC<{ productNumberMax?: number }> = ({
+const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
   productNumberMax = 3,
 }) => {
   const theme = useTheme();
 
-  const { data: products, loading, error } = useQuery<Products>(GET_PRODUCTS);
+  const {
+    data: products,
+    loading,
+    error,
+  } = useQuery<PreOwnedProducts>(GET_PREOWNED_PRODUCTS);
 
-  if (products?.products.length === 0 || error) {
+  if (products?.category.products.length === 0 || error) {
     return null;
   }
 
@@ -46,7 +50,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
           color={'secondary'}
           align={'center'}
         >
-          Produits
+          Occasion
         </Typography>
         <Typography
           variant="h4"
@@ -57,7 +61,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
             fontWeight: 700,
           }}
         >
-          Produits mis en avant
+          {"Produits d'occasion"}
         </Typography>
         <Typography
           variant="h6"
@@ -65,11 +69,13 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
           color={'text.secondary'}
           data-aos={'fade-up'}
         >
-          Vivez une expérience audiovisuelle comme jamais auparavant.
+          {
+            'Prolongez la vie de produits Bang & Olufsen tout en vous faisant plaisir.'
+          }
         </Typography>
       </Box>
       <Grid container spacing={4}>
-        {products.products.map((product, i) => (
+        {products.category.products.map((product, i) => (
           <React.Fragment key={product.id}>
             {i < productNumberMax && (
               <Grid
@@ -185,4 +191,4 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
   );
 };
 
-export default Products;
+export default PreOwnedProducts;

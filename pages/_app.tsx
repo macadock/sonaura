@@ -5,6 +5,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { Toaster } from 'react-hot-toast';
 
 /* eslint-disable react/prop-types */
 import React from 'react';
@@ -67,6 +68,7 @@ export default function App({ Component, pageProps }: AppProps) {
               `,
           }}
         />
+        <Toaster position="top-center" toastOptions={{ duration: 6000 }} />
       </Page>
     </ApolloProvider>
   );

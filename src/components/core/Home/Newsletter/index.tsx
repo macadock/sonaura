@@ -1,16 +1,55 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useTheme } from '@mui/material/styles';
-
 import Container from 'components/system/Container';
+import { isEmail } from 'class-validator';
+import toast from 'react-hot-toast';
+
+const API_KEY = process.env.NEXT_PUBLIC_SIB_API_KEY;
+const LIST_ID = parseInt(process.env.NEXT_PUBLIC_SIB_LIST_ID);
+const TEMPLATE_ID = parseInt(process.env.NEXT_PUBLIC_SIB_TEMPLATE_ID);
 
 const Newsletter: React.FC = () => {
   const theme = useTheme();
+
+  const [email, setEmail] = useState<string>('');
+  const isValid = isEmail(email);
+
+  const handleSubscribe = async () => {
+    if (isValid) {
+      const headers = new Headers();
+      headers.append('Accept', 'application/json');
+      headers.append('Content-Type', 'application/json');
+      headers.append('api-key', API_KEY);
+
+      const bodyFetch = {
+        email: email,
+        includeListIds: [LIST_ID],
+        redirectionUrl: 'https://dev.sonaura.fr',
+        templateId: TEMPLATE_ID,
+      };
+
+      const subscribe = fetch(
+        'https://api.sendinblue.com/v3/contacts/doubleOptinConfirmation',
+        {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify(bodyFetch),
+        },
+      );
+
+      toast.promise(subscribe, {
+        loading: 'Inscription...',
+        success: "Vous allez recevoir un email pour confirmer l'inscription",
+        error: 'Merci de réessayer votre inscription',
+      });
+    }
+  };
 
   return (
     <Box bgcolor={'primary.main'} borderRadius={2}>
@@ -32,7 +71,7 @@ const Newsletter: React.FC = () => {
                 color: theme.palette.common.white,
               }}
             >
-              Inscrivez-vous à notre newsletter
+              {'Inscrivez-vous à notre newsletter'}
             </Typography>
             <Typography
               variant="h6"
@@ -42,7 +81,7 @@ const Newsletter: React.FC = () => {
               }}
               data-aos={'fade-up'}
             >
-              Soyez informé des dernières nouveautés Bang &amp; Olufsen
+              {'Soyez informé des dernières nouveautés Bang & Olufsen'}
             </Typography>
           </Box>
           <Box width={1} display={'flex'} justifyContent={'center'}>
@@ -73,8 +112,18 @@ const Newsletter: React.FC = () => {
               data-aos="fade-up"
             >
               <OutlinedInput
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyPress={(e: React.KeyboardEvent) => {
+                  if (e.key === 'Enter') handleSubscribe();
+                }}
                 endAdornment={
-                  <InputAdornment position="end">
+                  <InputAdornment
+                    sx={{ cursor: 'pointer' }}
+                    onClick={handleSubscribe}
+                    position="end"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -94,6 +143,11 @@ const Newsletter: React.FC = () => {
                 }
                 placeholder="Entrez votre adresse email"
               />
+              {email !== '' && !isValid && (
+                <Typography color={'white'} sx={{ margin: '0.5rem' }}>
+                  {"Merci d'entrer une adresse email valide"}
+                </Typography>
+              )}
             </FormControl>
           </Box>
         </Box>

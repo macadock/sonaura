@@ -11,7 +11,7 @@ interface Props {
   product: Product;
 }
 
-const ProductDetails: React.FC<Props> = ({ product }) => {
+const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const theme = useTheme();
   const [size, setSize] = useState<Product['product']['sizes'][number]>(null);
   const [color, setColor] =
@@ -25,28 +25,34 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
   const [supportColor, setSupportColor] =
     useState<Product['product']['supportColors'][number]>(null);
 
+  if (product === null) return null;
+
+  const { product: currentProduct } = product;
+
   return (
     <Box>
-      <Box
-        padding={1}
-        display={'inline-flex'}
-        borderRadius={1}
-        bgcolor={'primary.main'}
-        marginBottom={1}
-      >
-        <Typography sx={{ color: 'common.white', lineHeight: 1 }}>
-          nouveau
-        </Typography>
-      </Box>
+      {currentProduct.isNew && (
+        <Box
+          padding={1}
+          display={'inline-flex'}
+          borderRadius={1}
+          bgcolor={'primary.main'}
+          marginBottom={1}
+        >
+          <Typography sx={{ color: 'common.white', lineHeight: 1 }}>
+            nouveau
+          </Typography>
+        </Box>
+      )}
       <Typography variant={'h4'} fontWeight={700}>
-        {product.product.name}
+        {currentProduct.name}
       </Typography>
       <Box marginY={3}>
         <Box display={'flex'}>
-          {product.product.price && (
+          {currentProduct.price && (
             <Typography variant={'h5'} fontWeight={700}>
               <NumberFormat
-                value={product.product.price}
+                value={currentProduct.price}
                 displayType="text"
                 thousandSeparator=" "
                 suffix=" €"
@@ -57,10 +63,10 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
         </Box>
       </Box>
       <Typography variant={'subtitle2'} color={'text.secondary'}>
-        {product.product.description}
+        {currentProduct.description}
       </Typography>
       <Box marginY={3}>
-        {product?.product.sizes.length > 0 && (
+        {currentProduct.sizes.length > 0 && (
           <Box>
             <Typography>
               Taille :{' '}
@@ -69,7 +75,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
               </Typography>
             </Typography>
             <Stack direction={'row'} spacing={1} marginTop={0.5}>
-              {product.product.sizes.map((item) => (
+              {currentProduct.sizes.map((item) => (
                 <Box
                   key={item.id}
                   onClick={() => setSize(item)}
@@ -90,7 +96,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
             </Stack>
           </Box>
         )}
-        {product?.product.colors.length > 0 && (
+        {currentProduct.colors.length > 0 && (
           <Box marginY={2}>
             <Typography>
               Couleur :{' '}
@@ -99,7 +105,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
               </Typography>
             </Typography>
             <Stack direction={'row'} spacing={1} marginTop={0.5}>
-              {product.product.colors.map((item) => (
+              {currentProduct.colors.map((item) => (
                 <Box
                   key={item.id}
                   onClick={() => setColor(item)}
@@ -127,7 +133,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
             </Stack>
           </Box>
         )}
-        {product?.product.frameColors.length > 0 && (
+        {currentProduct.frameColors.length > 0 && (
           <Box marginY={2}>
             <Typography>
               Couleur du cadre :{' '}
@@ -136,7 +142,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
               </Typography>
             </Typography>
             <Stack direction={'row'} spacing={1} marginTop={0.5}>
-              {product.product.frameColors.map((item) => (
+              {currentProduct.frameColors.map((item) => (
                 <Box
                   key={item.id}
                   onClick={() => setFrameColor(item)}
@@ -164,7 +170,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
             </Stack>
           </Box>
         )}
-        {product?.product.sounbarColors.length > 0 && (
+        {currentProduct.sounbarColors.length > 0 && (
           <Box marginY={2}>
             <Typography>
               Couleur de la barre de son :{' '}
@@ -173,7 +179,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
               </Typography>
             </Typography>
             <Stack direction={'row'} spacing={1} marginTop={0.5}>
-              {product.product.sounbarColors.map((item) => (
+              {currentProduct.sounbarColors.map((item) => (
                 <Box
                   key={item.id}
                   onClick={() => setSoundbarColor(item)}
@@ -201,7 +207,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
             </Stack>
           </Box>
         )}
-        {product?.product.supportColors.length > 0 && (
+        {currentProduct.supportColors.length > 0 && (
           <Box marginY={2}>
             <Typography>
               Couleur du support :{' '}
@@ -210,7 +216,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
               </Typography>
             </Typography>
             <Stack direction={'row'} spacing={1} marginTop={0.5}>
-              {product.product.supportColors.map((item) => (
+              {currentProduct.supportColors.map((item) => (
                 <Box
                   key={item.id}
                   onClick={() => setSupportColor(item)}
@@ -238,7 +244,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
             </Stack>
           </Box>
         )}
-        {product?.product.positionnings.length > 0 && (
+        {currentProduct.positionnings.length > 0 && (
           <Box>
             <Typography>
               Support :{' '}
@@ -247,7 +253,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
               </Typography>
             </Typography>
             <Stack direction={'row'} spacing={1} marginTop={0.5}>
-              {product.product.positionnings.map((item) => (
+              {currentProduct.positionnings.map((item) => (
                 <Box
                   key={item.id}
                   onClick={() => setPositionning(item)}

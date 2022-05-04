@@ -66,9 +66,9 @@ export type ProductFragment = {
     sounbarColors: (SoundbarColorsFragment)[];
     supportColors: (SupportColorsFragment)[];
 };
-export type Product = {
-    product: (ProductFragment) | null;
+export type PreOwnedProducts = {
+    category: ({
+        products: (ProductFragment)[];
+    }) | null;
 };
-export type ProductVariables = {
-    slug: string;
-};
+export type PreOwnedProductsVariables = {};

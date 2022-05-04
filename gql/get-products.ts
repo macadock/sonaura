@@ -83,6 +83,7 @@ export const PRODUCT_FRAMGENT = gql`
       name
       slug
     }
+    isNew
     colors(orderBy: name_ASC) {
       ...ColorsFragment
     }
@@ -118,6 +119,17 @@ export const GET_PRODUCTS = gql`
   query Products {
     products {
       ...ProductFragment
+    }
+  }
+`;
+
+export const GET_PREOWNED_PRODUCTS = gql`
+  ${PRODUCT_FRAMGENT}
+  query PreOwnedProducts {
+    category(where: { slug: "occasion" }) {
+      products {
+        ...ProductFragment
+      }
     }
   }
 `;

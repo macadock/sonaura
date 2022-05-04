@@ -42,7 +42,7 @@ const Categories: React.FC<Props> = ({ categories }) => {
         <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
           {categories.categories.map((category, i) => (
             <Grid item xs={6} md={2} key={i}>
-              <Link href={category.slug} passHref>
+              <Link href={`/${category.slug}`} passHref>
                 <Box
                   display={'block'}
                   width={1}
