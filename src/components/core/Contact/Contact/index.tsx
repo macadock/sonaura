@@ -10,8 +10,6 @@ import { useTheme } from '@mui/material/styles';
 
 import Container from 'components/system/Container';
 import { ShopFragment } from '../../../../../gql/__generated__/shop-fragment';
-import Script from 'next/script';
-import { Button } from '@mui/material';
 
 interface Props {
   shops: ShopFragment[];
@@ -181,15 +179,9 @@ const Details: React.FC<ShopProps> = ({ shop }) => {
 const Map: React.FC<ShopProps> = ({ shop }) => {
   const theme = useTheme();
 
-  const handleGoogleMapsCookies = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).axeptioSDK.requestConsent('gmaps');
-  };
-
   return (
     <React.Fragment>
       <iframe
-        data-requires-vendor-consent="gmaps"
         width="100%"
         height="100%"
         frameBorder="0"
@@ -197,56 +189,14 @@ const Map: React.FC<ShopProps> = ({ shop }) => {
         marginHeight={0}
         marginWidth={0}
         scrolling="no"
-        data-src={shop.googleMapsUrl}
+        src={shop.googleMapsUrl}
         style={{
-          display: 'none',
+          display: 'flex',
           minHeight: 400,
           filter:
             theme.palette.mode === 'dark'
               ? 'grayscale(0.5) opacity(0.7)'
               : 'none',
-        }}
-      />
-      <Box
-        data-hide-on-vendor-consent="gmaps"
-        sx={{
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          backgroundColor: theme.palette.grey[100],
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Button onClick={handleGoogleMapsCookies}>
-          Accepter les cookies Google Maps
-        </Button>
-      </Box>
-
-      <Script
-        id="gmaps-consent"
-        dangerouslySetInnerHTML={{
-          __html: `
-        (_axcb = window._axcb || []).push(function(sdk) {
-          sdk.on('cookies:complete', function(choices){
-            document
-              .querySelectorAll('[data-hide-on-vendor-consent]')
-              .forEach(el => {
-                const vendor = el.getAttribute('data-hide-on-vendor-consent');
-                el.style.display = choices[vendor] ? 'none' : 'flex';
-              });
-            document
-              .querySelectorAll('[data-requires-vendor-consent]')
-              .forEach(el => {
-                const vendor = el.getAttribute('data-requires-vendor-consent');
-                if (choices[vendor]) {
-                  el.setAttribute('src', el.getAttribute('data-src'));
-                  el.style.display = 'block';
-                }
-              });
-          });
-        });
-      `,
         }}
       />
     </React.Fragment>

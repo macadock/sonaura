@@ -54,7 +54,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <Page>
         <Component {...pageProps} />
-        <Script
+        {/* <Script
           id="axeptio-consent"
           dangerouslySetInnerHTML={{
             __html: `
@@ -67,7 +67,7 @@ export default function App({ Component, pageProps }: AppProps) {
               })(document, "script");
               `,
           }}
-        />
+        /> */}
         <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
       </Page>
     </ApolloProvider>
