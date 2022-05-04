@@ -12,7 +12,7 @@ const Hero: React.FC = () => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            alignItems: { xs: 'start', sm: 'center' },
           }}
         >
           <Box marginBottom={2}>
@@ -31,7 +31,7 @@ const Hero: React.FC = () => {
               variant="h6"
               component="p"
               color="text.secondary"
-              sx={{ fontWeight: 400, textAlign: 'center' }}
+              sx={{ fontWeight: 400, textAlign: { xs: 'left', sm: 'center' } }}
             >
               {
                 'Nos experts Bang & Olufsen répondent à vos questions et vous aident à gagner du temps.'

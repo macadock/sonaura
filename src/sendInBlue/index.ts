@@ -59,7 +59,7 @@ export default class SendInBlue {
   static getBodyEmailToCustomer(
     templateId: number,
     email: string,
-    fullName?: string,
+    fullName: string,
     params?: { [key: string]: string },
   ): string {
     const body = {
@@ -82,7 +82,7 @@ export default class SendInBlue {
   static getBodyEmailToMerchant(
     templateId: number,
     customerEmail: string,
-    customerFullName?: string,
+    customerFullName: string,
     params?: { [key: string]: string },
   ): string {
     const body = {

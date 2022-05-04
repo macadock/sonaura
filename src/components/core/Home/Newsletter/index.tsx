@@ -32,6 +32,8 @@ const Newsletter: React.FC = () => {
         success: "Vous allez recevoir un email pour confirmer l'inscription",
         error: 'Merci de réessayer votre inscription',
       });
+    } else {
+      toast.error("Merci d'entrer une adresse email valide");
     }
   };
 
@@ -125,7 +127,7 @@ const Newsletter: React.FC = () => {
                     </svg>
                   </InputAdornment>
                 }
-                placeholder="Entrez votre adresse email"
+                placeholder="Votre adresse email"
               />
               {email !== '' && !isValid && (
                 <Typography color={'white'} sx={{ margin: '0.5rem' }}>

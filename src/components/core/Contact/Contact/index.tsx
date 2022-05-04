@@ -65,7 +65,7 @@ const Details: React.FC<ShopProps> = ({ shop }) => {
   const theme = useTheme();
 
   return (
-    <Box marginX={5}>
+    <Box marginX={{ sm: 0, md: 5 }}>
       <Box marginBottom={2}>
         <Typography variant={'h4'} sx={{ fontWeight: 700 }} gutterBottom>
           {shop.name}
@@ -200,7 +200,7 @@ const Map: React.FC<ShopProps> = ({ shop }) => {
         data-src={shop.googleMapsUrl}
         style={{
           display: 'none',
-          minHeight: 300,
+          minHeight: 400,
           filter:
             theme.palette.mode === 'dark'
               ? 'grayscale(0.5) opacity(0.7)'

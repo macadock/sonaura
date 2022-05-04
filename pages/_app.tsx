@@ -68,7 +68,7 @@ export default function App({ Component, pageProps }: AppProps) {
               `,
           }}
         />
-        <Toaster position="top-center" toastOptions={{ duration: 6000 }} />
+        <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
       </Page>
     </ApolloProvider>
   );
