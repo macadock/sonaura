@@ -9,6 +9,12 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import SendInBlue, {
+  contactFormCustomerTemplateId,
+  contactFormMerchantTemplateId,
+  url,
+} from '../../../../sendInBlue';
+import toast from 'react-hot-toast';
 
 const validationSchema = yup.object({
   fullName: yup
@@ -31,21 +37,70 @@ const Form: React.FC = () => {
     defaultMatches: true,
   });
 
+  const {
+    getHeaders,
+    getBodyAddContactToList,
+    getBodyEmailToCustomer: getBodyContactFormForCustomerEmail,
+    getBodyEmailToMerchant: getBodyContactFormForMerchantEmail,
+  } = SendInBlue;
+
   const initialValues = {
     fullName: '',
     message: '',
     email: '',
   };
 
-  const onSubmit = (values) => {
-    return values;
+  const onSubmit = async ({ fullName, message, email }) => {
+    const addcontactToList = fetch(`${url}contacts`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: getBodyAddContactToList(email, fullName),
+    });
+
+    const sendFormByEmailToCustomer = fetch(`${url}smtp/email`, {
+      method: 'POST',
+      headers: SendInBlue.getHeaders(),
+      body: getBodyContactFormForCustomerEmail(
+        contactFormCustomerTemplateId,
+        email,
+        fullName,
+        { message },
+      ),
+    });
+
+    const sendFormByEmailToMerchant = fetch(`${url}smtp/email`, {
+      method: 'POST',
+      headers: SendInBlue.getHeaders(),
+      body: getBodyContactFormForMerchantEmail(
+        contactFormMerchantTemplateId,
+        email,
+        fullName,
+        { message },
+      ),
+    });
+
+    const sendForm = Promise.all([
+      addcontactToList,
+      sendFormByEmailToCustomer,
+      sendFormByEmailToMerchant,
+    ]);
+
+    toast.promise(sendForm, {
+      loading: 'Envoi en cours...',
+      success: () => {
+        resetForm();
+        return 'Message envoyé';
+      },
+      error: 'Erreur. Merci de réessayer.',
+    });
   };
 
-  const formik = useFormik({
-    initialValues,
-    validationSchema: validationSchema,
-    onSubmit,
-  });
+  const { handleSubmit, values, handleChange, touched, errors, resetForm } =
+    useFormik({
+      initialValues,
+      validationSchema: validationSchema,
+      onSubmit,
+    });
 
   return (
     <Box>
@@ -58,17 +113,12 @@ const Form: React.FC = () => {
         >
           Vous ne trouvez pas de réponse à vos questions ?
         </Typography>
-        {/* <Typography color="text.secondary" align={'center'}>
-          Keep track of what's happening with your data, change permissions, and
-          run reports against your data anywhere in the world. Keep track of
-          what's happening with your data, change permissions.
-        </Typography> */}
       </Box>
       <Box
         maxWidth={600}
         margin={'0 auto'}
         component={'form'}
-        onSubmit={formik.handleSubmit}
+        onSubmit={handleSubmit}
         sx={{
           '& .MuiOutlinedInput-root.MuiInputBase-multiline': {
             padding: 0,
@@ -96,10 +146,10 @@ const Form: React.FC = () => {
               name="fullName"
               fullWidth
               type="text"
-              value={formik.values.fullName}
-              onChange={formik.handleChange}
-              error={formik.touched.fullName && Boolean(formik.errors.fullName)}
-              helperText={formik.touched.fullName && formik.errors.fullName}
+              value={values.fullName}
+              onChange={handleChange}
+              error={touched.fullName && Boolean(errors.fullName)}
+              helperText={touched.fullName && errors.fullName}
             />
           </Grid>
           <Grid item xs={12}>
@@ -118,10 +168,10 @@ const Form: React.FC = () => {
               name="email"
               fullWidth
               type="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
+              value={values.email}
+              onChange={handleChange}
+              error={touched.email && Boolean(errors.email)}
+              helperText={touched.email && errors.email}
             />
           </Grid>
           <Grid item xs={12}>
@@ -140,10 +190,10 @@ const Form: React.FC = () => {
               fullWidth
               multiline
               rows={4}
-              value={formik.values.message}
-              onChange={formik.handleChange}
-              error={formik.touched.message && Boolean(formik.errors.message)}
-              helperText={formik.touched.message && formik.errors.message}
+              value={values.message}
+              onChange={handleChange}
+              error={touched.message && Boolean(errors.message)}
+              helperText={touched.message && errors.message}
             />
           </Grid>
           <Grid item container justifyContent="center" xs={12}>

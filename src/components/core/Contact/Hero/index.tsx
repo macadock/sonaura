@@ -1,17 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
-import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
 const Hero: React.FC = () => {
-  const theme = useTheme();
-
   return (
-    <Grid container spacing={4}>
+    <Grid container justifyContent={'center'} spacing={4}>
       <Grid item container alignItems={'center'} xs={12} md={6}>
-        <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
           <Box marginBottom={2}>
             <Typography
               variant="h2"
@@ -20,7 +23,7 @@ const Hero: React.FC = () => {
                 fontWeight: 700,
               }}
             >
-              Contactez-nous
+              {'Contactez-nous'}
             </Typography>
           </Box>
           <Box>
@@ -28,35 +31,12 @@ const Hero: React.FC = () => {
               variant="h6"
               component="p"
               color="text.secondary"
-              sx={{ fontWeight: 400 }}
+              sx={{ fontWeight: 400, textAlign: 'center' }}
             >
-              Nos experts Bang &amp; Olufsen répondent à vos questions et vous
-              aident à gagner du temps.
-            </Typography>
-          </Box>
-        </Box>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Box
-          height={1}
-          width={1}
-          display={'flex'}
-          justifyContent={'center'}
-          alignItems={'center'}
-        >
-          <Box height={1} width={1} maxWidth={500}>
-            <Box
-              component={'img'}
-              src={
-                'https://assets.maccarianagency.com/svg/illustrations/drawkit-illustration6.svg'
+              {
+                'Nos experts Bang & Olufsen répondent à vos questions et vous aident à gagner du temps.'
               }
-              width={1}
-              height={1}
-              sx={{
-                filter:
-                  theme.palette.mode === 'dark' ? 'brightness(0.8)' : 'none',
-              }}
-            />
+            </Typography>
           </Box>
         </Box>
       </Grid>

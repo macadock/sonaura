@@ -19,9 +19,10 @@ interface Props {
 
 const Contact: React.FC<Props> = ({ shops }) => {
   return (
-    <>
+    <Box sx={{ display: { sm: 'block', md: 'flex' } }}>
       {shops.map((shop) => (
         <Box
+          maxWidth={{ sm: 1, md: '50%' }}
           key={shop.id}
           sx={{
             width: 1,
@@ -43,52 +44,16 @@ const Contact: React.FC<Props> = ({ shops }) => {
                 order={{ xs: 2, md: 1 }}
               >
                 <Container>
-                  <LeftSide shop={shop} />
+                  <Details shop={shop} />
+                  <Map shop={shop} />
                 </Container>
-              </Box>
-              <Box
-                sx={{
-                  flex: { xs: '0 0 100%', md: '0 0 50%' },
-                  position: 'relative',
-                  maxWidth: { xs: '100%', md: '50%' },
-                  minHeight: { xs: 300, md: 600 },
-                  order: { xs: 1, md: 2 },
-                }}
-              >
-                <Box
-                  sx={{
-                    width: { xs: 1, md: '50vw' },
-                    height: '100%',
-                    position: 'relative',
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: '100%',
-                      height: '100%',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        overflow: 'hidden',
-                        left: '0%',
-                        width: 1,
-                        height: 1,
-                        position: { xs: 'relative', md: 'absolute' },
-                      }}
-                    >
-                      <RightSide shop={shop} />
-                    </Box>
-                  </Box>
-                </Box>
               </Box>
             </Box>
           </Container>
           <Divider />
         </Box>
       ))}
-    </>
+    </Box>
   );
 };
 
@@ -96,23 +61,24 @@ interface ShopProps {
   shop: ShopFragment;
 }
 
-const LeftSide: React.FC<ShopProps> = ({ shop }) => {
+const Details: React.FC<ShopProps> = ({ shop }) => {
   const theme = useTheme();
 
   return (
-    <Box>
+    <Box marginX={5}>
       <Box marginBottom={2}>
         <Typography variant={'h4'} sx={{ fontWeight: 700 }} gutterBottom>
           {shop.name}
         </Typography>
-        <Typography color="text.secondary">
+        {/* <Typography color="text.secondary">
           Description sur le magasin...
-        </Typography>
+        </Typography> */}
       </Box>
       <Box
         display={'flex'}
         flexDirection={'column'}
         justifyContent={'space-between'}
+        marginBottom={4}
       >
         <Box component={ListItem} disableGutters width={'auto'} padding={0}>
           <Box
@@ -137,7 +103,12 @@ const LeftSide: React.FC<ShopProps> = ({ shop }) => {
               </svg>
             </Box>
           </Box>
-          <ListItemText primary={'Téléphone'} secondary={shop.phoneNumber} />
+          <a
+            href={`tel:${shop.phoneNumber.trim()}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <ListItemText primary={'Téléphone'} secondary={shop.phoneNumber} />
+          </a>
         </Box>
         <Box component={ListItem} disableGutters width={'auto'} padding={0}>
           <Box
@@ -163,7 +134,12 @@ const LeftSide: React.FC<ShopProps> = ({ shop }) => {
               </svg>
             </Box>
           </Box>
-          <ListItemText primary={'Email'} secondary={shop.email} />
+          <a
+            href={`mailto:${shop.email}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <ListItemText primary={'Email'} secondary={shop.email} />
+          </a>
         </Box>
         <Box component={ListItem} disableGutters width={'auto'} padding={0}>
           <Box
@@ -202,7 +178,7 @@ const LeftSide: React.FC<ShopProps> = ({ shop }) => {
   );
 };
 
-const RightSide: React.FC<ShopProps> = ({ shop }) => {
+const Map: React.FC<ShopProps> = ({ shop }) => {
   const theme = useTheme();
 
   const handleGoogleMapsCookies = () => {

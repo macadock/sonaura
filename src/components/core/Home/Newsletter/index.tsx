@@ -9,10 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import Container from 'components/system/Container';
 import { isEmail } from 'class-validator';
 import toast from 'react-hot-toast';
-
-const API_KEY = process.env.NEXT_PUBLIC_SIB_API_KEY;
-const LIST_ID = parseInt(process.env.NEXT_PUBLIC_SIB_LIST_ID);
-const TEMPLATE_ID = parseInt(process.env.NEXT_PUBLIC_SIB_TEMPLATE_ID);
+import SendInBlue, { url } from '../../../../sendInBlue';
 
 const Newsletter: React.FC = () => {
   const theme = useTheme();
@@ -22,26 +19,13 @@ const Newsletter: React.FC = () => {
 
   const handleSubscribe = async () => {
     if (isValid) {
-      const headers = new Headers();
-      headers.append('Accept', 'application/json');
-      headers.append('Content-Type', 'application/json');
-      headers.append('api-key', API_KEY);
+      const { getHeaders, getBodyNewsletterSubscription } = SendInBlue;
 
-      const bodyFetch = {
-        email: email,
-        includeListIds: [LIST_ID],
-        redirectionUrl: 'https://dev.sonaura.fr',
-        templateId: TEMPLATE_ID,
-      };
-
-      const subscribe = fetch(
-        'https://api.sendinblue.com/v3/contacts/doubleOptinConfirmation',
-        {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify(bodyFetch),
-        },
-      );
+      const subscribe = fetch(`${url}contacts/doubleOptinConfirmation`, {
+        method: 'POST',
+        headers: getHeaders(),
+        body: getBodyNewsletterSubscription(email),
+      });
 
       toast.promise(subscribe, {
         loading: 'Inscription...',
