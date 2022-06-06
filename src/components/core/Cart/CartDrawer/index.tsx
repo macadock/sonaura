@@ -80,9 +80,11 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
           <Typography variant={'h3'} textAlign={'center'}>
             {t('title')}
           </Typography>
-          <Typography variant={'h5'} textAlign={'center'}>
-            {t('product', { count: totalItems })}
-          </Typography>
+          {totalItems > 0 && (
+            <Typography variant={'h5'} textAlign={'center'}>
+              {t('product', { count: totalItems })}
+            </Typography>
+          )}
         </Box>
         {isEmpty ? (
           <Box marginY={'1.5rem'} sx={{ textAlign: 'center' }}>

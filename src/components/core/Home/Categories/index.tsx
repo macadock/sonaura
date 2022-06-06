@@ -7,13 +7,17 @@ import Card from '@mui/material/Card';
 import Link from 'next/link';
 import { Categories } from '../../../../../gql/__generated__/categories';
 import { useTranslation } from 'next-i18next';
+import { useTheme } from '@mui/material';
 
 interface Props {
   categories: Categories;
 }
 
 const Categories: React.FC<Props> = ({ categories }) => {
-  const { t } = useTranslation('homapage', { keyPrefix: 'categories' });
+  const theme = useTheme();
+  const { mode } = theme.palette;
+  console.log(mode);
+  const { t } = useTranslation('homepage', { keyPrefix: 'categories' });
   return (
     <Box>
       <Box marginBottom={4}>
@@ -75,23 +79,12 @@ const Categories: React.FC<Props> = ({ categories }) => {
                       justifyContent={'center'}
                       sx={{ height: 100 }}
                     >
-                      {/* <Box
-                        width={50}
-                        height={50}
-                        bgcolor={'secondary.dark'}
-                        borderRadius={'100%'}
-                        sx={{
-                          transform: `translate(${theme.spacing(
-                            2,
-                          )}, ${theme.spacing(-2)})`,
-                          marginTop: 2,
-                        }}
-                      /> */}
                       <Box
                         component="img"
                         sx={{
                           color: 'primary.dark',
                           objectFit: 'contain',
+                          filter: mode === 'dark' ? 'invert(1)' : 'invert(0)',
                         }}
                         src={category.file.url}
                       />
