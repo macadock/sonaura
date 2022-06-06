@@ -1,0 +1,29 @@
+{
+    "config": {
+        "website": "Sonaura"
+    },
+    "categories": {
+        "title": "Catégories",
+        "noProducts": "Aucuns produits",
+        "moreDetails": "Plus en détail"
+    },
+    "cart": {
+        "title": "Panier",
+        "empty": "Votre panier est vide.",
+        "order": "Poursuivre la commande",
+        "product_one": "{{ count }} produit",
+        "product_other": "{{ count }} produits"
+    },
+    "footer": {
+        "legalNotice": "Mentions légales",
+        "privacyPolicy": "Politique de confidentialité",
+        "copyright": "Sonaura. {{ year }}, Tous droits réservés",
+        "legalMessage": "Lorsque vous visitez ou interagissez avec nos sites, services ou outils, nous ou nos prestataires de services agréés peuvent utiliser des cookies pour stocker stocker des informations afin de vous offrir une expérience plus rapide et plus et à des fins de marketing."
+    },
+    "theme": {
+        "light": "clair",
+        "dark": "foncé",
+        "button": "Changer de thème",
+        "notification": "Vous utilisez le thème {{ theme }}"
+    }
+}

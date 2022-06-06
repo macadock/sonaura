@@ -4,8 +4,10 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'next-i18next';
 
 const Banner: React.FC = () => {
+  const { t } = useTranslation('homepage', { keyPrefix: 'banner' });
   return (
     <Box position={'relative'}>
       <Grid container>
@@ -16,7 +18,7 @@ const Banner: React.FC = () => {
               color="text.primary"
               sx={{ fontWeight: 700, color: '#222B45' }}
             >
-              Laissez vous guider.
+              {t('title')}
             </Typography>
           </Box>
           <Box marginBottom={3}>
@@ -26,8 +28,7 @@ const Banner: React.FC = () => {
               color="text.primary"
               sx={{ color: '#222B45' }}
             >
-              Toutes nos équipes vous conseillent les produits Bang &amp;
-              Olufsen qui répondront à vos besoins.
+              {t('text')}
             </Typography>
           </Box>
           <Box
@@ -38,7 +39,7 @@ const Banner: React.FC = () => {
             height={54}
             href="contact"
           >
-            Contactez nos magasins
+            {t('button')}
           </Box>
         </Grid>
       </Grid>

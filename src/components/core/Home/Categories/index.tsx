@@ -6,12 +6,14 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import Link from 'next/link';
 import { Categories } from '../../../../../gql/__generated__/categories';
+import { useTranslation } from 'next-i18next';
 
 interface Props {
   categories: Categories;
 }
 
 const Categories: React.FC<Props> = ({ categories }) => {
+  const { t } = useTranslation('homapage', { keyPrefix: 'categories' });
   return (
     <Box>
       <Box marginBottom={4}>
@@ -24,7 +26,7 @@ const Categories: React.FC<Props> = ({ categories }) => {
           color={'secondary'}
           align={'center'}
         >
-          Catégories
+          {t('subtitle')}
         </Typography>
         <Typography
           variant="h4"
@@ -35,7 +37,7 @@ const Categories: React.FC<Props> = ({ categories }) => {
             fontWeight: 700,
           }}
         >
-          Explorez nos produits
+          {t('title')}
         </Typography>
       </Box>
       <Box>

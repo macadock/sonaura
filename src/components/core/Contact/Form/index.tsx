@@ -15,6 +15,7 @@ import SendInBlue, {
   url,
 } from '../../../../sendInBlue';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'next-i18next';
 
 const validationSchema = yup.object({
   fullName: yup
@@ -32,6 +33,7 @@ const validationSchema = yup.object({
 });
 
 const Form: React.FC = () => {
+  const { t } = useTranslation('contact', { keyPrefix: 'form' });
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
@@ -86,12 +88,12 @@ const Form: React.FC = () => {
     ]);
 
     toast.promise(sendForm, {
-      loading: 'Envoi en cours...',
+      loading: t('loading'),
       success: () => {
         resetForm();
-        return 'Message envoyé';
+        return t('success');
       },
-      error: 'Erreur. Merci de réessayer.',
+      error: t('error'),
     });
   };
 
@@ -111,7 +113,7 @@ const Form: React.FC = () => {
           gutterBottom
           align={'center'}
         >
-          Vous ne trouvez pas de réponse à vos questions ?
+          {t('title')}
         </Typography>
       </Box>
       <Box
@@ -137,10 +139,10 @@ const Form: React.FC = () => {
               fontWeight={700}
               gutterBottom
             >
-              Nom complet
+              {t('input.name')}
             </Typography>
             <TextField
-              placeholder="Prénom et Nom"
+              placeholder={t('placeholder.name')}
               variant="outlined"
               size="medium"
               name="fullName"
@@ -159,10 +161,10 @@ const Form: React.FC = () => {
               fontWeight={700}
               gutterBottom
             >
-              E-mail
+              {t('input.email')}
             </Typography>
             <TextField
-              placeholder="Adresse e-mail"
+              placeholder={t('placeholder.email')}
               variant="outlined"
               size="medium"
               name="email"
@@ -181,10 +183,10 @@ const Form: React.FC = () => {
               fontWeight={700}
               gutterBottom
             >
-              Message
+              {t('input.message')}
             </Typography>
             <TextField
-              placeholder="Votre question à propos de nos services"
+              placeholder={t('placeholder.message')}
               variant="outlined"
               name="message"
               fullWidth
@@ -203,7 +205,7 @@ const Form: React.FC = () => {
               color="primary"
               size="large"
             >
-              Envoyer
+              {t('send')}
             </Button>
           </Grid>
         </Grid>

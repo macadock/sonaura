@@ -8,6 +8,7 @@ import { Link } from '@mui/material';
 import { CategoryFragment } from '../../../../../gql/__generated__/category-fragment';
 import { PageFragment } from '../../../../../gql/__generated__/pages';
 import TopNav from 'components/system/TopNav';
+import { useTranslation } from 'next-i18next';
 
 interface Props {
   pages: PageFragment[];
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const SidebarNav: React.FC<Props> = ({ pages, categories }) => {
+  const { t } = useTranslation('common');
   const theme = useTheme();
   const { mode } = theme.palette;
 
@@ -25,12 +27,13 @@ const SidebarNav: React.FC<Props> = ({ pages, categories }) => {
           display={'flex'}
           component="a"
           href="/"
-          title="Sonaura"
+          title={t('config.website')}
           width={{ xs: 100, md: 120 }}
           sx={{ marginTop: '1rem' }}
         >
           <Box
             component={'img'}
+            alt={t('config.website')}
             src={
               mode === 'light'
                 ? '/assets/logos/logo.svg'
@@ -44,7 +47,7 @@ const SidebarNav: React.FC<Props> = ({ pages, categories }) => {
       <Box paddingX={2} paddingY={2}>
         {categories.length !== 0 && (
           <Box>
-            <NavItem title={'Categories'} items={categories} />
+            <NavItem title={t('categories.title')} items={categories} />
           </Box>
         )}
         {pages.map((page) => (

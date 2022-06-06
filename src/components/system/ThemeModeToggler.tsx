@@ -1,17 +1,35 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import { alpha, useTheme } from '@mui/material/styles';
+import { useTranslation } from 'next-i18next';
+import toast from 'react-hot-toast';
 
 const ThemeModeToggler: React.FC = () => {
+  const { t } = useTranslation('common', { keyPrefix: 'theme' });
   const theme = useTheme();
   const { themeToggler } = theme;
   const { mode } = theme.palette;
 
+  const onThemeToggle = () => {
+    themeToggler();
+    toast.success(
+      t('notification', { theme: themeTranslation('notification') }),
+      { id: 'theme' },
+    );
+  };
+
+  const themeTranslation = (use: 'notification' | 'button'): string => {
+    const translation = mode === 'light' ? t('dark') : t('light');
+    if (use === 'notification') return `${translation}`;
+    return `${translation.charAt(0).toUpperCase()}${translation.substring(1)}`;
+  };
+
   return (
     <Button
       variant={'outlined'}
-      onClick={() => themeToggler()}
-      aria-label="Dark mode toggler"
+      onClick={onThemeToggle}
+      aria-label={t('button')}
+      title={themeTranslation('button')}
       color={mode === 'light' ? 'primary' : 'secondary'}
       sx={{
         borderRadius: 2,

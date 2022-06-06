@@ -14,10 +14,12 @@ import { GET_PRODUCTS } from '../../../../../gql/get-products';
 import { Products } from '../../../../../gql/__generated__/products';
 import { CircularProgress, Link } from '@mui/material';
 import NumberFormat from 'react-number-format';
+import { useTranslation } from 'next-i18next';
 
 const Products: React.FC<{ productNumberMax?: number }> = ({
   productNumberMax = 3,
 }) => {
+  const { t } = useTranslation('homepage', { keyPrefix: 'products' });
   const theme = useTheme();
 
   const { data: products, loading, error } = useQuery<Products>(GET_PRODUCTS);
@@ -46,7 +48,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
           color={'secondary'}
           align={'center'}
         >
-          Produits
+          {t('subtitle')}
         </Typography>
         <Typography
           variant="h4"
@@ -57,7 +59,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
             fontWeight: 700,
           }}
         >
-          Produits mis en avant
+          {t('title')}
         </Typography>
         <Typography
           variant="h6"
@@ -65,7 +67,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
           color={'text.secondary'}
           data-aos={'fade-up'}
         >
-          Vivez une expérience audiovisuelle comme jamais auparavant.
+          {t('description')}
         </Typography>
       </Box>
       <Grid container spacing={4}>
@@ -170,7 +172,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
                             </Box>
                           }
                         >
-                          Plus en détail
+                          {t('moreDetails')}
                         </Button>
                       </CardActions>
                     </CardContent>

@@ -63,6 +63,7 @@ export type ProductFragment = {
     sizes: (SizesFragment)[];
     positionnings: (PositionningsFragment)[];
     frameColors: (FrameColorsFragment)[];
-    sounbarColors: (SoundbarColorsFragment)[];
+    soundbarColors: (SoundbarColorsFragment)[];
     supportColors: (SupportColorsFragment)[];
+    quantity: number;
 };

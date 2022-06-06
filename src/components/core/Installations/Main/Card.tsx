@@ -85,7 +85,7 @@ const Card: React.FC<Props> = ({ installation }) => {
             ></path>
           </Box>
           <Typography variant={'h6'} fontWeight={700} gutterBottom>
-            {'Titre'}
+            {installation.title}
           </Typography>
           <Typography>{installation.description}</Typography>
         </Box>

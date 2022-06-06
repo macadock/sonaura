@@ -10,6 +10,7 @@ import { useTheme } from '@mui/material/styles';
 
 import Container from 'components/system/Container';
 import { ShopFragment } from '../../../../../gql/__generated__/shop-fragment';
+import { useTranslation } from 'next-i18next';
 
 interface Props {
   shops: ShopFragment[];
@@ -60,6 +61,7 @@ interface ShopProps {
 }
 
 const Details: React.FC<ShopProps> = ({ shop }) => {
+  const { t } = useTranslation('contact');
   const theme = useTheme();
 
   return (
@@ -105,7 +107,7 @@ const Details: React.FC<ShopProps> = ({ shop }) => {
             href={`tel:${shop.phoneNumber.trim()}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            <ListItemText primary={'Téléphone'} secondary={shop.phoneNumber} />
+            <ListItemText primary={t('phone')} secondary={shop.phoneNumber} />
           </a>
         </Box>
         <Box component={ListItem} disableGutters width={'auto'} padding={0}>
@@ -136,7 +138,7 @@ const Details: React.FC<ShopProps> = ({ shop }) => {
             href={`mailto:${shop.email}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            <ListItemText primary={'Email'} secondary={shop.email} />
+            <ListItemText primary={t('email')} secondary={shop.email} />
           </a>
         </Box>
         <Box component={ListItem} disableGutters width={'auto'} padding={0}>
@@ -167,7 +169,7 @@ const Details: React.FC<ShopProps> = ({ shop }) => {
             </Box>
           </Box>
           <ListItemText
-            primary={'Adresse'}
+            primary={t('address')}
             secondary={shop.address + ', ' + shop.postalCode + ' ' + shop.city}
           />
         </Box>

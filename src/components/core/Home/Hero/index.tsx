@@ -6,8 +6,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import { useTranslation } from 'next-i18next';
 
 const Hero: React.FC = () => {
+  const { t } = useTranslation('homepage', { keyPrefix: 'hero' });
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
@@ -55,14 +57,14 @@ const Hero: React.FC = () => {
                   backgroundClip: 'text',
                 }}
               >
-                Vivez une expérience audiovisuelle{' '}
+                {t('titlePartOne')}{' '}
               </Typography>
-              comme jamais auparavant.
+              {t('titlePartTwo')}
             </Typography>
           </Box>
           <Box marginBottom={3}>
             <Typography variant="h6" component="p" color="text.secondary">
-              Nous vous aidons à trouver la solution adaptée à vos besoins.
+              {t('subtitle')}
             </Typography>
             <Box
               component={Button}
@@ -73,7 +75,7 @@ const Hero: React.FC = () => {
               marginTop={'2rem'}
               href={'#products'}
             >
-              Découvrez nos produits
+              {t('discoverOurProducts')}
             </Box>
           </Box>
         </Box>

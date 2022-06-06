@@ -1,3 +1,5 @@
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import i18nConfig from '../../next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../src/constants';
 import type { NextPage } from 'next';
 import ContactView from 'views/ContactView';
@@ -21,7 +23,7 @@ const Contact: NextPage<{
   );
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps = async ({ locale }) => {
   const { data: shops } = await client.query<Shops>({
     query: GET_SHOPS,
   });
@@ -33,6 +35,11 @@ export const getStaticProps = async () => {
       shops,
       categories,
       pages,
+      ...(await serverSideTranslations(
+        locale,
+        ['common', 'contact'],
+        i18nConfig,
+      )),
     },
     revalidate: TIME_TO_INVALIDATE_CACHE_SEC,
   };

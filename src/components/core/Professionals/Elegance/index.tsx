@@ -3,8 +3,10 @@ import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'next-i18next';
 
 const Elegance: React.FC = () => {
+  const { t } = useTranslation('pro', { keyPrefix: 'elegance' });
   const theme = useTheme();
 
   return (
@@ -19,7 +21,7 @@ const Elegance: React.FC = () => {
           textTransform: 'uppercase',
         }}
       >
-        élégance
+        {t('title')}
       </Typography>
       <Typography
         variant="h6"
@@ -30,7 +32,7 @@ const Elegance: React.FC = () => {
           color: theme.palette.common.white,
         }}
       >
-        Des produits pensés jusqu'aux moindres détails.
+        {t('subtitle')}
       </Typography>
     </Box>
   );

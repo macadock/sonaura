@@ -10,8 +10,10 @@ import Container from 'components/system/Container';
 import { isEmail } from 'class-validator';
 import toast from 'react-hot-toast';
 import SendInBlue, { url } from '../../../../sendInBlue';
+import { useTranslation } from 'next-i18next';
 
 const Newsletter: React.FC = () => {
+  const { t } = useTranslation('homepage', { keyPrefix: 'newsletter' });
   const theme = useTheme();
 
   const [email, setEmail] = useState<string>('');
@@ -28,12 +30,12 @@ const Newsletter: React.FC = () => {
       });
 
       toast.promise(subscribe, {
-        loading: 'Inscription...',
-        success: "Vous allez recevoir un email pour confirmer l'inscription",
-        error: 'Merci de réessayer votre inscription',
+        loading: t('loading'),
+        success: t('success'),
+        error: t('error'),
       });
     } else {
-      toast.error("Merci d'entrer une adresse email valide");
+      toast.error(t('wrongEmail'));
     }
   };
 
@@ -57,7 +59,7 @@ const Newsletter: React.FC = () => {
                 color: theme.palette.common.white,
               }}
             >
-              {'Inscrivez-vous à notre newsletter'}
+              {t('title')}
             </Typography>
             <Typography
               variant="h6"
@@ -67,7 +69,7 @@ const Newsletter: React.FC = () => {
               }}
               data-aos={'fade-up'}
             >
-              {'Soyez informé des dernières nouveautés Bang & Olufsen'}
+              {t('subtitle')}
             </Typography>
           </Box>
           <Box width={1} display={'flex'} justifyContent={'center'}>
@@ -127,11 +129,11 @@ const Newsletter: React.FC = () => {
                     </svg>
                   </InputAdornment>
                 }
-                placeholder="Votre adresse email"
+                placeholder={t('placeholder')}
               />
               {email !== '' && !isValid && (
                 <Typography color={'white'} sx={{ margin: '0.5rem' }}>
-                  {"Merci d'entrer une adresse email valide"}
+                  {t('wrongEmail')}
                 </Typography>
               )}
             </FormControl>

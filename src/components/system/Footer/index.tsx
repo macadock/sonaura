@@ -4,10 +4,13 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
+import { useTranslation } from 'next-i18next';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation('common', { keyPrefix: 'footer' });
   const theme = useTheme();
   const { mode } = theme.palette;
+  const year = new Date().getFullYear().toString();
 
   return (
     <Grid container spacing={2}>
@@ -42,22 +45,22 @@ const Footer: React.FC = () => {
               <Link
                 underline="none"
                 component="a"
-                href="mentions-legales"
+                href="/mentions-legales"
                 color="text.primary"
                 variant={'subtitle2'}
               >
-                Mentions Légales
+                {t('legalNotice')}
               </Link>
             </Box>
             <Box marginTop={1} marginRight={2}>
               <Link
                 underline="none"
                 component="a"
-                href="politique-de-confidentialite"
+                href="/politique-de-confidentialite"
                 color="text.primary"
                 variant={'subtitle2'}
               >
-                Politique de confidentialité
+                {t('privacyPolicy')}
               </Link>
             </Box>
           </Box>
@@ -70,7 +73,7 @@ const Footer: React.FC = () => {
           color="text.secondary"
           gutterBottom
         >
-          &copy; Sonaura. 2022, Tous droits réservés
+          {`© ${t('copyright', { year })}`}
         </Typography>
         <Typography
           align={'center'}
@@ -78,10 +81,7 @@ const Footer: React.FC = () => {
           color="text.secondary"
           component={'p'}
         >
-          Lorsque vous visitez ou interagissez avec nos sites, services ou
-          outils, nous ou nos prestataires de services agréés peuvent utiliser
-          des cookies pour stocker stocker des informations afin de vous offrir
-          une expérience plus rapide et plus et à des fins de marketing.
+          {t('legalMessage')}
         </Typography>
       </Grid>
     </Grid>

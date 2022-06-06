@@ -3,8 +3,10 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'next-i18next';
 
 const People: React.FC = () => {
+  const { t } = useTranslation('homepage', { keyPrefix: 'people' });
   return (
     <Box bgcolor={'primary.main'} borderRadius={2}>
       <Grid container data-aos="fade-up">
@@ -41,12 +43,10 @@ const People: React.FC = () => {
               align={'center'}
               sx={{ fontWeight: 700, color: 'common.white' }}
             >
-              Passionnés.
+              {t('title')}
             </Typography>
             <Typography align={'center'} sx={{ color: 'common.white' }}>
-              Vos boutiques de Lyon et Grenoble sont gérées par des passionnés
-              qui sont présents pour partager leur passion et leur savoir-faire
-              autour de Bang &amp; Olufsen.
+              {t('text')}
             </Typography>
           </Box>
         </Grid>

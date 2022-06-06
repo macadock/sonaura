@@ -3,8 +3,10 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import { useTranslation } from 'next-i18next';
 
 const Hero: React.FC = () => {
+  const { t } = useTranslation('contact');
   return (
     <Grid container justifyContent={'center'} spacing={4}>
       <Grid item container alignItems={'center'} xs={12} md={6}>
@@ -23,7 +25,7 @@ const Hero: React.FC = () => {
                 fontWeight: 700,
               }}
             >
-              {'Contactez-nous'}
+              {t('title')}
             </Typography>
           </Box>
           <Box>
@@ -33,9 +35,7 @@ const Hero: React.FC = () => {
               color="text.secondary"
               sx={{ fontWeight: 400, textAlign: { xs: 'left', sm: 'center' } }}
             >
-              {
-                'Nos experts Bang & Olufsen répondent à vos questions et vous aident à gagner du temps.'
-              }
+              {t('subtitle')}
             </Typography>
           </Box>
         </Box>

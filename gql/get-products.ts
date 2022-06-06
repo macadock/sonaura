@@ -19,7 +19,7 @@ export const SIZES_FRAGMENT = gql`
   }
 `;
 
-export const POSITIONNINGS_FRAGMENT = gql`
+export const POSITIONING_FRAGMENT = gql`
   fragment PositionningsFragment on ProductPositionning {
     id
     name
@@ -60,10 +60,10 @@ export const SUPPORT_COLORS_FRAGMENT = gql`
   }
 `;
 
-export const PRODUCT_FRAMGENT = gql`
+export const PRODUCT_FRAGMENT = gql`
   ${COLORS_FRAGMENT}
   ${SIZES_FRAGMENT}
-  ${POSITIONNINGS_FRAGMENT}
+  ${POSITIONING_FRAGMENT}
   ${FRAME_COLORS_FRAGMENT}
   ${SOUNDBAR_COLORS_FRAGMENT}
   ${SUPPORT_COLORS_FRAGMENT}
@@ -96,17 +96,18 @@ export const PRODUCT_FRAMGENT = gql`
     frameColors(orderBy: name_ASC) {
       ...FrameColorsFragment
     }
-    sounbarColors(orderBy: name_ASC) {
+    soundbarColors(orderBy: name_ASC) {
       ...SoundbarColorsFragment
     }
     supportColors(orderBy: name_ASC) {
       ...SupportColorsFragment
     }
+    quantity
   }
 `;
 
 export const GET_PRODUCT = gql`
-  ${PRODUCT_FRAMGENT}
+  ${PRODUCT_FRAGMENT}
   query Product($slug: String!) {
     product(where: { slug: $slug }) {
       ...ProductFragment
@@ -115,7 +116,7 @@ export const GET_PRODUCT = gql`
 `;
 
 export const GET_PRODUCTS = gql`
-  ${PRODUCT_FRAMGENT}
+  ${PRODUCT_FRAGMENT}
   query Products {
     products {
       ...ProductFragment
@@ -124,12 +125,21 @@ export const GET_PRODUCTS = gql`
 `;
 
 export const GET_PREOWNED_PRODUCTS = gql`
-  ${PRODUCT_FRAMGENT}
+  ${PRODUCT_FRAGMENT}
   query PreOwnedProducts {
     category(where: { slug: "occasion" }) {
       products {
         ...ProductFragment
       }
+    }
+  }
+`;
+
+export const GET_PRODUCTS_BY_IDS = gql`
+  ${PRODUCT_FRAGMENT}
+  query GetProductsByIds($ids: [ID!]!) {
+    products(where: { id_in: $ids }) {
+      ...ProductFragment
     }
   }
 `;

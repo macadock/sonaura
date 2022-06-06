@@ -21,6 +21,8 @@ import 'aos/dist/aos.css';
 import { AppProps } from 'next/app';
 import Script from 'next/script';
 import './styles.css';
+import { CartProvider } from 'react-use-cart';
+import { appWithTranslation } from 'next-i18next';
 
 const httpLink = createHttpLink({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
@@ -42,19 +44,20 @@ export const client = new ApolloClient({
 });
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
-      <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-        <title>Sonaura</title>
-      </Head>
-      <Page>
-        <Component {...pageProps} />
-        {/* <Script
+      <CartProvider>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          />
+          <title>Sonaura</title>
+        </Head>
+        <Page>
+          <Component {...pageProps} />
+          {/* <Script
           id="axeptio-consent"
           dangerouslySetInnerHTML={{
             __html: `
@@ -68,8 +71,11 @@ export default function App({ Component, pageProps }: AppProps) {
               `,
           }}
         /> */}
-        <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
-      </Page>
+          <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
+        </Page>
+      </CartProvider>
     </ApolloProvider>
   );
 }
+
+export default appWithTranslation(App);

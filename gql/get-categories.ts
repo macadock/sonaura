@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
-import { PRODUCT_FRAMGENT } from './get-products';
+import { PRODUCT_FRAGMENT } from './get-products';
 
 export const CATEGORY_FRAGMENT = gql`
-  ${PRODUCT_FRAMGENT}
+  ${PRODUCT_FRAGMENT}
   fragment CategoryFragment on Category {
     id
     name

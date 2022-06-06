@@ -6,8 +6,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { Link } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 
 const Contact: React.FC = () => {
+  const { t } = useTranslation('pro', { keyPrefix: 'contact' });
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
@@ -30,11 +32,13 @@ const Contact: React.FC = () => {
             }}
           >
             <Typography variant={'h4'} sx={{ fontWeight: 700 }} gutterBottom>
-              Contactez-nous
+              {t('title')}
             </Typography>
             <Typography color="text.secondary">Frank VILIN</Typography>
-            <Link href="tel:+33689210978">06 89 21 09 78</Link>
-            <Link href="mailto:frank@beostore.fr">frank@beostore.fr</Link>
+            <Link href={`tel:+33${t('phone').replace(/\s/g, '').substring(1)}`}>
+              {t('phone')}
+            </Link>
+            <Link href={`mailto:${t('email')}`}>{t('email')}</Link>
           </Box>
         </Grid>
       </Grid>

@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { CategoryFragment } from '../../../../../gql/__generated__/categories';
+import { useRouter } from 'next/router';
 
 interface Props {
   title: string;
@@ -21,6 +22,7 @@ const NavItem: React.FC<Props> = ({
   items,
   colorInvert = false,
 }) => {
+  const router = useRouter();
   const theme = useTheme();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -41,7 +43,8 @@ const NavItem: React.FC<Props> = ({
     setActiveLink(window && window.location ? window.location.pathname : '');
   }, []);
 
-  const hasActiveLink = () => items.find((i) => i.slug === activeLink);
+  const hasActiveLink = () =>
+    items.find((i) => i.slug.includes(router?.query?.category as string));
   const linkColor = colorInvert ? 'common.white' : 'text.primary';
 
   return (
@@ -113,26 +116,12 @@ const NavItem: React.FC<Props> = ({
                     activeLink === p.slug
                       ? alpha(theme.palette.primary.main, 0.1)
                       : 'transparent',
-                  fontWeight: activeLink === p.slug ? 600 : 400,
+                  fontWeight: p.slug.includes(router?.query.category as string)
+                    ? 600
+                    : 400,
                 }}
               >
                 {p.name}
-                {/* {p.isNew && (
-                  <Box
-                    padding={0.5}
-                    display={'inline-flex'}
-                    borderRadius={1}
-                    bgcolor={'primary.main'}
-                    marginLeft={2}
-                  >
-                    <Typography
-                      variant={'caption'}
-                      sx={{ color: 'common.white', lineHeight: 1 }}
-                    >
-                      new
-                    </Typography>
-                  </Box>
-                )} */}
               </Button>
             </Grid>
           ))}

@@ -3,8 +3,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import Container from '../../../system/Container';
+import { useTranslation } from 'next-i18next';
 
 const Hero: React.FC = () => {
+  const { t } = useTranslation('installations');
   const theme = useTheme();
   return (
     <Box
@@ -49,7 +51,7 @@ const Hero: React.FC = () => {
                 color: theme.palette.common.white,
               }}
             >
-              Nos réalisations
+              {t('title')}
             </Typography>
           </Box>
           <Box>
@@ -61,7 +63,7 @@ const Hero: React.FC = () => {
                 color: theme.palette.common.white,
               }}
             >
-              Vous aussi profitez d&apos;une installation sur-mesure.
+              {t('subtitle')}
             </Typography>
           </Box>
         </Box>

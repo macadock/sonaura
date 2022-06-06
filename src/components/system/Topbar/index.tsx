@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { alpha, useTheme } from '@mui/material/styles';
@@ -9,6 +9,10 @@ import NavItem from './NavItem';
 import { Categories } from '../../../../gql/__generated__/categories';
 import { Pages } from '../../../../gql/__generated__/pages';
 import TopNav from 'components/system/TopNav';
+import { ShoppingCartTwoTone } from '@mui/icons-material';
+import CartDrawer from '../../core/Cart/CartDrawer';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -24,8 +28,15 @@ const Topbar: React.FC<Props> = ({
   categories,
   colorInvert = false,
 }) => {
+  const { t } = useTranslation('common');
+  const [cartState, setCartState] = useState<boolean>(false);
   const theme = useTheme();
   const { mode } = theme.palette;
+  const { route } = useRouter();
+
+  const handleCart = () => {
+    setCartState(!cartState);
+  };
 
   return (
     <Box
@@ -38,12 +49,13 @@ const Topbar: React.FC<Props> = ({
         display={'flex'}
         component="a"
         href="/"
-        title="Sonaura"
+        title={t('config.website')}
         width={{ xs: 130, md: 200 }}
         sx={{ marginY: '1rem' }}
       >
         <Box
           component={'img'}
+          alt={t('config.website')}
           src={
             mode === 'light' && !colorInvert
               ? '/assets/logos/logo.svg'
@@ -58,7 +70,7 @@ const Topbar: React.FC<Props> = ({
         {categories.categories.length !== 0 && (
           <Box>
             <NavItem
-              title={'Catégories'}
+              title={t('categories.title')}
               id={'categories-pages'}
               items={categories.categories}
               colorInvert={colorInvert}
@@ -74,18 +86,38 @@ const Topbar: React.FC<Props> = ({
                 component="a"
                 href={page.url}
                 color={colorInvert ? 'common.white' : 'text.primary'}
+                fontWeight={route.includes(page.url) ? 700 : 400}
               >
                 {page.title}
               </Link>
             </Box>
           ))}
         <Box>
+          <Button onClick={handleCart} title={t('cart.title')}>
+            <ShoppingCartTwoTone />
+          </Button>
+        </Box>
+        <Box>
           <TopNav />
         </Box>
       </Box>
       <Box sx={{ display: { xs: 'flex', md: 'none' } }} alignItems={'center'}>
         <Button
-          onClick={() => onSidebarOpen()}
+          onClick={handleCart}
+          aria-label="Menu"
+          variant={'outlined'}
+          sx={{
+            marginRight: '1rem',
+            borderRadius: 2,
+            minWidth: 'auto',
+            padding: 1,
+            borderColor: alpha(theme.palette.divider, 0.2),
+          }}
+        >
+          <ShoppingCartTwoTone />
+        </Button>
+        <Button
+          onClick={onSidebarOpen}
           aria-label="Menu"
           variant={'outlined'}
           sx={{
@@ -98,6 +130,7 @@ const Topbar: React.FC<Props> = ({
           <MenuIcon />
         </Button>
       </Box>
+      <CartDrawer open={cartState} onClose={handleCart} />
     </Box>
   );
 };

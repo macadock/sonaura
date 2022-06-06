@@ -1,3 +1,5 @@
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import i18nConfig from '../../next-i18next.config';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { GET_CATEGORIES } from '../../gql/get-categories';
 import { GET_PRODUCT } from '../../gql/get-products';
@@ -45,6 +47,11 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       product,
       categories,
       pages,
+      ...(await serverSideTranslations(
+        context.locale,
+        ['common', 'product'],
+        i18nConfig,
+      )),
     },
     revalidate: TIME_TO_INVALIDATE_CACHE_SEC,
   };

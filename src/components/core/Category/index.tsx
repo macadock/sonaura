@@ -10,16 +10,18 @@ import CardMedia from '@mui/material/CardMedia';
 import Container from 'components/system/Container';
 import { ProductFragment } from '../../../../gql/__generated__/categories';
 import NumberFormat from 'react-number-format';
+import { useTranslation } from 'next-i18next';
 
 interface Props {
   products: ProductFragment[];
 }
 
 const ProductGrid: React.FC<Props> = ({ products }) => {
+  const { t } = useTranslation('common', { keyPrefix: 'categories' });
   if (products.length === 0) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', padding: '5rem' }}>
-        <Typography>Aucuns produits</Typography>
+        <Typography>{t('noProducts')}</Typography>
       </Box>
     );
   }
@@ -121,7 +123,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                       </svg>
                     }
                   >
-                    Plus en détail
+                    {t('moreDetails')}
                   </Button>
                 </Box>
               </Card>

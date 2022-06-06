@@ -3,8 +3,10 @@ import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'next-i18next';
 
 const Integration: React.FC = () => {
+  const { t } = useTranslation('pro', { keyPrefix: 'integration' });
   const theme = useTheme();
 
   return (
@@ -19,7 +21,7 @@ const Integration: React.FC = () => {
           textTransform: 'uppercase',
         }}
       >
-        Intégration
+        {t('title')}
       </Typography>
       <Typography
         variant="h6"
@@ -30,8 +32,7 @@ const Integration: React.FC = () => {
           color: theme.palette.common.white,
         }}
       >
-        Tous nos produits communiquent entre eux et sont capables de jouer
-        ensemble.
+        {t('subtitle')}
       </Typography>
     </Box>
   );

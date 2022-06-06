@@ -67,22 +67,6 @@ const NavItem: React.FC<Props> = ({ title, items }: Props) => {
                   }}
                 >
                   {p.name}
-                  {/* {p.isNew && (
-                    <Box
-                      padding={0.5}
-                      display={'inline-flex'}
-                      borderRadius={1}
-                      bgcolor={'primary.main'}
-                      marginLeft={2}
-                    >
-                      <Typography
-                        variant={'caption'}
-                        sx={{ color: 'common.white', lineHeight: 1 }}
-                      >
-                        new
-                      </Typography>
-                    </Box>
-                  )} */}
                 </Button>
               </Grid>
             ))}

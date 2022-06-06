@@ -1,3 +1,5 @@
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import i18nConfig from '../../next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../src/constants';
 import Main from 'layouts/Main';
 import type { NextPage } from 'next';
@@ -17,13 +19,14 @@ const Professionnels: NextPage<{ categories: Categories; pages: Pages }> = ({
   );
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps = async ({ locale }) => {
   const { categories, pages } = await getNavbarItems();
 
   return {
     props: {
       categories,
       pages,
+      ...(await serverSideTranslations(locale, ['common', 'pro'], i18nConfig)),
     },
     revalidate: TIME_TO_INVALIDATE_CACHE_SEC,
   };

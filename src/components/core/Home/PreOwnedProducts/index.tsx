@@ -14,10 +14,12 @@ import { GET_PREOWNED_PRODUCTS } from '../../../../../gql/get-products';
 import { CircularProgress, Link } from '@mui/material';
 import NumberFormat from 'react-number-format';
 import { PreOwnedProducts } from '../../../../../gql/__generated__/pre-owned-products';
+import { useTranslation } from 'next-i18next';
 
 const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
   productNumberMax = 3,
 }) => {
+  const { t } = useTranslation('homepage', { keyPrefix: 'preOwned' });
   const theme = useTheme();
 
   const {
@@ -50,7 +52,7 @@ const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
           color={'secondary'}
           align={'center'}
         >
-          Occasion
+          {t('subtitle')}
         </Typography>
         <Typography
           variant="h4"
@@ -61,7 +63,7 @@ const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
             fontWeight: 700,
           }}
         >
-          {"Produits d'occasion"}
+          {t('title')}
         </Typography>
         <Typography
           variant="h6"
@@ -69,9 +71,7 @@ const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
           color={'text.secondary'}
           data-aos={'fade-up'}
         >
-          {
-            'Prolongez la vie de produits Bang & Olufsen tout en vous faisant plaisir.'
-          }
+          {t('description')}
         </Typography>
       </Box>
       <Grid container spacing={4}>
@@ -176,7 +176,7 @@ const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
                             </Box>
                           }
                         >
-                          Plus en détail
+                          {t('moreDetails')}
                         </Button>
                       </CardActions>
                     </CardContent>

@@ -1,3 +1,5 @@
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import i18nConfig from '../../next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../src/constants';
 import type { GetStaticPropsContext, NextPage } from 'next';
 import CategoryView from 'views/CategoryView';
@@ -44,6 +46,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       category,
       categories,
       pages,
+      ...(await serverSideTranslations(context.locale, ['common'], i18nConfig)),
     },
     revalidate: TIME_TO_INVALIDATE_CACHE_SEC,
   };
