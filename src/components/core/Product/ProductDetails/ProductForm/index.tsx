@@ -19,9 +19,10 @@ import {
 interface Props {
   title: string;
   origin: string;
+  button?: string;
 }
 
-const ProductForm: React.FC<Props> = ({ title, origin }) => {
+const ProductForm: React.FC<Props> = ({ title, origin, button }) => {
   const { t } = useTranslation('product', { keyPrefix: 'form' });
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
@@ -156,7 +157,7 @@ const ProductForm: React.FC<Props> = ({ title, origin }) => {
             color="primary"
             size="large"
           >
-            {t('send')}
+            {button || t('send')}
           </Button>
         </Grid>
       </Grid>

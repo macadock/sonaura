@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { SHOP_FRAGMENT } from './get-shops';
 
 export const COLORS_FRAGMENT = gql`
   fragment ColorsFragment on ProductColor {
@@ -8,6 +9,7 @@ export const COLORS_FRAGMENT = gql`
     colorCode {
       hex
     }
+    __typename
   }
 `;
 
@@ -16,6 +18,7 @@ export const SIZES_FRAGMENT = gql`
     id
     name
     size
+    __typename
   }
 `;
 
@@ -24,6 +27,7 @@ export const POSITIONING_FRAGMENT = gql`
     id
     name
     positionning
+    __typename
   }
 `;
 
@@ -35,6 +39,7 @@ export const FRAME_COLORS_FRAGMENT = gql`
     colorCode {
       hex
     }
+    __typename
   }
 `;
 
@@ -46,6 +51,7 @@ export const SOUNDBAR_COLORS_FRAGMENT = gql`
     colorCode {
       hex
     }
+    __typename
   }
 `;
 
@@ -57,6 +63,22 @@ export const SUPPORT_COLORS_FRAGMENT = gql`
     colorCode {
       hex
     }
+    __typename
+  }
+`;
+
+export const ASSETS_BY_PRODUCT_VARIANT_FRAGMENT = gql`
+  fragment AssetsByProductVariantFragment on AssetsByProductVariant {
+    id
+    asset {
+      url(transformation: { image: { resize: { fit: max, width: 1920 } } })
+    }
+    color
+    positionning
+    soundbarColor
+    size
+    frameColor
+    supportColor
   }
 `;
 
@@ -67,6 +89,8 @@ export const PRODUCT_FRAGMENT = gql`
   ${FRAME_COLORS_FRAGMENT}
   ${SOUNDBAR_COLORS_FRAGMENT}
   ${SUPPORT_COLORS_FRAGMENT}
+  ${SHOP_FRAGMENT}
+  ${ASSETS_BY_PRODUCT_VARIANT_FRAGMENT}
   fragment ProductFragment on Product {
     id
     slug
@@ -103,6 +127,12 @@ export const PRODUCT_FRAGMENT = gql`
       ...SupportColorsFragment
     }
     quantity
+    shops {
+      ...ShopFragment
+    }
+    assetsByProductVariants {
+      ...AssetsByProductVariantFragment
+    }
   }
 `;
 

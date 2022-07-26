@@ -1,5 +1,4 @@
 import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
@@ -25,7 +24,24 @@ const Hero: React.FC = () => {
         xs={12}
         md={6}
       >
-        <Box
+        <video
+          autoPlay
+          loop
+          muted
+          width={'100%'}
+          style={{
+            objectFit: 'cover',
+            height: 'max-content',
+            maxHeight: '50vh',
+            borderRadius: '1rem',
+          }}
+        >
+          <source
+            src="https://media.graphassets.com/67TVe7YRmaJV6Y1TO6i8"
+            type="video/mp4"
+          />
+        </video>
+        {/* <Box
           component={LazyLoadImage}
           height={1}
           width={1}
@@ -38,7 +54,7 @@ const Hero: React.FC = () => {
           sx={{
             borderRadius: 2,
           }}
-        />
+        /> */}
       </Grid>
       <Grid item xs={12} md={6}>
         <Box data-aos={isMd ? 'fade-right' : 'fade-up'}>

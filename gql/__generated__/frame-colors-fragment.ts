@@ -7,4 +7,5 @@ export type FrameColorsFragment = {
     colorCode: {
         hex: any;
     };
+    __typename: "ProductFrameColor";
 };

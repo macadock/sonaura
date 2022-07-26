@@ -7,7 +7,11 @@ import { Categories } from '../../gql/__generated__/categories';
 import { Pages } from '../../gql/__generated__/pages';
 import Main from 'layouts/Main';
 import getNavbarItems from '../../src/components/system/_getNavbarItems';
-import CartView from '../../src/views/CartView';
+import dynamic from 'next/dynamic';
+
+const CartView = dynamic(() => import('../../src/views/CartView'), {
+  ssr: false,
+});
 
 const Contact: NextPage<{
   shops: Shops;

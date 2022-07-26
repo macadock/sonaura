@@ -15,6 +15,7 @@ export const SHOP_FRAGMENT = gql`
       id
       url(transformation: { image: { resize: { fit: max, width: 1920 } } })
     }
+    openHours
   }
 `;
 

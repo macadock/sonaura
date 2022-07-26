@@ -4,4 +4,5 @@ export type PositionningsFragment = {
     id: string;
     name: string;
     positionning: "fixed" | "motorized" | "wall_mount" | "floor" | "table";
+    __typename: "ProductPositionning";
 };

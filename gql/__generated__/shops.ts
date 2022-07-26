@@ -14,6 +14,7 @@ export type ShopFragment = {
         id: string;
         url: string;
     }) | null;
+    openHours: any | null;
 };
 export type Shops = {
     shops: (ShopFragment)[];

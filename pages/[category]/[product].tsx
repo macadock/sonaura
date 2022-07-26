@@ -11,16 +11,35 @@ import TIME_TO_INVALIDATE_CACHE_SEC from '../../src/constants';
 import Main from '../../src/layouts/Main';
 import ProductView from '../../src/views/ProductView';
 import { client } from '../_app';
+import Head from 'next/head';
 
 const ProductPage: NextPage<{
   product: Product;
   categories: Categories;
   pages: Pages;
 }> = ({ product, categories, pages }) => {
+  const {
+    product: { name, description },
+  } = product;
+
+  const pageTitle = `${name} - Sonaura, Distributeur Bang & Olufsen`;
+
   return (
-    <Main categories={categories} pages={pages}>
-      <ProductView product={product} />
-    </Main>
+    <>
+      <Head>
+        <title>{pageTitle}</title>
+        <meta property="og:title" content={pageTitle} key="title" />
+        <meta name="description" content={description} key={'description'} />
+        <meta
+          property="og:description"
+          content={description}
+          key={'og-description'}
+        />
+      </Head>
+      <Main categories={categories} pages={pages}>
+        <ProductView product={product} />
+      </Main>
+    </>
   );
 };
 

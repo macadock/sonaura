@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import Drawer from '@mui/material/Drawer';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, Link as MuiLink } from '@mui/material';
 import { useCart } from 'react-use-cart';
 import { useQuery } from '@apollo/client';
 import { GET_PRODUCTS_BY_IDS } from '../../../../../gql/get-products';
@@ -88,7 +88,10 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
         </Box>
         {isEmpty ? (
           <Box marginY={'1.5rem'} sx={{ textAlign: 'center' }}>
-            {t('empty')}
+            <Typography>{t('empty')}</Typography>
+            <MuiLink href={'/occasion'}>
+              {t('discoverPreOwnedProducts')}
+            </MuiLink>
           </Box>
         ) : (
           <Box>
@@ -158,7 +161,8 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
 
         <Box>
           <Button
-            disabled
+            disabled={totalItems === 0}
+            href={'/panier'}
             variant={'contained'}
             sx={{
               position: 'absolute',
@@ -167,7 +171,7 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
               right: '1rem',
             }}
           >
-            {t('order')}
+            {t('continueOrder')}
           </Button>
         </Box>
       </Box>

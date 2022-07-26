@@ -1,13 +1,7 @@
-import { Box, Typography } from '@mui/material';
+import CartPage from '../../components/core/Cart/CartPage';
 
 const CartView: React.FC = () => {
-  return (
-    <Box>
-      <Typography variant={'h2'} textAlign={'center'}>
-        Panier
-      </Typography>
-    </Box>
-  );
+  return <CartPage />;
 };
 
 export default CartView;

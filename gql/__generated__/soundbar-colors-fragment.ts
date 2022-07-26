@@ -7,4 +7,5 @@ export type SoundbarColorsFragment = {
     colorCode: {
         hex: any;
     };
+    __typename: "ProductSoundbarColor";
 };

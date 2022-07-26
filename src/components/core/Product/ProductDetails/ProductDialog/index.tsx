@@ -7,9 +7,16 @@ interface Props {
   onClose: () => void;
   title: string;
   origin: string;
+  button?: string;
 }
 
-const ProductDialog: React.FC<Props> = ({ open, onClose, title, origin }) => {
+const ProductDialog: React.FC<Props> = ({
+  open,
+  onClose,
+  title,
+  origin,
+  button,
+}) => {
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -19,7 +26,7 @@ const ProductDialog: React.FC<Props> = ({ open, onClose, title, origin }) => {
         <Box textAlign={'right'}>
           <Close onClick={onClose} sx={{ ':hover': { cursor: 'pointer' } }} />
         </Box>
-        <ProductForm title={title} origin={origin} />
+        <ProductForm title={title} origin={origin} button={button} />
       </Box>
     </Dialog>
   );

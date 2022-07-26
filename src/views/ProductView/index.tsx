@@ -1,9 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 
 import Container from '../../components/system/Container';
-import ProductImage from '../../components/core/Product/ProductImage';
 import ProductDetails from '../../components/core/Product/ProductDetails';
 import { Product } from '../../../gql/__generated__/product';
 import { Breadcrumbs, Link } from '@mui/material';
@@ -19,7 +17,7 @@ const ProductView: React.FC<Props> = ({ product }) => {
       <Box>
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/">
-            Sonaura
+            {process.env.NEXT_PUBLIC_MERCHANT_NAME}
           </Link>
           <Link underline="hover" color="inherit" href={`/${category.slug}`}>
             {category.name}
@@ -34,16 +32,7 @@ const ProductView: React.FC<Props> = ({ product }) => {
           </Link>
         </Breadcrumbs>
       </Box>
-      <Box sx={{ marginTop: '2rem' }}>
-        <Grid container spacing={{ xs: 2, md: 4 }}>
-          <Grid item xs={12} md={7}>
-            <ProductImage product={product} />
-          </Grid>
-          <Grid item xs={12} md={5}>
-            <ProductDetails product={product} />
-          </Grid>
-        </Grid>
-      </Box>
+      <ProductDetails product={product} />
     </Container>
   );
 };

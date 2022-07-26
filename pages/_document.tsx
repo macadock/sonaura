@@ -17,34 +17,37 @@ export default class MyDocument extends Document {
       <Html lang="fr">
         <Head>
           <meta charSet="utf-8" />
-          <link
+          {/* <link
             rel="shortcut icon"
             href="https://assets.maccarianagency.com/favicons/thefront/favicon.ico"
-          />
-          <meta name="theme-color" content="#ffffff" />
-          {/* <meta
-            name="description"
-            content="A modern design system for your new landing and web pages."
           /> */}
+          <meta name="theme-color" content="#ffffff" />
+          <meta
+            name="description"
+            content="Sonaura, Distributeur Bang & Olufsen."
+            key={'description'}
+          />
           <meta
             name="robots"
             content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
           />
-          <meta property="og:locale" content="en_US" />
+          <meta property="og:locale" content="fr_FR" />
           <meta property="og:type" content="website" />
           {/* <meta
             property="og:image"
             content="https://assets.maccarianagency.com/screenshots/the-front/social.png"
           /> */}
-          <meta property="og:title" content="Sonaura" />
-          {/* <meta
+          <meta
+            property="og:title"
+            content="Sonaura, Distributeur Bang & Olufsen"
+            key={'title'}
+          />
+          <meta
             property="og:description"
-            content="A modern design system for your new landing and web pages."
-          /> */}
-          {/* <meta
-            property="og:url"
-            content="https://thefront.maccarianagency.com/"
-          /> */}
+            content="Sonaura, Distributeur Bang & Olufsen"
+            key={'og-description'}
+          />
+          <meta property="og:url" content="https://sonaura.fr/" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"

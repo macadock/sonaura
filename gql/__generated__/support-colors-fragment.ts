@@ -7,4 +7,5 @@ export type SupportColorsFragment = {
     colorCode: {
         hex: any;
     };
+    __typename: "ProductSupportColor";
 };
