@@ -10,7 +10,7 @@
     "validate-schema": "ts-graphql-plugin validate",
     "storybook": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook",
-    "prettier": "prettier --write \"src\"",
+    "prettier": "prettier --write \"src\" \"*{.json, .js}\"",
     "lint": "eslint ./src --fix",
     "full-check": "yarn prettier && yarn lint && yarn tsc",
     "codeStyle:fix": "npm run prettier:fix && npm run eslint:fix",

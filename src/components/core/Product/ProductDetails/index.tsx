@@ -227,49 +227,49 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
             />
             {currentProduct.quantity > 0 &&
             currentProduct.category.name === Categories.OCCASION ? (
-                <>
-                  <Stack marginTop={3} direction={'column'} spacing={2}>
-                    <Button
-                      onClick={addToCart}
-                      disabled={alreadyAddedToCart}
-                      variant={'contained'}
-                      color={'primary'}
-                      size={'large'}
-                      fullWidth
-                      startIcon={<ShoppingCartTwoTone />}
-                    >
-                      {t('addToCart')}
-                    </Button>
-                    <Button
-                      onClick={openDialog}
-                      variant={'text'}
-                      color={'inherit'}
-                      size={'medium'}
-                      fullWidth
-                      startIcon={<Phone />}
-                    >
-                      {t('preOwned.book')}
-                    </Button>
-                  </Stack>
-                </>
-              ) : (
-                <Stack
-                  marginTop={3}
-                  direction={{ xs: 'column', sm: 'row' }}
-                  spacing={2}
-                >
+              <>
+                <Stack marginTop={3} direction={'column'} spacing={2}>
                   <Button
-                    onClick={openDialog}
+                    onClick={addToCart}
+                    disabled={alreadyAddedToCart}
                     variant={'contained'}
                     color={'primary'}
                     size={'large'}
                     fullWidth
-                    startIcon={<Info />}
+                    startIcon={<ShoppingCartTwoTone />}
                   >
-                    {t('demonstration.book')}
+                    {t('addToCart')}
+                  </Button>
+                  <Button
+                    onClick={openDialog}
+                    variant={'text'}
+                    color={'inherit'}
+                    size={'medium'}
+                    fullWidth
+                    startIcon={<Phone />}
+                  >
+                    {t('preOwned.book')}
                   </Button>
                 </Stack>
-              )}
+              </>
+            ) : (
+              <Stack
+                marginTop={3}
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={2}
+              >
+                <Button
+                  onClick={openDialog}
+                  variant={'contained'}
+                  color={'primary'}
+                  size={'large'}
+                  fullWidth
+                  startIcon={<Info />}
+                >
+                  {t('demonstration.book')}
+                </Button>
+              </Stack>
+            )}
             <Box marginY={3}>
               {currentProduct.sizes.length > 0 && (
                 <Box>
