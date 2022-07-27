@@ -5,12 +5,17 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'next-i18next';
-import { useCart } from 'react-use-cart';
-import NumberFormat from 'react-number-format';
+import Price from '../../../../../../utils/Price';
 
-const SummeryBox: React.FC = () => {
+interface Props {
+  cartTotal: number;
+  isEmpty: boolean;
+}
+
+const SummeryBox: React.FC<Props> = ({ cartTotal, isEmpty }) => {
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
-  const { cartTotal, isEmpty } = useCart();
+
+  const vat = cartTotal * 0.2;
 
   return (
     <Box>
@@ -29,25 +34,13 @@ const SummeryBox: React.FC = () => {
         <Box display={'flex'} justifyContent={'space-between'}>
           <Typography color={'text.secondary'}>{t('subtotal')}</Typography>
           <Typography color={'text.secondary'} fontWeight={700}>
-            <NumberFormat
-              value={cartTotal}
-              displayType="text"
-              thousandSeparator=" "
-              suffix=" €"
-              decimalSeparator=","
-            />
+            <Price formatedPrice={cartTotal} />
           </Typography>
         </Box>
         <Box display={'flex'} justifyContent={'space-between'}>
           <Typography color={'text.secondary'}>{t('vat')}</Typography>
           <Typography color={'text.secondary'} fontWeight={700}>
-            <NumberFormat
-              value={cartTotal * 0.2}
-              displayType="text"
-              thousandSeparator=" "
-              suffix=" €"
-              decimalSeparator=","
-            />
+            <Price formatedPrice={vat} />
           </Typography>
         </Box>
         <Divider />
@@ -56,13 +49,7 @@ const SummeryBox: React.FC = () => {
             {t('total')}
           </Typography>
           <Typography variant={'h6'} fontWeight={700}>
-            <NumberFormat
-              value={cartTotal}
-              displayType="text"
-              thousandSeparator=" "
-              suffix=" €"
-              decimalSeparator=","
-            />
+            <Price formatedPrice={cartTotal} />
           </Typography>
         </Box>
         <Button

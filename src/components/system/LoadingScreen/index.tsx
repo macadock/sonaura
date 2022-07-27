@@ -1,21 +1,22 @@
-import styled from 'styled-components';
 import { CircularProgress } from '@mui/material';
 import { Box } from '@mui/system';
 
-const LoadingScreen: React.FC = () => {
+interface Props {
+  height?: string;
+}
+
+const LoadingScreen: React.FC<Props> = ({ height }) => {
   return (
-    <Container>
+    <Box
+      width={'100%'}
+      height={height || '75vh'}
+      display={'flex'}
+      justifyContent={'center'}
+      alignItems={'center'}
+    >
       <CircularProgress />
-    </Container>
+    </Box>
   );
 };
-
-const Container = styled(Box)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-`;
 
 export default LoadingScreen;

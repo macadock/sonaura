@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { InstallationFragment } from '../../../../../gql/__generated__/installation-fragment';
+import { InstallationFragment } from '../../../../gql/__generated__/installation-fragment';
 
 import Card from './Card';
 

@@ -1,8 +1,8 @@
-import { GET_CATEGORIES } from '../../../gql/get-categories';
-import { GET_PAGES_HEADER } from '../../../gql/get-pages';
-import { Categories } from '../../../gql/__generated__/categories';
-import { Pages } from '../../../gql/__generated__/pages';
-import { client } from '../../../pages/_app';
+import { GET_CATEGORIES } from '../../gql/get-categories';
+import { GET_PAGES_HEADER } from '../../gql/get-pages';
+import { Categories } from '../../gql/__generated__/categories';
+import { Pages } from '../../gql/__generated__/pages';
+import { client } from '../../pages/_app';
 
 const getNavbarItems = async (): Promise<{
   categories: Categories;

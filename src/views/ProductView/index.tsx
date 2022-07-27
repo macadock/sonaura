@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 
 import Container from '../../components/system/Container';
 import ProductDetails from '../../components/core/Product/ProductDetails';
-import { Product } from '../../../gql/__generated__/product';
+import { Product } from '../../gql/__generated__/product';
 import { Breadcrumbs, Link } from '@mui/material';
 
 interface Props {

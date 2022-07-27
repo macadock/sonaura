@@ -8,8 +8,8 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 import Container from 'components/system/Container';
 
-import { Pages } from '../../../gql/__generated__/pages';
-import { Categories } from '../../../gql/__generated__/categories';
+import { Pages } from '../../gql/__generated__/pages';
+import { Categories } from '../../gql/__generated__/categories';
 import Topbar from 'components/system/Topbar';
 import Sidebar from 'components/system/Sidebar';
 import Footer from 'components/system/Footer';
@@ -77,11 +77,11 @@ const Main: React.FC<Props> = ({
         pages={pages}
         categories={categories}
       />
-      <main>
+      <main style={{ minHeight: '75vh', position: 'relative' }}>
         {children}
-        <Divider />
+        <Divider sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }} />
       </main>
-      <Container paddingY={4}>
+      <Container paddingY={4} component={'footer'}>
         <Footer />
       </Container>
     </Box>

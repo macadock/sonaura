@@ -8,9 +8,9 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 
 import Container from 'components/system/Container';
-import { ProductFragment } from '../../../../gql/__generated__/categories';
-import NumberFormat from 'react-number-format';
+import { ProductFragment } from '../../../gql/__generated__/categories';
 import { useTranslation } from 'next-i18next';
+import Price from '../../../utils/Price';
 
 interface Props {
   products: ProductFragment[];
@@ -94,13 +94,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                   justifyContent={'space-between'}
                 >
                   <Typography fontWeight={700}>
-                    <NumberFormat
-                      value={product.price}
-                      displayType="text"
-                      thousandSeparator=" "
-                      suffix=" €"
-                      decimalSeparator=","
-                    />
+                    <Price priceWithCents={product.price} />
                   </Typography>
                 </Box>
                 <Box marginTop={2}>

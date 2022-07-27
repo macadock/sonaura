@@ -1,17 +1,18 @@
 import React, { useEffect, useMemo } from 'react';
 import Drawer from '@mui/material/Drawer';
-import { Box, Button, Typography, Link as MuiLink } from '@mui/material';
+import { Box, Button, Typography, Link as MuiLink, Stack } from '@mui/material';
 import { useCart } from 'react-use-cart';
 import { useQuery } from '@apollo/client';
-import { GET_PRODUCTS_BY_IDS } from '../../../../../gql/get-products';
+import { GET_PRODUCTS_BY_IDS } from '../../../../gql/get-products';
 import {
   GetProductsByIds,
   GetProductsByIdsVariables,
-} from '../../../../../gql/__generated__/get-products-by-ids';
-import { Delete } from '@mui/icons-material';
+} from '../../../../gql/__generated__/get-products-by-ids';
+import { Close, Delete } from '@mui/icons-material';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
+import Price from '../../../../utils/Price';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -68,6 +69,17 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
         },
       }}
     >
+      <Box position={'relative'} title={t('close')}>
+        <Close
+          onClick={closeCart}
+          sx={{
+            cursor: 'pointer',
+            width: { xs: '3rem', sm: '2.5rem', md: '2rem' },
+            height: { xs: '3rem', sm: '2.5rem', md: '2rem' },
+            position: 'absolute',
+          }}
+        />
+      </Box>
       <Box
         sx={{
           display: 'flex',
@@ -107,24 +119,21 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                   }}
                 >
                   <Box>
-                    <Link
-                      passHref
-                      href={`/${product.category.slug}/${product.slug}`}
-                    >
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <Box
-                        sx={{ display: 'flex', alignItems: 'center' }}
-                        onClick={closeCart}
+                        sx={{
+                          ':hover': { cursor: 'pointer' },
+                          position: 'relative',
+                          width: '5rem',
+                          height: '5rem',
+                          marginRight: '0.5rem',
+                          borderRadius: '1rem',
+                          overflow: 'hidden',
+                        }}
                       >
-                        <Box
-                          sx={{
-                            ':hover': { cursor: 'pointer' },
-                            position: 'relative',
-                            width: '5rem',
-                            height: '5rem',
-                            marginRight: '0.5rem',
-                            borderRadius: '1rem',
-                            overflow: 'hidden',
-                          }}
+                        <Link
+                          passHref
+                          href={`/${product.category.slug}/${product.slug}`}
                         >
                           <Image
                             src={product.mainAsset.url}
@@ -132,18 +141,30 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                             layout={'responsive'}
                             width={'5rem'}
                             height={'5rem'}
+                            onClick={closeCart}
                           />
-                        </Box>
-                        <Typography
-                          sx={{
-                            ':hover': { cursor: 'pointer' },
-                            textDecoration: 'underline',
-                          }}
+                        </Link>
+                      </Box>
+                      <Box>
+                        <Link
+                          passHref
+                          href={`/${product.category.slug}/${product.slug}`}
                         >
-                          {product.name}
+                          <Typography
+                            sx={{
+                              ':hover': { cursor: 'pointer' },
+                              textDecoration: 'underline',
+                            }}
+                            onClick={closeCart}
+                          >
+                            {product.name}
+                          </Typography>
+                        </Link>
+                        <Typography>
+                          <Price priceWithCents={product.price} />
                         </Typography>
                       </Box>
-                    </Link>
+                    </Box>
                   </Box>
                   <Box>
                     <Button
@@ -159,21 +180,26 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
           </Box>
         )}
 
-        <Box>
+        <Stack
+          sx={{
+            position: 'absolute',
+            bottom: '1rem',
+            left: '1rem',
+            right: '1rem',
+          }}
+          onClick={closeCart}
+        >
+          <Button href={'/panier'} variant={'text'}>
+            {t('displayCart')}
+          </Button>
           <Button
             disabled={totalItems === 0}
-            href={'/panier'}
+            href={'/panier/commander'}
             variant={'contained'}
-            sx={{
-              position: 'absolute',
-              bottom: '1rem',
-              left: '1rem',
-              right: '1rem',
-            }}
           >
             {t('continueOrder')}
           </Button>
-        </Box>
+        </Stack>
       </Box>
     </Drawer>
   );

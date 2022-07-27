@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import Container from 'components/system/Container';
-import { Legal } from '../../../gql/__generated__/legal';
+import { Legal } from '../../gql/__generated__/legal';
 
 interface Props {
   legals: Legal;

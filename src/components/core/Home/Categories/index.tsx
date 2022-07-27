@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import Link from 'next/link';
-import { Categories } from '../../../../../gql/__generated__/categories';
+import { Categories } from '../../../../gql/__generated__/categories';
 import { useTranslation } from 'next-i18next';
 import { useTheme } from '@mui/material';
 

@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as createPalette from '@mui/material/styles/createPalette';
+import { Color } from '@mui/material';
 
 declare module '@mui/material/styles/createPalette' {
   interface TypeBackground {
@@ -24,5 +25,6 @@ declare module '@mui/material/styles/createPalette' {
       main: string;
       dark: string;
     };
+    red: Color;
   }
 }

@@ -11,12 +11,14 @@ import { useQuery } from '@apollo/client';
 import {
   GetProductsByIds,
   GetProductsByIdsVariables,
-} from '../../../../../../../gql/__generated__/get-products-by-ids';
-import { GET_PRODUCTS_BY_IDS } from '../../../../../../../gql/get-products';
-import NumberFormat from 'react-number-format';
+} from '../../../../../../gql/__generated__/get-products-by-ids';
+import { GET_PRODUCTS_BY_IDS } from '../../../../../../gql/get-products';
 import { useTranslation } from 'next-i18next';
+import Price from '../../../../../../utils/Price';
 
 const paymentUrl = `${process.env.NEXT_PUBLIC_PAYPLUG_API_URL}/payments`;
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const apiKey = process.env.NEXT_PUBLIC_PAYPLUG_SECRET_KEY;
 
 const Orders = (): JSX.Element => {
@@ -32,6 +34,7 @@ const Orders = (): JSX.Element => {
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
 
   const { isEmpty, items, cartTotal } = useCart();
+  const vat = cartTotal * 0.2;
 
   const ids = items.map((item) => item.id);
 
@@ -88,7 +91,7 @@ const Orders = (): JSX.Element => {
                   />
                   <Box
                     display={'flex'}
-                    flexDirection={{ xs: 'column', sm: 'row' }}
+                    flexDirection={'row'}
                     justifyContent={'space-between'}
                     alignItems={'flex-start'}
                     width={1}
@@ -100,13 +103,7 @@ const Orders = (): JSX.Element => {
                     </Box>
                     <Box>
                       <Typography fontWeight={700} variant={'subtitle2'}>
-                        <NumberFormat
-                          value={product.price}
-                          displayType="text"
-                          thousandSeparator=" "
-                          suffix=" €"
-                          decimalSeparator=","
-                        />
+                        <Price priceWithCents={product.price} />
                       </Typography>
                     </Box>
                   </Box>
@@ -119,29 +116,17 @@ const Orders = (): JSX.Element => {
                 />
               </Box>
             ))}
-          <Stack spacing={2} marginY={{ xs: 2, sm: 4 }}>
+          <Stack spacing={2} marginTop={{ xs: 2, sm: 4 }}>
             <Box display={'flex'} justifyContent={'space-between'}>
               <Typography color={'text.secondary'}>{t('subtotal')}</Typography>
               <Typography color={'text.secondary'} fontWeight={700}>
-                <NumberFormat
-                  value={cartTotal}
-                  displayType="text"
-                  thousandSeparator=" "
-                  suffix=" €"
-                  decimalSeparator=","
-                />
+                <Price formatedPrice={cartTotal} />
               </Typography>
             </Box>
             <Box display={'flex'} justifyContent={'space-between'}>
               <Typography color={'text.secondary'}>{t('vat')}</Typography>
               <Typography color={'text.secondary'} fontWeight={700}>
-                <NumberFormat
-                  value={cartTotal * 0.2}
-                  displayType="text"
-                  thousandSeparator=" "
-                  suffix=" €"
-                  decimalSeparator=","
-                />
+                <Price formatedPrice={vat} />
               </Typography>
             </Box>
             <Divider />
@@ -150,13 +135,7 @@ const Orders = (): JSX.Element => {
                 {t('total')}
               </Typography>
               <Typography variant={'h6'} fontWeight={700}>
-                <NumberFormat
-                  value={cartTotal}
-                  displayType="text"
-                  thousandSeparator=" "
-                  suffix=" €"
-                  decimalSeparator=","
-                />
+                <Price formatedPrice={cartTotal} />
               </Typography>
             </Box>
             <Button
@@ -166,6 +145,7 @@ const Orders = (): JSX.Element => {
               variant={'contained'}
               size={'large'}
               fullWidth
+              marginBottom={0}
             >
               {t('order')}
             </Button>

@@ -10,8 +10,9 @@
     "validate-schema": "ts-graphql-plugin validate",
     "storybook": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook",
-    "prettier": "prettier {src,pages} --write",
+    "prettier": "prettier --write \"src\" \"*{.json, .js}\"",
     "lint": "eslint ./src --fix",
+    "full-check": "yarn prettier && yarn lint && yarn tsc",
     "codeStyle:fix": "npm run prettier:fix && npm run eslint:fix",
     "clear-all": "rimraf ./node_modules ./.next"
   },
@@ -44,6 +45,7 @@
     "@hookform/resolvers": "^2.8.8",
     "@mui/icons-material": "^5.2.4",
     "@mui/material": "^5.2.4",
+    "@sentry/nextjs": "^7.7.0",
     "aos": "^2.3.4",
     "card-validator": "^8.1.1",
     "class-transformer": "^0.5.1",

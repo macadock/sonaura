@@ -7,7 +7,7 @@ import People from 'components/core/Home/People';
 import Products from 'components/core/Home/Products';
 import Container from 'components/system/Container';
 import React from 'react';
-import { Categories as Cat } from '../../../gql/__generated__/categories';
+import { Categories as Cat } from '../../gql/__generated__/categories';
 import PreOwnedProducts from '../../components/core/Home/PreOwnedProducts';
 
 interface Props {

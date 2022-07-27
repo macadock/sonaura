@@ -9,7 +9,7 @@ import Avatar from '@mui/material/Avatar';
 import { useTheme } from '@mui/material/styles';
 
 import Container from 'components/system/Container';
-import { ShopFragment } from '../../../../../gql/__generated__/shop-fragment';
+import { ShopFragment } from '../../../../gql/__generated__/shop-fragment';
 import { useTranslation } from 'next-i18next';
 
 interface Props {
@@ -27,7 +27,6 @@ const Contact: React.FC<Props> = ({ shops }) => {
             width: 1,
             height: 1,
             overflow: 'hidden',
-            marginBottom: 1,
           }}
         >
           <Container paddingX={0} paddingY={0} maxWidth={{ sm: 1, md: 1236 }}>

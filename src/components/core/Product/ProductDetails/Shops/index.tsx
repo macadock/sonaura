@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'next-i18next';
-import { Product } from '../../../../../../gql/__generated__/product';
+import { Product } from '../../../../../gql/__generated__/product';
 
 type ShopHours = {
   hours: { [key: number]: Hour[] }[];
@@ -61,17 +61,17 @@ const Shops: React.FC<Props> = ({ shops }) => {
               {values.length === 0
                 ? t('closed')
                 : values.map(({ Start, Finish }, index) => {
-                  const startHour = `${Start.substring(
-                    0,
-                    2,
-                  )}:${Start.substring(2)}`;
-                  const endHour = `${Finish.substring(
-                    0,
-                    2,
-                  )}:${Finish.substring(2)}`;
-                  const addComma = index + 1 < values.length;
-                  return `${startHour} - ${endHour}${addComma ? ', ' : ''}`;
-                })}
+                    const startHour = `${Start.substring(
+                      0,
+                      2,
+                    )}:${Start.substring(2)}`;
+                    const endHour = `${Finish.substring(
+                      0,
+                      2,
+                    )}:${Finish.substring(2)}`;
+                    const addComma = index + 1 < values.length;
+                    return `${startHour} - ${endHour}${addComma ? ', ' : ''}`;
+                  })}
             </Typography>
           </Box>
         );

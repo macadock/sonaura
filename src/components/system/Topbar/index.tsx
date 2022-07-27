@@ -6,13 +6,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Link from '@mui/material/Link';
 
 import NavItem from './NavItem';
-import { Categories } from '../../../../gql/__generated__/categories';
-import { Pages } from '../../../../gql/__generated__/pages';
+import { Categories } from '../../../gql/__generated__/categories';
+import { Pages } from '../../../gql/__generated__/pages';
 import TopNav from 'components/system/TopNav';
 import { ShoppingCartTwoTone } from '@mui/icons-material';
 import CartDrawer from '../../core/Cart/CartDrawer';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { useCart } from 'react-use-cart';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -33,6 +34,7 @@ const Topbar: React.FC<Props> = ({
   const theme = useTheme();
   const { mode } = theme.palette;
   const { route } = useRouter();
+  const { isEmpty } = useCart();
 
   const handleCart = () => {
     setCartState(!cartState);
@@ -92,10 +94,20 @@ const Topbar: React.FC<Props> = ({
               </Link>
             </Box>
           ))}
-        <Box>
+        <Box position={'relative'}>
           <Button onClick={handleCart} title={t('cart.title')}>
             <ShoppingCartTwoTone />
           </Button>
+          {!isEmpty ? (
+            <Box
+              width={'0.5rem'}
+              height={'0.5rem'}
+              sx={{ position: 'absolute', borderRadius: '50%' }}
+              bgcolor={theme.palette.red[900]}
+              top={'0.5rem'}
+              right={'0.6rem'}
+            />
+          ) : null}
         </Box>
         <Box>
           <TopNav />
@@ -114,7 +126,17 @@ const Topbar: React.FC<Props> = ({
             borderColor: alpha(theme.palette.divider, 0.2),
           }}
         >
-          <ShoppingCartTwoTone />
+          <ShoppingCartTwoTone sx={{ position: 'relative' }} />
+          {!isEmpty ? (
+            <Box
+              width={'0.5rem'}
+              height={'0.5rem'}
+              sx={{ position: 'absolute', borderRadius: '50%' }}
+              bgcolor={theme.palette.red[900]}
+              top={'0.2rem'}
+              right={'0.2rem'}
+            />
+          ) : null}
         </Button>
         <Button
           onClick={onSidebarOpen}
