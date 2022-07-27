@@ -49,7 +49,6 @@ const People: React.FC = () => {
         </Grid>
         <Grid xs={12} md={4} height={{ xs: '40vh', md: 'auto' }}>
           <Box position={'relative'} width={'100%'} height={'100%'}>
-            <Typography>Hello</Typography>
             <Image
               src={'https://media.graphassets.com/tiVZCCX5QYy3Y6SHD80r'}
               height={'100%'}
