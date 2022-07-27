@@ -4,35 +4,32 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
 
 const People: React.FC = () => {
   const { t } = useTranslation('homepage', { keyPrefix: 'people' });
   return (
-    <Box bgcolor={'primary.main'} borderRadius={2}>
-      <Grid container data-aos="fade-up">
-        <Grid item container alignItems="flex-start" xs={12} md={4}>
-          <Box
-            component={'img'}
-            src={
-              'https://home-cinema-alpes.fr/wp-content/uploads/2020/09/Capture-decran-2020-09-23-a-12.35.53.png'
-            }
-            borderRadius={2}
-            alt="..."
-            sx={{
-              objectFit: 'cover',
-              width: { xs: '100%', md: '90%' },
-              height: '100%',
-            }}
-          />
+    <Box bgcolor={'primary.main'} borderRadius={2} overflow={'hidden'}>
+      <Grid container data-aos="fade-up" justifyContent={'space-between'}>
+        <Grid xs={12} md={4} height={{ xs: '40vh', md: 'auto' }}>
+          <Box position={'relative'} width={'100%'} height={'100%'}>
+            <Image
+              src={'https://media.graphassets.com/CGglaVGhTJCqbPy0ftfx'}
+              height={'100%'}
+              width={'100%'}
+              layout={'fill'}
+              objectFit={'cover'}
+              alt={'Gérant du magasin de Lyon'}
+            />
+          </Box>
         </Grid>
         <Grid
-          item
           container
           alignItems="center"
           xs={12}
           md={4}
           sx={{
-            marginY: 2,
+            marginY: { xs: 4, md: 2 },
             paddingX: 2,
           }}
         >
@@ -50,20 +47,18 @@ const People: React.FC = () => {
             </Typography>
           </Box>
         </Grid>
-        <Grid item container justifyContent="flex-end" xs={12} md={4}>
-          <Box
-            component={'img'}
-            src={
-              'https://home-cinema-alpes.fr/wp-content/uploads/2020/09/DSC5555.jpg'
-            }
-            borderRadius={2}
-            alt="..."
-            sx={{
-              objectFit: 'cover',
-              width: { xs: '100%', md: '90%' },
-              height: '100%',
-            }}
-          />
+        <Grid xs={12} md={4} height={{ xs: '40vh', md: 'auto' }}>
+          <Box position={'relative'} width={'100%'} height={'100%'}>
+            <Typography>Hello</Typography>
+            <Image
+              src={'https://media.graphassets.com/tiVZCCX5QYy3Y6SHD80r'}
+              height={'100%'}
+              width={'100%'}
+              layout={'fill'}
+              objectFit={'cover'}
+              alt={'Gérant du magasin de Grenoble'}
+            />
+          </Box>
         </Grid>
       </Grid>
     </Box>

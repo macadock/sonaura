@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { Box, Container, NoSsr, useTheme } from '@mui/material';
+import { Box, Container, NoSsr } from '@mui/material';
 import Welcome from '../../components/core/Professionals/Welcome';
 import Integration from '../../components/core/Professionals/Integration';
 import Design from '../../components/core/Professionals/Design';
 import Contact from '../../components/core/Professionals/Contact';
 import Elegance from '../../components/core/Professionals/Elegance';
+import Image from 'next/image';
 
 const ProfessionalsView: React.FC = () => {
   useEffect(() => {
@@ -31,26 +32,6 @@ const ProfessionalsView: React.FC = () => {
       window.scrollTo({ left: 0, top: element.offsetTop, behavior: 'smooth' });
     });
   };
-
-  const theme = useTheme();
-
-  const styles = (bgImage: string) =>
-    ({
-      position: 'absolute',
-      objectFit: 'cover',
-      /* support for plugin https://github.com/bfred-it/object-fit-images */
-      fontFamily: 'object-fit: cover;',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      zIndex: -1,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center center',
-      backgroundImage: `url(${bgImage})`,
-      filter: theme.palette.mode === 'dark' ? 'brightness(0.7)' : 'none',
-    } as const);
 
   return (
     <React.Fragment>
@@ -98,9 +79,13 @@ const ProfessionalsView: React.FC = () => {
         alignItems={'center'}
         id="agency__portfolio-item--js-scroll"
       >
-        <Box
+        <Image
           className={'jarallax-img'}
-          sx={styles('https://media.graphassets.com/PSUppvkmQdWDzjlNJmxh')}
+          src={'https://media.graphassets.com/izREvI8T72Nismbx2bXg'}
+          height={'100%'}
+          width={'100%'}
+          layout={'fill'}
+          objectFit={'cover'}
         />
         <Container>
           <Integration />
@@ -115,10 +100,15 @@ const ProfessionalsView: React.FC = () => {
         display={'flex'}
         alignItems={'center'}
       >
-        <Box
+        <Image
           className={'jarallax-img'}
-          sx={styles('https://media.graphassets.com/jPoZthdR6qwNsfe5Ipuw')}
+          src={'https://media.graphassets.com/jPoZthdR6qwNsfe5Ipuw'}
+          height={'100%'}
+          width={'100%'}
+          layout={'fill'}
+          objectFit={'cover'}
         />
+
         <Container>
           <Design />
         </Container>
@@ -133,11 +123,13 @@ const ProfessionalsView: React.FC = () => {
         alignItems={'center'}
         id="agency__portfolio-item--js-scroll"
       >
-        <Box
+        <Image
           className={'jarallax-img'}
-          sx={styles(
-            'https://images.ctfassets.net/8cd2csgvqd3m/3Z6yoO08OjU5GgZzMsLUes/b407e75154fd4398290a61f44b0f975f/beolab_18_home_launch_2.png',
-          )}
+          src={'https://media.graphassets.com/q3KUbWoRQpqgTEmdclCa'}
+          height={'100%'}
+          width={'100%'}
+          layout={'fill'}
+          objectFit={'cover'}
         />
         <Container>
           <Elegance />

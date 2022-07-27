@@ -26,7 +26,7 @@ const Welcome: React.FC = () => {
         align={'center'}
         sx={{
           fontWeight: 400,
-          whiteSpace: 'pre',
+          whiteSpace: { md: 'pre' },
         }}
       >
         {t('subtitle')}
