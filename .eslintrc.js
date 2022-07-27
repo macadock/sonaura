@@ -28,7 +28,6 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
-    indent: ['error', 2, { SwitchCase: 1 }],
     'react/display-name': 'off',
     '@next/next/no-img-element': 'off',
   },
