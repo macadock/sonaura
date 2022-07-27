@@ -5,7 +5,13 @@ interface Props {
   formatedPrice?: number;
 }
 
-const Price: React.FC<Props> = ({ priceWithCents = 0, formatedPrice }) => {
+const Price: React.FC<Props> = ({ priceWithCents, formatedPrice }) => {
+  const emptyNumber = !(Boolean(priceWithCents) || Boolean(formatedPrice));
+
+  if (emptyNumber) {
+    return null;
+  }
+
   return (
     <NumberFormat
       value={formatedPrice || priceWithCents / 100}
