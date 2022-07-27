@@ -3,16 +3,16 @@
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-const {withSentryConfig} = require('@sentry/nextjs');
-const {i18n} = require('./next-i18next.config');
+const { withSentryConfig } = require('@sentry/nextjs');
+const { i18n } = require('./next-i18next.config');
 
 /** @type {import('next').NextConfig} */
 const moduleExports = {
-  reactStrictMode : true,
-  images : {
-    domains : [ 'media.graphassets.com' ],
+  reactStrictMode: true,
+  images: {
+    domains: ['media.graphassets.com'],
   },
-  i18n
+  i18n,
 };
 
 const sentryWebpackPluginOptions = {
@@ -22,7 +22,7 @@ const sentryWebpackPluginOptions = {
   //   release, url, org, project, authToken, configFile, stripPrefix,
   //   urlPrefix, include, ignore
 
-  silent : true, // Suppresses all logs
+  silent: true, // Suppresses all logs
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
