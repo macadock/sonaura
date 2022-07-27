@@ -12,7 +12,7 @@ const moduleExports = {
   images: {
     domains: ['media.graphassets.com'],
   },
-  i18n
+  i18n,
 };
 
 const sentryWebpackPluginOptions = {

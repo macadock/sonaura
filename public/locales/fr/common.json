@@ -1,53 +1,53 @@
 {
-    "config": {
-        "website": "Sonaura"
-    },
-    "categories": {
-        "title": "Catégories",
-        "noProducts": "Aucuns produits",
-        "moreDetails": "Plus en détail"
-    },
-    "cart": {
-        "title": "Panier",
-        "empty": "Votre panier est vide.",
-        "displayCart": "Afficher le panier",
-        "continueOrder": "Poursuivre la commande",
-        "order": "Effectuer le paiement",
-        "product_one": "{{ count }} produit d'occasion",
-        "product_other": "{{ count }} produits d'occasion",
-        "summary": "Résumé",
-        "subtotal": "Sous total",
-        "vat": "dont TVA",
-        "total": "Total",
-        "checkout": "Commander",
-        "delete": "Supprimer",
-        "quantity": "Quantité",
-        "discoverPreOwnedProducts": "Découvrez nos produits d'occasion",
-        "close": "Fermer"
-    },
-    "checkout": {
-        "shippingAddress": "Adresse d'expédition",
-        "orderSummary": "Résumé de la commande",
-        "fullName": "Nom complet",
-        "country": "Pays",
-        "chooseCountry": "Choisissez un pays",
-        "city": "Ville",
-        "address": "Adresse",
-        "email": "Email",
-        "billingAddressDifferent": "L'adresse de facturation est différente de l'adresse d'expédition",
-        "billingAddress": "Adresse de facturation",
-        "redirectingToShop": "Votre panier est vide. Redirection vers le site"
-    },
-    "footer": {
-        "legalNotice": "Mentions légales",
-        "privacyPolicy": "Politique de confidentialité",
-        "copyright": "Sonaura. {{ year }}, Tous droits réservés",
-        "legalMessage": "Lorsque vous visitez ou interagissez avec nos sites, services ou outils, nous ou nos prestataires de services agréés peuvent utiliser des cookies pour stocker des informations afin de vous offrir une expérience plus rapide et plus et à des fins de marketing."
-    },
-    "theme": {
-        "light": "clair",
-        "dark": "foncé",
-        "button": "Changer de thème",
-        "notification": "Vous utilisez le thème {{ theme }}"
-    }
+  "config": {
+    "website": "Sonaura"
+  },
+  "categories": {
+    "title": "Catégories",
+    "noProducts": "Aucuns produits",
+    "moreDetails": "Plus en détail"
+  },
+  "cart": {
+    "title": "Panier",
+    "empty": "Votre panier est vide.",
+    "displayCart": "Afficher le panier",
+    "continueOrder": "Poursuivre la commande",
+    "order": "Effectuer le paiement",
+    "product_one": "{{ count }} produit d'occasion",
+    "product_other": "{{ count }} produits d'occasion",
+    "summary": "Résumé",
+    "subtotal": "Sous total",
+    "vat": "dont TVA",
+    "total": "Total",
+    "checkout": "Commander",
+    "delete": "Supprimer",
+    "quantity": "Quantité",
+    "discoverPreOwnedProducts": "Découvrez nos produits d'occasion",
+    "close": "Fermer"
+  },
+  "checkout": {
+    "shippingAddress": "Adresse d'expédition",
+    "orderSummary": "Résumé de la commande",
+    "fullName": "Nom complet",
+    "country": "Pays",
+    "chooseCountry": "Choisissez un pays",
+    "city": "Ville",
+    "address": "Adresse",
+    "email": "Email",
+    "billingAddressDifferent": "L'adresse de facturation est différente de l'adresse d'expédition",
+    "billingAddress": "Adresse de facturation",
+    "redirectingToShop": "Votre panier est vide. Redirection vers le site"
+  },
+  "footer": {
+    "legalNotice": "Mentions légales",
+    "privacyPolicy": "Politique de confidentialité",
+    "copyright": "Sonaura. {{ year }}, Tous droits réservés",
+    "legalMessage": "Lorsque vous visitez ou interagissez avec nos sites, services ou outils, nous ou nos prestataires de services agréés peuvent utiliser des cookies pour stocker des informations afin de vous offrir une expérience plus rapide et plus et à des fins de marketing."
+  },
+  "theme": {
+    "light": "clair",
+    "dark": "foncé",
+    "button": "Changer de thème",
+    "notification": "Vous utilisez le thème {{ theme }}"
+  }
 }
