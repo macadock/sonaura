@@ -4,8 +4,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import NumberFormat from 'react-number-format';
-import { Product } from '../../../../../gql/__generated__/product';
+import { Product } from '../../../../gql/__generated__/product';
 import { Categories } from '../../../../types';
 import { useCart } from 'react-use-cart';
 import ProductDialog from './ProductDialog';
@@ -14,6 +13,7 @@ import { useTranslation } from 'next-i18next';
 import toast from 'react-hot-toast';
 import Shops from './Shops';
 import { Grid } from '@mui/material';
+import Price from '../../../../utils/Price';
 
 type Image = Product['product']['mainAsset'];
 
@@ -63,7 +63,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const { addItem, items } = useCart();
 
   const addToCart = () => {
-    addItem({ id: currentProduct.id, price: currentProduct.price });
+    addItem({ id: currentProduct.id, price: currentProduct.price / 100 });
     setAlreadyAddedToCart(true);
     toast.success(t('addedToCart'));
   };
@@ -210,13 +210,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               <Box display={'flex'}>
                 {currentProduct.price && (
                   <Typography variant={'h5'} fontWeight={700}>
-                    <NumberFormat
-                      value={currentProduct.price}
-                      displayType="text"
-                      thousandSeparator=" "
-                      suffix=" €"
-                      decimalSeparator=","
-                    />
+                    <Price priceWithCents={currentProduct.price} />
                   </Typography>
                 )}
               </Box>

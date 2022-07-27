@@ -51,6 +51,9 @@ export const light = {
     500: '#FFA000',
     900: '#644A06',
   },
+  red: {
+    900: '#b71c1c',
+  },
 };
 
 export const dark = {
@@ -107,5 +110,8 @@ export const dark = {
     100: '#FFF5E5',
     500: '#FFA000',
     900: '#644A06',
+  },
+  red: {
+    900: '#b71c1c',
   },
 };

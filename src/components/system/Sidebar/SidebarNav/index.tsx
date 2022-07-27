@@ -5,8 +5,8 @@ import { useTheme } from '@mui/material/styles';
 import NavItem from '../NavItem';
 import { Link } from '@mui/material';
 
-import { CategoryFragment } from '../../../../../gql/__generated__/category-fragment';
-import { PageFragment } from '../../../../../gql/__generated__/pages';
+import { CategoryFragment } from '../../../../gql/__generated__/category-fragment';
+import { PageFragment } from '../../../../gql/__generated__/pages';
 import TopNav from 'components/system/TopNav';
 import { useTranslation } from 'next-i18next';
 

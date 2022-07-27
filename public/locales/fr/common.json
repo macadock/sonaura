@@ -10,10 +10,11 @@
     "cart": {
         "title": "Panier",
         "empty": "Votre panier est vide.",
+        "displayCart": "Afficher le panier",
         "continueOrder": "Poursuivre la commande",
         "order": "Effectuer le paiement",
-        "product_one": "{{ count }} produit",
-        "product_other": "{{ count }} produits",
+        "product_one": "{{ count }} produit d'occasion",
+        "product_other": "{{ count }} produits d'occasion",
         "summary": "Résumé",
         "subtotal": "Sous total",
         "vat": "dont TVA",
@@ -21,7 +22,8 @@
         "checkout": "Commander",
         "delete": "Supprimer",
         "quantity": "Quantité",
-        "discoverPreOwnedProducts": "Découvrez nos produits d'occasion"
+        "discoverPreOwnedProducts": "Découvrez nos produits d'occasion",
+        "close": "Fermer"
     },
     "checkout": {
         "shippingAddress": "Adresse d'expédition",

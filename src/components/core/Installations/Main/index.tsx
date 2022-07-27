@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import {
   InstallationFragment,
   Installations,
-} from '../../../../../gql/__generated__/installations';
+} from '../../../../gql/__generated__/installations';
 import Column from './Column';
 
 interface Props {

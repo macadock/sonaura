@@ -1,4 +1,4 @@
-import { Category } from '../../../gql/__generated__/category';
+import { Category } from '../../gql/__generated__/category';
 import { Box, Typography } from '@mui/material';
 import ProductGrid from '../../components/core/Category';
 

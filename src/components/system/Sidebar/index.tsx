@@ -2,8 +2,8 @@ import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import SidebarNav from './SidebarNav';
-import { Pages } from '../../../../gql/__generated__/pages';
-import { Categories } from '../../../../gql/__generated__/categories';
+import { Pages } from '../../../gql/__generated__/pages';
+import { Categories } from '../../../gql/__generated__/categories';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types

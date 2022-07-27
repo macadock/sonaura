@@ -10,11 +10,11 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { useTheme } from '@mui/material/styles';
 import { useQuery } from '@apollo/client';
-import { GET_PREOWNED_PRODUCTS } from '../../../../../gql/get-products';
+import { GET_PREOWNED_PRODUCTS } from '../../../../gql/get-products';
 import { CircularProgress, Link } from '@mui/material';
-import NumberFormat from 'react-number-format';
-import { PreOwnedProducts } from '../../../../../gql/__generated__/pre-owned-products';
+import { PreOwnedProducts } from '../../../../gql/__generated__/pre-owned-products';
 import { useTranslation } from 'next-i18next';
+import Price from '../../../../utils/Price';
 
 const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
   productNumberMax = 3,
@@ -145,13 +145,7 @@ const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
                             sx={{ fontWeight: 700 }}
                             color={'primary'}
                           >
-                            <NumberFormat
-                              value={product.price}
-                              displayType="text"
-                              thousandSeparator=" "
-                              suffix=" €"
-                              decimalSeparator=","
-                            />
+                            <Price priceWithCents={product.price} />
                           </Typography>
                         )}
                         <Button

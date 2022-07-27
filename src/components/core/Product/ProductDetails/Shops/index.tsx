@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'next-i18next';
-import { Product } from '../../../../../../gql/__generated__/product';
+import { Product } from '../../../../../gql/__generated__/product';
 
 type ShopHours = {
   hours: { [key: number]: Hour[] }[];
