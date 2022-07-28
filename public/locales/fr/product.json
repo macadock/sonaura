@@ -1,0 +1,53 @@
+{
+    "demonstration": {
+        "book": "Réserver une démonstration",
+        "origin": "démonstration produit neuf",
+        "button": "Réserver"
+    },
+    "preOwned": {
+        "book": "Être recontacté",
+        "origin": "produit occasion",
+        "button": "Valider"
+    },
+    "new": "nouveau",
+    "addToCart": "Ajouter au panier",
+    "addedToCart": "Ajouté au panier",
+    "attributes": {
+        "size": "Taille",
+        "color": "Couleur",
+        "frameColor": "Couleur du cadre",
+        "soundbarColor": "Couleur de la barre de son",
+        "supportColor": "Couleur du support",
+        "support": "Support"
+    },
+    "form": {
+        "input": {
+            "name": "Nom complet",
+            "email": "E-mail",
+            "phone": "Téléphone",
+            "message": "Message"
+        },
+        "placeholder": {
+            "name": "Prénom et Nom",
+            "email": "Adresse e-mail",
+            "phone": "Numéro de téléphone",
+            "message": "Si vous avez une demande particulière, c'est le moment !"
+        },
+        "gdpr": "Dans le cadre de ma demande de contact, j'accepte que mes données soient traitées et conservées",
+        "send": "Envoyer",
+        "loading": "Envoi en cours...",
+        "success": "Demande envoyée",
+        "error": "Erreur. Merci de réessayer."
+    },
+    "time": "Horaires",
+    "closed": "Fermé",
+    "days": {
+        "1": "Lundi",
+        "2": "Mardi",
+        "3": "Mercredi",
+        "4": "Jeudi",
+        "5": "Vendredi",
+        "6": "Samedi",
+        "7": "Dimanche"
+    }
+}
