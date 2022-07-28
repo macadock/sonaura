@@ -16,7 +16,6 @@ interface Props {
 const Categories: React.FC<Props> = ({ categories }) => {
   const theme = useTheme();
   const { mode } = theme.palette;
-  console.log(mode);
   const { t } = useTranslation('homepage', { keyPrefix: 'categories' });
   return (
     <Box>
