@@ -28,6 +28,7 @@ const Hero: React.FC = () => {
           autoPlay
           loop
           muted
+          playsInline
           width={'100%'}
           style={{
             objectFit: 'cover',
@@ -41,20 +42,6 @@ const Hero: React.FC = () => {
             type="video/mp4"
           />
         </video>
-        {/* <Box
-          component={LazyLoadImage}
-          height={1}
-          width={1}
-          src={
-            'https://images.ctfassets.net/8cd2csgvqd3m/4L0ytjVAqCRJxknRjMxia8/071610f7f07d699a0b37ea06f1ecbd99/all_televisions_.png?q=90&fm=webp&w=1440&h=1440&fit=fill'
-          }
-          alt="..."
-          effect="blur"
-          maxWidth={600}
-          sx={{
-            borderRadius: 2,
-          }}
-        /> */}
       </Grid>
       <Grid item xs={12} md={6}>
         <Box data-aos={isMd ? 'fade-right' : 'fade-up'}>
