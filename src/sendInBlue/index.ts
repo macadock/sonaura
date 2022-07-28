@@ -2,12 +2,12 @@ export const url = 'https://api.sendinblue.com/v3/';
 const apiKey = process.env.NEXT_PUBLIC_SIB_API_KEY;
 // Newsletter subscription
 export const newsletterListId = 3;
-export const newsletterTemplateId = 1;
+export const newsletterTemplateId = 2;
 
 // Contact Form
 export const addContactListId = 4;
-export const contactFormCustomerTemplateId = 2;
-export const contactFormMerchantTemplateId = 3;
+export const contactFormCustomerTemplateId = 3;
+export const contactFormMerchantTemplateId = 4;
 
 const websiteUrl = process.env.NEXT_PUBLIC_WEBSITE_URL;
 const merchantName = process.env.NEXT_PUBLIC_MERCHANT_NAME;
