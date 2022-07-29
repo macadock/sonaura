@@ -34,6 +34,7 @@
     "city": "Ville",
     "address": "Adresse",
     "email": "Email",
+    "phoneNumber": "Numéro de téléphone",
     "billingAddressDifferent": "L'adresse de facturation est différente de l'adresse d'expédition",
     "billingAddress": "Adresse de facturation",
     "redirectingToShop": "Votre panier est vide. Redirection vers le site"

@@ -15,23 +15,12 @@ import {
 import { GET_PRODUCTS_BY_IDS } from '../../../../../../gql/get-products';
 import { useTranslation } from 'next-i18next';
 import Price from '../../../../../../utils/Price';
-
-const paymentUrl = `${process.env.NEXT_PUBLIC_PAYPLUG_API_URL}/payments`;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const apiKey = process.env.NEXT_PUBLIC_PAYPLUG_SECRET_KEY;
+import { useFormikContext } from 'formik';
 
 const Orders = (): JSX.Element => {
   const theme = useTheme();
-
-  const handlePayment = () => {
-    fetch(paymentUrl, {
-      method: 'POST',
-      body: null,
-    });
-  };
-
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
+  const { handleSubmit } = useFormikContext();
 
   const { isEmpty, items, cartTotal } = useCart();
   const vat = cartTotal * 0.2;
@@ -140,8 +129,10 @@ const Orders = (): JSX.Element => {
             </Box>
             <Button
               disabled={isEmpty}
-              onClick={handlePayment}
               component={Link}
+              onClick={() => {
+                handleSubmit();
+              }}
               variant={'contained'}
               size={'large'}
               fullWidth
