@@ -77,10 +77,8 @@ const Main: React.FC<Props> = ({
         pages={pages}
         categories={categories}
       />
-      <main style={{ minHeight: '75vh', position: 'relative' }}>
-        {children}
-        <Divider sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }} />
-      </main>
+      <main style={{ minHeight: '75vh' }}>{children}</main>
+      <Divider />
       <Container paddingY={4} component={'footer'}>
         <Footer />
       </Container>

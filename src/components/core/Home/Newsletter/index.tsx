@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import Container from 'components/system/Container';
 import { isEmail } from 'class-validator';
 import toast from 'react-hot-toast';
-import SendInBlue, { url } from '../../../../sendInBlue';
+import SendInBlue, { url } from '../../../../common/sendInBlue';
 import { useTranslation } from 'next-i18next';
 
 const Newsletter: React.FC = () => {

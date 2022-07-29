@@ -13,7 +13,7 @@ import SendInBlue, {
   contactFormCustomerTemplateId,
   contactFormMerchantTemplateId,
   url,
-} from '../../../../sendInBlue';
+} from '../../../../common/sendInBlue';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'next-i18next';
 
