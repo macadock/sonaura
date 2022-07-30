@@ -12,7 +12,11 @@ export const checkoutForm = yup.object({
   address: yup.string().trim().required(),
   country: yup.object().nullable().required(),
   city: yup.string().trim().required(),
-  postalCode: yup.string().required().length(5),
+  postalCode: yup
+    .string()
+    .required()
+    .matches(/^[0-9]+$/)
+    .length(5),
   hasBillingAddress: yup.boolean().required(),
   billingAddress: yup.string().when('hasBillingAddress', {
     is: (hasBillingAddress) => hasBillingAddress === true,
@@ -31,7 +35,11 @@ export const checkoutForm = yup.object({
   }),
   billingPostalCode: yup.string().when('hasBillingAddress', {
     is: (hasBillingAddress) => hasBillingAddress === true,
-    then: yup.string().required().length(5),
+    then: yup
+      .string()
+      .required()
+      .matches(/^[0-9]+$/)
+      .length(5),
   }),
 });
 
@@ -42,12 +50,12 @@ export const initialValues: checkoutFormTypes = {
   address: '',
   country: null,
   city: '',
-  postalCode: '06700',
+  postalCode: '',
   hasBillingAddress: false,
   billingAddress: '',
   billingCountry: null,
   billingCity: '',
-  billingPostalCode: '06700',
+  billingPostalCode: '',
 };
 
 export interface checkoutFormTypes {

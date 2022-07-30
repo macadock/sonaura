@@ -20,9 +20,12 @@ import { useFormikContext } from 'formik';
 const Orders = (): JSX.Element => {
   const theme = useTheme();
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
-  const { handleSubmit } = useFormikContext();
+  const { handleSubmit, isValid, dirty } = useFormikContext();
 
   const { isEmpty, items, cartTotal } = useCart();
+
+  const disabledCheckoutButton = isEmpty || !isValid || !dirty;
+
   const vat = cartTotal * 0.2;
 
   const ids = items.map((item) => item.id);
@@ -128,7 +131,7 @@ const Orders = (): JSX.Element => {
               </Typography>
             </Box>
             <Button
-              disabled={isEmpty}
+              disabled={disabledCheckoutButton}
               component={Link}
               onClick={() => {
                 handleSubmit();

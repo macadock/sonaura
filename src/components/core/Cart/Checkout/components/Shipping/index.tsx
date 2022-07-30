@@ -40,7 +40,9 @@ const Shipping: React.FC = () => {
                 onBlur={onBlur}
                 value={value}
                 error={touched && Boolean(error)}
-                helperText={touched && error ? t(`errors.${name}`) : null}
+                helperText={
+                  touched && error ? `${t(name)} ${t('notValid')}` : null
+                }
                 label={t(name)}
                 variant="outlined"
                 fullWidth
@@ -60,7 +62,9 @@ const Shipping: React.FC = () => {
                 onBlur={onBlur}
                 value={value}
                 error={touched && Boolean(error)}
-                helperText={touched && error ? t(`errors.${name}`) : null}
+                helperText={
+                  touched && error ? `${t(name)} ${t('notValid')}` : null
+                }
                 label={t(name)}
                 variant="outlined"
                 fullWidth
@@ -80,7 +84,9 @@ const Shipping: React.FC = () => {
                 onBlur={onBlur}
                 value={value}
                 error={touched && Boolean(error)}
-                helperText={touched && error ? t(`errors.${name}`) : null}
+                helperText={
+                  touched && error ? `${t(name)} ${t('notValid')}` : null
+                }
                 label={t(name)}
                 variant="outlined"
                 fullWidth
@@ -100,7 +106,9 @@ const Shipping: React.FC = () => {
                 onBlur={onBlur}
                 value={value}
                 error={touched && Boolean(error)}
-                helperText={touched && error ? t(`errors.${name}`) : null}
+                helperText={
+                  touched && error ? `${t(name)} ${t('notValid')}` : null
+                }
                 label={t(name)}
                 variant="outlined"
                 fullWidth
@@ -108,7 +116,7 @@ const Shipping: React.FC = () => {
             )}
           </Field>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <Field name={'country'}>
             {({ field: { name, onBlur, value } }: FieldProps) => (
               <Autocomplete
@@ -153,7 +161,29 @@ const Shipping: React.FC = () => {
             )}
           </Field>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
+          <Field name={'postalCode'}>
+            {({
+              field: { name, onBlur, onChange, value },
+              meta: { error, touched },
+            }: FieldProps) => (
+              <TextField
+                name={name}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                error={touched && Boolean(error)}
+                helperText={
+                  touched && error ? `${t(name)} ${t('notValid')}` : null
+                }
+                label={t(name)}
+                variant="outlined"
+                fullWidth
+              />
+            )}
+          </Field>
+        </Grid>
+        <Grid item xs={12} sm={4}>
           <Field name={'city'}>
             {({
               field: { name, onBlur, onChange, value },
@@ -165,7 +195,9 @@ const Shipping: React.FC = () => {
                 onBlur={onBlur}
                 value={value}
                 error={touched && Boolean(error)}
-                helperText={touched && error ? t(`errors.${name}`) : null}
+                helperText={
+                  touched && error ? `${t(name)} ${t('notValid')}` : null
+                }
                 label={t(name)}
                 variant="outlined"
                 fullWidth
@@ -173,7 +205,6 @@ const Shipping: React.FC = () => {
             )}
           </Field>
         </Grid>
-
         <Grid item xs={12}>
           <Divider />
         </Grid>
@@ -212,7 +243,9 @@ const Shipping: React.FC = () => {
                     onBlur={onBlur}
                     value={value}
                     error={touched && Boolean(error)}
-                    helperText={touched && error ? t(`errors.${name}`) : null}
+                    helperText={
+                      touched && error ? `${t(name)} ${t('notValid')}` : null
+                    }
                     label={t(name)}
                     variant="outlined"
                     fullWidth
@@ -277,7 +310,9 @@ const Shipping: React.FC = () => {
                     onBlur={onBlur}
                     value={value}
                     error={touched && Boolean(error)}
-                    helperText={touched && error ? t(`errors.${name}`) : null}
+                    helperText={
+                      touched && error ? `${t(name)} ${t('notValid')}` : null
+                    }
                     label={t(name)}
                     variant="outlined"
                     fullWidth

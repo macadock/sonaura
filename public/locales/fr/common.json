@@ -28,16 +28,21 @@
   "checkout": {
     "shippingAddress": "Adresse d'expédition",
     "orderSummary": "Résumé de la commande",
-    "fullName": "Nom complet",
-    "country": "Pays",
     "chooseCountry": "Choisissez un pays",
-    "city": "Ville",
-    "address": "Adresse",
+    "fullName": "Nom complet",
     "email": "Email",
     "phoneNumber": "Numéro de téléphone",
+    "address": "Adresse",
+    "country": "Pays",
+    "city": "Ville",
+    "postalCode":"Code postal",
     "billingAddressDifferent": "L'adresse de facturation est différente de l'adresse d'expédition",
     "billingAddress": "Adresse de facturation",
-    "redirectingToShop": "Votre panier est vide. Redirection vers le site"
+    "billingCountry": "Pays",
+    "billingCity": "Ville",
+    "billingPostalCode":"Code postal",
+    "redirectingToShop": "Votre panier est vide. Redirection vers le site",
+    "notValid": "non valide"
   },
   "footer": {
     "legalNotice": "Mentions légales",
