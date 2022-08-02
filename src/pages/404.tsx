@@ -1,4 +1,4 @@
-import TIME_TO_INVALIDATE_CACHE_SEC from '../constants';
+import TIME_TO_INVALIDATE_CACHE_SEC from '../appConstants';
 import Main from 'layouts/Main';
 import { NextPage } from 'next';
 import DefaultErrorPage from 'next/error';

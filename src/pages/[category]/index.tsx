@@ -1,6 +1,6 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from '../../../next-i18next.config';
-import TIME_TO_INVALIDATE_CACHE_SEC from '../../constants';
+import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { GetStaticPropsContext, NextPage } from 'next';
 import CategoryView from 'views/CategoryView';
 import { GET_CATEGORIES, GET_CATEGORY } from '../../gql/get-categories';

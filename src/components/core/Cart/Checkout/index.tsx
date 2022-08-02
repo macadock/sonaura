@@ -8,7 +8,8 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useCart } from 'react-use-cart';
 import Orders from './components/Orders';
 import Shipping from './components/Shipping';
@@ -18,74 +19,53 @@ import {
   initialValues,
 } from './checkout.validator';
 import { Formik } from 'formik';
-import { apiUrl, apiKey } from '../../../../common/payPlug';
+import LoadingScreen from 'components/system/LoadingScreen';
+import { formatPhoneNumber } from 'utils/phone-number';
+import { ApiUrls, getRoutePath } from 'appConstants';
+import toast from 'react-hot-toast';
+import CreatePaymentInput from 'common/payplug/dto/create-payment.input';
+import FormikSessionStorage from '../../../system/FormikSessionStorage';
 
 const Checkout: React.FC = () => {
   const { t } = useTranslation('common', { keyPrefix: 'checkout' });
   const router = useRouter();
 
+  const [paymentInProgress, setPaymentInProgress] = useState<boolean>(false);
+
   const { isEmpty, cartTotal } = useCart();
 
   const onSubmit = async (values: checkoutFormTypes) => {
-    const url = `${apiUrl}/payments`;
-    const formatedAmount = cartTotal * 100;
-    const {
-      fullName,
-      email,
-      address,
-      city,
-      postalCode,
-      country,
-      hasBillingAddress,
-      billingAddress,
-      billingCity,
-      billingCountry,
-      billingPostalCode,
-    } = values;
+    interface PaymentResponseBody {
+      hosted_payment: {
+        payment_url: string;
+      };
+    }
 
-    const headers: HeadersInit = {
-      Authorization: `Bearer ${apiKey}`,
-      'PayPlug-Version': '2019-08-06',
-      'Content-Type': 'application/json',
+    setPaymentInProgress(true);
+
+    const body: CreatePaymentInput = {
+      ...values,
+      phoneNumber: formatPhoneNumber(values.phoneNumber),
+      amount: cartTotal,
     };
 
-    const body = JSON.stringify({
-      amount: formatedAmount,
-      currency: 'EUR',
-      billing: {
-        first_name: fullName,
-        last_name: fullName,
-        email,
-        // add mobile_phone_number E164 standard,
-        address1: hasBillingAddress ? billingAddress : address,
-        postcode: hasBillingAddress ? billingPostalCode : postalCode,
-        city: hasBillingAddress ? billingCity : city,
-        country: hasBillingAddress ? billingCountry.code : country.code,
-        language: 'fr',
-      },
-      shipping: {
-        first_name: fullName,
-        last_name: fullName,
-        email,
-        // add mobile_phone_number E164 standard,
-        address1: address,
-        postcode: postalCode,
-        city: city,
-        country: country.code,
-        language: 'fr',
-        delivery_type: hasBillingAddress ? 'NEW' : 'BILLING',
-      },
-    });
+    try {
+      const { data, status } = await axios.post<PaymentResponseBody>(
+        getRoutePath({ api: ApiUrls.MAKE_PAYMENT }),
+        body,
+      );
 
-    console.log(url, body, headers);
+      if (status !== 201) {
+        toast.error('Erreur lors du paiement');
+        setPaymentInProgress(false);
+        return;
+      }
 
-    const payment = await fetch(url, {
-      method: 'POST',
-      headers,
-      body,
-    });
-
-    console.log(payment);
+      router.push(data.hosted_payment.payment_url);
+    } catch (e) {
+      toast.error('Erreur lors du paiement');
+      setPaymentInProgress(false);
+    }
   };
 
   useEffect(() => {
@@ -93,6 +73,10 @@ const Checkout: React.FC = () => {
       router.replace('/');
     }
   }, [isEmpty]);
+
+  if (paymentInProgress) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Container>
@@ -130,6 +114,7 @@ const Checkout: React.FC = () => {
               </Grid>
             ) : (
               <>
+                <FormikSessionStorage uniqueName={'checkout'} />
                 <Grid item xs={12} md={7}>
                   <Grid container spacing={4}>
                     <Grid item xs={12}>

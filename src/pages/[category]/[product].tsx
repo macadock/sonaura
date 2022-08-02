@@ -7,7 +7,7 @@ import { Categories } from '../../gql/__generated__/categories';
 import { Pages } from '../../gql/__generated__/pages';
 import { Product } from '../../gql/__generated__/product';
 import getNavbarItems from '../../components/system/_getNavbarItems';
-import TIME_TO_INVALIDATE_CACHE_SEC from '../../constants';
+import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import Main from '../../layouts/Main';
 import ProductView from '../../views/ProductView';
 import { client } from '../_app';

@@ -1,6 +1,6 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from '../../../next-i18next.config';
-import TIME_TO_INVALIDATE_CACHE_SEC from '../../constants';
+import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import Main from 'layouts/Main';
 import type { NextPage } from 'next';
 import getNavbarItems from '../../components/system/_getNavbarItems';

@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import 'yup-phone-lite';
 
 export type Country = {
   code: string;
@@ -6,9 +7,10 @@ export type Country = {
 };
 
 export const checkoutForm = yup.object({
-  fullName: yup.string().trim().min(2).required(),
+  firstName: yup.string().trim().required(),
+  lastName: yup.string().trim().required(),
   email: yup.string().trim().email().required(),
-  phoneNumber: yup.string().trim().min(10).required(),
+  phoneNumber: yup.string().phone('FR').required(),
   address: yup.string().trim().required(),
   country: yup.object().nullable().required(),
   city: yup.string().trim().required(),
@@ -17,58 +19,26 @@ export const checkoutForm = yup.object({
     .required()
     .matches(/^[0-9]+$/)
     .length(5),
-  hasBillingAddress: yup.boolean().required(),
-  billingAddress: yup.string().when('hasBillingAddress', {
-    is: (hasBillingAddress) => hasBillingAddress === true,
-    then: yup.string().trim().required(),
-  }),
-  billingCountry: yup
-    .object()
-    .nullable()
-    .when('hasBillingAddress', {
-      is: (hasBillingAddress) => hasBillingAddress === true,
-      then: yup.object().nullable().required(),
-    }),
-  billingCity: yup.string().when('hasBillingAddress', {
-    is: (hasBillingAddress) => hasBillingAddress === true,
-    then: yup.string().trim().required(),
-  }),
-  billingPostalCode: yup.string().when('hasBillingAddress', {
-    is: (hasBillingAddress) => hasBillingAddress === true,
-    then: yup
-      .string()
-      .required()
-      .matches(/^[0-9]+$/)
-      .length(5),
-  }),
 });
 
 export const initialValues: checkoutFormTypes = {
-  fullName: '',
+  firstName: '',
+  lastName: '',
   email: '',
   phoneNumber: '',
   address: '',
   country: null,
   city: '',
   postalCode: '',
-  hasBillingAddress: false,
-  billingAddress: '',
-  billingCountry: null,
-  billingCity: '',
-  billingPostalCode: '',
 };
 
 export interface checkoutFormTypes {
-  fullName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phoneNumber: string;
   address: string;
   country: Country;
   city: string;
   postalCode: string;
-  hasBillingAddress: boolean;
-  billingAddress: string;
-  billingCountry: Country;
-  billingCity: string;
-  billingPostalCode: string;
 }

@@ -1,65 +1,71 @@
-import axios, { AxiosRequestHeaders } from 'axios';
-import { checkoutFormTypes } from '../../components/core/Cart/Checkout/checkout.validator';
-
-export const apiUrl = process.env.NEXT_PUBLIC_PAYPLUG_API_URL;
-export const apiKey = process.env.NEXT_PUBLIC_PAYPLUG_SECRET_KEY;
-
-// const websiteUrl = process.env.NEXT_PUBLIC_WEBSITE_URL;
+import { getRoutePath, PagesUrls, payplugApi, payplugKey } from 'appConstants';
+import CreatePaymentInput from './dto/create-payment.input';
 
 export default class PayPlug {
-  static makePayment(amount: number, values: checkoutFormTypes) {
-    const url = `${apiUrl}/payments`;
-    const formatedAmount = amount * 100;
+  private static getHeaders(): Headers {
+    const headers = new Headers();
+    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', `Bearer ${payplugKey}`);
+    headers.append('PayPlug-Version', '2019-08-06');
+
+    return headers;
+  }
+
+  public static makePayment(
+    createPaymentInput: CreatePaymentInput,
+  ): Promise<Response> {
+    const url = `${payplugApi}/payments`;
+    const cancelUrl = getRoutePath({ page: PagesUrls.CHECKOUT_PAGE });
+    const returnUrl = getRoutePath({ page: PagesUrls.SUCCESS_PAYMENT_PAGE });
+
     const {
-      fullName,
+      firstName,
+      lastName,
       email,
+      phoneNumber,
       address,
       city,
       postalCode,
       country,
-      hasBillingAddress,
-      billingAddress,
-      billingCity,
-      billingCountry,
-      billingPostalCode,
-    } = values;
+      amount,
+    } = createPaymentInput;
 
-    const headers: AxiosRequestHeaders = {
-      Authorization: `Bearer ${apiKey}`,
-      'PayPlug-Version': '2019-08-06',
-      'Content-Type': 'application/json',
+    const formattedAmount = amount * 100;
+
+    const addressInput = {
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      mobile_phone_number: phoneNumber,
+      address1: address,
+      postcode: postalCode,
+      city: city,
+      country: country.code,
+      language: 'fr',
     };
 
     const body = JSON.stringify({
-      amount: formatedAmount,
+      amount: formattedAmount,
       currency: 'EUR',
       billing: {
-        first_name: fullName,
-        last_name: fullName,
-        email,
-        // add mobile_phone_number E164 standard,
-        address1: hasBillingAddress ? billingAddress : address,
-        postcode: hasBillingAddress ? billingPostalCode : postalCode,
-        city: hasBillingAddress ? billingCity : city,
-        country: hasBillingAddress ? billingCountry.code : country.code,
-        language: 'fr',
+        ...addressInput,
       },
       shipping: {
-        first_name: fullName,
-        last_name: fullName,
-        email,
-        // add mobile_phone_number E164 standard,
-        address1: address,
-        postcode: postalCode,
-        city: city,
-        country: country.code,
-        language: 'fr',
-        delivery_type: hasBillingAddress ? 'NEW' : 'BILLING',
+        ...addressInput,
+        delivery_type: 'SHIP_TO_STORE',
+      },
+      hosted_payment: {
+        cancel_url: cancelUrl,
+        return_url: returnUrl,
       },
     });
 
-    const payment = axios.post(url, body, headers);
-
-    console.log(payment);
+    return fetch(url, {
+      method: 'POST',
+      headers: this.getHeaders(),
+      mode: 'no-cors',
+      body,
+    });
   }
 }
