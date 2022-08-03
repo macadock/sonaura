@@ -1,7 +1,7 @@
 import {
   checkoutFormTypes,
   Country,
-} from 'components/core/Cart/Checkout/checkout.validator';
+} from 'components/core/Checkout/checkout.validator';
 
 export default class CreatePaymentInput implements checkoutFormTypes {
   firstName: string;

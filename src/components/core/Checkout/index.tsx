@@ -23,11 +23,13 @@ import LoadingScreen from 'components/system/LoadingScreen';
 import { formatPhoneNumber } from 'utils/phone-number';
 import { ApiUrls, getRoutePath } from 'appConstants';
 import toast from 'react-hot-toast';
-import FormikSessionStorage from '../../../system/FormikSessionStorage';
+import FormikSessionStorage from '../../system/FormikSessionStorage';
 import CreatePaymentInput from 'PayPlug/dto/create-payment.input';
 
+export const uniqueName = 'checkout';
+
 const Checkout: React.FC = () => {
-  const { t } = useTranslation('common', { keyPrefix: 'checkout' });
+  const { t } = useTranslation('checkout');
   const router = useRouter();
 
   const [paymentInProgress, setPaymentInProgress] = useState<boolean>(false);
@@ -56,14 +58,14 @@ const Checkout: React.FC = () => {
       );
 
       if (status !== 201) {
-        toast.error('Erreur lors du paiement');
+        toast.error(t('error'));
         setPaymentInProgress(false);
         return;
       }
 
       router.push(data.hosted_payment.payment_url);
     } catch (e) {
-      toast.error('Erreur lors du paiement');
+      toast.error(t('error'));
       setPaymentInProgress(false);
     }
   };
@@ -75,7 +77,7 @@ const Checkout: React.FC = () => {
   }, [isEmpty]);
 
   if (paymentInProgress) {
-    return <LoadingScreen />;
+    return <LoadingScreen loadingText={t('inProgress')} />;
   }
 
   return (
@@ -114,7 +116,7 @@ const Checkout: React.FC = () => {
               </Grid>
             ) : (
               <>
-                <FormikSessionStorage uniqueName={'checkout'} />
+                <FormikSessionStorage uniqueName={uniqueName} />
                 <Grid item xs={12} md={7}>
                   <Grid container spacing={4}>
                     <Grid item xs={12}>

@@ -1,18 +1,10 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from '../../../../next-i18next.config';
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { Box, Container } from '@mui/material';
+import SuccessCheckoutView from '../../../views/SuccessCheckoutView';
 
 const Contact: NextPage = () => {
-  const router = useRouter();
-  const orderId = router.query.orderId;
-
-  return (
-    <Container>
-      <Box>{`Success for order ${orderId}`}</Box>
-    </Container>
-  );
+  return <SuccessCheckoutView />;
 };
 
 export const getStaticProps = async ({ locale }) => {
