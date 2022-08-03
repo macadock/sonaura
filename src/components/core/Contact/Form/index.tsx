@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'next-i18next';
 import { ApiUrls, getRoutePath } from 'appConstants';
-import SendEmailInput from 'common/send-in-blue/dto/send-customer-email.input';
+import SendEmailInput from 'SendInBlue/dto/send-customer-email.input';
 import {
   contactForm,
   contactFormTypes,
