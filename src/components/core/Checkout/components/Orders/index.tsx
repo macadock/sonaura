@@ -11,15 +11,15 @@ import { useQuery } from '@apollo/client';
 import {
   GetProductsByIds,
   GetProductsByIdsVariables,
-} from '../../../../../../gql/__generated__/get-products-by-ids';
-import { GET_PRODUCTS_BY_IDS } from '../../../../../../gql/get-products';
+} from '../../../../../gql/__generated__/get-products-by-ids';
+import { GET_PRODUCTS_BY_IDS } from '../../../../../gql/get-products';
 import { useTranslation } from 'next-i18next';
-import Price from '../../../../../../utils/Price';
+import Price from '../../../../../utils/Price';
 import { useFormikContext } from 'formik';
 
 const Orders = (): JSX.Element => {
   const theme = useTheme();
-  const { t } = useTranslation('common', { keyPrefix: 'cart' });
+  const { t } = useTranslation('checkout');
   const { handleSubmit, isValid, dirty } = useFormikContext();
 
   const { isEmpty, items, cartTotal } = useCart();

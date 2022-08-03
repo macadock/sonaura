@@ -16,7 +16,7 @@ export const countries: Country[] = [
 ];
 
 const Shipping: React.FC = () => {
-  const { t } = useTranslation('common', { keyPrefix: 'checkout' });
+  const { t } = useTranslation('checkout');
 
   const { setFieldValue } = useFormikContext<checkoutFormTypes>();
 
@@ -67,7 +67,7 @@ const Shipping: React.FC = () => {
             )}
           </Field>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <Field name={'email'}>
             {({
               field: { name, onBlur, onChange, value },
@@ -89,7 +89,7 @@ const Shipping: React.FC = () => {
             )}
           </Field>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <Field name={'phoneNumber'}>
             {({
               field: { name, onBlur, onChange, value },

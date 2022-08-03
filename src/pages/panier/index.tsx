@@ -17,7 +17,11 @@ const Contact: NextPage = () => {
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
+      ...(await serverSideTranslations(
+        locale,
+        ['common', 'checkout'],
+        i18nConfig,
+      )),
     },
     revalidate: TIME_TO_INVALIDATE_CACHE_SEC,
   };
