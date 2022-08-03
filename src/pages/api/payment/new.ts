@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import PayPlug from 'common/payplug';
-import CreatePaymentInput from 'common/payplug/dto/create-payment.input';
+import PayPlug from 'PayPlug';
+import CreatePaymentInput from 'PayPlug/dto/create-payment.input';
 
 export default async function handler(
   req: NextApiRequest,

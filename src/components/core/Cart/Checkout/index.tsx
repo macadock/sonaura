@@ -24,7 +24,7 @@ import { formatPhoneNumber } from 'utils/phone-number';
 import { ApiUrls, getRoutePath } from 'appConstants';
 import toast from 'react-hot-toast';
 import FormikSessionStorage from '../../../system/FormikSessionStorage';
-import CreatePaymentInput from 'common/payplug/dto/create-payment.input';
+import CreatePaymentInput from 'PayPlug/dto/create-payment.input';
 
 const Checkout: React.FC = () => {
   const { t } = useTranslation('common', { keyPrefix: 'checkout' });
