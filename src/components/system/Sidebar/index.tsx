@@ -10,16 +10,8 @@ interface Props {
   onClose: () => void;
   open: boolean;
   variant: 'permanent' | 'persistent' | 'temporary' | undefined;
-  pages: Pages;
-  categories: Categories;
-  // pages: {
-  //   landings: Array<PageItem>;
-  //   company: Array<PageItem>;
-  //   account: Array<PageItem>;
-  //   secondary: Array<PageItem>;
-  //   blog: Array<PageItem>;
-  //   portfolio: Array<PageItem>;
-  // };
+  pages: Pages['pages'];
+  categories: Categories['categories'];
 }
 
 const Sidebar: React.FC<Props> = ({
@@ -49,7 +41,7 @@ const Sidebar: React.FC<Props> = ({
         }}
       >
         {pages && categories && (
-          <SidebarNav pages={pages.pages} categories={categories.categories} />
+          <SidebarNav pages={pages} categories={categories} />
         )}
       </Box>
     </Drawer>

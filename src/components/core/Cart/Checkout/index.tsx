@@ -23,8 +23,8 @@ import LoadingScreen from 'components/system/LoadingScreen';
 import { formatPhoneNumber } from 'utils/phone-number';
 import { ApiUrls, getRoutePath } from 'appConstants';
 import toast from 'react-hot-toast';
-import CreatePaymentInput from 'common/payplug/dto/create-payment.input';
 import FormikSessionStorage from '../../../system/FormikSessionStorage';
+import CreatePaymentInput from '../../../../common/payplug/dto/create-payment.input';
 
 const Checkout: React.FC = () => {
   const { t } = useTranslation('common', { keyPrefix: 'checkout' });

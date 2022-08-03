@@ -18,8 +18,8 @@ import { useCart } from 'react-use-cart';
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
   onSidebarOpen: () => void;
-  pages: Pages;
-  categories: Categories;
+  pages: Pages['pages'];
+  categories: Categories['categories'];
   colorInvert?: boolean;
 }
 
@@ -69,18 +69,18 @@ const Topbar: React.FC<Props> = ({
       </Box>
 
       <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems={'center'}>
-        {categories.categories.length !== 0 && (
+        {categories && categories.length !== 0 && (
           <Box>
             <NavItem
               title={t('categories.title')}
               id={'categories-pages'}
-              items={categories.categories}
+              items={categories}
               colorInvert={colorInvert}
             />
           </Box>
         )}
         {pages &&
-          pages.pages.map((page) => (
+          pages.map((page) => (
             <Box key={page.id}>
               <Link
                 sx={{ paddingX: '1rem' }}
