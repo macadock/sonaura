@@ -1,31 +1,21 @@
-import TIME_TO_INVALIDATE_CACHE_SEC from '../constants';
-import Main from 'layouts/Main';
 import { NextPage } from 'next';
-import DefaultErrorPage from 'next/error';
-import getNavbarItems from '../components/system/_getNavbarItems';
-import { Categories } from '../gql/__generated__/categories';
-import { Pages } from '../gql/__generated__/pages';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import i18nConfig from '../../next-i18next.config';
+import { Container, Typography } from '@mui/material';
 
-const Custom404: NextPage<{ categories: Categories; pages: Pages }> = ({
-  categories,
-  pages,
-}) => {
+const Custom404: NextPage = () => {
   return (
-    <Main categories={categories} pages={pages}>
-      <DefaultErrorPage statusCode={404} />
-    </Main>
+    <Container sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Typography variant={'h2'}>{'Erreur 404'}</Typography>
+    </Container>
   );
 };
 
-export const getStaticProps = async () => {
-  const { categories, pages } = await getNavbarItems();
-
+export const getStaticProps = async ({ locale }) => {
   return {
     props: {
-      categories,
-      pages,
+      ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
     },
-    revalidate: TIME_TO_INVALIDATE_CACHE_SEC,
   };
 };
 

@@ -8,21 +8,64 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useCart } from 'react-use-cart';
 import Orders from './components/Orders';
 import Shipping from './components/Shipping';
-import { checkoutForm, initialValues } from './checkout.validator';
+import {
+  checkoutForm,
+  checkoutFormTypes,
+  initialValues,
+} from './checkout.validator';
 import { Formik } from 'formik';
+import LoadingScreen from 'components/system/LoadingScreen';
+import { formatPhoneNumber } from 'utils/phone-number';
+import { ApiUrls, getRoutePath } from 'appConstants';
+import toast from 'react-hot-toast';
+import FormikSessionStorage from '../../../system/FormikSessionStorage';
+import CreatePaymentInput from 'common/payplug/dto/create-payment.input';
 
 const Checkout: React.FC = () => {
   const { t } = useTranslation('common', { keyPrefix: 'checkout' });
   const router = useRouter();
 
-  const { isEmpty } = useCart();
+  const [paymentInProgress, setPaymentInProgress] = useState<boolean>(false);
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const { isEmpty, cartTotal } = useCart();
+
+  const onSubmit = async (values: checkoutFormTypes) => {
+    interface PaymentResponseBody {
+      hosted_payment: {
+        payment_url: string;
+      };
+    }
+
+    setPaymentInProgress(true);
+
+    const body: CreatePaymentInput = {
+      ...values,
+      phoneNumber: formatPhoneNumber(values.phoneNumber),
+      amount: cartTotal,
+    };
+
+    try {
+      const { data, status } = await axios.post<PaymentResponseBody>(
+        getRoutePath({ api: ApiUrls.MAKE_PAYMENT }),
+        body,
+      );
+
+      if (status !== 201) {
+        toast.error('Erreur lors du paiement');
+        setPaymentInProgress(false);
+        return;
+      }
+
+      router.push(data.hosted_payment.payment_url);
+    } catch (e) {
+      toast.error('Erreur lors du paiement');
+      setPaymentInProgress(false);
+    }
   };
 
   useEffect(() => {
@@ -30,6 +73,10 @@ const Checkout: React.FC = () => {
       router.replace('/');
     }
   }, [isEmpty]);
+
+  if (paymentInProgress) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Container>
@@ -67,6 +114,7 @@ const Checkout: React.FC = () => {
               </Grid>
             ) : (
               <>
+                <FormikSessionStorage uniqueName={'checkout'} />
                 <Grid item xs={12} md={7}>
                   <Grid container spacing={4}>
                     <Grid item xs={12}>

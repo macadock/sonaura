@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
@@ -9,8 +10,8 @@ import { useTheme } from '@mui/material/styles';
 import Container from 'components/system/Container';
 import { isEmail } from 'class-validator';
 import toast from 'react-hot-toast';
-import SendInBlue, { url } from '../../../../common/sendInBlue';
 import { useTranslation } from 'next-i18next';
+import { ApiUrls, getRoutePath } from '../../../../appConstants';
 
 const Newsletter: React.FC = () => {
   const { t } = useTranslation('homepage', { keyPrefix: 'newsletter' });
@@ -21,13 +22,10 @@ const Newsletter: React.FC = () => {
 
   const handleSubscribe = async () => {
     if (isValid) {
-      const { getHeaders, getBodyNewsletterSubscription } = SendInBlue;
-
-      const subscribe = fetch(`${url}contacts/doubleOptinConfirmation`, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: getBodyNewsletterSubscription(email),
-      });
+      const subscribe = axios.post(
+        getRoutePath({ api: ApiUrls.SUBSCRIBE_NEWSLETTER }),
+        { email },
+      );
 
       toast.promise(subscribe, {
         loading: t('loading'),

@@ -1,24 +1,19 @@
 {
     "title": "Contactez-nous",
     "subtitle": "Nos experts Bang & Olufsen répondent à vos questions et vous aident à gagner du temps.",
+    "firstName": "Prénom",
+    "lastName": "Nom",
     "phone": "Téléphone",
     "email": "E-mail",
+    "message": "Message",
+    "messagePlaceholder": "Votre question à propos de nos services",
     "address": "Adresse",
+    "formTitle": "Vous ne trouvez pas de réponse à vos questions ?",
     "form": {
-        "title": "Vous ne trouvez pas de réponse à vos questions ?",
-        "input": {
-            "name": "Nom complet",
-            "email": "E-mail",
-            "message": "Message"
-        },
-        "placeholder": {
-            "name": "Prénom et Nom",
-            "email": "Adresse e-mail",
-            "message": "Votre question à propos de nos services"
-        },
         "send": "Envoyer",
         "loading": "Envoi en cours...",
         "success": "Message envoyé",
-        "error": "Erreur. Merci de réessayer."
+        "error": "Erreur. Merci de réessayer.",
+        "notValid": "non valide"
     }
 }

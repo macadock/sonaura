@@ -13,26 +13,31 @@ import { Categories } from '../../gql/__generated__/categories';
 import Topbar from 'components/system/Topbar';
 import Sidebar from 'components/system/Sidebar';
 import Footer from 'components/system/Footer';
+import { useQuery } from '@apollo/client';
+import { GET_CATEGORIES } from '../../gql/get-categories';
+import { GET_PAGES_HEADER } from '../../gql/get-pages';
 
 interface Props {
   children: React.ReactNode;
   colorInvert?: boolean;
   bgcolor?: string;
-  categories: Categories;
-  pages: Pages;
 }
 
 const Main: React.FC<Props> = ({
   children,
   colorInvert = false,
   bgcolor = 'transparent',
-  categories,
-  pages,
 }) => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
   });
+
+  const { data: { categories } = { categories: null } } =
+    useQuery<Categories>(GET_CATEGORIES);
+
+  const { data: { pages } = { pages: null } } =
+    useQuery<Pages>(GET_PAGES_HEADER);
 
   const [openSidebar, setOpenSidebar] = useState(false);
 

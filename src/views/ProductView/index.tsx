@@ -5,6 +5,7 @@ import Container from '../../components/system/Container';
 import ProductDetails from '../../components/core/Product/ProductDetails';
 import { Product } from '../../gql/__generated__/product';
 import { Breadcrumbs, Link } from '@mui/material';
+import { merchantName } from 'appConstants';
 
 interface Props {
   product: Product;
@@ -17,7 +18,7 @@ const ProductView: React.FC<Props> = ({ product }) => {
       <Box>
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/">
-            {process.env.NEXT_PUBLIC_MERCHANT_NAME}
+            {merchantName}
           </Link>
           <Link underline="hover" color="inherit" href={`/${category.slug}`}>
             {category.name}
