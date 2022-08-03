@@ -12,7 +12,9 @@ const Home: NextPage<{ categories: Categories }> = ({ categories }) => {
 };
 
 export const getStaticProps = async ({ locale }) => {
-  const categories = await client.query<Categories>({ query: GET_CATEGORIES });
+  const { data: categories } = await client.query<Categories>({
+    query: GET_CATEGORIES,
+  });
 
   return {
     props: {
