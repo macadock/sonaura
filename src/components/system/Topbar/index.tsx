@@ -14,6 +14,7 @@ import CartDrawer from '../../core/Cart/CartDrawer';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useCart } from 'react-use-cart';
+import pagesToExcludeFromMenu from './exlude-from-menu';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -33,12 +34,31 @@ const Topbar: React.FC<Props> = ({
   const [cartState, setCartState] = useState<boolean>(false);
   const theme = useTheme();
   const { mode } = theme.palette;
-  const { route } = useRouter();
+  const { asPath } = useRouter();
   const { isEmpty } = useCart();
 
   const handleCart = () => {
     setCartState(!cartState);
   };
+
+  const customPages: Pages['pages'] = [];
+
+  if (categories && pages) {
+    pagesToExcludeFromMenu.forEach((exclude) => {
+      const category = categories.find((c) => c.slug === exclude.slug);
+      if (category !== undefined) {
+        customPages.push({
+          id: category.id,
+          name: category.slug,
+          pageType: 'Page',
+          title: exclude.name,
+          url: `/${category.slug}`,
+        });
+      }
+    });
+
+    customPages.push(...pages);
+  }
 
   return (
     <Box
@@ -79,8 +99,8 @@ const Topbar: React.FC<Props> = ({
             />
           </Box>
         )}
-        {pages &&
-          pages.map((page) => (
+        {customPages &&
+          customPages.map((page) => (
             <Box key={page.id}>
               <Link
                 sx={{ paddingX: '1rem' }}
@@ -88,7 +108,7 @@ const Topbar: React.FC<Props> = ({
                 component="a"
                 href={page.url}
                 color={colorInvert ? 'common.white' : 'text.primary'}
-                fontWeight={route.includes(page.url) ? 700 : 400}
+                fontWeight={asPath.includes(page.url) ? 700 : 400}
               >
                 {page.title}
               </Link>

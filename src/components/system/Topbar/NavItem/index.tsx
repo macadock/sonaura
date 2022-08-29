@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { CategoryFragment } from '../../../../gql/__generated__/categories';
 import { useRouter } from 'next/router';
+import pagesToExcludeFromMenu from '../exlude-from-menu';
 
 interface Props {
   title: string;
@@ -43,8 +44,14 @@ const NavItem: React.FC<Props> = ({
     setActiveLink(window && window.location ? window.location.pathname : '');
   }, []);
 
+  const pageIsExcluded = Boolean(
+    pagesToExcludeFromMenu.find((page) => `/${page.slug}` === router.asPath),
+  );
+
   const hasActiveLink = () =>
-    items.find((i) => i.slug.includes(router?.query?.category as string));
+    pageIsExcluded
+      ? false
+      : items.find((i) => i.slug.includes(router?.query?.category as string));
   const linkColor = colorInvert ? 'common.white' : 'text.primary';
 
   return (
@@ -100,31 +107,35 @@ const NavItem: React.FC<Props> = ({
         }}
       >
         <Grid container spacing={0.5}>
-          {items.map((p, i) => (
-            <Grid item key={i} xs={items.length > 12 ? 6 : 12}>
-              <Button
-                component={'a'}
-                href={`/${p.slug}`}
-                fullWidth
-                sx={{
-                  justifyContent: 'flex-start',
-                  color:
-                    activeLink === p.slug
-                      ? theme.palette.primary.main
-                      : theme.palette.text.primary,
-                  backgroundColor:
-                    activeLink === p.slug
-                      ? alpha(theme.palette.primary.main, 0.1)
-                      : 'transparent',
-                  fontWeight: p.slug.includes(router?.query.category as string)
-                    ? 600
-                    : 400,
-                }}
-              >
-                {p.name}
-              </Button>
-            </Grid>
-          ))}
+          {items.map((p, i) =>
+            p.slug !== 'occasion' ? (
+              <Grid item key={i} xs={items.length > 12 ? 6 : 12}>
+                <Button
+                  component={'a'}
+                  href={`/${p.slug}`}
+                  fullWidth
+                  sx={{
+                    justifyContent: 'flex-start',
+                    color:
+                      activeLink === p.slug
+                        ? theme.palette.primary.main
+                        : theme.palette.text.primary,
+                    backgroundColor:
+                      activeLink === p.slug
+                        ? alpha(theme.palette.primary.main, 0.1)
+                        : 'transparent',
+                    fontWeight: p.slug.includes(
+                      router?.query.category as string,
+                    )
+                      ? 600
+                      : 400,
+                  }}
+                >
+                  {p.name}
+                </Button>
+              </Grid>
+            ) : null,
+          )}
         </Grid>
       </Popover>
     </Box>

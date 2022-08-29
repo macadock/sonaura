@@ -20,6 +20,11 @@ export default async function handler(
         newsletterSubscriptionInput,
       );
 
+      if (subscription.status === 204) {
+        res.status(204).end();
+        return;
+      }
+
       res.status(subscription.status).json(await subscription.json());
     } catch (e) {
       res.status(500).json({});

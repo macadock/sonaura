@@ -42,11 +42,16 @@ const ProfessionalsView: React.FC = () => {
         bgcolor={'alternate.main'}
         marginTop={-13}
         paddingTop={13}
+        position={'relative'}
       >
         <Container>
           <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
             <Welcome />
-            <Box marginTop={4}>
+            <Box
+              marginTop={4}
+              position={'absolute'}
+              bottom={{ xs: '0', sm: '2rem' }}
+            >
               <NoSsr>
                 <Box
                   component={'svg'}

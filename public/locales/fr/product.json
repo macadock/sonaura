@@ -11,6 +11,7 @@
     },
     "new": "nouveau",
     "addToCart": "Ajouter au panier",
+    "pricePreOwnedConditions": "prix hors livraison et installation",
     "addedToCart": "Ajouté au panier",
     "attributes": {
         "size": "Taille",
