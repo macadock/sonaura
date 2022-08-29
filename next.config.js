@@ -13,6 +13,14 @@ const moduleExports = {
     domains: ['media.graphassets.com'],
   },
   i18n,
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: '/api/sitemap',
+      },
+    ]
+  },
 };
 
 const sentryWebpackPluginOptions = {
