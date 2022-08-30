@@ -1,13 +1,17 @@
 import { globby } from 'globby';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { GET_CATEGORIES } from '../../gql/get-categories';
 import { GET_PRODUCTS } from '../../gql/get-products';
 import { Categories } from '../../gql/__generated__/categories';
 import { Products } from '../../gql/__generated__/products';
 import { client } from '../_app';
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/xml');
+  res.setHeader('Content-Type', 'application/xml');
 
   // Instructing the Vercel edge to cache the file
   res.setHeader('Cache-control', 'stale-while-revalidate, s-maxage=3600');
