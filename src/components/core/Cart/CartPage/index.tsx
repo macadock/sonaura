@@ -64,6 +64,19 @@ const CartPage: React.FC = () => {
             ) : (
               <Orders products={products} />
             )}
+            <Box marginTop={'3rem'} display={'flex'} flexDirection={'column'}>
+              <Typography variant={'body2'} fontWeight={'bold'}>
+                {t('noDelivery')}
+              </Typography>
+              <Typography variant={'body2'}>
+                {t('contactUsToCollect')}
+              </Typography>
+              <Typography variant={'body2'}>
+                <Link href={'/contact'} target={'_blank'}>
+                  {t('ourShops')}
+                </Link>
+              </Typography>
+            </Box>
           </Grid>
           {isEmpty ? null : (
             <Grid item xs={12} md={4}>

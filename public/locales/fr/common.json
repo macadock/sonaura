@@ -15,7 +15,10 @@
     "product_one": "{{ count }} produit d'occasion",
     "product_other": "{{ count }} produits d'occasion",
     "discoverPreOwnedProducts": "Découvrez nos produits d'occasion",
-    "close": "Fermer"
+    "close": "Fermer",
+    "noDelivery": "Nos produits d'occasion ne font pas l'objet d'une livraison.",
+    "contactUsToCollect": "Merci de nous contacter pour les modalités de retrait.",
+    "ourShops": "Nos boutiques."
   },
   "footer": {
     "legalNotice": "Mentions légales",

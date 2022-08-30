@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from '@mui/material/styles';
+import { alpha, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -20,14 +20,9 @@ import { GET_PAGES_HEADER } from '../../gql/get-pages';
 interface Props {
   children: React.ReactNode;
   colorInvert?: boolean;
-  bgcolor?: string;
 }
 
-const Main: React.FC<Props> = ({
-  children,
-  colorInvert = false,
-  bgcolor = 'transparent',
-}) => {
+const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
@@ -62,7 +57,9 @@ const Main: React.FC<Props> = ({
         position={'sticky'}
         sx={{
           top: 0,
-          backgroundColor: trigger ? theme.palette.background.paper : bgcolor,
+          backgroundColor: trigger
+            ? alpha(theme.palette.background.paper, 1)
+            : alpha(theme.palette.background.paper, 0.4),
         }}
         elevation={trigger ? 1 : 0}
       >

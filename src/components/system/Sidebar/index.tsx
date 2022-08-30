@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import SidebarNav from './SidebarNav';
 import { Pages } from '../../../gql/__generated__/pages';
 import { Categories } from '../../../gql/__generated__/categories';
+import moveCategoryToPage from '../Topbar/exlude-from-menu';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -21,6 +22,8 @@ const Sidebar: React.FC<Props> = ({
   variant,
   onClose,
 }) => {
+  const [customCategories, customPages] = moveCategoryToPage(categories, pages);
+
   return (
     <Drawer
       anchor="left"
@@ -41,7 +44,7 @@ const Sidebar: React.FC<Props> = ({
         }}
       >
         {pages && categories && (
-          <SidebarNav pages={pages} categories={categories} />
+          <SidebarNav pages={customPages} categories={customCategories} />
         )}
       </Box>
     </Drawer>

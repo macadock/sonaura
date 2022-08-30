@@ -9,7 +9,7 @@ interface Props {
   installations: Installations;
 }
 
-const PortfolioMasonry: React.FC<Props> = ({ installations }) => {
+const InstallationView: React.FC<Props> = ({ installations }) => {
   return (
     <React.Fragment>
       <Hero />
@@ -20,4 +20,4 @@ const PortfolioMasonry: React.FC<Props> = ({ installations }) => {
   );
 };
 
-export default PortfolioMasonry;
+export default InstallationView;

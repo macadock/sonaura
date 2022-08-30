@@ -45,7 +45,7 @@ const NavItem: React.FC<Props> = ({ title, items }: Props) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: 0 }}>
-          <Grid container spacing={1}>
+          <Grid container spacing={0} marginBottom={1}>
             {items.map((p, i) => (
               <Grid item key={i} xs={12}>
                 <Button

@@ -87,8 +87,6 @@ const ProfessionalsView: React.FC = () => {
         <Image
           className={'jarallax-img'}
           src={'https://media.graphassets.com/izREvI8T72Nismbx2bXg'}
-          height={'100%'}
-          width={'100%'}
           layout={'fill'}
           objectFit={'cover'}
         />
@@ -108,8 +106,6 @@ const ProfessionalsView: React.FC = () => {
         <Image
           className={'jarallax-img'}
           src={'https://media.graphassets.com/jPoZthdR6qwNsfe5Ipuw'}
-          height={'100%'}
-          width={'100%'}
           layout={'fill'}
           objectFit={'cover'}
         />
@@ -131,8 +127,6 @@ const ProfessionalsView: React.FC = () => {
         <Image
           className={'jarallax-img'}
           src={'https://media.graphassets.com/q3KUbWoRQpqgTEmdclCa'}
-          height={'100%'}
-          width={'100%'}
           layout={'fill'}
           objectFit={'cover'}
         />

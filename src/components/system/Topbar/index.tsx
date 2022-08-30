@@ -14,7 +14,7 @@ import CartDrawer from '../../core/Cart/CartDrawer';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useCart } from 'react-use-cart';
-import pagesToExcludeFromMenu from './exlude-from-menu';
+import moveCategoryToPage from './exlude-from-menu';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -41,24 +41,7 @@ const Topbar: React.FC<Props> = ({
     setCartState(!cartState);
   };
 
-  const customPages: Pages['pages'] = [];
-
-  if (categories && pages) {
-    pagesToExcludeFromMenu.forEach((exclude) => {
-      const category = categories.find((c) => c.slug === exclude.slug);
-      if (category !== undefined) {
-        customPages.push({
-          id: category.id,
-          name: category.slug,
-          pageType: 'Page',
-          title: exclude.name,
-          url: `/${category.slug}`,
-        });
-      }
-    });
-
-    customPages.push(...pages);
-  }
+  const [customCategories, customPages] = moveCategoryToPage(categories, pages);
 
   return (
     <Box
@@ -89,12 +72,12 @@ const Topbar: React.FC<Props> = ({
       </Box>
 
       <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems={'center'}>
-        {categories && categories.length !== 0 && (
+        {customCategories && customCategories.length !== 0 && (
           <Box>
             <NavItem
               title={t('categories.title')}
               id={'categories-pages'}
-              items={categories}
+              items={customCategories}
               colorInvert={colorInvert}
             />
           </Box>
@@ -103,7 +86,7 @@ const Topbar: React.FC<Props> = ({
           customPages.map((page) => (
             <Box key={page.id}>
               <Link
-                sx={{ paddingX: '1rem' }}
+                sx={{ paddingX: { md: 0.8, lg: 2 } }}
                 underline="none"
                 component="a"
                 href={page.url}

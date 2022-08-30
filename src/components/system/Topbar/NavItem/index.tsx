@@ -8,7 +8,6 @@ import Grid from '@mui/material/Grid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { CategoryFragment } from '../../../../gql/__generated__/categories';
 import { useRouter } from 'next/router';
-import pagesToExcludeFromMenu from '../exlude-from-menu';
 
 interface Props {
   title: string;
@@ -44,14 +43,8 @@ const NavItem: React.FC<Props> = ({
     setActiveLink(window && window.location ? window.location.pathname : '');
   }, []);
 
-  const pageIsExcluded = Boolean(
-    pagesToExcludeFromMenu.find((page) => `/${page.slug}` === router.asPath),
-  );
-
   const hasActiveLink = () =>
-    pageIsExcluded
-      ? false
-      : items.find((i) => i.slug.includes(router?.query?.category as string));
+    items.find((i) => i.slug.includes(router?.query?.category as string));
   const linkColor = colorInvert ? 'common.white' : 'text.primary';
 
   return (
