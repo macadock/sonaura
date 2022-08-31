@@ -3,7 +3,7 @@
 export type SupportColorsFragment = {
   id: string;
   name: string;
-  supportColor: 'silver' | 'bronze' | 'piano_black';
+  supportColor: 'bronze' | 'piano_black' | 'silver';
   colorCode: {
     hex: any;
   };

@@ -41,7 +41,7 @@ const Card: React.FC<Props> = ({ installation }) => {
           component={LazyLoadImage}
           height={1}
           width={1}
-          src={installation.image.url}
+          src={installation.images[0].url}
           alt="..."
           effect="blur"
           maxHeight={{ xs: 400, sm: 600, md: 1 }}

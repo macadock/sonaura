@@ -3,6 +3,6 @@
 export type PositionningsFragment = {
   id: string;
   name: string;
-  positionning: 'fixed' | 'motorized' | 'wall_mount' | 'floor' | 'table';
+  positionning: 'fixed' | 'floor' | 'motorized' | 'table' | 'wall_mount';
   __typename: 'ProductPositionning';
 };

@@ -3,6 +3,6 @@
 export type SizesFragment = {
   id: string;
   name: string;
-  size: 's_65' | 's_77' | 's_88' | 's_55' | 's_48';
+  size: 's_48' | 's_55' | 's_65' | 's_77' | 's_88';
   __typename: 'ProductSize';
 };

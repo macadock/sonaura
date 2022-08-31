@@ -7,49 +7,49 @@ export type AssetsByProductVariantFragment = {
   }[];
   color:
     | (
-        | 'fabric'
-        | 'gold_oak'
-        | 'silver_natural_oak'
-        | 'bronze_walnut'
-        | 'light_oak_wood'
-        | 'oak_wood'
-        | 'natural_aluminium'
-        | 'infantry_green'
-        | 'purple_heart'
-        | 'black_aluminium'
-        | 'brass_tone_aluminium'
-        | 'black_fabric'
-        | 'bronze_tone_aluminium'
-        | 'gold_tone'
-        | 'black'
-        | 'nordic_ice'
-        | 'white_marble'
-        | 'silver'
-        | 'gold'
-        | 'bronze'
-        | 'natural'
-        | 'grey_mist'
-        | 'green'
-        | 'black_anthracite'
-        | 'pink'
         | 'anthracite_oxygen'
         | 'berluti_edition'
-        | 'oxygen_blue'
-        | 'sand'
-        | 'dark_maroon'
-        | 'timber'
-        | 'navy'
+        | 'black'
+        | 'black_aluminium'
+        | 'black_anthracite'
+        | 'black_fabric'
+        | 'brass_tone_aluminium'
+        | 'bronze'
+        | 'bronze_tone_aluminium'
+        | 'bronze_walnut'
         | 'chestnut'
+        | 'dark_maroon'
+        | 'fabric'
+        | 'gold'
+        | 'gold_oak'
+        | 'gold_tone'
+        | 'green'
+        | 'grey_mist'
+        | 'infantry_green'
+        | 'light_oak_wood'
+        | 'natural'
+        | 'natural_aluminium'
+        | 'navy'
+        | 'nordic_ice'
+        | 'oak_wood'
+        | 'oxygen_blue'
         | 'parisian_night_blue'
+        | 'pink'
+        | 'purple_heart'
+        | 'sand'
+        | 'silver'
+        | 'silver_natural_oak'
+        | 'timber'
+        | 'white_marble'
       )
     | null;
   positionning:
-    | ('fixed' | 'motorized' | 'wall_mount' | 'floor' | 'table')
+    | ('fixed' | 'floor' | 'motorized' | 'table' | 'wall_mount')
     | null;
   soundbarColor:
-    | ('light_oak' | 'smocked_oak' | 'walnut' | 'grey_melange')
+    | ('grey_melange' | 'light_oak' | 'smocked_oak' | 'walnut')
     | null;
-  size: ('s_65' | 's_77' | 's_88' | 's_55' | 's_48') | null;
-  frameColor: ('silver' | 'black' | 'gold') | null;
-  supportColor: ('silver' | 'bronze' | 'piano_black') | null;
+  size: ('s_48' | 's_55' | 's_65' | 's_77' | 's_88') | null;
+  frameColor: ('black' | 'gold' | 'silver') | null;
+  supportColor: ('bronze' | 'piano_black' | 'silver') | null;
 };
