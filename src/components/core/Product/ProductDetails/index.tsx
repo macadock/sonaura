@@ -226,6 +226,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               title={dialogTitle}
               origin={dialogOrigin}
               button={dialogButton}
+              product={currentProduct}
             />
             {currentProduct.quantity > 0 && isOccasion ? (
               <>

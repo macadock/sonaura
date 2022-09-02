@@ -22,23 +22,18 @@
         "support": "Support"
     },
     "form": {
-        "input": {
-            "name": "Nom complet",
-            "email": "E-mail",
-            "phone": "Téléphone",
-            "message": "Message"
-        },
-        "placeholder": {
-            "name": "Prénom et Nom",
-            "email": "Adresse e-mail",
-            "phone": "Numéro de téléphone",
-            "message": "Si vous avez une demande particulière, c'est le moment !"
-        },
-        "gdpr": "Dans le cadre de ma demande de contact, j'accepte que mes données soient traitées et conservées",
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "email": "Email",
+        "phone": "Numéro de téléphone",
+        "message": "Message",
+        "gdpr": "Dans le cadre de ma demande de contact, j'accepte que mes données soient traitées et conservées.",
         "send": "Envoyer",
         "loading": "Envoi en cours...",
         "success": "Demande envoyée",
-        "error": "Erreur. Merci de réessayer."
+        "error": "Erreur. Merci de réessayer.",
+        "notValid": "non valide",
+        "acceptGdpr": "Merci d'accepter le traitement de vos données"
     },
     "time": "Horaires",
     "closed": "Fermé",
