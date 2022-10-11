@@ -1,5 +1,6 @@
 import { Close } from '@mui/icons-material';
 import { Box, Dialog, useMediaQuery, useTheme } from '@mui/material';
+import { ProductFragment } from '../../../../../gql/__generated__/product-fragment';
 import ProductForm from '../ProductForm';
 
 interface Props {
@@ -8,6 +9,7 @@ interface Props {
   title: string;
   origin: string;
   button?: string;
+  product: ProductFragment;
 }
 
 const ProductDialog: React.FC<Props> = ({
@@ -16,6 +18,7 @@ const ProductDialog: React.FC<Props> = ({
   title,
   origin,
   button,
+  product,
 }) => {
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
@@ -26,7 +29,12 @@ const ProductDialog: React.FC<Props> = ({
         <Box textAlign={'right'}>
           <Close onClick={onClose} sx={{ ':hover': { cursor: 'pointer' } }} />
         </Box>
-        <ProductForm title={title} origin={origin} button={button} />
+        <ProductForm
+          title={title}
+          origin={origin}
+          button={button}
+          product={product}
+        />
       </Box>
     </Dialog>
   );

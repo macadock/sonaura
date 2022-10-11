@@ -100,31 +100,35 @@ const NavItem: React.FC<Props> = ({
         }}
       >
         <Grid container spacing={0.5}>
-          {items.map((p, i) => (
-            <Grid item key={i} xs={items.length > 12 ? 6 : 12}>
-              <Button
-                component={'a'}
-                href={`/${p.slug}`}
-                fullWidth
-                sx={{
-                  justifyContent: 'flex-start',
-                  color:
-                    activeLink === p.slug
-                      ? theme.palette.primary.main
-                      : theme.palette.text.primary,
-                  backgroundColor:
-                    activeLink === p.slug
-                      ? alpha(theme.palette.primary.main, 0.1)
-                      : 'transparent',
-                  fontWeight: p.slug.includes(router?.query.category as string)
-                    ? 600
-                    : 400,
-                }}
-              >
-                {p.name}
-              </Button>
-            </Grid>
-          ))}
+          {items.map((p, i) =>
+            p.slug !== 'occasion' ? (
+              <Grid item key={i} xs={items.length > 12 ? 6 : 12}>
+                <Button
+                  component={'a'}
+                  href={`/${p.slug}`}
+                  fullWidth
+                  sx={{
+                    justifyContent: 'flex-start',
+                    color:
+                      activeLink === p.slug
+                        ? theme.palette.primary.main
+                        : theme.palette.text.primary,
+                    backgroundColor:
+                      activeLink === p.slug
+                        ? alpha(theme.palette.primary.main, 0.1)
+                        : 'transparent',
+                    fontWeight: p.slug.includes(
+                      router?.query.category as string,
+                    )
+                      ? 600
+                      : 400,
+                  }}
+                >
+                  {p.name}
+                </Button>
+              </Grid>
+            ) : null,
+          )}
         </Grid>
       </Popover>
     </Box>

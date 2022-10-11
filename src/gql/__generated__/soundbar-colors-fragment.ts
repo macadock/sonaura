@@ -3,7 +3,7 @@
 export type SoundbarColorsFragment = {
   id: string;
   name: string;
-  color: 'light_oak' | 'smocked_oak' | 'walnut' | 'grey_melange';
+  color: 'grey_melange' | 'light_oak' | 'smocked_oak' | 'walnut';
   colorCode: {
     hex: any;
   };

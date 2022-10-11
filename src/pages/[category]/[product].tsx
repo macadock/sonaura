@@ -4,20 +4,15 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { GET_CATEGORIES } from '../../gql/get-categories';
 import { GET_PRODUCT } from '../../gql/get-products';
 import { Categories } from '../../gql/__generated__/categories';
-import { Pages } from '../../gql/__generated__/pages';
 import { Product } from '../../gql/__generated__/product';
-import getNavbarItems from '../../components/system/_getNavbarItems';
-import TIME_TO_INVALIDATE_CACHE_SEC from '../../constants';
-import Main from '../../layouts/Main';
+import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import ProductView from '../../views/ProductView';
 import { client } from '../_app';
 import Head from 'next/head';
 
 const ProductPage: NextPage<{
   product: Product;
-  categories: Categories;
-  pages: Pages;
-}> = ({ product, categories, pages }) => {
+}> = ({ product }) => {
   const {
     product: { name, description },
   } = product;
@@ -36,17 +31,13 @@ const ProductPage: NextPage<{
           key={'og-description'}
         />
       </Head>
-      <Main categories={categories} pages={pages}>
-        <ProductView product={product} />
-      </Main>
+      <ProductView product={product} />
     </>
   );
 };
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const slug = context.params.product;
-
-  const { categories, pages } = await getNavbarItems();
 
   const { data: product } = await client.query<Product>({
     query: GET_PRODUCT,
@@ -64,8 +55,6 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   return {
     props: {
       product,
-      categories,
-      pages,
       ...(await serverSideTranslations(
         context.locale,
         ['common', 'product'],
@@ -104,7 +93,7 @@ export const getStaticPaths = async () => {
   // We'll pre-render only these paths at build time.
   // { fallback: blocking } will server-render pages
   // on-demand if the path doesn't exist.
-  return { paths, fallback: 'blocking' };
+  return { paths, fallback: false };
 };
 
 export default ProductPage;

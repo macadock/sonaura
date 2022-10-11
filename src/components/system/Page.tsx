@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from 'styled-components';
 import AOS from 'aos';
 import getTheme from '../../theme';
+import Main from '../../layouts/Main';
 
 export const useDarkMode = (): [string, () => void, boolean] => {
   const [themeMode, setTheme] = useState('light');
@@ -69,7 +70,9 @@ const Page: React.FC<Props> = ({ children }) => {
       <ThemeProvider theme={getTheme(themeMode, themeToggler)}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Paper elevation={0}>{children}</Paper>
+        <Paper elevation={0}>
+          <Main>{children}</Main>
+        </Paper>
       </ThemeProvider>
     </MuiThemeProvider>
   );

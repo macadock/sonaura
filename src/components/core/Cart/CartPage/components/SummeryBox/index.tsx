@@ -9,16 +9,18 @@ import Price from '../../../../../../utils/Price';
 
 interface Props {
   cartTotal: number;
-  isEmpty: boolean;
 }
 
-const SummeryBox: React.FC<Props> = ({ cartTotal, isEmpty }) => {
-  const { t } = useTranslation('common', { keyPrefix: 'cart' });
+const SummeryBox: React.FC<Props> = ({ cartTotal }) => {
+  const { t } = useTranslation('checkout');
 
   const vat = cartTotal * 0.2;
 
   return (
     <Box>
+      <Typography variant="h6" fontWeight={700} marginBottom={4}>
+        {t('summary')}
+      </Typography>
       <Box
         component={'form'}
         noValidate
@@ -53,7 +55,6 @@ const SummeryBox: React.FC<Props> = ({ cartTotal, isEmpty }) => {
           </Typography>
         </Box>
         <Button
-          disabled={isEmpty}
           href={'/panier/commander'}
           variant={'contained'}
           size={'large'}

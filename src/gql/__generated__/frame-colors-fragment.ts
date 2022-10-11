@@ -3,7 +3,7 @@
 export type FrameColorsFragment = {
   id: string;
   name: string;
-  frameColor: 'silver' | 'black' | 'gold';
+  frameColor: 'black' | 'gold' | 'silver';
   colorCode: {
     hex: any;
   };

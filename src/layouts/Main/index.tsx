@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from '@mui/material/styles';
+import { alpha, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -13,26 +13,26 @@ import { Categories } from '../../gql/__generated__/categories';
 import Topbar from 'components/system/Topbar';
 import Sidebar from 'components/system/Sidebar';
 import Footer from 'components/system/Footer';
+import { useQuery } from '@apollo/client';
+import { GET_CATEGORIES } from '../../gql/get-categories';
+import { GET_PAGES_HEADER } from '../../gql/get-pages';
 
 interface Props {
   children: React.ReactNode;
   colorInvert?: boolean;
-  bgcolor?: string;
-  categories: Categories;
-  pages: Pages;
 }
 
-const Main: React.FC<Props> = ({
-  children,
-  colorInvert = false,
-  bgcolor = 'transparent',
-  categories,
-  pages,
-}) => {
+const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
   });
+
+  const { data: { categories } = { categories: null } } =
+    useQuery<Categories>(GET_CATEGORIES);
+
+  const { data: { pages } = { pages: null } } =
+    useQuery<Pages>(GET_PAGES_HEADER);
 
   const [openSidebar, setOpenSidebar] = useState(false);
 
@@ -57,7 +57,9 @@ const Main: React.FC<Props> = ({
         position={'sticky'}
         sx={{
           top: 0,
-          backgroundColor: trigger ? theme.palette.background.paper : bgcolor,
+          backgroundColor: trigger
+            ? alpha(theme.palette.background.paper, 1)
+            : alpha(theme.palette.background.paper, 0.4),
         }}
         elevation={trigger ? 1 : 0}
       >
@@ -77,10 +79,8 @@ const Main: React.FC<Props> = ({
         pages={pages}
         categories={categories}
       />
-      <main style={{ minHeight: '75vh', position: 'relative' }}>
-        {children}
-        <Divider sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }} />
-      </main>
+      <main style={{ minHeight: '75vh' }}>{children}</main>
+      <Divider />
       <Container paddingY={4} component={'footer'}>
         <Footer />
       </Container>

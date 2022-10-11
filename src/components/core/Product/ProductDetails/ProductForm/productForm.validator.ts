@@ -1,32 +1,28 @@
 import * as yup from 'yup';
 
-export const productContactFormSchema = yup.object({
-  fullName: yup
-    .string()
-    .trim()
-    .min(2, "Merci d'enter votre nom complet")
-    .max(50, "Merci d'enter votre nom complet")
-    .required("Merci d'enter votre nom complet"),
-  message: yup.string().trim().required("Merci d'écrire un message"),
-  email: yup
-    .string()
-    .trim()
-    .email("Merci d'entrer une adresse email valide")
-    .required("L'email est requis"),
-  phone: yup
-    .string()
-    .trim()
-    .min(10, "Merci d'entrer un numéro de téléphone valide")
-    .required("Merci d'entrer un numéro de téléphone valide"),
-  gdpr: yup
-    .boolean()
-    .required('Nous avons besoin de votre consentement pour vous contacter'),
+export const productFormSchema = yup.object({
+  firstName: yup.string().trim().required(),
+  lastName: yup.string().trim().required(),
+  email: yup.string().trim().email().required(),
+  phone: yup.string().trim().min(10).required(),
+  message: yup.string().trim().required(),
+  gdpr: yup.boolean().isTrue().required(),
 });
 
-export const initialValues = {
-  fullName: '',
-  message: '',
+export const initialValues: productFormTypes = {
+  firstName: '',
+  lastName: '',
   email: '',
   phone: '',
+  message: '',
   gdpr: false,
 };
+
+export interface productFormTypes {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  message: string;
+  gdpr: boolean;
+}

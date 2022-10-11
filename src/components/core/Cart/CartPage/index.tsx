@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Box, Card, Grid, Typography } from '@mui/material';
+import { Box, Card, Grid, Link, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useMemo } from 'react';
 import { useCart } from 'react-use-cart';
@@ -56,22 +56,41 @@ const CartPage: React.FC = () => {
                 ? t('title')
                 : `${t('title')} (${t('product', { count: totalItems })})`}
             </Typography>
-            <Orders isEmpty={isEmpty} products={products} />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card
-              elevation={0}
-              sx={{
-                bgcolor: 'alternate.main',
-                padding: { xs: 2, sm: 4 },
-              }}
-            >
-              <Typography variant="h6" fontWeight={700} marginBottom={4}>
-                {t('summary')}
+            {isEmpty ? (
+              <Box marginY={'1.5rem'}>
+                <Typography>{t('empty')}</Typography>
+                <Link href={'/occasion'}>{t('discoverPreOwnedProducts')}</Link>
+              </Box>
+            ) : (
+              <Orders products={products} />
+            )}
+            <Box marginTop={'3rem'} display={'flex'} flexDirection={'column'}>
+              <Typography variant={'body2'} fontWeight={'bold'}>
+                {t('noDelivery')}
               </Typography>
-              <SummeryBox isEmpty={isEmpty} cartTotal={cartTotal} />
-            </Card>
+              <Typography variant={'body2'}>
+                {t('contactUsToCollect')}
+              </Typography>
+              <Typography variant={'body2'}>
+                <Link href={'/contact'} target={'_blank'}>
+                  {t('ourShops')}
+                </Link>
+              </Typography>
+            </Box>
           </Grid>
+          {isEmpty ? null : (
+            <Grid item xs={12} md={4}>
+              <Card
+                elevation={0}
+                sx={{
+                  bgcolor: 'alternate.main',
+                  padding: { xs: 2, sm: 4 },
+                }}
+              >
+                <SummeryBox cartTotal={cartTotal} />
+              </Card>
+            </Grid>
+          )}
         </Grid>
       </Box>
     </Container>

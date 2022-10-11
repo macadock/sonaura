@@ -17,6 +17,7 @@ const Categories: React.FC<Props> = ({ categories }) => {
   const theme = useTheme();
   const { mode } = theme.palette;
   const { t } = useTranslation('homepage', { keyPrefix: 'categories' });
+
   return (
     <Box>
       <Box marginBottom={4}>

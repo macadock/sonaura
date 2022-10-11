@@ -1,18 +1,16 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
-
 import NavItem from '../NavItem';
 import { Link } from '@mui/material';
-
-import { CategoryFragment } from '../../../../gql/__generated__/category-fragment';
-import { PageFragment } from '../../../../gql/__generated__/pages';
+import { Pages } from '../../../../gql/__generated__/pages';
 import TopNav from 'components/system/TopNav';
 import { useTranslation } from 'next-i18next';
+import { Categories } from '../../../../gql/__generated__/categories';
 
 interface Props {
-  pages: PageFragment[];
-  categories: CategoryFragment[];
+  pages: Pages['pages'];
+  categories: Categories['categories'];
 }
 
 const SidebarNav: React.FC<Props> = ({ pages, categories }) => {

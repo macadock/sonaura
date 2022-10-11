@@ -6,45 +6,85 @@ import {
   Grid,
   TextField,
   Typography,
-  useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useFormik } from 'formik';
+import axios from 'axios';
+import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'next-i18next';
+import { ApiUrls, getRoutePath, PagesUrls } from '../../../../../appConstants';
+import { ProductFragment } from '../../../../../gql/__generated__/product-fragment';
+import FormikSessionStorage from '../../../../system/FormikSessionStorage';
 import {
-  productContactFormSchema,
+  productFormSchema,
   initialValues,
+  productFormTypes,
 } from './productForm.validator';
+import SendEmailInput from 'SendInBlue/dto/send-customer-email.input';
+import toast from 'react-hot-toast';
+import { Categories } from '../../../../../types';
 
 interface Props {
   title: string;
   origin: string;
+  product: ProductFragment;
   button?: string;
 }
 
-const ProductForm: React.FC<Props> = ({ title, origin, button }) => {
+const ProductForm: React.FC<Props> = ({ title, origin, button, product }) => {
   const { t } = useTranslation('product', { keyPrefix: 'form' });
   const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up('md'), {
-    defaultMatches: true,
-  });
 
-  const onSubmit = () => {
-    origin;
+  const onSubmit = (
+    values: productFormTypes,
+    actions: FormikHelpers<productFormTypes>,
+  ) => {
+    const { firstName, lastName, email, message, phone, gdpr } = values;
+
+    const isOccasion = product.category.name === Categories.OCCASION;
+
+    if (!gdpr) {
+      toast.error(t('acceptGdpr'));
+    }
+
+    const customerBody: SendEmailInput = {
+      firstName,
+      lastName,
+      email,
+      message,
+      phone,
+      templateId: {
+        customer: isOccasion ? 7 : 6,
+        merchant: isOccasion ? 9 : 8,
+      },
+      includeListIds: [isOccasion ? 6 : 5],
+      params: {
+        product: product.name,
+        url: getRoutePath({ page: PagesUrls.PRODUCT })
+          .replace('[category]', product.category.slug)
+          .replace('[product]', product.slug),
+      },
+    };
+
+    const customerEmail = axios.post(
+      getRoutePath({ api: ApiUrls.SEND_CUSTOMER_EMAIL }),
+      customerBody,
+    );
+
+    toast.promise(customerEmail, {
+      loading: t('loading'),
+      success: () => {
+        actions.resetForm();
+        return t('success');
+      },
+      error: t('error'),
+    });
   };
-
-  const { handleSubmit, values, handleChange, touched, errors } = useFormik({
-    initialValues,
-    validationSchema: productContactFormSchema,
-    onSubmit,
-  });
 
   return (
     <Box
       maxWidth={600}
       margin={'0 auto'}
       component={'form'}
-      onSubmit={handleSubmit}
       sx={{
         '& .MuiOutlinedInput-root.MuiInputBase-multiline': {
           padding: 0,
@@ -58,109 +98,161 @@ const ProductForm: React.FC<Props> = ({ title, origin, button }) => {
       <Typography variant={'h4'} sx={{ marginY: '2rem' }}>
         {title}
       </Typography>
-      <Grid container spacing={isMd ? 4 : 2}>
-        <Grid item xs={12}>
-          <Typography
-            variant="subtitle1"
-            color="text.primary"
-            fontWeight={700}
-            gutterBottom
-          >
-            {t('input.name')}
-          </Typography>
-          <TextField
-            placeholder={t('placeholder.name')}
-            variant="outlined"
-            size="medium"
-            name="fullName"
-            fullWidth
-            type="text"
-            value={values.fullName}
-            onChange={handleChange}
-            error={touched.fullName && Boolean(errors.fullName)}
-            helperText={touched.fullName && errors.fullName}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography
-            variant="subtitle1"
-            color="text.primary"
-            fontWeight={700}
-            gutterBottom
-          >
-            {t('input.email')}
-          </Typography>
-          <TextField
-            placeholder={t('placeholder.email')}
-            variant="outlined"
-            size="medium"
-            name="email"
-            fullWidth
-            type="email"
-            value={values.email}
-            onChange={handleChange}
-            error={touched.email && Boolean(errors.email)}
-            helperText={touched.email && errors.email}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography
-            variant="subtitle1"
-            color="text.primary"
-            fontWeight={700}
-            gutterBottom
-          >
-            {t('input.phone')}
-          </Typography>
-          <TextField
-            placeholder={t('placeholder.phone')}
-            variant="outlined"
-            size="medium"
-            name="phone"
-            fullWidth
-            type="tel"
-            value={values.phone}
-            onChange={handleChange}
-            error={touched.phone && Boolean(errors.phone)}
-            helperText={touched.phone && errors.phone}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography
-            variant="subtitle1"
-            color="text.primary"
-            fontWeight={700}
-            gutterBottom
-          >
-            {t('input.message')}
-          </Typography>
-          <TextField
-            placeholder={t('placeholder.message')}
-            variant="outlined"
-            name="message"
-            fullWidth
-            multiline
-            rows={4}
-            value={values.message}
-            onChange={handleChange}
-            error={touched.message && Boolean(errors.message)}
-            helperText={touched.message && errors.message}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel control={<Checkbox />} label={t('gdpr')} />
-        </Grid>
-        <Grid item container justifyContent="center" xs={12}>
-          <Button
-            variant="contained"
-            type="submit"
-            color="primary"
-            size="large"
-          >
-            {button || t('send')}
-          </Button>
-        </Grid>
-      </Grid>
+      <Formik<productFormTypes>
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={productFormSchema}
+      >
+        {({ isValid, dirty, handleSubmit }) => (
+          <Grid container spacing={{ xs: 2, md: 4 }}>
+            <FormikSessionStorage uniqueName={origin} />
+            <Grid item xs={12} sm={6}>
+              <Field name={'firstName'}>
+                {({
+                  field: { name, onBlur, onChange, value },
+                  meta: { error, touched },
+                }: FieldProps) => (
+                  <TextField
+                    name={name}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    error={touched && Boolean(error)}
+                    helperText={
+                      touched && error ? `${t(name)} ${t('notValid')}` : null
+                    }
+                    label={t(name)}
+                    variant="outlined"
+                    fullWidth
+                  />
+                )}
+              </Field>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Field name={'lastName'}>
+                {({
+                  field: { name, onBlur, onChange, value },
+                  meta: { error, touched },
+                }: FieldProps) => (
+                  <TextField
+                    name={name}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    error={touched && Boolean(error)}
+                    helperText={
+                      touched && error ? `${t(name)} ${t('notValid')}` : null
+                    }
+                    label={t(name)}
+                    variant="outlined"
+                    fullWidth
+                  />
+                )}
+              </Field>
+            </Grid>
+            <Grid item xs={12}>
+              <Field name={'email'}>
+                {({
+                  field: { name, onBlur, onChange, value },
+                  meta: { error, touched },
+                }: FieldProps) => (
+                  <TextField
+                    name={name}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    error={touched && Boolean(error)}
+                    helperText={
+                      touched && error ? `${t(name)} ${t('notValid')}` : null
+                    }
+                    label={t(name)}
+                    variant="outlined"
+                    fullWidth
+                  />
+                )}
+              </Field>
+            </Grid>
+            <Grid item xs={12}>
+              <Field name={'phone'}>
+                {({
+                  field: { name, onBlur, onChange, value },
+                  meta: { error, touched },
+                }: FieldProps) => (
+                  <TextField
+                    name={name}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    error={touched && Boolean(error)}
+                    helperText={
+                      touched && error ? `${t(name)} ${t('notValid')}` : null
+                    }
+                    label={t(name)}
+                    variant="outlined"
+                    fullWidth
+                  />
+                )}
+              </Field>
+            </Grid>
+            <Grid item xs={12}>
+              <Field name={'message'}>
+                {({
+                  field: { name, onBlur, onChange, value },
+                  meta: { error, touched },
+                }: FieldProps) => (
+                  <TextField
+                    name={name}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    error={touched && Boolean(error)}
+                    helperText={
+                      touched && error
+                        ? `${t(name)} ${t('form.notValid')}`
+                        : null
+                    }
+                    label={t(name)}
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    rows={4}
+                  />
+                )}
+              </Field>
+            </Grid>
+            <Grid item xs={12}>
+              <Field name={'gdpr'}>
+                {({ field: { name, onBlur, onChange, value } }: FieldProps) => (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        name={name}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        value={value}
+                      />
+                    }
+                    label={t('gdpr')}
+                  />
+                )}
+              </Field>
+            </Grid>
+            <Grid item container justifyContent="center" xs={12}>
+              <Button
+                disabled={!isValid || !dirty}
+                onClick={() => {
+                  handleSubmit();
+                }}
+                variant="contained"
+                color="primary"
+                size="large"
+              >
+                {button || t('form.send')}
+              </Button>
+            </Grid>
+          </Grid>
+        )}
+      </Formik>
     </Box>
   );
 };

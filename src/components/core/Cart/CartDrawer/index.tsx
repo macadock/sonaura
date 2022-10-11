@@ -1,6 +1,13 @@
 import React, { useEffect, useMemo } from 'react';
 import Drawer from '@mui/material/Drawer';
-import { Box, Button, Typography, Link as MuiLink, Stack } from '@mui/material';
+import {
+  Box,
+  Button,
+  Typography,
+  Link as MuiLink,
+  Stack,
+  Link,
+} from '@mui/material';
 import { useCart } from 'react-use-cart';
 import { useQuery } from '@apollo/client';
 import { GET_PRODUCTS_BY_IDS } from '../../../../gql/get-products';
@@ -9,7 +16,7 @@ import {
   GetProductsByIdsVariables,
 } from '../../../../gql/__generated__/get-products-by-ids';
 import { Close, Delete } from '@mui/icons-material';
-import Link from 'next/link';
+
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import Price from '../../../../utils/Price';
@@ -132,7 +139,6 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                         }}
                       >
                         <Link
-                          passHref
                           href={`/${product.category.slug}/${product.slug}`}
                         >
                           <Image
@@ -147,7 +153,6 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                       </Box>
                       <Box>
                         <Link
-                          passHref
                           href={`/${product.category.slug}/${product.slug}`}
                         >
                           <Typography
@@ -189,6 +194,19 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
           }}
           onClick={closeCart}
         >
+          <Box display={'flex'} flexDirection={'column'}>
+            <Typography variant={'caption'} fontWeight={'bold'}>
+              {t('noDelivery')}
+            </Typography>
+            <Typography variant={'caption'}>
+              {t('contactUsToCollect')}
+            </Typography>
+            <Typography variant={'caption'}>
+              <Link href={'/contact'} target={'_blank'}>
+                {t('ourShops')}
+              </Link>
+            </Typography>
+          </Box>
           <Button href={'/panier'} variant={'text'}>
             {t('displayCart')}
           </Button>

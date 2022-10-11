@@ -15,8 +15,6 @@ const People: React.FC = () => {
           <Box position={'relative'} width={'100%'} height={'100%'}>
             <Image
               src={'https://media.graphassets.com/CGglaVGhTJCqbPy0ftfx'}
-              height={'100%'}
-              width={'100%'}
               layout={'fill'}
               objectFit={'cover'}
               alt={'Gérant du magasin de Lyon'}
@@ -51,8 +49,6 @@ const People: React.FC = () => {
           <Box position={'relative'} width={'100%'} height={'100%'}>
             <Image
               src={'https://media.graphassets.com/tiVZCCX5QYy3Y6SHD80r'}
-              height={'100%'}
-              width={'100%'}
               layout={'fill'}
               objectFit={'cover'}
               alt={'Gérant du magasin de Grenoble'}

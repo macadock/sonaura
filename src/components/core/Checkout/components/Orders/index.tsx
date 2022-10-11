@@ -11,29 +11,21 @@ import { useQuery } from '@apollo/client';
 import {
   GetProductsByIds,
   GetProductsByIdsVariables,
-} from '../../../../../../gql/__generated__/get-products-by-ids';
-import { GET_PRODUCTS_BY_IDS } from '../../../../../../gql/get-products';
+} from '../../../../../gql/__generated__/get-products-by-ids';
+import { GET_PRODUCTS_BY_IDS } from '../../../../../gql/get-products';
 import { useTranslation } from 'next-i18next';
-import Price from '../../../../../../utils/Price';
-
-const paymentUrl = `${process.env.NEXT_PUBLIC_PAYPLUG_API_URL}/payments`;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const apiKey = process.env.NEXT_PUBLIC_PAYPLUG_SECRET_KEY;
+import Price from '../../../../../utils/Price';
+import { useFormikContext } from 'formik';
 
 const Orders = (): JSX.Element => {
   const theme = useTheme();
-
-  const handlePayment = () => {
-    fetch(paymentUrl, {
-      method: 'POST',
-      body: null,
-    });
-  };
-
-  const { t } = useTranslation('common', { keyPrefix: 'cart' });
+  const { t } = useTranslation('checkout');
+  const { handleSubmit, isValid, dirty } = useFormikContext();
 
   const { isEmpty, items, cartTotal } = useCart();
+
+  const disabledCheckoutButton = isEmpty || !isValid || !dirty;
+
   const vat = cartTotal * 0.2;
 
   const ids = items.map((item) => item.id);
@@ -139,9 +131,11 @@ const Orders = (): JSX.Element => {
               </Typography>
             </Box>
             <Button
-              disabled={isEmpty}
-              onClick={handlePayment}
+              disabled={disabledCheckoutButton}
               component={Link}
+              onClick={() => {
+                handleSubmit();
+              }}
               variant={'contained'}
               size={'large'}
               fullWidth

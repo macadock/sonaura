@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useTranslation } from 'next-i18next';
+import { Link } from '@mui/material';
 
 const Welcome: React.FC = () => {
   const { t } = useTranslation('pro');
@@ -45,6 +46,26 @@ const Welcome: React.FC = () => {
             justifyContent={'center'}
           >
             <GridItemHeadlineBlock />
+          </Box>
+          <Box
+            marginBottom={2}
+            sx={{
+              textAlign: 'center',
+              display: { xs: 'none', sm: 'flex' },
+              flexDirection: 'column',
+            }}
+          >
+            <Typography color="text.secondary">{t('contact.name')}</Typography>
+            <Link
+              href={`tel:+33${t('contact.phone')
+                .replace(/\s/g, '')
+                .substring(1)}`}
+            >
+              {t('contact.phone')}
+            </Link>
+            <Link href={`mailto:${t('contact.email')}`}>
+              {t('contact.email')}
+            </Link>
           </Box>
         </Grid>
       </Grid>

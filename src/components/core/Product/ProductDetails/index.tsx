@@ -47,18 +47,15 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const [alreadyAddedToCart, setAlreadyAddedToCart] = useState<boolean>(false);
   const [dialogState, setDialogState] = useState<boolean>(false);
 
-  const dialogTitle =
-    product.product.category.name === Categories.OCCASION
-      ? t('preOwned.book')
-      : t('demonstration.book');
-  const dialogOrigin =
-    product.product.category.name === Categories.OCCASION
-      ? t('preOwned.origin')
-      : t('demonstration.origin');
-  const dialogButton =
-    product.product.category.name === Categories.OCCASION
-      ? t('preOwned.button')
-      : t('demonstration.button');
+  const isOccasion = currentProduct.category.name === Categories.OCCASION;
+
+  const dialogTitle = isOccasion ? t('preOwned.book') : t('demonstration.book');
+  const dialogOrigin = isOccasion
+    ? t('preOwned.origin')
+    : t('demonstration.origin');
+  const dialogButton = isOccasion
+    ? t('preOwned.button')
+    : t('demonstration.button');
 
   const { addItem, items } = useCart();
 
@@ -207,11 +204,16 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               {currentProduct.name}
             </Typography>
             <Box marginY={3}>
-              <Box display={'flex'}>
+              <Box display={'flex'} alignItems={'baseline'}>
                 {currentProduct.price && (
-                  <Typography variant={'h5'} fontWeight={700}>
-                    <Price priceWithCents={currentProduct.price} />
-                  </Typography>
+                  <>
+                    <Typography variant={'h5'} fontWeight={700}>
+                      <Price priceWithCents={currentProduct.price} />
+                    </Typography>
+                    <Typography variant="body2" sx={{ marginLeft: '0.5rem' }}>
+                      {t('pricePreOwnedConditions')}
+                    </Typography>
+                  </>
                 )}
               </Box>
             </Box>
@@ -224,9 +226,9 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               title={dialogTitle}
               origin={dialogOrigin}
               button={dialogButton}
+              product={currentProduct}
             />
-            {currentProduct.quantity > 0 &&
-            currentProduct.category.name === Categories.OCCASION ? (
+            {currentProduct.quantity > 0 && isOccasion ? (
               <>
                 <Stack marginTop={3} direction={'column'} spacing={2}>
                   <Button
@@ -480,7 +482,11 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 </Box>
               )}
 
-              {currentProduct?.shops && <Shops shops={currentProduct.shops} />}
+              {isOccasion
+                ? currentProduct?.shops && (
+                    <Shops shops={currentProduct.shops} />
+                  )
+                : null}
             </Box>
           </Box>
         </Grid>

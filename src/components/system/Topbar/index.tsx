@@ -14,12 +14,13 @@ import CartDrawer from '../../core/Cart/CartDrawer';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useCart } from 'react-use-cart';
+import moveCategoryToPage from './exlude-from-menu';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
   onSidebarOpen: () => void;
-  pages: Pages;
-  categories: Categories;
+  pages: Pages['pages'];
+  categories: Categories['categories'];
   colorInvert?: boolean;
 }
 
@@ -33,12 +34,14 @@ const Topbar: React.FC<Props> = ({
   const [cartState, setCartState] = useState<boolean>(false);
   const theme = useTheme();
   const { mode } = theme.palette;
-  const { route } = useRouter();
+  const { asPath } = useRouter();
   const { isEmpty } = useCart();
 
   const handleCart = () => {
     setCartState(!cartState);
   };
+
+  const [customCategories, customPages] = moveCategoryToPage(categories, pages);
 
   return (
     <Box
@@ -69,26 +72,26 @@ const Topbar: React.FC<Props> = ({
       </Box>
 
       <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems={'center'}>
-        {categories.categories.length !== 0 && (
+        {customCategories && customCategories.length !== 0 && (
           <Box>
             <NavItem
               title={t('categories.title')}
               id={'categories-pages'}
-              items={categories.categories}
+              items={customCategories}
               colorInvert={colorInvert}
             />
           </Box>
         )}
-        {pages &&
-          pages.pages.map((page) => (
+        {customPages &&
+          customPages.map((page) => (
             <Box key={page.id}>
               <Link
-                sx={{ paddingX: '1rem' }}
+                sx={{ paddingX: { md: 0.8, lg: 2 } }}
                 underline="none"
                 component="a"
                 href={page.url}
                 color={colorInvert ? 'common.white' : 'text.primary'}
-                fontWeight={route.includes(page.url) ? 700 : 400}
+                fontWeight={asPath.includes(page.url) ? 700 : 400}
               >
                 {page.title}
               </Link>

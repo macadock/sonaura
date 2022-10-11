@@ -34,7 +34,7 @@ const Contact: React.FC = () => {
             <Typography variant={'h4'} sx={{ fontWeight: 700 }} gutterBottom>
               {t('title')}
             </Typography>
-            <Typography color="text.secondary">Frank VILIN</Typography>
+            <Typography color="text.secondary">{t('name')}</Typography>
             <Link href={`tel:+33${t('phone').replace(/\s/g, '').substring(1)}`}>
               {t('phone')}
             </Link>

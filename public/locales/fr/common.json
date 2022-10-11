@@ -12,31 +12,13 @@
     "empty": "Votre panier est vide.",
     "displayCart": "Afficher le panier",
     "continueOrder": "Poursuivre la commande",
-    "order": "Effectuer le paiement",
     "product_one": "{{ count }} produit d'occasion",
     "product_other": "{{ count }} produits d'occasion",
-    "summary": "Résumé",
-    "subtotal": "Sous total",
-    "vat": "dont TVA",
-    "total": "Total",
-    "checkout": "Commander",
-    "delete": "Supprimer",
-    "quantity": "Quantité",
     "discoverPreOwnedProducts": "Découvrez nos produits d'occasion",
-    "close": "Fermer"
-  },
-  "checkout": {
-    "shippingAddress": "Adresse d'expédition",
-    "orderSummary": "Résumé de la commande",
-    "fullName": "Nom complet",
-    "country": "Pays",
-    "chooseCountry": "Choisissez un pays",
-    "city": "Ville",
-    "address": "Adresse",
-    "email": "Email",
-    "billingAddressDifferent": "L'adresse de facturation est différente de l'adresse d'expédition",
-    "billingAddress": "Adresse de facturation",
-    "redirectingToShop": "Votre panier est vide. Redirection vers le site"
+    "close": "Fermer",
+    "noDelivery": "Nos produits d'occasion ne font pas l'objet d'une livraison.",
+    "contactUsToCollect": "Merci de nous contacter pour les modalités de retrait.",
+    "ourShops": "Nos boutiques."
   },
   "footer": {
     "legalNotice": "Mentions légales",
@@ -49,5 +31,6 @@
     "dark": "foncé",
     "button": "Changer de thème",
     "notification": "Vous utilisez le thème {{ theme }}"
-  }
+  },
+  "loading": "Chargement en cours"
 }

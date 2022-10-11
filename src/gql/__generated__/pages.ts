@@ -3,7 +3,7 @@
 export type PageFragment = {
   id: string;
   name: string;
-  pageType: 'Page' | 'Home' | 'Categories';
+  pageType: 'Categories' | 'Home' | 'Page';
   title: string | null;
   url: string;
 };

@@ -4,7 +4,7 @@ export type InstallationFragment = {
   id: string;
   title: string;
   description: string;
-  image: {
+  images: {
     url: string;
-  };
+  }[];
 };

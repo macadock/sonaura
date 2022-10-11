@@ -5,7 +5,7 @@ export const INSTALLATION_FRAGMENT = gql`
     id
     title
     description
-    image {
+    images {
       url(transformation: { image: { resize: { fit: max, width: 1920 } } })
     }
   }
