@@ -1,42 +1,42 @@
 {
-    "hero": {
-        "titlePartOne": "Vivez une expérience audiovisuelle",
-        "titlePartTwo": "comme jamais auparavant.",
-        "subtitle": "Nous vous aidons à trouver la solution adaptée à vos besoins.",
-        "discoverOurProducts": "Découvrez nos produits"
-    },
-    "people": {
-        "title": "Passionnés.",
-        "text": "Vos boutiques de Lyon et Grenoble sont gérées par des passionnés qui sont présents pour partager leur passion et leur savoir-faire autour de Bang & Olufsen."
-    },
-    "categories": {
-        "title": "Explorez nos produits" ,
-        "subtitle": "Catégories"
-    },
-    "banner": {
-        "title": "Laissez vous guider.",
-        "text": "Toutes nos équipes vous conseillent les produits Bang & Olufsen qui répondront à vos besoins.",
-        "button": "Contactez nos magasins"
-    },
-    "products": {
-        "title": "Produits mis en avant",
-        "subtitle": "Produits",
-        "description": "Vivez une expérience audiovisuelle comme jamais auparavant.",
-        "moreDetails": "Plus en détail"
-    },
-    "preOwned": {
-        "title": "Produits d'occasion",
-        "subtitle": "Occasion",
-        "description": "Prolongez la vie de produits Bang & Olufsen tout en vous faisant plaisir.",
-        "moreDetails": "Plus en détail"
-    },
-    "newsletter": {
-        "title": "Inscrivez-vous à notre newsletter",
-        "subtitle": "Soyez informé des dernières nouveautés Bang & Olufsen",
-        "placeholder": "Votre adresse email",
-        "loading": "Inscription...",
-        "success": "Vous allez recevoir un email pour confirmer l'inscription",
-        "error": "Erreur. Merci de réessayer votre inscription",
-        "wrongEmail": "Merci d'entrer une adresse email valide"
-    }
+  "hero": {
+    "titlePartOne": "Vivez une expérience audiovisuelle",
+    "titlePartTwo": "comme jamais auparavant.",
+    "subtitle": "Nous vous aidons à trouver la solution adaptée à vos besoins.",
+    "discoverOurProducts": "Découvrez nos produits"
+  },
+  "people": {
+    "title": "Passionnés.",
+    "text": "Vos boutiques de Lyon et Grenoble sont gérées par des passionnés qui sont présents pour partager leur passion et leur savoir-faire autour de Bang & Olufsen."
+  },
+  "categories": {
+    "title": "Explorez nos produits",
+    "subtitle": "Catégories"
+  },
+  "banner": {
+    "title": "Laissez vous guider.",
+    "text": "Toutes nos équipes vous conseillent les produits Bang & Olufsen qui répondront à vos besoins.",
+    "button": "Contactez nos magasins"
+  },
+  "products": {
+    "title": "Produits mis en avant",
+    "subtitle": "Produits",
+    "description": "Vivez une expérience audiovisuelle comme jamais auparavant.",
+    "moreDetails": "Plus en détail"
+  },
+  "preOwned": {
+    "title": "Produits d'occasion",
+    "subtitle": "Occasion",
+    "description": "Prolongez la vie de produits Bang & Olufsen tout en vous faisant plaisir.",
+    "moreDetails": "Plus en détail"
+  },
+  "newsletter": {
+    "title": "Inscrivez-vous à notre newsletter",
+    "subtitle": "Soyez informé des dernières nouveautés Bang & Olufsen",
+    "placeholder": "Votre adresse email",
+    "loading": "Inscription...",
+    "success": "Vous allez recevoir un email pour confirmer l'inscription",
+    "error": "Erreur. Merci de réessayer votre inscription",
+    "wrongEmail": "Merci d'entrer une adresse email valide"
+  }
 }

@@ -1,0 +1,107 @@
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+    provider             = "mysql"
+    url                  = env("DATABASE_URL")
+    referentialIntegrity = "prisma"
+}
+
+model Category {
+    id        String    @id @default(uuid())
+    name      String
+    slug      String    @unique()
+    icon      String
+    products  Product[] @relation("CategoryProduct")
+    createdAt DateTime  @default(now())
+    updatedAt DateTime? @updatedAt()
+}
+
+model Shop {
+    id            String    @id @default(uuid())
+    city          String
+    country       String
+    address       String
+    postalCode    String
+    phoneNumber   String
+    image         String    @db.Text
+    googleMapsUrl String    @db.Text
+    email         String
+    openHours     Json?
+    products      Product[] @relation("ShopProduct")
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime? @updatedAt()
+}
+
+model Product {
+    id          String    @id @default(uuid())
+    name        String
+    description String    @db.Text
+    fromPrice   Int?
+    mainAsset   String
+    price       Int?
+    quantity    Int?
+    slug        String
+    categoryId  String
+    category    Category  @relation("CategoryProduct", fields: [categoryId], references: [id])
+    shopId      String
+    shop        Shop      @relation("ShopProduct", fields: [shopId], references: [id])
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime? @updatedAt()
+
+    @@unique([slug, categoryId])
+}
+
+model Account {
+    id                String  @id @default(uuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.Text
+    session_state     String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model Session {
+    id           String   @id @default(uuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum UserRole {
+    ADMIN
+    EDITOR
+    CUSTOMER
+}
+
+model User {
+    id            String    @id @default(uuid())
+    name          String?
+    email         String?   @unique
+    emailVerified DateTime?
+    image         String?
+    role          UserRole  @default(CUSTOMER)
+    accounts      Account[]
+    sessions      Session[]
+}
+
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}

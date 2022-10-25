@@ -19,7 +19,7 @@ const moduleExports = {
         source: '/sitemap.xml',
         destination: '/api/sitemap',
       },
-    ]
+    ];
   },
 };
 
