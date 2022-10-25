@@ -2,3 +2,4 @@ sentry.client.config.js
 sentry.server.config.js
 next.config.js
 next-i18next.config.js
+graphql/index.d.ts
