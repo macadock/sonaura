@@ -1,3 +1,5 @@
+import { vercelUrl } from '.';
+
 export enum PagesUrls {
   HOMEPAGE = '/',
   CATEGORY = '/[category]',
@@ -30,8 +32,7 @@ interface Props {
 }
 
 export function getRoutePath({ page, api }: Props): string {
-  const websiteUrl =
-    process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000';
+  const websiteUrl = vercelUrl || 'http://localhost:3000';
 
   if (api) {
     return `${websiteUrl}${api}`;
