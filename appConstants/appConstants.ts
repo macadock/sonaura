@@ -30,7 +30,7 @@ interface Props {
 }
 
 export function getRoutePath({ page, api }: Props): string {
-  const websiteUrl = process.env.NEXT_PUBLIC_WEBSITE_URL;
+  const websiteUrl = process.env.VERCEL_URL || 'http://localhost:3000';
 
   if (api) {
     return `${websiteUrl}${api}`;
