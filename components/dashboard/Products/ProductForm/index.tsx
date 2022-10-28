@@ -1,39 +1,71 @@
-import { useMutation } from '@apollo/client';
-import { Button, Grid, Stack, TextField } from '@mui/material';
-import { Shop } from '@prisma/client';
+import { useMutation, useQuery } from '@apollo/client';
+import {
+  Button,
+  Grid,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+} from '@mui/material';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import { useMemo, useState } from 'react';
+import { CREATE_PRODUCT, UPDATE_PRODUCT } from 'gql/product';
 import { client } from 'lib/apollo';
-import { initialValues, shopForm, shopFormTypes } from './shops.validator';
-import { CREATE_SHOP, UPDATE_SHOP } from 'gql/shop';
+import {
+  initialValues,
+  productFrom,
+  productFormTypes,
+} from './product.validator';
+import { GET_CATEGORIES } from 'gql/category';
+import { GET_SHOPS } from 'gql/shop';
 
 interface Props {
-  shopId: string;
-  shops: Shop[];
+  productId: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  products: any[];
   onCompletedOrUpdated: () => void;
 }
 
-const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
+const ProductForm: React.FC<Props> = ({
+  productId,
+  products,
+  onCompletedOrUpdated,
+}) => {
   type FormMode = 'creation' | 'edit';
 
   const [formMode, setFormMode] = useState<FormMode>('creation');
-  const selectedShop = useMemo((): Shop => {
-    if (!shopId) return undefined;
-    return shops.find((shop) => shop.id === shopId);
-  }, [shopId]);
+  const selectedProduct = useMemo(() => {
+    if (!productId) return undefined;
+    const product = products.find((category) => category.id === productId);
+    return {
+      ...product,
+      categoryId: product.category.id,
+      shopId: product.shop.id,
+    };
+  }, [productId]);
 
-  const [createShop] = useMutation(CREATE_SHOP, {
+  console.log(selectedProduct);
+
+  const [createCategory] = useMutation(CREATE_PRODUCT, {
     client,
     onCompleted: () => {
       onCompletedOrUpdated();
     },
   });
 
-  const [updateShop] = useMutation(UPDATE_SHOP, {
+  const [updateCategory] = useMutation(UPDATE_PRODUCT, {
     client,
     onCompleted: () => {
       onCompletedOrUpdated();
     },
+  });
+
+  const { data: categories } = useQuery(GET_CATEGORIES, {
+    client,
+  });
+
+  const { data: shops } = useQuery(GET_SHOPS, {
+    client,
   });
 
   const handleEditMode = () => {
@@ -45,45 +77,48 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
   };
 
   const onSubmit = (
-    values: shopFormTypes,
-    actions: FormikHelpers<shopFormTypes>,
+    values: productFormTypes,
+    actions: FormikHelpers<productFormTypes>,
   ) => {
     const {
-      address,
-      postalCode,
-      city,
-      country,
-      email,
-      phoneNumber,
-      googleMapsUrl,
-      image,
+      name,
+      description,
+      fromPrice,
+      mainAsset,
+      price,
+      quantity,
+      slug,
+      categoryId,
+      shopId,
     } = values;
+
     const input = {
-      address,
-      postalCode,
-      city,
-      country,
-      email,
-      phoneNumber,
-      googleMapsUrl,
-      image,
+      name,
+      description,
+      fromPrice,
+      mainAsset,
+      price,
+      quantity,
+      slug,
+      categoryId,
+      shopId,
     };
 
     if (formMode === 'creation') {
-      return createShop({
+      return createCategory({
         variables: {
-          createShopInput: {
+          createProductInput: {
             ...input,
           },
         },
       });
     }
 
-    updateShop({
+    updateCategory({
       variables: {
-        updateShopInput: {
+        updateProductInput: {
           ...input,
-          id: shopId,
+          id: productId,
         },
       },
     });
@@ -93,29 +128,29 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
   };
 
   return (
-    <Formik<shopFormTypes>
-      initialValues={formMode === 'creation' ? initialValues : selectedShop}
+    <Formik<productFormTypes>
+      initialValues={formMode === 'creation' ? initialValues : selectedProduct}
       enableReinitialize={true}
       onSubmit={onSubmit}
-      validationSchema={shopForm}
+      validationSchema={productFrom}
     >
       {({ isValid, dirty, handleSubmit }) => (
         <>
           <Stack direction={'row'} marginBottom={2} spacing={1}>
             <Button
               variant={'outlined'}
-              disabled={shopId === null}
+              disabled={productId === null}
               onClick={handleEditMode}
             >
               {'Editer'}
             </Button>
             <Button variant={'outlined'} onClick={handleCreateMode}>
-              {'Créer un nouveau magasin'}
+              {'Créer un nouveau produit'}
             </Button>
           </Stack>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <Field name={'email'}>
+            <Grid item xs={6}>
+              <Field name={'name'}>
                 {({
                   field: { name, onBlur, onChange, value },
                   meta: { error, touched },
@@ -133,8 +168,8 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
                 )}
               </Field>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Field name={'phoneNumber'}>
+            <Grid item xs={6}>
+              <Field name={'slug'}>
                 {({
                   field: { name, onBlur, onChange, value },
                   meta: { error, touched },
@@ -152,8 +187,8 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
                 )}
               </Field>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Field name={'address'}>
+            <Grid item xs={12}>
+              <Field name={'description'}>
                 {({
                   field: { name, onBlur, onChange, value },
                   meta: { error, touched },
@@ -171,8 +206,94 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
                 )}
               </Field>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Field name={'postalCode'}>
+            <Grid item xs={6}>
+              <Field name={'price'}>
+                {({
+                  field: { name, onBlur, onChange, value },
+                  meta: { error, touched },
+                }: FieldProps) => (
+                  <TextField
+                    name={name}
+                    label={name}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    type={'number'}
+                    error={touched && Boolean(error)}
+                    helperText={touched && error ? '' : null}
+                    fullWidth
+                  />
+                )}
+              </Field>
+            </Grid>
+            <Grid item xs={6}>
+              <Field name={'fromPrice'}>
+                {({
+                  field: { name, onBlur, onChange, value },
+                  meta: { error, touched },
+                }: FieldProps) => (
+                  <TextField
+                    name={name}
+                    label={name}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    type={'number'}
+                    error={touched && Boolean(error)}
+                    helperText={touched && error ? '' : null}
+                    fullWidth
+                  />
+                )}
+              </Field>
+            </Grid>
+            <Grid item xs={6}>
+              <Field name={'categoryId'}>
+                {({
+                  field: { name, onBlur, onChange, value },
+                  meta: { error, touched },
+                }: FieldProps) => (
+                  <Select
+                    fullWidth
+                    name={name}
+                    value={value}
+                    onBlur={onBlur}
+                    onChange={onChange}
+                    error={touched && Boolean(error)}
+                  >
+                    {categories?.categories.map((category) => (
+                      <MenuItem key={category.id} value={category.id}>
+                        {category.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              </Field>
+            </Grid>
+            <Grid item xs={6}>
+              <Field name={'shopId'}>
+                {({
+                  field: { name, onBlur, onChange, value },
+                  meta: { error, touched },
+                }: FieldProps) => (
+                  <Select
+                    fullWidth
+                    name={name}
+                    value={value}
+                    onBlur={onBlur}
+                    onChange={onChange}
+                    error={touched && Boolean(error)}
+                  >
+                    {shops?.categories.map((category) => (
+                      <MenuItem key={category.id} value={category.id}>
+                        {category.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              </Field>
+            </Grid>
+            <Grid item xs={12}>
+              <Field name={'mainAsset'}>
                 {({
                   field: { name, onBlur, onChange, value },
                   meta: { error, touched },
@@ -190,83 +311,6 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
                 )}
               </Field>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Field name={'city'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Field name={'country'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Field name={'image'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Field name={'googleMapsUrl'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
-            </Grid>
-
             <Grid item xs={12}>
               <Button
                 variant={'contained'}
@@ -287,4 +331,4 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
   );
 };
 
-export default ShopForm;
+export default ProductForm;

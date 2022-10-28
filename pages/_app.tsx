@@ -1,10 +1,4 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
-} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
+import { ApolloProvider } from '@apollo/client';
 import { Toaster } from 'react-hot-toast';
 import { SessionProvider } from 'next-auth/react';
 
@@ -24,25 +18,7 @@ import './styles.css';
 import { CartProvider } from 'react-use-cart';
 import { appWithTranslation } from 'next-i18next';
 import { Session } from 'next-auth';
-
-const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
-});
-
-const authLink = setContext((_, { headers }) => {
-  const token = process.env.NEXT_PUBLIC_GRAPHCMS_PUBLIC_KEY;
-  return {
-    headers: {
-      ...headers,
-      Authorization: `Bearer ${token}`,
-    },
-  };
-});
-
-export const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-});
+import { client } from 'lib/apollo';
 
 type Props = AppProps & {
   pageProps: {

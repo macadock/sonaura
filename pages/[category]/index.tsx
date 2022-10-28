@@ -3,22 +3,21 @@ import i18nConfig from 'next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { GetStaticPropsContext, NextPage } from 'next';
 import CategoryView from 'views/CategoryView';
-import { GET_CATEGORIES, GET_CATEGORY } from 'gql/get-categories';
-import { Category } from 'gql/__generated__/category';
-import { client } from 'pages/_app';
-import { Categories } from 'gql/__generated__/categories';
+import { client as newClient } from 'lib/apollo';
+import { GET_CATEGORIES, GET_CATEGORY_BY_SLUG } from '../../gql/category';
 
 const Category: NextPage<{
-  category: Category;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  category: any;
 }> = ({ category }) => {
-  return <CategoryView category={category} />;
+  return <CategoryView category={category.categoryBySlug} />;
 };
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const slug = context.params.category;
 
-  const { data: category } = await client.query<Category>({
-    query: GET_CATEGORY,
+  const { data: category } = await newClient.query({
+    query: GET_CATEGORY_BY_SLUG,
     variables: {
       slug: slug,
     },
@@ -40,7 +39,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 };
 
 export const getStaticPaths = async () => {
-  const { data } = await client.query<Categories>({
+  const { data } = await newClient.query({
     query: GET_CATEGORIES,
   });
 

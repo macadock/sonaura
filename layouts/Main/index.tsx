@@ -8,14 +8,11 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 import Container from 'components/system/Container';
 
-import { Pages } from 'gql/__generated__/pages';
-import { Categories } from 'gql/__generated__/categories';
 import Topbar from 'components/system/Topbar';
 import Sidebar from 'components/system/Sidebar';
 import Footer from 'components/system/Footer';
 import { useQuery } from '@apollo/client';
-import { GET_CATEGORIES } from 'gql/get-categories';
-import { GET_PAGES_HEADER } from 'gql/get-pages';
+import { GET_CATEGORIES } from 'gql/category';
 
 interface Props {
   children: React.ReactNode;
@@ -28,11 +25,32 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
     defaultMatches: true,
   });
 
-  const { data: { categories } = { categories: null } } =
-    useQuery<Categories>(GET_CATEGORIES);
+  const pages = [
+    {
+      id: 'ckyg109fkjweg0b45npsbm9yt',
+      name: 'professionnels',
+      pageType: 'Page',
+      title: 'Professionnels',
+      url: '/professionnels',
+    },
+    {
+      id: 'ckyg11ye0jxr20c52r9fzhfn6',
+      name: 'realisations',
+      pageType: 'Page',
+      title: 'Réalisations',
+      url: '/realisations',
+    },
+    {
+      id: 'ckyg129yojxhq0b06mzuvyyjp',
+      name: 'contact',
+      pageType: 'Page',
+      title: 'Contact',
+      url: '/contact',
+    },
+  ];
 
-  const { data: { pages } = { pages: null } } =
-    useQuery<Pages>(GET_PAGES_HEADER);
+  const { data: { categories } = { categories: null } } =
+    useQuery(GET_CATEGORIES);
 
   const [openSidebar, setOpenSidebar] = useState(false);
 

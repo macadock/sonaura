@@ -6,32 +6,16 @@ import { useQuery } from '@apollo/client';
 import { client } from 'lib/apollo';
 import ShopsTable from 'components/dashboard/Shops/ShopsTable';
 import ShopForm from 'components/dashboard/Shops/ShopsForm';
+import { GET_SHOPS } from '../../../gql/shop';
 
 const DashboardShopView: React.FC = () => {
   const [shopId, setShopId] = useState<string>(null);
-
-  const query = gql`
-    query shops {
-      shops {
-        id
-        city
-        country
-        address
-        postalCode
-        phoneNumber
-        image
-        googleMapsUrl
-        email
-        openHours
-      }
-    }
-  `;
 
   type Shops = {
     shops: Shop[];
   };
 
-  const { data, loading, error, refetch } = useQuery<Shops>(query, {
+  const { data, loading, error, refetch } = useQuery<Shops>(GET_SHOPS, {
     client,
   });
 

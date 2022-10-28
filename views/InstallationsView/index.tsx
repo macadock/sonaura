@@ -3,10 +3,10 @@ import React from 'react';
 import { Container } from '@mui/material';
 import Hero from 'components/core/Installations/Hero';
 import Main from 'components/core/Installations/Main';
-import { Installations } from 'gql/__generated__/installations';
 
 interface Props {
-  installations: Installations;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  installations: any;
 }
 
 const InstallationView: React.FC<Props> = ({ installations }) => {

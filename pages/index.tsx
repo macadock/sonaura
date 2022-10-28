@@ -3,16 +3,16 @@ import i18nConfig from '../next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../appConstants';
 import type { NextPage } from 'next';
 import HomeView from 'views/HomeView';
-import { Categories } from 'gql/__generated__/categories';
-import { client } from 'pages/_app';
-import { GET_CATEGORIES } from 'gql/get-categories';
+import { client as newClient } from 'lib/apollo';
+import { GET_CATEGORIES } from '../gql/category';
 
-const Home: NextPage<{ categories: Categories }> = ({ categories }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Home: NextPage<{ categories: any }> = ({ categories }) => {
   return <HomeView categories={categories} />;
 };
 
 export const getStaticProps = async ({ locale }) => {
-  const { data: categories } = await client.query<Categories>({
+  const { data: categories } = await newClient.query({
     query: GET_CATEGORIES,
   });
 

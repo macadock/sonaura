@@ -3,18 +3,18 @@ import i18nConfig from 'next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { NextPage } from 'next';
 import ContactView from 'views/ContactView';
-import { GET_SHOPS } from 'gql/get-shops';
-import { Shops } from 'gql/__generated__/shops';
-import { client } from 'pages/_app';
+import { client as newClient } from 'lib/apollo';
+import { GET_SHOPS } from '../../gql/shop';
 
 const Contact: NextPage<{
-  shops: Shops;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  shops: any;
 }> = ({ shops }) => {
   return <ContactView shops={shops} />;
 };
 
 export const getStaticProps = async ({ locale }) => {
-  const { data: shops } = await client.query<Shops>({
+  const { data: shops } = await newClient.query({
     query: GET_SHOPS,
   });
 

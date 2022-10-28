@@ -6,8 +6,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Link from '@mui/material/Link';
 
 import NavItem from './NavItem';
-import { Categories } from 'gql/__generated__/categories';
-import { Pages } from 'gql/__generated__/pages';
 import TopNav from 'components/system/TopNav';
 import { ShoppingCartTwoTone } from '@mui/icons-material';
 import CartDrawer from '../../core/Cart/CartDrawer';
@@ -19,8 +17,10 @@ import moveCategoryToPage from './exlude-from-menu';
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
   onSidebarOpen: () => void;
-  pages: Pages['pages'];
-  categories: Categories['categories'];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pages: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  categories: any;
   colorInvert?: boolean;
 }
 

@@ -2,8 +2,6 @@ import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import SidebarNav from './SidebarNav';
-import { Pages } from 'gql/__generated__/pages';
-import { Categories } from 'gql/__generated__/categories';
 import moveCategoryToPage from '../Topbar/exlude-from-menu';
 
 interface Props {
@@ -11,8 +9,10 @@ interface Props {
   onClose: () => void;
   open: boolean;
   variant: 'permanent' | 'persistent' | 'temporary' | undefined;
-  pages: Pages['pages'];
-  categories: Categories['categories'];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pages: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  categories: any;
 }
 
 const Sidebar: React.FC<Props> = ({

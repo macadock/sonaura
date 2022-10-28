@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Product } from 'gql/__generated__/product';
 import { Categories } from 'types';
 import { useCart } from 'react-use-cart';
 import ProductDialog from './ProductDialog';
@@ -15,10 +14,9 @@ import Shops from './Shops';
 import { Grid } from '@mui/material';
 import Price from 'utils/Price';
 
-type Image = Product['product']['mainAsset'];
-
 interface Props {
-  product: Product;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  product: any;
 }
 
 const ProductDetails: React.FC<Props> = ({ product = null }) => {
@@ -27,23 +25,21 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
   if (product === null) return null;
 
-  const { product: currentProduct } = product;
-  const basicAssets = [currentProduct.mainAsset, ...currentProduct.assets];
+  const currentProduct = product;
+  const basicAssets = [
+    currentProduct.mainAsset,
+    // ...currentProduct.assets
+  ];
 
-  const [media, setMedia] = useState<Array<{ url: string }>>(basicAssets);
-  const [current, setCurrent] = useState<Image>(media[0]);
+  const [media, setMedia] = useState<Array<string>>(basicAssets);
+  const [current, setCurrent] = useState<string>(media[0]);
 
-  const [size, setSize] = useState<Product['product']['sizes'][number]>(null);
-  const [color, setColor] =
-    useState<Product['product']['colors'][number]>(null);
-  const [positionning, setPositionning] =
-    useState<Product['product']['positionnings'][number]>(null);
-  const [frameColor, setFrameColor] =
-    useState<Product['product']['frameColors'][number]>(null);
-  const [soundbarColor, setSoundbarColor] =
-    useState<Product['product']['soundbarColors'][number]>(null);
-  const [supportColor, setSupportColor] =
-    useState<Product['product']['supportColors'][number]>(null);
+  const [size, setSize] = useState(null);
+  const [color, setColor] = useState(null);
+  const [positionning, setPositionning] = useState(null);
+  const [frameColor, setFrameColor] = useState(null);
+  const [soundbarColor, setSoundbarColor] = useState(null);
+  const [supportColor, setSupportColor] = useState(null);
   const [alreadyAddedToCart, setAlreadyAddedToCart] = useState<boolean>(false);
   const [dialogState, setDialogState] = useState<boolean>(false);
 
@@ -83,7 +79,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   }, [items]);
 
   const variantAssets = useMemo(() => {
-    if (currentProduct.assetsByProductVariants === null) return null;
+    if (currentProduct?.assetsByProductVariants === null) return null;
 
     const selectedAttributes = [
       size,
@@ -123,7 +119,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   }, [size, color, positionning, frameColor, soundbarColor, supportColor]);
 
   useEffect(() => {
-    if (currentProduct.assetsByProductVariants === null) return null;
+    if (currentProduct?.assetsByProductVariants === null) return null;
 
     if (variantAssets) {
       const assetsToAdd = variantAssets.flatMap((variant) => variant.asset);
@@ -154,7 +150,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                   },
                 }}
               >
-                <img src={current.url} alt={currentProduct.name} />
+                <img src={current} alt={currentProduct.name} />
               </Box>
             )}
             <Stack
@@ -179,7 +175,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     },
                   }}
                 >
-                  <img src={item.url} alt={currentProduct.name} />
+                  <img src={item} alt={currentProduct.name} />
                 </Box>
               ))}
             </Stack>
@@ -187,7 +183,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
         </Grid>
         <Grid item xs={12} md={5}>
           <Box>
-            {currentProduct.isNew && (
+            {currentProduct?.isNew && (
               <Box
                 padding={1}
                 display={'inline-flex'}
@@ -228,7 +224,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               button={dialogButton}
               product={currentProduct}
             />
-            {currentProduct.quantity > 0 && isOccasion ? (
+            {currentProduct?.quantity > 0 && isOccasion ? (
               <>
                 <Stack marginTop={3} direction={'column'} spacing={2}>
                   <Button
@@ -273,7 +269,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               </Stack>
             )}
             <Box marginY={3}>
-              {currentProduct.sizes.length > 0 && (
+              {/* {currentProduct?.sizes.length > 0 && (
                 <Box>
                   <Typography>
                     {`${t('attributes.size')} : `}
@@ -302,8 +298,8 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     ))}
                   </Stack>
                 </Box>
-              )}
-              {currentProduct.colors.length > 0 && (
+              )} */}
+              {/* {currentProduct?.colors.length > 0 && (
                 <Box marginY={2}>
                   <Typography>
                     {`${t('attributes.color')} : `}
@@ -339,8 +335,8 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     ))}
                   </Stack>
                 </Box>
-              )}
-              {currentProduct.frameColors.length > 0 && (
+              )} */}
+              {/* {currentProduct?.frameColors.length > 0 && (
                 <Box marginY={2}>
                   <Typography>
                     {`${t('attributes.frameColor')} : `}
@@ -376,8 +372,8 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     ))}
                   </Stack>
                 </Box>
-              )}
-              {currentProduct.soundbarColors.length > 0 && (
+              )} */}
+              {/* {currentProduct?.soundbarColors.length > 0 && (
                 <Box marginY={2}>
                   <Typography>
                     {`${t('attributes.soundbarColor')} : `}
@@ -413,8 +409,8 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     ))}
                   </Stack>
                 </Box>
-              )}
-              {currentProduct.supportColors.length > 0 && (
+              )} */}
+              {/* {currentProduct?.supportColors.length > 0 && (
                 <Box marginY={2}>
                   <Typography>
                     {`${t('attributes.supportColor')} : `}
@@ -450,8 +446,8 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     ))}
                   </Stack>
                 </Box>
-              )}
-              {currentProduct.positionnings.length > 0 && (
+              )} */}
+              {/* {currentProduct?.positionnings.length > 0 && (
                 <Box marginY={2}>
                   <Typography>
                     {`${t('attributes.support')} : `}
@@ -480,7 +476,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     ))}
                   </Stack>
                 </Box>
-              )}
+              )} */}
 
               {isOccasion
                 ? currentProduct?.shops && (

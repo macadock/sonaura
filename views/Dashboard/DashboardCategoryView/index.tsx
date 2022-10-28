@@ -2,32 +2,24 @@ import { Box, Grid, Typography } from '@mui/material';
 import CategoryTable from 'components/dashboard/Categories/CategoryTable';
 import CategoryForm from 'components/dashboard/Categories/CategoryForm';
 import { useState } from 'react';
-import { gql } from 'apollo-server-micro';
 import { Category } from '@prisma/client';
 import { useQuery } from '@apollo/client';
 import { client } from 'lib/apollo';
+import { GET_CATEGORIES } from '../../../gql/category';
 
 const DashboardCategoryView: React.FC = () => {
   const [categoryId, setCategoryId] = useState<string>(null);
-
-  const query = gql`
-    query categories {
-      categories {
-        id
-        name
-        slug
-        icon
-      }
-    }
-  `;
 
   type Categories = {
     categories: Category[];
   };
 
-  const { data, loading, error, refetch } = useQuery<Categories>(query, {
-    client,
-  });
+  const { data, loading, error, refetch } = useQuery<Categories>(
+    GET_CATEGORIES,
+    {
+      client,
+    },
+  );
 
   if (loading || error) return null;
 

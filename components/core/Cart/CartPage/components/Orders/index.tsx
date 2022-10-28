@@ -5,14 +5,14 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { useCart } from 'react-use-cart';
-import { GetProductsByIds } from 'gql/__generated__/get-products-by-ids';
 import { useTranslation } from 'next-i18next';
 import { Delete } from '@mui/icons-material';
 import NextLink from 'next/link';
 import Price from 'utils/Price';
 
 interface Props {
-  products: GetProductsByIds['products'];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  products: any;
 }
 
 const Orders: React.FC<Props> = ({ products }) => {

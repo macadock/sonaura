@@ -8,12 +8,12 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 
 import Container from 'components/system/Container';
-import { ProductFragment } from 'gql/__generated__/categories';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
 
 interface Props {
-  products: ProductFragment[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  products: any[];
 }
 
 const ProductGrid: React.FC<Props> = ({ products }) => {
@@ -50,7 +50,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                 <Link href={`/${product.category.slug}/${product.slug}`}>
                   <CardMedia
                     title={product.name}
-                    image={product.mainAsset.url}
+                    image={product.mainAsset}
                     sx={{
                       position: 'relative',
                       height: 320,

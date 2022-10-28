@@ -5,12 +5,25 @@ type Category {
   icon: String
   id: String
   name: String
+  products: [Product]
   slug: String
 }
 
 input CreateCategoryInput {
   icon: String!
   name: String!
+  slug: String!
+}
+
+input CreateProductInput {
+  categoryId: String!
+  description: String!
+  fromPrice: Int
+  mainAsset: String!
+  name: String!
+  price: Int
+  quantity: Int
+  shopId: String
   slug: String!
 }
 
@@ -21,7 +34,7 @@ input CreateShopInput {
   email: String!
   googleMapsUrl: String!
   image: String!
-  openHours: JSONObject!
+  openHours: JSONObject
   phoneNumber: String!
   postalCode: String!
 }
@@ -41,16 +54,37 @@ scalar JSONObject
 
 type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!): Category
+  createProduct(createProductInput: CreateProductInput!): Product
   createShop(createShopInput: CreateShopInput!): Shop
   deleteCategory(id: String!): Category
+  deleteProduct(id: String!): Product
   deleteShop(id: String!): Shop
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category
+  updateProduct(updateProductInput: UpdateProductInput!): Product
   updateShop(updateShopInput: UpdateShopInput!): Shop
+}
+
+type Product {
+  category: Category
+  description: String
+  fromPrice: Int
+  id: String
+  mainAsset: String
+  name: String
+  price: Int
+  quantity: Int
+  shop: Shop
+  slug: String
 }
 
 type Query {
   categories: [Category]
   categoryById(id: String!): Category
+  categoryBySlug(slug: String!): Category
+  productById(id: String!): Product
+  productByIds(ids: [String]!): [Product]
+  productBySlug(slug: String!): Product
+  products: [Product]
   shopById(id: String!): Shop
   shops: [Shop]
 }
@@ -75,8 +109,22 @@ input UpdateCategoryInput {
   slug: String
 }
 
+input UpdateProductInput {
+  categoryId: String
+  description: String
+  fromPrice: Int
+  id: String!
+  mainAsset: String
+  name: String
+  price: Int
+  quantity: Int
+  shopId: String
+  slug: String
+}
+
 input UpdateShopInput {
   address: String
+  city: String!
   country: String
   email: String
   googleMapsUrl: String

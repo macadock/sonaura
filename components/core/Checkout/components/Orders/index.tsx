@@ -8,14 +8,11 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import { useCart } from 'react-use-cart';
 import { useQuery } from '@apollo/client';
-import {
-  GetProductsByIds,
-  GetProductsByIdsVariables,
-} from 'gql/__generated__/get-products-by-ids';
-import { GET_PRODUCTS_BY_IDS } from 'gql/get-products';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
 import { useFormikContext } from 'formik';
+import { client as newClient } from 'lib/apollo';
+import { GET_PRODUCT_BY_IDS } from '../../../../../gql/product';
 
 const Orders = (): JSX.Element => {
   const theme = useTheme();
@@ -30,14 +27,12 @@ const Orders = (): JSX.Element => {
 
   const ids = items.map((item) => item.id);
 
-  const { data, refetch } = useQuery<
-    GetProductsByIds,
-    GetProductsByIdsVariables
-  >(GET_PRODUCTS_BY_IDS, {
+  const { data, refetch } = useQuery(GET_PRODUCT_BY_IDS, {
     variables: {
       ids,
     },
     skip: !ids,
+    client: newClient,
   });
 
   useEffect(() => {
@@ -48,14 +43,16 @@ const Orders = (): JSX.Element => {
     if (!items || !data) return null;
 
     return items.map((item) => {
-      const product = data.products.find((product) => product.id === item.id);
+      const product = data.productByIds.find(
+        (product) => product.id === item.id,
+      );
 
       return {
         ...item,
         ...product,
       };
     });
-  }, [data?.products]);
+  }, [data?.productByIds]);
 
   return (
     <>
@@ -67,7 +64,7 @@ const Orders = (): JSX.Element => {
                 <Box display={'flex'}>
                   <Box
                     component={'img'}
-                    src={product.mainAsset.url}
+                    src={product.mainAsset}
                     alt={product.name}
                     sx={{
                       borderRadius: 2,

@@ -10,16 +10,13 @@ import {
 } from '@mui/material';
 import { useCart } from 'react-use-cart';
 import { useQuery } from '@apollo/client';
-import { GET_PRODUCTS_BY_IDS } from 'gql/get-products';
-import {
-  GetProductsByIds,
-  GetProductsByIdsVariables,
-} from 'gql/__generated__/get-products-by-ids';
 import { Close, Delete } from '@mui/icons-material';
 
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
+import { client as newClient } from 'lib/apollo';
+import { GET_PRODUCT_BY_IDS } from '../../../../gql/product';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -33,14 +30,12 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
 
   const ids = items.map((item) => item.id);
 
-  const { data, refetch } = useQuery<
-    GetProductsByIds,
-    GetProductsByIdsVariables
-  >(GET_PRODUCTS_BY_IDS, {
+  const { data, refetch } = useQuery(GET_PRODUCT_BY_IDS, {
     variables: {
       ids,
     },
     skip: !ids,
+    client: newClient,
   });
 
   useEffect(() => {
@@ -51,14 +46,16 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
     if (!items || !data) return null;
 
     return items.map((item) => {
-      const product = data.products.find((product) => product.id === item.id);
+      const product = data.productsByIds.find(
+        (product) => product.id === item.id,
+      );
 
       return {
         ...item,
         ...product,
       };
     });
-  }, [data?.products]);
+  }, [data?.productByIds]);
 
   const closeCart = () => {
     onClose();

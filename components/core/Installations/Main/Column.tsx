@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
-import { InstallationFragment } from 'gql/__generated__/installation-fragment';
 
 import Card from './Card';
 
 interface Props {
-  installations: InstallationFragment[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  installations: any[];
 }
 
 const Column: React.FC<Props> = ({ installations }) => {

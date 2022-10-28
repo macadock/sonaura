@@ -3,14 +3,14 @@ import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import NavItem from '../NavItem';
 import { Link } from '@mui/material';
-import { Pages } from 'gql/__generated__/pages';
 import TopNav from 'components/system/TopNav';
 import { useTranslation } from 'next-i18next';
-import { Categories } from 'gql/__generated__/categories';
 
 interface Props {
-  pages: Pages['pages'];
-  categories: Categories['categories'];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pages: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  categories: any;
 }
 
 const SidebarNav: React.FC<Props> = ({ pages, categories }) => {

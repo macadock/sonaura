@@ -1,10 +1,8 @@
 import { globby } from 'globby';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { GET_CATEGORIES } from 'gql/get-categories';
-import { GET_PRODUCTS } from 'gql/get-products';
-import { Categories } from 'gql/__generated__/categories';
-import { Products } from 'gql/__generated__/products';
-import { client } from 'pages/_app';
+import { client as newClient } from 'lib/apollo';
+import { GET_PRODUCTS } from '../../gql/product';
+import { GET_CATEGORIES } from '../../gql/category';
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,7 +15,7 @@ export default async function handler(
   res.setHeader('Cache-control', 'stale-while-revalidate, s-maxage=3600');
 
   async function getCategories(): Promise<string[]> {
-    const { data } = await client.query<Categories>({
+    const { data } = await newClient.query({
       query: GET_CATEGORIES,
     });
 
@@ -30,7 +28,7 @@ export default async function handler(
   }
 
   async function getProducts(): Promise<string[]> {
-    const { data } = await client.query<Products>({
+    const { data } = await newClient.query({
       query: GET_PRODUCTS,
     });
 

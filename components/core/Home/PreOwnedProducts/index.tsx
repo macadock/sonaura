@@ -10,11 +10,11 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { useTheme } from '@mui/material/styles';
 import { useQuery } from '@apollo/client';
-import { GET_PREOWNED_PRODUCTS } from 'gql/get-products';
 import { CircularProgress, Link } from '@mui/material';
-import { PreOwnedProducts } from 'gql/__generated__/pre-owned-products';
+
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
+import { GET_PREOWNED_PRODUCTS } from '../../../../gql/category';
 
 const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
   productNumberMax = 3,
@@ -22,13 +22,11 @@ const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
   const { t } = useTranslation('homepage', { keyPrefix: 'preOwned' });
   const theme = useTheme();
 
-  const {
-    data: products,
-    loading,
-    error,
-  } = useQuery<PreOwnedProducts>(GET_PREOWNED_PRODUCTS);
+  const { data: products, loading, error } = useQuery(GET_PREOWNED_PRODUCTS);
 
-  if (products?.category.products.length === 0 || error) {
+  if (products === null) return null;
+
+  if (products?.categoryBySlug.products.length === 0 || error) {
     return null;
   }
 
@@ -112,7 +110,7 @@ const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
                       <Box
                         component={LazyLoadImage}
                         effect="blur"
-                        src={product.mainAsset.url}
+                        src={product.mainAsset}
                         sx={{
                           width: '100%',
                           objectFit: 'cover',

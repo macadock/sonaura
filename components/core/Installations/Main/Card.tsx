@@ -2,10 +2,10 @@ import { Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { InstallationFragment } from 'gql/__generated__/installation-fragment';
 
 interface Props {
-  installation: InstallationFragment;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  installation: any;
 }
 
 const Card: React.FC<Props> = ({ installation }) => {

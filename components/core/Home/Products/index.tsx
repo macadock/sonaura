@@ -10,11 +10,10 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { useTheme } from '@mui/material/styles';
 import { useQuery } from '@apollo/client';
-import { GET_PRODUCTS } from 'gql/get-products';
-import { Products } from 'gql/__generated__/products';
 import { CircularProgress, Link } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
+import { GET_PRODUCTS } from 'gql/product';
 
 const Products: React.FC<{ productNumberMax?: number }> = ({
   productNumberMax = 3,
@@ -22,7 +21,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
   const { t } = useTranslation('homepage', { keyPrefix: 'products' });
   const theme = useTheme();
 
-  const { data: products, loading, error } = useQuery<Products>(GET_PRODUCTS);
+  const { data: products, loading, error } = useQuery(GET_PRODUCTS);
 
   if (products?.products.length === 0 || error) {
     return null;
@@ -108,7 +107,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
                       <Box
                         component={LazyLoadImage}
                         effect="blur"
-                        src={product.mainAsset.url}
+                        src={product.mainAsset}
                         sx={{
                           width: '100%',
                           objectFit: 'cover',

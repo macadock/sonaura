@@ -75,6 +75,16 @@ const DashboardMain: React.FC<Props> = ({ children }) => {
                 sx={{ paddingX: { md: 0.8, lg: 2 } }}
                 underline="none"
                 component="a"
+                href={'/dashboard/products'}
+                color={'text.primary'}
+                fontWeight={asPath.includes('/dashboard/products') ? 700 : 400}
+              >
+                {'Produits'}
+              </Link>
+              <Link
+                sx={{ paddingX: { md: 0.8, lg: 2 } }}
+                underline="none"
+                component="a"
                 href={'/dashboard/categories'}
                 color={'text.primary'}
                 fontWeight={

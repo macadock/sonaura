@@ -62,6 +62,18 @@ export interface NexusGenInputs {
     name: string; // String!
     slug: string; // String!
   };
+  CreateProductInput: {
+    // input type
+    categoryId: string; // String!
+    description: string; // String!
+    fromPrice?: number | null; // Int
+    mainAsset: string; // String!
+    name: string; // String!
+    price?: number | null; // Int
+    quantity?: number | null; // Int
+    shopId?: string | null; // String
+    slug: string; // String!
+  };
   CreateShopInput: {
     // input type
     address: string; // String!
@@ -70,7 +82,7 @@ export interface NexusGenInputs {
     email: string; // String!
     googleMapsUrl: string; // String!
     image: string; // String!
-    openHours: NexusGenScalars['JSONObject']; // JSONObject!
+    openHours?: NexusGenScalars['JSONObject'] | null; // JSONObject
     phoneNumber: string; // String!
     postalCode: string; // String!
   };
@@ -81,9 +93,23 @@ export interface NexusGenInputs {
     name?: string | null; // String
     slug?: string | null; // String
   };
+  UpdateProductInput: {
+    // input type
+    categoryId?: string | null; // String
+    description?: string | null; // String
+    fromPrice?: number | null; // Int
+    id: string; // String!
+    mainAsset?: string | null; // String
+    name?: string | null; // String
+    price?: number | null; // Int
+    quantity?: number | null; // Int
+    shopId?: string | null; // String
+    slug?: string | null; // String
+  };
   UpdateShopInput: {
     // input type
     address?: string | null; // String
+    city: string; // String!
     country?: string | null; // String
     email?: string | null; // String
     googleMapsUrl?: string | null; // String
@@ -116,6 +142,17 @@ export interface NexusGenObjects {
     slug?: string | null; // String
   };
   Mutation: {};
+  Product: {
+    // root type
+    description?: string | null; // String
+    fromPrice?: number | null; // Int
+    id?: string | null; // String
+    mainAsset?: string | null; // String
+    name?: string | null; // String
+    price?: number | null; // Int
+    quantity?: number | null; // Int
+    slug?: string | null; // String
+  };
   Query: {};
   Shop: {
     // root type
@@ -146,21 +183,43 @@ export interface NexusGenFieldTypes {
     icon: string | null; // String
     id: string | null; // String
     name: string | null; // String
+    products: Array<NexusGenRootTypes['Product'] | null> | null; // [Product]
     slug: string | null; // String
   };
   Mutation: {
     // field return type
     createCategory: NexusGenRootTypes['Category'] | null; // Category
+    createProduct: NexusGenRootTypes['Product'] | null; // Product
     createShop: NexusGenRootTypes['Shop'] | null; // Shop
     deleteCategory: NexusGenRootTypes['Category'] | null; // Category
+    deleteProduct: NexusGenRootTypes['Product'] | null; // Product
     deleteShop: NexusGenRootTypes['Shop'] | null; // Shop
     updateCategory: NexusGenRootTypes['Category'] | null; // Category
+    updateProduct: NexusGenRootTypes['Product'] | null; // Product
     updateShop: NexusGenRootTypes['Shop'] | null; // Shop
+  };
+  Product: {
+    // field return type
+    category: NexusGenRootTypes['Category'] | null; // Category
+    description: string | null; // String
+    fromPrice: number | null; // Int
+    id: string | null; // String
+    mainAsset: string | null; // String
+    name: string | null; // String
+    price: number | null; // Int
+    quantity: number | null; // Int
+    shop: NexusGenRootTypes['Shop'] | null; // Shop
+    slug: string | null; // String
   };
   Query: {
     // field return type
     categories: Array<NexusGenRootTypes['Category'] | null> | null; // [Category]
     categoryById: NexusGenRootTypes['Category'] | null; // Category
+    categoryBySlug: NexusGenRootTypes['Category'] | null; // Category
+    productById: NexusGenRootTypes['Product'] | null; // Product
+    productByIds: Array<NexusGenRootTypes['Product'] | null> | null; // [Product]
+    productBySlug: NexusGenRootTypes['Product'] | null; // Product
+    products: Array<NexusGenRootTypes['Product'] | null> | null; // [Product]
     shopById: NexusGenRootTypes['Shop'] | null; // Shop
     shops: Array<NexusGenRootTypes['Shop'] | null> | null; // [Shop]
   };
@@ -185,21 +244,43 @@ export interface NexusGenFieldTypeNames {
     icon: 'String';
     id: 'String';
     name: 'String';
+    products: 'Product';
     slug: 'String';
   };
   Mutation: {
     // field return type name
     createCategory: 'Category';
+    createProduct: 'Product';
     createShop: 'Shop';
     deleteCategory: 'Category';
+    deleteProduct: 'Product';
     deleteShop: 'Shop';
     updateCategory: 'Category';
+    updateProduct: 'Product';
     updateShop: 'Shop';
+  };
+  Product: {
+    // field return type name
+    category: 'Category';
+    description: 'String';
+    fromPrice: 'Int';
+    id: 'String';
+    mainAsset: 'String';
+    name: 'String';
+    price: 'Int';
+    quantity: 'Int';
+    shop: 'Shop';
+    slug: 'String';
   };
   Query: {
     // field return type name
     categories: 'Category';
     categoryById: 'Category';
+    categoryBySlug: 'Category';
+    productById: 'Product';
+    productByIds: 'Product';
+    productBySlug: 'Product';
+    products: 'Product';
     shopById: 'Shop';
     shops: 'Shop';
   };
@@ -224,11 +305,19 @@ export interface NexusGenArgTypes {
       // args
       createCategoryInput: NexusGenInputs['CreateCategoryInput']; // CreateCategoryInput!
     };
+    createProduct: {
+      // args
+      createProductInput: NexusGenInputs['CreateProductInput']; // CreateProductInput!
+    };
     createShop: {
       // args
       createShopInput: NexusGenInputs['CreateShopInput']; // CreateShopInput!
     };
     deleteCategory: {
+      // args
+      id: string; // String!
+    };
+    deleteProduct: {
       // args
       id: string; // String!
     };
@@ -240,6 +329,10 @@ export interface NexusGenArgTypes {
       // args
       updateCategoryInput: NexusGenInputs['UpdateCategoryInput']; // UpdateCategoryInput!
     };
+    updateProduct: {
+      // args
+      updateProductInput: NexusGenInputs['UpdateProductInput']; // UpdateProductInput!
+    };
     updateShop: {
       // args
       updateShopInput: NexusGenInputs['UpdateShopInput']; // UpdateShopInput!
@@ -249,6 +342,22 @@ export interface NexusGenArgTypes {
     categoryById: {
       // args
       id: string; // String!
+    };
+    categoryBySlug: {
+      // args
+      slug: string; // String!
+    };
+    productById: {
+      // args
+      id: string; // String!
+    };
+    productByIds: {
+      // args
+      ids: Array<string | null>; // [String]!
+    };
+    productBySlug: {
+      // args
+      slug: string; // String!
     };
     shopById: {
       // args

@@ -3,14 +3,11 @@ import { Box, Card, Grid, Link, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useMemo } from 'react';
 import { useCart } from 'react-use-cart';
-import { GET_PRODUCTS_BY_IDS } from 'gql/get-products';
-import {
-  GetProductsByIds,
-  GetProductsByIdsVariables,
-} from 'gql/__generated__/get-products-by-ids';
 import Container from 'components/system/Container';
 import Orders from './components/Orders';
 import SummeryBox from './components/SummeryBox';
+import { client as newClient } from 'lib/apollo';
+import { GET_PRODUCT_BY_IDS } from '../../../../gql/product';
 
 const CartPage: React.FC = () => {
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
@@ -19,14 +16,12 @@ const CartPage: React.FC = () => {
 
   const ids = items.map((item) => item.id);
 
-  const { data, refetch } = useQuery<
-    GetProductsByIds,
-    GetProductsByIdsVariables
-  >(GET_PRODUCTS_BY_IDS, {
+  const { data, refetch } = useQuery(GET_PRODUCT_BY_IDS, {
     variables: {
       ids,
     },
     skip: !ids,
+    client: newClient,
   });
 
   useEffect(() => {
@@ -37,14 +32,17 @@ const CartPage: React.FC = () => {
     if (!items || !data) return null;
 
     return items.map((item) => {
-      const product = data.products.find((product) => product.id === item.id);
+      if (data?.productByIds === null) return null;
+      const product = data.productByIds.find(
+        (product) => product.id === item.id,
+      );
 
       return {
         ...item,
         ...product,
       };
     });
-  }, [data?.products]);
+  }, [data?.productByIds]);
 
   return (
     <Container>

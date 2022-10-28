@@ -1,7 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'next-i18next';
-import { Product } from 'gql/__generated__/product';
 
 type ShopHours = {
   hours: { [key: number]: Hour[] }[];
@@ -13,7 +12,8 @@ type Hour = {
 };
 
 interface Props {
-  shops: Product['product']['shops'];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  shops: any;
 }
 
 const Shops: React.FC<Props> = ({ shops }) => {

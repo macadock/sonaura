@@ -5,6 +5,7 @@ import {
   inputObjectType,
   nonNull,
 } from 'nexus';
+import { Product } from './Product';
 
 export const Category = objectType({
   name: 'Category',
@@ -13,6 +14,17 @@ export const Category = objectType({
     t.string('name');
     t.string('slug');
     t.string('icon');
+    t.list.field('products', {
+      type: Product,
+      resolve: ({ id }, _, ctx) =>
+        ctx.prisma.category
+          .findUnique({
+            where: {
+              id,
+            },
+          })
+          .products(),
+    });
   },
 });
 
@@ -57,6 +69,23 @@ export const categoryById = extendType({
         return ctx.prisma.category.findUnique({
           where: {
             id,
+          },
+        });
+      },
+    });
+  },
+});
+
+export const categoryBySlug = extendType({
+  type: 'Query',
+  definition: (t) => {
+    t.field('categoryBySlug', {
+      type: 'Category',
+      args: { slug: nonNull(stringArg()) },
+      resolve: async (root, { slug }, ctx) => {
+        return ctx.prisma.category.findUnique({
+          where: {
+            slug,
           },
         });
       },

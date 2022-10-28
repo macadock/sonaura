@@ -8,11 +8,11 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { CategoryFragment } from 'gql/__generated__/category-fragment';
 
 interface Props {
   title: string;
-  items: CategoryFragment[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  items: any[];
 }
 
 const NavItem: React.FC<Props> = ({ title, items }: Props) => {

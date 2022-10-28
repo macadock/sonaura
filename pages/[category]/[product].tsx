@@ -1,20 +1,19 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from 'next-i18next.config';
 import { GetStaticPropsContext, NextPage } from 'next';
-import { GET_CATEGORIES } from 'gql/get-categories';
-import { GET_PRODUCT } from 'gql/get-products';
-import { Categories } from 'gql/__generated__/categories';
-import { Product } from 'gql/__generated__/product';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import ProductView from 'views/ProductView';
-import { client } from 'pages/_app';
 import Head from 'next/head';
+import { client as newClient } from 'lib/apollo';
+import { GET_PRODUCT_BY_SLUG } from '../../gql/product';
+import { GET_CATEGORIES } from '../../gql/category';
 
 const ProductPage: NextPage<{
-  product: Product;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  product: any;
 }> = ({ product }) => {
   const {
-    product: { name, description },
+    productBySlug: { name, description },
   } = product;
 
   const pageTitle = `${name} - Sonaura, Distributeur Bang & Olufsen`;
@@ -31,7 +30,7 @@ const ProductPage: NextPage<{
           key={'og-description'}
         />
       </Head>
-      <ProductView product={product} />
+      <ProductView product={product.productBySlug} />
     </>
   );
 };
@@ -39,14 +38,14 @@ const ProductPage: NextPage<{
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const slug = context.params.product;
 
-  const { data: product } = await client.query<Product>({
-    query: GET_PRODUCT,
+  const { data: product } = await newClient.query({
+    query: GET_PRODUCT_BY_SLUG,
     variables: {
-      slug: slug,
+      slug,
     },
   });
 
-  if (product.product.id === null) {
+  if (product.productBySlug.id === null) {
     return {
       notFound: true,
     };
@@ -66,7 +65,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 };
 
 export const getStaticPaths = async () => {
-  const { data } = await client.query<Categories>({
+  const { data } = await newClient.query({
     query: GET_CATEGORIES,
   });
 

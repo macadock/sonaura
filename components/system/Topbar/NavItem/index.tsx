@@ -6,13 +6,13 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { CategoryFragment } from 'gql/__generated__/categories';
 import { useRouter } from 'next/router';
 
 interface Props {
   title: string;
   id: string;
-  items: CategoryFragment[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  items: any[];
   colorInvert?: boolean;
 }
 

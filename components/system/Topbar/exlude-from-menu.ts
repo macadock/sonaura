@@ -1,14 +1,13 @@
-import { Categories } from 'gql/__generated__/categories';
-import { Pages } from 'gql/__generated__/pages';
-
 const pagesToExcludeFromMenu = [{ slug: 'occasion', name: 'Nos Occasions' }];
 
 const moveCategoryToPage = (
-  categories: Categories['categories'],
-  pages: Pages['pages'],
-): [Categories['categories'], Pages['pages']] => {
-  const customPages: Pages['pages'] = [];
-  const customCategories: Categories['categories'] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  categories: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pages: any,
+): any => {
+  const customPages = [];
+  const customCategories = [];
 
   if (categories && pages) {
     customCategories.push(...categories);

@@ -33,7 +33,7 @@ export const CreateShopInput = inputObjectType({
     t.nonNull.string('image');
     t.nonNull.string('googleMapsUrl');
     t.nonNull.string('email');
-    t.nonNull.json('openHours');
+    t.nullable.json('openHours');
   },
 });
 
@@ -41,6 +41,7 @@ export const UpdateShopInput = inputObjectType({
   name: 'UpdateShopInput',
   definition: (t) => {
     t.nonNull.string('id');
+    t.nonNull.string('city');
     t.nullable.string('country');
     t.nullable.string('address');
     t.nullable.string('postalCode');

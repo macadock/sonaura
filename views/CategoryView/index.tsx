@@ -1,9 +1,9 @@
-import { Category } from 'gql/__generated__/category';
 import { Box, Typography } from '@mui/material';
 import ProductGrid from 'components/core/Category';
 
 interface Props {
-  category: Category;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  category: any;
 }
 
 const CategoryView: React.FC<Props> = ({ category }) => {
@@ -16,8 +16,8 @@ const CategoryView: React.FC<Props> = ({ category }) => {
         marginTop: '2rem',
       }}
     >
-      <Typography variant="h1">{category.category.name}</Typography>
-      <ProductGrid products={category.category.products} />
+      <Typography variant="h1">{category.name}</Typography>
+      <ProductGrid products={category.products} />
     </Box>
   );
 };

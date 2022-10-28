@@ -9,11 +9,11 @@ import Avatar from '@mui/material/Avatar';
 import { useTheme } from '@mui/material/styles';
 
 import Container from 'components/system/Container';
-import { ShopFragment } from 'gql/__generated__/shop-fragment';
 import { useTranslation } from 'next-i18next';
 
 interface Props {
-  shops: ShopFragment[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  shops: any[];
 }
 
 const Contact: React.FC<Props> = ({ shops }) => {
@@ -56,7 +56,7 @@ const Contact: React.FC<Props> = ({ shops }) => {
 };
 
 interface ShopProps {
-  shop: ShopFragment;
+  shop: any;
 }
 
 const Details: React.FC<ShopProps> = ({ shop }) => {
@@ -67,7 +67,7 @@ const Details: React.FC<ShopProps> = ({ shop }) => {
     <Box marginX={{ sm: 0, md: 5 }}>
       <Box marginBottom={2}>
         <Typography variant={'h4'} sx={{ fontWeight: 700 }} gutterBottom>
-          {shop.name}
+          {shop.city}
         </Typography>
         {/* <Typography color="text.secondary">
           Description sur le magasin...

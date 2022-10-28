@@ -7,11 +7,11 @@ import People from 'components/core/Home/People';
 import Products from 'components/core/Home/Products';
 import Container from 'components/system/Container';
 import React from 'react';
-import { Categories as Cat } from 'gql/__generated__/categories';
 import PreOwnedProducts from 'components/core/Home/PreOwnedProducts';
 
 interface Props {
-  categories: Cat;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  categories: any;
 }
 
 const HomeView: React.FC<Props> = ({ categories }) => {
@@ -34,9 +34,7 @@ const HomeView: React.FC<Props> = ({ categories }) => {
       <Container>
         <Products />
       </Container>
-      <Container>
-        <PreOwnedProducts />
-      </Container>
+      <Container>{/* <PreOwnedProducts /> */}</Container>
       <Container>
         <Newsletter />
       </Container>

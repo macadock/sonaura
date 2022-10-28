@@ -37,17 +37,17 @@ model Shop {
 
 model Product {
     id          String    @id @default(uuid())
+    slug        String    @unique()
     name        String
     description String    @db.Text
     fromPrice   Int?
     mainAsset   String
     price       Int?
     quantity    Int?
-    slug        String
     categoryId  String
     category    Category  @relation("CategoryProduct", fields: [categoryId], references: [id])
-    shopId      String
-    shop        Shop      @relation("ShopProduct", fields: [shopId], references: [id])
+    shopId      String?
+    shop        Shop?     @relation("ShopProduct", fields: [shopId], references: [id])
     createdAt   DateTime  @default(now())
     updatedAt   DateTime? @updatedAt()
 

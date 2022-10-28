@@ -1,37 +1,15 @@
 import { useMutation } from '@apollo/client';
 import { Button, Grid, Stack, TextField } from '@mui/material';
 import { Category } from '@prisma/client';
-import { gql } from 'apollo-server-micro';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import { useMemo, useState } from 'react';
-import { client } from '../../../../lib/apollo';
+import { CREATE_CATEGORY, UPDATE_CATEGORY } from 'gql/category';
+import { client } from 'lib/apollo';
 import {
   initialValues,
   categoryForm,
   categoryFormTypes,
 } from './category.validator';
-
-const CREATE_CATEGORY = gql`
-  mutation CreateCategory($createCategoryInput: CreateCategoryInput!) {
-    createCategory(createCategoryInput: $createCategoryInput) {
-      id
-      name
-      slug
-      icon
-    }
-  }
-`;
-
-const UPDATE_CATEGORY = gql`
-  mutation UpdateCategory($updateCategoryInput: UpdateCategoryInput!) {
-    updateCategory(updateCategoryInput: $updateCategoryInput) {
-      id
-      name
-      slug
-      icon
-    }
-  }
-`;
 
 interface Props {
   categoryId: string;

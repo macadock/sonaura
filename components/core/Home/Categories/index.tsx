@@ -5,12 +5,12 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import Link from 'next/link';
-import { Categories } from 'gql/__generated__/categories';
 import { useTranslation } from 'next-i18next';
 import { useTheme } from '@mui/material';
 
 interface Props {
-  categories: Categories;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  categories: any;
 }
 
 const Categories: React.FC<Props> = ({ categories }) => {
@@ -86,7 +86,7 @@ const Categories: React.FC<Props> = ({ categories }) => {
                           objectFit: 'contain',
                           filter: mode === 'dark' ? 'invert(1)' : 'invert(0)',
                         }}
-                        src={category.file.url}
+                        src={category.icon}
                       />
                     </Box>
                     <Typography

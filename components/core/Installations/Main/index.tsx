@@ -1,22 +1,15 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import {
-  InstallationFragment,
-  Installations,
-} from 'gql/__generated__/installations';
 import Column from './Column';
 
 interface Props {
-  installations: Installations;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  installations: any;
 }
 
 const Main: React.FC<Props> = ({ installations }) => {
-  const instArray: [
-    InstallationFragment[],
-    InstallationFragment[],
-    InstallationFragment[],
-  ] = [[], [], []];
+  const instArray = [[], [], []];
 
   let counter = 0;
 
