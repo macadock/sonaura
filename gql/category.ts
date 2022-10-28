@@ -3,9 +3,13 @@ import { CATEGORY_FRAGMENT, PRODUCT_FRAGMENT } from './fragment';
 
 export const GET_CATEGORIES = gql`
   ${CATEGORY_FRAGMENT}
+  ${PRODUCT_FRAGMENT}
   query Categories {
     categories {
       ...CategoryFragment
+      products {
+        ...ProductFragment
+      }
     }
   }
 `;

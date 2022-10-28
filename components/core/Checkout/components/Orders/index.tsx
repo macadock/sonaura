@@ -11,7 +11,6 @@ import { useQuery } from '@apollo/client';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
 import { useFormikContext } from 'formik';
-import { client as newClient } from 'lib/apollo';
 import { GET_PRODUCT_BY_IDS } from '../../../../../gql/product';
 
 const Orders = (): JSX.Element => {
@@ -32,7 +31,6 @@ const Orders = (): JSX.Element => {
       ids,
     },
     skip: !ids,
-    client: newClient,
   });
 
   useEffect(() => {

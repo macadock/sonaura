@@ -15,7 +15,6 @@ import { Close, Delete } from '@mui/icons-material';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
-import { client as newClient } from 'lib/apollo';
 import { GET_PRODUCT_BY_IDS } from '../../../../gql/product';
 
 interface Props {
@@ -35,7 +34,6 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
       ids,
     },
     skip: !ids,
-    client: newClient,
   });
 
   useEffect(() => {

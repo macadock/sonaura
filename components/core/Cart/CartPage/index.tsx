@@ -6,7 +6,6 @@ import { useCart } from 'react-use-cart';
 import Container from 'components/system/Container';
 import Orders from './components/Orders';
 import SummeryBox from './components/SummeryBox';
-import { client as newClient } from 'lib/apollo';
 import { GET_PRODUCT_BY_IDS } from '../../../../gql/product';
 
 const CartPage: React.FC = () => {
@@ -21,7 +20,6 @@ const CartPage: React.FC = () => {
       ids,
     },
     skip: !ids,
-    client: newClient,
   });
 
   useEffect(() => {

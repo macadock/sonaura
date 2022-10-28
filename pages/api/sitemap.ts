@@ -1,6 +1,6 @@
 import { globby } from 'globby';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { client as newClient } from 'lib/apollo';
+import { client } from 'lib/apollo';
 import { GET_PRODUCTS } from '../../gql/product';
 import { GET_CATEGORIES } from '../../gql/category';
 
@@ -15,7 +15,7 @@ export default async function handler(
   res.setHeader('Cache-control', 'stale-while-revalidate, s-maxage=3600');
 
   async function getCategories(): Promise<string[]> {
-    const { data } = await newClient.query({
+    const { data } = await client.query({
       query: GET_CATEGORIES,
     });
 
@@ -28,7 +28,7 @@ export default async function handler(
   }
 
   async function getProducts(): Promise<string[]> {
-    const { data } = await newClient.query({
+    const { data } = await client.query({
       query: GET_PRODUCTS,
     });
 

@@ -3,7 +3,7 @@ import i18nConfig from 'next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { GetStaticPropsContext, NextPage } from 'next';
 import CategoryView from 'views/CategoryView';
-import { client as newClient } from 'lib/apollo';
+import { client } from 'lib/apollo';
 import { GET_CATEGORIES, GET_CATEGORY_BY_SLUG } from '../../gql/category';
 
 const Category: NextPage<{
@@ -16,7 +16,7 @@ const Category: NextPage<{
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const slug = context.params.category;
 
-  const { data: category } = await newClient.query({
+  const { data: category } = await client.query({
     query: GET_CATEGORY_BY_SLUG,
     variables: {
       slug: slug,
@@ -39,7 +39,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 };
 
 export const getStaticPaths = async () => {
-  const { data } = await newClient.query({
+  const { data } = await client.query({
     query: GET_CATEGORIES,
   });
 
@@ -53,7 +53,7 @@ export const getStaticPaths = async () => {
   // We'll pre-render only these paths at build time.
   // { fallback: blocking } will server-render pages
   // on-demand if the path doesn't exist.
-  return { paths, fallback: 'blocking' };
+  return { paths, fallback: false };
 };
 
 export default Category;

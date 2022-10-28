@@ -3,7 +3,7 @@ import i18nConfig from 'next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { NextPage } from 'next';
 import ContactView from 'views/ContactView';
-import { client as newClient } from 'lib/apollo';
+import { client } from 'lib/apollo';
 import { GET_SHOPS } from '../../gql/shop';
 
 const Contact: NextPage<{
@@ -14,7 +14,7 @@ const Contact: NextPage<{
 };
 
 export const getStaticProps = async ({ locale }) => {
-  const { data: shops } = await newClient.query({
+  const { data: shops } = await client.query({
     query: GET_SHOPS,
   });
 

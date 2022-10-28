@@ -4,7 +4,7 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import ProductView from 'views/ProductView';
 import Head from 'next/head';
-import { client as newClient } from 'lib/apollo';
+import { client } from 'lib/apollo';
 import { GET_PRODUCT_BY_SLUG } from '../../gql/product';
 import { GET_CATEGORIES } from '../../gql/category';
 
@@ -38,7 +38,7 @@ const ProductPage: NextPage<{
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const slug = context.params.product;
 
-  const { data: product } = await newClient.query({
+  const { data: product } = await client.query({
     query: GET_PRODUCT_BY_SLUG,
     variables: {
       slug,
@@ -65,13 +65,11 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 };
 
 export const getStaticPaths = async () => {
-  const { data } = await newClient.query({
+  const { data } = await client.query({
     query: GET_CATEGORIES,
   });
 
   const categories = data.categories;
-
-  // Get the paths we want to pre-render based on posts
 
   let paths = [];
   categories.map((category) =>
