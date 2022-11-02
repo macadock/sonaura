@@ -5,6 +5,7 @@ import type { GetStaticPropsContext, NextPage } from 'next';
 import CategoryView from 'views/CategoryView';
 import { client } from 'lib/apollo';
 import { GET_CATEGORIES, GET_CATEGORY_BY_SLUG } from '../../gql/category';
+import prisma from 'lib/prisma';
 
 const Category: NextPage<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,14 +17,13 @@ const Category: NextPage<{
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const slug = context.params.category;
 
-  const { data: category } = await client.query({
-    query: GET_CATEGORY_BY_SLUG,
-    variables: {
-      slug: slug,
+  const category = await prisma.category.findUnique({
+    where: {
+      slug: slug as string,
     },
   });
 
-  if (category.category === null) {
+  if (category === null) {
     return {
       notFound: true,
     };
@@ -39,11 +39,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 };
 
 export const getStaticPaths = async () => {
-  const { data } = await client.query({
-    query: GET_CATEGORIES,
-  });
-
-  const categories = data.categories;
+  const categories = await prisma.category.findMany();
 
   // Get the paths we want to pre-render based on posts
   const paths = categories.map((category) => ({

@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { client } from 'lib/apollo';
 import { GET_PRODUCTS } from '../../gql/product';
 import { GET_CATEGORIES } from '../../gql/category';
+import { websiteUrl } from 'appConstants';
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,7 +22,7 @@ export default async function handler(
 
     return data.categories.map((category) => {
       return `  <url>
-        <loc>${`${process.env.NEXT_PUBLIC_WEBSITE_URL}/${category.slug}/`}</loc>
+        <loc>${`${websiteUrl}/${category.slug}/`}</loc>
         <changefreq>daily</changefreq>
       </url>`;
     });
@@ -34,7 +35,7 @@ export default async function handler(
 
     return data.products.map((product) => {
       return `  <url>
-        <loc>${`${process.env.NEXT_PUBLIC_WEBSITE_URL}/${product.category.slug}/${product.slug}/`}</loc>
+        <loc>${`${websiteUrl}/${product.category.slug}/${product.slug}/`}</loc>
         <changefreq>daily</changefreq>
       </url>`;
     });
@@ -48,7 +49,7 @@ export default async function handler(
       .replace('.mdx', '');
 
     return `  <url>
-      <loc>${`${process.env.NEXT_PUBLIC_WEBSITE_URL}/${route}`}</loc>
+      <loc>${`${websiteUrl}/${route}`}</loc>
       <changefreq>daily</changefreq>
     </url>`;
   }
