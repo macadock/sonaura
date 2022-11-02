@@ -7,6 +7,7 @@ import Head from 'next/head';
 import { client } from 'lib/apollo';
 import { GET_PRODUCT_BY_SLUG } from '../../gql/product';
 import { GET_CATEGORIES } from '../../gql/category';
+import prisma from 'lib/prisma';
 
 const ProductPage: NextPage<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,14 +39,13 @@ const ProductPage: NextPage<{
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const slug = context.params.product;
 
-  const { data: product } = await client.query({
-    query: GET_PRODUCT_BY_SLUG,
-    variables: {
-      slug,
+  const product = await prisma.product.findUnique({
+    where: {
+      slug: slug as string,
     },
   });
 
-  if (product.productBySlug.id === null) {
+  if (product.id === null) {
     return {
       notFound: true,
     };
@@ -65,11 +65,11 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 };
 
 export const getStaticPaths = async () => {
-  const { data } = await client.query({
-    query: GET_CATEGORIES,
+  const categories = await prisma.category.findMany({
+    include: {
+      products: true,
+    },
   });
-
-  const categories = data.categories;
 
   let paths = [];
   categories.map((category) =>
