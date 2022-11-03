@@ -15,7 +15,7 @@ export const getStaticProps = async ({ locale }) => {
 
   return {
     props: {
-      categories,
+      categories: JSON.parse(JSON.stringify(categories)),
       ...(await serverSideTranslations(
         locale,
         ['homepage', 'common'],

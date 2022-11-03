@@ -9,6 +9,16 @@ datasource db {
     referentialIntegrity = "prisma"
 }
 
+model Image {
+    id             String        @id @default(uuid())
+    alt            String
+    href           String        @db.Text
+    createdAt      DateTime      @default(now())
+    updatedAt      DateTime?     @updatedAt()
+    Installation   Installation? @relation(fields: [installationId], references: [id])
+    installationId String?
+}
+
 model Category {
     id        String    @id @default(uuid())
     name      String
@@ -52,6 +62,15 @@ model Product {
     updatedAt   DateTime? @updatedAt()
 
     @@unique([slug, categoryId])
+}
+
+model Installation {
+    id          String    @id @default(uuid())
+    title       String
+    description String    @db.Text
+    images      Image[]
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime? @updatedAt()
 }
 
 model Account {
