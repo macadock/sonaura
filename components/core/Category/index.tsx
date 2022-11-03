@@ -13,12 +13,13 @@ import Price from 'utils/Price';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  category: any;
   products: any[];
 }
 
-const ProductGrid: React.FC<Props> = ({ products }) => {
+const ProductGrid: React.FC<Props> = ({ products, category }) => {
   const { t } = useTranslation('common', { keyPrefix: 'categories' });
-  if (products.length === 0) {
+  if (products === null || products.length === 0) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', padding: '5rem' }}>
         <Typography>{t('noProducts')}</Typography>
@@ -47,7 +48,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                   backgroundImage: 'none',
                 }}
               >
-                <Link href={`/${product.category.slug}/${product.slug}`}>
+                <Link href={`/${category.slug}/${product.slug}`}>
                   <CardMedia
                     title={product.name}
                     image={product.mainAsset}
@@ -61,7 +62,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                 </Link>
                 <Box marginTop={2}>
                   <Link
-                    href={`/${product.category.slug}/${product.slug}`}
+                    href={`/${category.slug}/${product.slug}`}
                     underline="none"
                     color="inherit"
                   >
@@ -100,7 +101,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                 <Box marginTop={2}>
                   <Button
                     component={Link}
-                    href={`/${product.category.slug}/${product.slug}`}
+                    href={`/${category.slug}/${product.slug}`}
                     variant={'contained'}
                     color={'primary'}
                     size={'large'}

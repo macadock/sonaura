@@ -3,8 +3,7 @@ import i18nConfig from 'next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { NextPage } from 'next';
 import ContactView from 'views/ContactView';
-import { client } from 'lib/apollo';
-import { GET_SHOPS } from '../../gql/shop';
+import prisma from 'lib/prisma';
 
 const Contact: NextPage<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,13 +13,11 @@ const Contact: NextPage<{
 };
 
 export const getStaticProps = async ({ locale }) => {
-  const { data: shops } = await client.query({
-    query: GET_SHOPS,
-  });
+  const shops = await prisma.shop.findMany();
 
   return {
     props: {
-      shops,
+      shops: JSON.parse(JSON.stringify(shops)),
       ...(await serverSideTranslations(
         locale,
         ['common', 'contact'],

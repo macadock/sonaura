@@ -13,7 +13,7 @@ const Main: React.FC<Props> = ({ installations }) => {
 
   let counter = 0;
 
-  installations.installations.map((installation) => {
+  installations.map((installation) => {
     counter > 2 ? (counter = 0) : null;
     instArray[counter] = [...instArray[counter], installation];
 

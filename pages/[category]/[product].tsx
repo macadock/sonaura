@@ -4,18 +4,13 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import ProductView from 'views/ProductView';
 import Head from 'next/head';
-import { client } from 'lib/apollo';
-import { GET_PRODUCT_BY_SLUG } from '../../gql/product';
-import { GET_CATEGORIES } from '../../gql/category';
 import prisma from 'lib/prisma';
 
 const ProductPage: NextPage<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   product: any;
 }> = ({ product }) => {
-  const {
-    productBySlug: { name, description },
-  } = product;
+  const { name, description } = product;
 
   const pageTitle = `${name} - Sonaura, Distributeur Bang & Olufsen`;
 
@@ -31,7 +26,7 @@ const ProductPage: NextPage<{
           key={'og-description'}
         />
       </Head>
-      <ProductView product={product.productBySlug} />
+      <ProductView product={product} />
     </>
   );
 };
@@ -43,6 +38,9 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     where: {
       slug: slug as string,
     },
+    include: {
+      category: true,
+    },
   });
 
   if (product.id === null) {
@@ -53,7 +51,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   return {
     props: {
-      product,
+      product: JSON.parse(JSON.stringify(product)),
       ...(await serverSideTranslations(
         context.locale,
         ['common', 'product'],

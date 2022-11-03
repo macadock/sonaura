@@ -29,7 +29,7 @@ const ContactView: React.FC<Props> = ({ shops }) => {
           <Hero />
         </Container>
       </Box>
-      {shops && <Contact shops={shops.shops} />}
+      {shops && <Contact shops={shops} />}
       <Box bgcolor={'alternate.main'}>
         <Container>
           <Form />

@@ -3,15 +3,13 @@ import i18nConfig from 'next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { GetStaticPropsContext, NextPage } from 'next';
 import CategoryView from 'views/CategoryView';
-import { client } from 'lib/apollo';
-import { GET_CATEGORIES, GET_CATEGORY_BY_SLUG } from '../../gql/category';
 import prisma from 'lib/prisma';
 
 const Category: NextPage<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   category: any;
 }> = ({ category }) => {
-  return <CategoryView category={category.categoryBySlug} />;
+  return <CategoryView category={category} />;
 };
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
@@ -20,6 +18,9 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   const category = await prisma.category.findUnique({
     where: {
       slug: slug as string,
+    },
+    include: {
+      products: true,
     },
   });
 
@@ -31,7 +32,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   return {
     props: {
-      category,
+      category: JSON.parse(JSON.stringify(category)),
       ...(await serverSideTranslations(context.locale, ['common'], i18nConfig)),
     },
     revalidate: TIME_TO_INVALIDATE_CACHE_SEC,

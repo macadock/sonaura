@@ -17,7 +17,7 @@ const CategoryView: React.FC<Props> = ({ category }) => {
       }}
     >
       <Typography variant="h1">{category.name}</Typography>
-      <ProductGrid products={category.products} />
+      <ProductGrid category={category} products={category.products} />
     </Box>
   );
 };

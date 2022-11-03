@@ -44,8 +44,6 @@ const ProductForm: React.FC<Props> = ({
     };
   }, [productId]);
 
-  console.log(selectedProduct);
-
   const [createCategory] = useMutation(CREATE_PRODUCT, {
     client,
     onCompleted: () => {
