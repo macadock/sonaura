@@ -13,6 +13,7 @@ import Sidebar from 'components/system/Sidebar';
 import Footer from 'components/system/Footer';
 import { useQuery } from '@apollo/client';
 import { GET_CATEGORIES } from 'gql/category';
+import { websiteUrl } from '../../appConstants';
 
 interface Props {
   children: React.ReactNode;
@@ -49,8 +50,7 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
     },
   ];
 
-  const { data: { categories } = { categories: null } } =
-    useQuery(GET_CATEGORIES);
+  const { data } = useQuery(GET_CATEGORIES);
 
   const [openSidebar, setOpenSidebar] = useState(false);
 
@@ -85,7 +85,7 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
           <Topbar
             onSidebarOpen={handleSidebarOpen}
             pages={pages}
-            categories={categories}
+            categories={data?.categories}
             colorInvert={trigger ? false : colorInvert}
           />
         </Container>
@@ -95,7 +95,7 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
         open={open}
         variant="temporary"
         pages={pages}
-        categories={categories}
+        categories={data?.categories}
       />
       <main style={{ minHeight: '75vh' }}>{children}</main>
       <Divider />
