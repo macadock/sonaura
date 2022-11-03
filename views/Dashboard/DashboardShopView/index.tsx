@@ -1,9 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { useState } from 'react';
-import { gql } from 'apollo-server-micro';
 import { Shop } from '@prisma/client';
 import { useQuery } from '@apollo/client';
-import { client } from 'lib/apollo';
 import ShopsTable from 'components/dashboard/Shops/ShopsTable';
 import ShopForm from 'components/dashboard/Shops/ShopsForm';
 import { GET_SHOPS } from '../../../gql/shop';
@@ -15,9 +13,7 @@ const DashboardShopView: React.FC = () => {
     shops: Shop[];
   };
 
-  const { data, loading, error, refetch } = useQuery<Shops>(GET_SHOPS, {
-    client,
-  });
+  const { data, loading, error, refetch } = useQuery<Shops>(GET_SHOPS);
 
   if (loading || error) return null;
 
