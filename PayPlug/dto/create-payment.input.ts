@@ -13,4 +13,6 @@ export default class CreatePaymentInput implements checkoutFormTypes {
   postalCode: string;
   email: string;
   amount: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  products: any;
 }

@@ -7,7 +7,7 @@ export enum PagesUrls {
   PRIVACY_POLICY = '/politique-de-confidentialite',
   CART = '/panier',
   CHECKOUT_PAGE = '/panier/commander',
-  SUCCESS_PAYMENT_PAGE = '/panier/success/[orderId]',
+  SUCCESS_PAYMENT_PAGE = '/panier/success',
   PROFESSIONALS = '/professionnels',
   INSTALLATIONS = '/realisations',
   DASHBOARD_HOME = '/dashboard',

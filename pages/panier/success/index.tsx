@@ -3,7 +3,7 @@ import i18nConfig from 'next-i18next.config';
 import type { NextPage } from 'next';
 import SuccessCheckoutView from 'views/SuccessCheckoutView';
 
-const Contact: NextPage = () => {
+const SuccessPage: NextPage = () => {
   return <SuccessCheckoutView />;
 };
 
@@ -15,11 +15,4 @@ export const getStaticProps = async ({ locale }) => {
   };
 };
 
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: true,
-  };
-}
-
-export default Contact;
+export default SuccessPage;
