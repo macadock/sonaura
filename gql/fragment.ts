@@ -35,3 +35,20 @@ export const SHOP_FRAGMENT = gql`
     email
   }
 `;
+
+export const VARIANT_VALUE_FRAGMENT = gql`
+  fragment VariantValueFragment on VariantValue {
+    id
+    value
+    colorHex
+  }
+`;
+
+export const VARIANT_FRAGMENT = gql`
+  ${VARIANT_VALUE_FRAGMENT}
+  fragment VariantFragment on Variant {
+    id
+    uniqueName
+    type
+  }
+`;

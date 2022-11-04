@@ -86,6 +86,12 @@ export interface NexusGenInputs {
     phoneNumber: string; // String!
     postalCode: string; // String!
   };
+  CreateVariantsInput: {
+    // input type
+    productId: string; // String!
+    type: NexusGenEnums['VariantType']; // VariantType!
+    uniqueName: string; // String!
+  };
   UpdateCategoryInput: {
     // input type
     icon?: string | null; // String
@@ -119,9 +125,17 @@ export interface NexusGenInputs {
     phoneNumber?: string | null; // String
     postalCode?: string | null; // String
   };
+  UpdateVariantsInput: {
+    // input type
+    type: NexusGenEnums['VariantType']; // VariantType!
+    uniqueName?: string | null; // String
+    variantId: string; // String!
+  };
 }
 
-export interface NexusGenEnums {}
+export interface NexusGenEnums {
+  VariantType: 'COLOR' | 'TEXT';
+}
 
 export interface NexusGenScalars {
   String: string;
@@ -167,6 +181,18 @@ export interface NexusGenObjects {
     phoneNumber?: string | null; // String
     postalCode?: string | null; // String
   };
+  Variant: {
+    // root type
+    id?: string | null; // String
+    type?: NexusGenEnums['VariantType'] | null; // VariantType
+    uniqueName?: string | null; // String
+  };
+  VariantValue: {
+    // root type
+    colorHex?: string | null; // String
+    id?: string | null; // String
+    value?: string | null; // String
+  };
 }
 
 export interface NexusGenInterfaces {}
@@ -175,7 +201,9 @@ export interface NexusGenUnions {}
 
 export type NexusGenRootTypes = NexusGenObjects;
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
+export type NexusGenAllTypes = NexusGenRootTypes &
+  NexusGenScalars &
+  NexusGenEnums;
 
 export interface NexusGenFieldTypes {
   Category: {
@@ -191,12 +219,15 @@ export interface NexusGenFieldTypes {
     createCategory: NexusGenRootTypes['Category'] | null; // Category
     createProduct: NexusGenRootTypes['Product'] | null; // Product
     createShop: NexusGenRootTypes['Shop'] | null; // Shop
+    createVariant: NexusGenRootTypes['Variant'] | null; // Variant
     deleteCategory: NexusGenRootTypes['Category'] | null; // Category
     deleteProduct: NexusGenRootTypes['Product'] | null; // Product
     deleteShop: NexusGenRootTypes['Shop'] | null; // Shop
+    deleteVariant: NexusGenRootTypes['Variant'] | null; // Variant
     updateCategory: NexusGenRootTypes['Category'] | null; // Category
     updateProduct: NexusGenRootTypes['Product'] | null; // Product
     updateShop: NexusGenRootTypes['Shop'] | null; // Shop
+    updateVariant: NexusGenRootTypes['Variant'] | null; // Variant
   };
   Product: {
     // field return type
@@ -210,6 +241,7 @@ export interface NexusGenFieldTypes {
     quantity: number | null; // Int
     shop: NexusGenRootTypes['Shop'] | null; // Shop
     slug: string | null; // String
+    variants: Array<NexusGenRootTypes['Variant'] | null> | null; // [Variant]
   };
   Query: {
     // field return type
@@ -222,6 +254,7 @@ export interface NexusGenFieldTypes {
     products: Array<NexusGenRootTypes['Product'] | null> | null; // [Product]
     shopById: NexusGenRootTypes['Shop'] | null; // Shop
     shops: Array<NexusGenRootTypes['Shop'] | null> | null; // [Shop]
+    variantsByProductId: Array<NexusGenRootTypes['Variant'] | null> | null; // [Variant]
   };
   Shop: {
     // field return type
@@ -235,6 +268,19 @@ export interface NexusGenFieldTypes {
     openHours: NexusGenScalars['JSONObject'] | null; // JSONObject
     phoneNumber: string | null; // String
     postalCode: string | null; // String
+  };
+  Variant: {
+    // field return type
+    id: string | null; // String
+    type: NexusGenEnums['VariantType'] | null; // VariantType
+    uniqueName: string | null; // String
+    values: Array<NexusGenRootTypes['VariantValue'] | null> | null; // [VariantValue]
+  };
+  VariantValue: {
+    // field return type
+    colorHex: string | null; // String
+    id: string | null; // String
+    value: string | null; // String
   };
 }
 
@@ -252,12 +298,15 @@ export interface NexusGenFieldTypeNames {
     createCategory: 'Category';
     createProduct: 'Product';
     createShop: 'Shop';
+    createVariant: 'Variant';
     deleteCategory: 'Category';
     deleteProduct: 'Product';
     deleteShop: 'Shop';
+    deleteVariant: 'Variant';
     updateCategory: 'Category';
     updateProduct: 'Product';
     updateShop: 'Shop';
+    updateVariant: 'Variant';
   };
   Product: {
     // field return type name
@@ -271,6 +320,7 @@ export interface NexusGenFieldTypeNames {
     quantity: 'Int';
     shop: 'Shop';
     slug: 'String';
+    variants: 'Variant';
   };
   Query: {
     // field return type name
@@ -283,6 +333,7 @@ export interface NexusGenFieldTypeNames {
     products: 'Product';
     shopById: 'Shop';
     shops: 'Shop';
+    variantsByProductId: 'Variant';
   };
   Shop: {
     // field return type name
@@ -296,6 +347,19 @@ export interface NexusGenFieldTypeNames {
     openHours: 'JSONObject';
     phoneNumber: 'String';
     postalCode: 'String';
+  };
+  Variant: {
+    // field return type name
+    id: 'String';
+    type: 'VariantType';
+    uniqueName: 'String';
+    values: 'VariantValue';
+  };
+  VariantValue: {
+    // field return type name
+    colorHex: 'String';
+    id: 'String';
+    value: 'String';
   };
 }
 
@@ -313,6 +377,10 @@ export interface NexusGenArgTypes {
       // args
       createShopInput: NexusGenInputs['CreateShopInput']; // CreateShopInput!
     };
+    createVariant: {
+      // args
+      createVariantInput: NexusGenInputs['CreateVariantsInput']; // CreateVariantsInput!
+    };
     deleteCategory: {
       // args
       id: string; // String!
@@ -322,6 +390,10 @@ export interface NexusGenArgTypes {
       id: string; // String!
     };
     deleteShop: {
+      // args
+      id: string; // String!
+    };
+    deleteVariant: {
       // args
       id: string; // String!
     };
@@ -336,6 +408,10 @@ export interface NexusGenArgTypes {
     updateShop: {
       // args
       updateShopInput: NexusGenInputs['UpdateShopInput']; // UpdateShopInput!
+    };
+    updateVariant: {
+      // args
+      updateVariantInput: NexusGenInputs['UpdateVariantsInput']; // UpdateVariantsInput!
     };
   };
   Query: {
@@ -363,6 +439,10 @@ export interface NexusGenArgTypes {
       // args
       id: string; // String!
     };
+    variantsByProductId: {
+      // args
+      id: string; // String!
+    };
   };
 }
 
@@ -374,7 +454,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = keyof NexusGenInputs;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 

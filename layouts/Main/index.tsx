@@ -13,7 +13,6 @@ import Sidebar from 'components/system/Sidebar';
 import Footer from 'components/system/Footer';
 import { useQuery } from '@apollo/client';
 import { GET_CATEGORIES } from 'gql/category';
-import { websiteUrl } from '../../appConstants';
 
 interface Props {
   children: React.ReactNode;

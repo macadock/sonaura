@@ -10,7 +10,6 @@ import {
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import { useMemo, useState } from 'react';
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from 'gql/product';
-import { client } from 'lib/apollo';
 import {
   initialValues,
   productFrom,
@@ -18,6 +17,7 @@ import {
 } from './product.validator';
 import { GET_CATEGORIES } from 'gql/category';
 import { GET_SHOPS } from 'gql/shop';
+import VariantsDialog from '../Variants/VariantsDialog';
 
 interface Props {
   productId: string;
@@ -33,38 +33,33 @@ const ProductForm: React.FC<Props> = ({
 }) => {
   type FormMode = 'creation' | 'edit';
 
+  const [modal, setModal] = useState<boolean>(false);
   const [formMode, setFormMode] = useState<FormMode>('creation');
   const selectedProduct = useMemo(() => {
     if (!productId) return undefined;
     const product = products.find((category) => category.id === productId);
     return {
       ...product,
-      categoryId: product.category.id,
-      shopId: product.shop.id,
+      categoryId: product.category.id || '',
+      shopId: product.shop?.id || '',
     };
   }, [productId]);
 
   const [createCategory] = useMutation(CREATE_PRODUCT, {
-    client,
     onCompleted: () => {
       onCompletedOrUpdated();
     },
   });
 
   const [updateCategory] = useMutation(UPDATE_PRODUCT, {
-    client,
     onCompleted: () => {
       onCompletedOrUpdated();
     },
   });
 
-  const { data: categories } = useQuery(GET_CATEGORIES, {
-    client,
-  });
+  const { data: categories } = useQuery(GET_CATEGORIES);
 
-  const { data: shops } = useQuery(GET_SHOPS, {
-    client,
-  });
+  const { data: shops } = useQuery(GET_SHOPS);
 
   const handleEditMode = () => {
     setFormMode('edit');
@@ -72,6 +67,10 @@ const ProductForm: React.FC<Props> = ({
 
   const handleCreateMode = () => {
     setFormMode('creation');
+  };
+
+  const handleModal = () => {
+    setModal((prev) => !prev);
   };
 
   const onSubmit = (
@@ -136,7 +135,7 @@ const ProductForm: React.FC<Props> = ({
         <>
           <Stack direction={'row'} marginBottom={2} spacing={1}>
             <Button
-              variant={'outlined'}
+              variant={'contained'}
               disabled={productId === null}
               onClick={handleEditMode}
             >
@@ -144,6 +143,13 @@ const ProductForm: React.FC<Props> = ({
             </Button>
             <Button variant={'outlined'} onClick={handleCreateMode}>
               {'Créer un nouveau produit'}
+            </Button>
+            <Button
+              variant={'outlined'}
+              disabled={productId === null}
+              onClick={handleModal}
+            >
+              {'Gérer les variantes'}
             </Button>
           </Stack>
           <Grid container spacing={2}>
@@ -281,9 +287,9 @@ const ProductForm: React.FC<Props> = ({
                     onChange={onChange}
                     error={touched && Boolean(error)}
                   >
-                    {shops?.categories.map((category) => (
-                      <MenuItem key={category.id} value={category.id}>
-                        {category.name}
+                    {shops?.shops.map((shop) => (
+                      <MenuItem key={shop.id} value={shop.id}>
+                        {shop.city}
                       </MenuItem>
                     ))}
                   </Select>
@@ -317,12 +323,15 @@ const ProductForm: React.FC<Props> = ({
                   handleSubmit();
                 }}
               >
-                {formMode === 'creation'
-                  ? 'Créer la catégorie'
-                  : 'Mettre à jour'}
+                {formMode === 'creation' ? 'Créer le produit' : 'Mettre à jour'}
               </Button>
             </Grid>
           </Grid>
+          <VariantsDialog
+            open={modal}
+            handleClose={handleModal}
+            productId={productId}
+          />
         </>
       )}
     </Formik>

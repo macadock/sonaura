@@ -2,7 +2,6 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Product } from '@prisma/client';
 import { useQuery } from '@apollo/client';
-import { client } from 'lib/apollo';
 import ProductTable from 'components/dashboard/Products/ProductTable';
 import ProductForm from 'components/dashboard/Products/ProductForm';
 import { GET_PRODUCTS } from '../../../gql/product';
@@ -14,9 +13,7 @@ const DashboardProductView: React.FC = () => {
     products: Product[];
   };
 
-  const { data, loading, error, refetch } = useQuery<Products>(GET_PRODUCTS, {
-    client,
-  });
+  const { data, loading, error, refetch } = useQuery<Products>(GET_PRODUCTS);
 
   if (loading || error) return null;
 

@@ -40,6 +40,12 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     },
     include: {
       category: true,
+      variants: {
+        include: {
+          values: true,
+        },
+      },
+      shop: true,
     },
   });
 

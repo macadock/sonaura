@@ -4,11 +4,15 @@ import { CATEGORY_FRAGMENT, PRODUCT_FRAGMENT, SHOP_FRAGMENT } from './fragment';
 export const GET_PRODUCTS = gql`
   ${PRODUCT_FRAGMENT}
   ${CATEGORY_FRAGMENT}
+  ${SHOP_FRAGMENT}
   query Products {
     products {
       ...ProductFragment
       category {
         ...CategoryFragment
+      }
+      shop {
+        ...ShopFragment
       }
     }
   }

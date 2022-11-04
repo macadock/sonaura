@@ -1,4 +1,4 @@
-const pagesToExcludeFromMenu = [{ slug: 'occasion', name: 'Nos Occasions' }];
+const pagesToExcludeFromMenu = [{ slug: 'occasions', name: 'Nos Occasions' }];
 
 const moveCategoryToPage = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

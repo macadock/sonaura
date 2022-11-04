@@ -8,6 +8,7 @@ import {
 } from 'nexus';
 import { Category } from './Category';
 import { Shop } from './Shop';
+import { Variant } from './Variant';
 
 export const Product = objectType({
   name: 'Product',
@@ -41,6 +42,17 @@ export const Product = objectType({
             },
           })
           .shop(),
+    });
+    t.list.field('variants', {
+      type: Variant,
+      resolve: ({ id }, __, ctx) =>
+        ctx.prisma.product
+          .findUnique({
+            where: {
+              id,
+            },
+          })
+          .variants(),
     });
   },
 });
