@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useCart } from 'react-use-cart';
 import moveCategoryToPage from './exlude-from-menu';
+import { Typography } from '@mui/material';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -50,25 +51,32 @@ const Topbar: React.FC<Props> = ({
       alignItems={'center'}
       width={1}
     >
-      <Box
-        display={'flex'}
-        component="a"
-        href="/"
-        title={t('config.website')}
-        width={{ xs: 130, md: 200 }}
-        sx={{ marginY: '1rem' }}
-      >
+      <Box width={210} sx={{ marginY: '1rem' }}>
         <Box
-          component={'img'}
-          alt={t('config.website')}
-          src={
-            mode === 'light' && !colorInvert
-              ? '/assets/logos/logo.svg'
-              : '/assets/logos/logo-negative.svg'
-          }
-          height={1}
-          width={1}
-        />
+          display={'flex'}
+          component="a"
+          href="/"
+          title={t('config.website')}
+        >
+          <Box
+            component={'img'}
+            alt={t('config.website')}
+            src={
+              mode === 'light' && !colorInvert
+                ? '/assets/logos/logo.svg'
+                : '/assets/logos/logo-negative.svg'
+            }
+            height={1}
+            width={1}
+          />
+        </Box>
+        <Typography
+          marginTop={'.5rem'}
+          color={theme.palette.text.primary}
+          variant="body2"
+        >
+          {'Distributeur Bang & Olufsen en région Rhône-Alpes'}
+        </Typography>
       </Box>
 
       <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems={'center'}>
