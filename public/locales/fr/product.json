@@ -1,8 +1,8 @@
 {
   "demonstration": {
-    "book": "Réserver une démonstration",
-    "origin": "démonstration produit neuf",
-    "button": "Réserver"
+    "book": "Demander un devis",
+    "origin": "produit neuf",
+    "button": "Demander un devis"
   },
   "preOwned": {
     "book": "Être recontacté",
