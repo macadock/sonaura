@@ -1,26 +1,33 @@
-import { Box } from '@mui/material';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
+import { Box, Button, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { uniqueName } from '..';
-import LoadingScreen from 'components/system/LoadingScreen';
+import { PagesUrls } from '../../../../appConstants';
 
 const Success: React.FC = () => {
-  const router = useRouter();
-  const orderId = router.query.orderId;
-  const { ready } = useTranslation('common');
-
   useEffect(() => {
     if (sessionStorage) {
       sessionStorage.removeItem(uniqueName);
     }
   }, []);
 
-  if (!ready) {
-    return <LoadingScreen />;
-  }
-
-  return <Box>{`Success for order ${orderId}`}</Box>;
+  return (
+    <Box textAlign={'center'}>
+      <Typography variant={'h2'} marginTop={'5rem'}>
+        {'Commande validée'}
+      </Typography>
+      <Typography variant={'h4'} marginY={'2rem'}>
+        {'Sonaura vous remercie pour votre commande'}
+      </Typography>
+      <Typography whiteSpace={'break-spaces'} marginBottom={'2rem'}>
+        {
+          "Vous allez recevoir un email de confirmation récapitulant la commande.\n Vous serez informé de l'état d'avancement de la commande."
+        }
+      </Typography>
+      <Button href={PagesUrls.HOMEPAGE} variant={'contained'}>
+        {"Retour à la page d'accueil"}
+      </Button>
+    </Box>
+  );
 };
 
 export default Success;

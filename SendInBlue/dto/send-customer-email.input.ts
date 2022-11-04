@@ -9,7 +9,6 @@ export default class SendCustomerEmailInput {
     merchant: number;
   };
   includeListIds?: number[];
-  params?: {
-    [key: string]: string;
-  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params?: any;
 }

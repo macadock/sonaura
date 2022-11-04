@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { useCart } from 'react-use-cart';
 import Orders from './components/Orders';
@@ -25,6 +25,12 @@ import { ApiUrls, getRoutePath } from 'appConstants';
 import toast from 'react-hot-toast';
 import FormikSessionStorage from 'components/system/FormikSessionStorage';
 import CreatePaymentInput from 'PayPlug/dto/create-payment.input';
+import { useQuery } from '@apollo/client';
+import {
+  GetProductsByIds,
+  GetProductsByIdsVariables,
+} from '../../../gql/__generated__/get-products-by-ids';
+import { GET_PRODUCTS_BY_IDS } from '../../../gql/get-products';
 
 export const uniqueName = 'checkout';
 
@@ -34,7 +40,33 @@ const Checkout: React.FC = () => {
 
   const [paymentInProgress, setPaymentInProgress] = useState<boolean>(false);
 
-  const { isEmpty, cartTotal } = useCart();
+  const { isEmpty, cartTotal, items } = useCart();
+
+  const ids = items.map((item) => item.id);
+
+  const { data } = useQuery<GetProductsByIds, GetProductsByIdsVariables>(
+    GET_PRODUCTS_BY_IDS,
+    {
+      variables: {
+        ids,
+      },
+      skip: !ids,
+    },
+  );
+
+  const products = useMemo(() => {
+    if (!data) return null;
+
+    return data.products.map((product) => {
+      const item = items.find((item) => item.id === product.id);
+      return {
+        [product.name]: {
+          quantity: item.quantity,
+          price: item.price,
+        },
+      };
+    });
+  }, [items, data?.products]);
 
   const onSubmit = async (values: checkoutFormTypes) => {
     interface PaymentResponseBody {
@@ -49,6 +81,7 @@ const Checkout: React.FC = () => {
       ...values,
       phoneNumber: formatPhoneNumber(values.phoneNumber),
       amount: cartTotal,
+      products: products,
     };
 
     try {
