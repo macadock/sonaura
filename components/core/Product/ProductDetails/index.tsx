@@ -217,7 +217,11 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 )}
               </Box>
             </Box>
-            <Typography variant={'subtitle2'} color={'text.secondary'}>
+            <Typography
+              whiteSpace={'break-spaces'}
+              variant={'subtitle2'}
+              color={'text.secondary'}
+            >
               {currentProduct.description}
             </Typography>
             <ProductDialog

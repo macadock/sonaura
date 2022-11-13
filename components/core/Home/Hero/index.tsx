@@ -30,7 +30,7 @@ const Hero: React.FC = () => {
         }}
       >
         <source
-          src="https://media.graphassets.com/67TVe7YRmaJV6Y1TO6i8"
+          src="https://ik.imagekit.io/sonaura/Videos/Beosound_Theatre_xUSPtr4Ad.mp4"
           type="video/mp4"
         />
       </video>
