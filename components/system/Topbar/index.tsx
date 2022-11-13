@@ -75,7 +75,7 @@ const Topbar: React.FC<Props> = ({
           color={theme.palette.text.primary}
           variant="body2"
         >
-          {'Distributeur Bang & Olufsen en région Rhône-Alpes'}
+          {'Distributeur Bang & Olufsen Auvergne Rhône-Alpes'}
         </Typography>
       </Box>
 
