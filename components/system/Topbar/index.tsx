@@ -72,10 +72,11 @@ const Topbar: React.FC<Props> = ({
         </Box>
         <Typography
           marginTop={'.5rem'}
+          component={'p'}
           color={theme.palette.text.primary}
-          variant="body2"
+          variant="caption"
         >
-          {'Distributeur Bang & Olufsen Auvergne Rhône-Alpes'}
+          {'Votre distributeur Bang & Olufsen en Auvergne Rhône-Alpes'}
         </Typography>
       </Box>
 
