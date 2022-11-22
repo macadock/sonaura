@@ -14,6 +14,7 @@ import toast from 'react-hot-toast';
 import Shops from './Shops';
 import { Grid } from '@mui/material';
 import Price from 'utils/Price';
+import { BoxProps } from '@mui/system';
 
 type Image = Product['product']['mainAsset'];
 
@@ -28,10 +29,11 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   if (product === null) return null;
 
   const { product: currentProduct } = product;
-  const basicAssets = [currentProduct.mainAsset, ...currentProduct.assets];
 
-  const [media, setMedia] = useState<Array<{ url: string }>>(basicAssets);
-  const [current, setCurrent] = useState<Image>(media[0]);
+  const [variantImages, setVariantImages] = useState<Array<{ url: string }>>(
+    [],
+  );
+  const [current, setCurrent] = useState<Image>(currentProduct.mainAsset);
 
   const [size, setSize] = useState<Product['product']['sizes'][number]>(null);
   const [color, setColor] =
@@ -127,13 +129,15 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
     if (variantAssets) {
       const assetsToAdd = variantAssets.flatMap((variant) => variant.asset);
-      setMedia([...assetsToAdd, ...basicAssets]);
+      setVariantImages([...assetsToAdd]);
     }
   }, [variantAssets]);
 
   useEffect(() => {
-    setCurrent(media[0]);
-  }, [media]);
+    if (variantImages.length > 0) {
+      setCurrent(variantImages[0]);
+    }
+  }, [variantImages]);
 
   return (
     <Box sx={{ marginTop: '2rem' }}>
@@ -163,7 +167,26 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               alignItems={'center'}
               flexWrap={'wrap'}
             >
-              {media.map((item, i) => (
+              <Box
+                onClick={() => setCurrent(currentProduct.mainAsset)}
+                sx={{
+                  width: 80,
+                  height: 'auto',
+                  cursor: 'pointer',
+                  '& img': {
+                    width: 1,
+                    height: 1,
+                    objectFit: 'cover',
+                    borderRadius: 2,
+                  },
+                }}
+              >
+                <img
+                  src={currentProduct.mainAsset.url}
+                  alt={currentProduct.name}
+                />
+              </Box>
+              {variantImages.map((item, i) => (
                 <Box
                   key={i}
                   onClick={() => setCurrent(item)}
@@ -177,12 +200,25 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                       objectFit: 'cover',
                       borderRadius: 2,
                     },
+                    position: 'relative',
                   }}
                 >
+                  <Bubble
+                    color={theme.palette.primary.main}
+                    position={'absolute'}
+                  />
                   <img src={item.url} alt={currentProduct.name} />
                 </Box>
               ))}
             </Stack>
+            {variantImages.length > 0 ? (
+              <Box display={'flex'} alignItems={'center'} gap={'0.5rem'}>
+                <Bubble color={theme.palette.primary.main} />
+                <Typography variant={'caption'}>
+                  {'Dépend des options sélectionnées'}
+                </Typography>
+              </Box>
+            ) : null}
           </Box>
         </Grid>
         <Grid item xs={12} md={5}>
@@ -498,5 +534,17 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
     </Box>
   );
 };
+
+const Bubble: React.FC<BoxProps> = ({ color, ...props }) => (
+  <Box
+    {...props}
+    sx={{
+      borderRadius: '50%',
+      width: '0.5rem',
+      height: '0.5rem',
+      backgroundColor: color,
+    }}
+  ></Box>
+);
 
 export default ProductDetails;
