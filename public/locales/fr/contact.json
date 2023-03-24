@@ -1,19 +1,19 @@
 {
-    "title": "Contactez-nous",
-    "subtitle": "Nos experts Bang & Olufsen répondent à vos questions et vous aident à gagner du temps.",
-    "firstName": "Prénom",
-    "lastName": "Nom",
-    "phone": "Téléphone",
-    "email": "E-mail",
-    "message": "Message",
-    "messagePlaceholder": "Votre question à propos de nos services",
-    "address": "Adresse",
-    "formTitle": "Vous ne trouvez pas de réponse à vos questions ?",
-    "form": {
-        "send": "Envoyer",
-        "loading": "Envoi en cours...",
-        "success": "Message envoyé",
-        "error": "Erreur. Merci de réessayer.",
-        "notValid": "non valide"
-    }
+  "title": "Contactez-nous",
+  "subtitle": "Nos experts Bang & Olufsen répondent à vos questions et vous aident à gagner du temps.",
+  "firstName": "Prénom",
+  "lastName": "Nom",
+  "phone": "Téléphone",
+  "email": "E-mail",
+  "message": "Message",
+  "messagePlaceholder": "Votre question à propos de nos services",
+  "address": "Adresse",
+  "formTitle": "Vous ne trouvez pas de réponse à vos questions ?",
+  "form": {
+    "send": "Envoyer",
+    "loading": "Envoi en cours...",
+    "success": "Message envoyé",
+    "error": "Erreur. Merci de réessayer.",
+    "notValid": "non valide"
+  }
 }

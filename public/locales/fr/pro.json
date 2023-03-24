@@ -1,22 +1,22 @@
 {
-    "title": "Intégrateur audiovisuel, architecte d’intérieur ou designer ?",
-    "subtitle" : "Proposez des produits haut de gamme et design.\n Nos équipes vous accompagnent dans tous vos projets, pour vous ou vos clients.",
-    "integration": {
-        "title": "intégration",
-        "subtitle": "Tous nos produits communiquent entre eux et sont capables de jouer ensemble."
-    },
-    "design": {
-        "title": "design",
-        "subtitle": "Des matériaux de qualité, un design irréprochable."
-    },
-    "elegance": {
-        "title": "élégance",
-        "subtitle": "Des produits pensés jusqu'aux moindres détails."
-    },
-    "contact": {
-        "title": "Contactez-nous",
-        "name": "Frank VILIN",
-        "phone": "06 89 21 09 78",
-        "email": "frank@beostore.fr"
-    }
+  "title": "Intégrateur audiovisuel, architecte d’intérieur ou designer ?",
+  "subtitle": "Proposez des produits haut de gamme et design.\n Nos équipes vous accompagnent dans tous vos projets, pour vous ou vos clients.",
+  "integration": {
+    "title": "intégration",
+    "subtitle": "Tous nos produits communiquent entre eux et sont capables de jouer ensemble."
+  },
+  "design": {
+    "title": "design",
+    "subtitle": "Des matériaux de qualité, un design irréprochable."
+  },
+  "elegance": {
+    "title": "élégance",
+    "subtitle": "Des produits pensés jusqu'aux moindres détails."
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "name": "Frank VILIN",
+    "phone": "06 89 21 09 78",
+    "email": "frank@beostore.fr"
+  }
 }

@@ -1,49 +1,49 @@
 {
-    "demonstration": {
-        "book": "Réserver une démonstration",
-        "origin": "démonstration produit neuf",
-        "button": "Réserver"
-    },
-    "preOwned": {
-        "book": "Être recontacté",
-        "origin": "produit occasion",
-        "button": "Valider"
-    },
-    "new": "nouveau",
-    "addToCart": "Ajouter au panier",
-    "pricePreOwnedConditions": "prix hors livraison et installation",
-    "addedToCart": "Ajouté au panier",
-    "attributes": {
-        "size": "Taille",
-        "color": "Couleur",
-        "frameColor": "Couleur du cadre",
-        "soundbarColor": "Couleur de la barre de son",
-        "supportColor": "Couleur du support",
-        "support": "Support"
-    },
-    "form": {
-        "firstName": "Prénom",
-        "lastName": "Nom",
-        "email": "Email",
-        "phone": "Numéro de téléphone",
-        "message": "Message",
-        "gdpr": "Dans le cadre de ma demande de contact, j'accepte que mes données soient traitées et conservées.",
-        "send": "Envoyer",
-        "loading": "Envoi en cours...",
-        "success": "Demande envoyée",
-        "error": "Erreur. Merci de réessayer.",
-        "notValid": "non valide",
-        "acceptGdpr": "Merci d'accepter le traitement de vos données"
-    },
-    "time": "Horaires",
-    "closed": "Fermé",
-    "days": {
-        "1": "Lundi",
-        "2": "Mardi",
-        "3": "Mercredi",
-        "4": "Jeudi",
-        "5": "Vendredi",
-        "6": "Samedi",
-        "7": "Dimanche"
-    }
+  "demonstration": {
+    "book": "Demander un devis",
+    "origin": "produit neuf",
+    "button": "Demander un devis"
+  },
+  "preOwned": {
+    "book": "Être recontacté",
+    "origin": "produit occasion",
+    "button": "Valider"
+  },
+  "new": "nouveau",
+  "addToCart": "Ajouter au panier",
+  "pricePreOwnedConditions": "prix hors livraison et installation",
+  "addedToCart": "Ajouté au panier",
+  "attributes": {
+    "size": "Taille",
+    "color": "Couleur",
+    "frameColor": "Couleur du cadre",
+    "soundbarColor": "Couleur de la barre de son",
+    "supportColor": "Couleur du support",
+    "support": "Support"
+  },
+  "form": {
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "phone": "Numéro de téléphone",
+    "message": "Message",
+    "gdpr": "Dans le cadre de ma demande de contact, j'accepte que mes données soient traitées et conservées.",
+    "send": "Envoyer",
+    "loading": "Envoi en cours...",
+    "success": "Demande envoyée",
+    "error": "Erreur. Merci de réessayer.",
+    "notValid": "non valide",
+    "acceptGdpr": "Merci d'accepter le traitement de vos données"
+  },
+  "time": "Horaires",
+  "closed": "Fermé",
+  "days": {
+    "1": "Lundi",
+    "2": "Mardi",
+    "3": "Mercredi",
+    "4": "Jeudi",
+    "5": "Vendredi",
+    "6": "Samedi",
+    "7": "Dimanche"
+  }
 }
