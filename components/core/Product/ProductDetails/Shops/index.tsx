@@ -1,27 +1,17 @@
 import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { Shop, ShopHours } from 'lib/supabase/shops';
 import { useTranslation } from 'next-i18next';
-import { Product } from 'gql/__generated__/product';
-
-type ShopHours = {
-  hours: { [key: number]: Hour[] }[];
-};
-
-type Hour = {
-  Start: string;
-  Finish: string;
-};
 
 interface Props {
-  shops: Product['product']['shops'];
+  shop: Shop;
 }
 
-const Shops: React.FC<Props> = ({ shops }) => {
+const Shops: React.FC<Props> = ({ shop }) => {
   const theme = useTheme();
   const { t } = useTranslation('product');
 
-  const shop = shops[0];
-  const { hours }: ShopHours = shop.openHours;
+  const hours = shop.openHours['hours'] as ShopHours['hours'];
   const todayDate = new Date();
 
   return (
@@ -35,7 +25,7 @@ const Shops: React.FC<Props> = ({ shops }) => {
     >
       <Typography
         sx={{ fontWeight: 'bold', marginBottom: '0.5rem' }}
-      >{`Bang & Olufsen ${shop.name}`}</Typography>
+      >{`Bang & Olufsen ${shop.city}`}</Typography>
       {hours.map((hour) => {
         const day = parseInt(Object.keys(hour)[0]);
         const today = day === todayDate.getDay();

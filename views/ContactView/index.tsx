@@ -5,13 +5,8 @@ import Contact from 'components/core/Contact/Contact';
 import Form from 'components/core/Contact/Form';
 import Hero from 'components/core/Contact/Hero';
 import Container from 'components/system/Container';
-import { Shops } from 'gql/__generated__/shops';
 
-interface Props {
-  shops: Shops;
-}
-
-const ContactView: React.FC<Props> = ({ shops }) => {
+const ContactView: React.FC = () => {
   const theme = useTheme();
 
   return (
@@ -29,7 +24,7 @@ const ContactView: React.FC<Props> = ({ shops }) => {
           <Hero />
         </Container>
       </Box>
-      {shops && <Contact shops={shops.shops} />}
+      <Contact />
       <Box bgcolor={'alternate.main'}>
         <Container>
           <Form />

@@ -1,29 +1,26 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import i18nConfig from '../next-i18next.config';
+import { i18n } from '../next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../appConstants';
 import type { NextPage } from 'next';
 import HomeView from 'views/HomeView';
-import { Categories } from 'gql/__generated__/categories';
-import { client } from 'pages/_app';
-import { GET_CATEGORIES } from 'gql/get-categories';
+import { getCategories } from 'lib/supabase/categories';
 
-const Home: NextPage<{ categories: Categories }> = ({ categories }) => {
+const Home: NextPage<{ categories: any }> = ({ categories }) => {
   return <HomeView categories={categories} />;
 };
 
 export const getStaticProps = async ({ locale }) => {
-  const { data: categories } = await client.query<Categories>({
-    query: GET_CATEGORIES,
-  });
+  const { data: categories } = await getCategories();
 
   return {
     props: {
       categories,
-      ...(await serverSideTranslations(
-        locale,
-        ['homepage', 'common'],
-        i18nConfig,
-      )),
+      ...(await serverSideTranslations(locale, ['homepage', 'common'], {
+        i18n: {
+          locales: i18n.locales,
+          defaultLocale: i18n.defaultLocale,
+        },
+      })),
     },
     revalidate: TIME_TO_INVALIDATE_CACHE_SEC,
   };

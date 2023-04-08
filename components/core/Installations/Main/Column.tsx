@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
-import { InstallationFragment } from 'gql/__generated__/installation-fragment';
+import { Installation } from 'lib/supabase/installations';
 
 import Card from './Card';
 
 interface Props {
-  installations: InstallationFragment[];
+  installations: Installation[];
 }
 
 const Column: React.FC<Props> = ({ installations }) => {

@@ -1,24 +1,31 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { useCart } from 'react-use-cart';
-import { GetProductsByIds } from 'gql/__generated__/get-products-by-ids';
 import { useTranslation } from 'next-i18next';
 import { Delete } from '@mui/icons-material';
 import NextLink from 'next/link';
 import Price from 'utils/Price';
+import { Product } from 'lib/supabase/products';
+import { useSiteData } from 'contexts/data';
 
 interface Props {
-  products: GetProductsByIds['products'];
+  products: Product[];
 }
 
 const Orders: React.FC<Props> = ({ products }) => {
   const theme = useTheme();
   const { t } = useTranslation('checkout');
   const { removeItem, getItem } = useCart();
+  const { categories } = useSiteData();
+
+  const getCategorySlug = (categoryId: string): string => {
+    if (!categories) return '';
+    return categories.find((category) => category.id === categoryId)?.slug;
+  };
 
   return (
     <Box>
@@ -26,10 +33,12 @@ const Orders: React.FC<Props> = ({ products }) => {
         products.map((product, i) => (
           <Box key={product.id}>
             <Box display={'flex'}>
-              <NextLink href={`/${product.category.slug}/${product.slug}`}>
+              <NextLink
+                href={`/${getCategorySlug(product.categoryId)}/${product.slug}`}
+              >
                 <Box
                   component={'img'}
-                  src={product.mainAsset.url}
+                  src={'https://media.graphassets.com/wEANADQnT5W9C9HgeaLv'}
                   alt={product.name}
                   sx={{
                     ':hover': { cursor: 'pointer' },
@@ -54,7 +63,11 @@ const Orders: React.FC<Props> = ({ products }) => {
                 position={'relative'}
               >
                 <Box>
-                  <Link href={`/${product.category.slug}/${product.slug}`}>
+                  <Link
+                    href={`/${getCategorySlug(product.categoryId)}/${
+                      product.slug
+                    }`}
+                  >
                     <Typography fontWeight={700} gutterBottom>
                       {product.name}
                     </Typography>
@@ -64,7 +77,7 @@ const Orders: React.FC<Props> = ({ products }) => {
                   </Typography>
                 </Box>
                 <Typography>
-                  {`${t('quantity')} : ${getItem(product.id).quantity}`}
+                  {`${t('quantity')} : ${getItem(product.id)?.quantity}`}
                 </Typography>
                 <Box
                   sx={{

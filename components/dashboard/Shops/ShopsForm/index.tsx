@@ -1,45 +1,31 @@
-import { useMutation } from '@apollo/client';
-import { Button, Grid, Stack, TextField } from '@mui/material';
-import { Shop } from '@prisma/client';
-import { gql } from 'apollo-server-micro';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Input,
+  Modal,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
+import supabase from 'lib/supabase';
+import {
+  createShop,
+  CreateShopInput,
+  removeShop,
+  Shop,
+  updateShop,
+  UpdateShopInput,
+} from 'lib/supabase/shops';
 import { useMemo, useState } from 'react';
-import { client } from 'lib/apollo';
-import { initialValues, shopForm, shopFormTypes } from './shops.validator';
-
-const CREATE_SHOP = gql`
-  mutation CreateShop($createShopInput: CreateShopInput!) {
-    createShop(createShopInput: $createShopInput) {
-      id
-      city
-      country
-      address
-      postalCode
-      phoneNumber
-      image
-      googleMapsUrl
-      email
-      openHours
-    }
-  }
-`;
-
-const UPDATE_SHOP = gql`
-  mutation UpdateShop($updateShopInput: UpdateShopInput!) {
-    updateShop(updateShopInput: $updateShopInput) {
-      id
-      city
-      country
-      address
-      postalCode
-      phoneNumber
-      image
-      googleMapsUrl
-      email
-      openHours
-    }
-  }
-`;
+import toast from 'react-hot-toast';
+import { initialValues, shopForm } from './shops.validator';
+import { v4 as uuidv4 } from 'uuid';
+import { Close } from '@mui/icons-material';
+import ShopTimeTable from 'components/dashboard/Shops/ShopTimeTable';
 
 interface Props {
   shopId: string;
@@ -47,28 +33,54 @@ interface Props {
   onCompletedOrUpdated: () => void;
 }
 
+export type InsertOrUpdateShop = CreateShopInput | UpdateShopInput;
+
+const getImageUrl = (value: string | object): string => {
+  let image: object;
+  try {
+    image = typeof value === 'string' ? JSON.parse(value) : value;
+  } catch (e) {
+    return '';
+  }
+  const bucket = image['bucket'];
+  const file = image['file'];
+  const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+  return data ? data.publicUrl : '';
+};
+
 const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
   type FormMode = 'creation' | 'edit';
 
   const [formMode, setFormMode] = useState<FormMode>('creation');
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const selectedShop = useMemo((): Shop => {
     if (!shopId) return undefined;
     return shops.find((shop) => shop.id === shopId);
   }, [shopId]);
 
-  const [createShop] = useMutation(CREATE_SHOP, {
-    client,
-    onCompleted: () => {
-      onCompletedOrUpdated();
-    },
-  });
+  const create = async (shop: CreateShopInput) => {
+    const { error } = await createShop(shop);
+    if (error) {
+      return;
+    }
+    onCompletedOrUpdated();
+  };
 
-  const [updateShop] = useMutation(UPDATE_SHOP, {
-    client,
-    onCompleted: () => {
-      onCompletedOrUpdated();
-    },
-  });
+  const update = async (shop: UpdateShopInput) => {
+    const { error } = await updateShop(shop);
+    if (error) {
+      return;
+    }
+    onCompletedOrUpdated();
+  };
+
+  const remove = async () => {
+    const { error } = await removeShop(shopId);
+    if (error) {
+      return;
+    }
+    onCompletedOrUpdated();
+  };
 
   const handleEditMode = () => {
     setFormMode('edit');
@@ -79,8 +91,8 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
   };
 
   const onSubmit = (
-    values: shopFormTypes,
-    actions: FormikHelpers<shopFormTypes>,
+    values: InsertOrUpdateShop,
+    actions: FormikHelpers<InsertOrUpdateShop>,
   ) => {
     const {
       address,
@@ -106,30 +118,34 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
     };
 
     if (formMode === 'creation') {
-      return createShop({
-        variables: {
-          createShopInput: {
-            ...input,
-          },
-        },
-      });
+      return create(input);
     }
 
-    updateShop({
-      variables: {
-        updateShopInput: {
-          ...input,
-          id: shopId,
-        },
-      },
-    });
+    update({ ...input, id: shopId });
 
     actions.resetForm();
     setFormMode('creation');
   };
 
+  const uploadImage = async (files: FileList): Promise<object> => {
+    const bucket = 'categories';
+    const fileName = uuidv4();
+    const { error } = await supabase.storage
+      .from(bucket)
+      .upload(fileName, files[0]);
+    if (error) {
+      toast.error('Erreur lors du chargement');
+      return {};
+    }
+    toast.success('Image chargée');
+    return {
+      bucket,
+      file: fileName,
+    };
+  };
+
   return (
-    <Formik<shopFormTypes>
+    <Formik<InsertOrUpdateShop>
       initialValues={formMode === 'creation' ? initialValues : selectedShop}
       enableReinitialize={true}
       onSubmit={onSubmit}
@@ -144,6 +160,13 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
               onClick={handleEditMode}
             >
               {'Editer'}
+            </Button>
+            <Button
+              variant={'outlined'}
+              disabled={shopId === null}
+              onClick={remove}
+            >
+              {'Supprimer'}
             </Button>
             <Button variant={'outlined'} onClick={handleCreateMode}>
               {'Créer un nouveau magasin'}
@@ -264,25 +287,7 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
                 )}
               </Field>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Field name={'image'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
-            </Grid>
+
             <Grid item xs={12} md={6}>
               <Field name={'googleMapsUrl'}>
                 {({
@@ -304,20 +309,82 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
             </Grid>
             <Grid item xs={12} md={6}>
               <Field name={'openHours'}>
+                {({ field: { value }, form: { setValues } }: FieldProps) => (
+                  <>
+                    <Button
+                      variant={'contained'}
+                      onClick={() => {
+                        setOpenModal((prev) => !prev);
+                      }}
+                    >
+                      Horaires : ajouter/modifier
+                    </Button>
+                    <Modal open={openModal}>
+                      <Box
+                        display={'flex'}
+                        flexDirection={'column'}
+                        position={'relative'}
+                        bgcolor={'#fff'}
+                        margin={5}
+                        padding={5}
+                        borderRadius={2}
+                      >
+                        <Close
+                          cursor={'pointer'}
+                          sx={{ position: 'absolute', top: 3, left: 3 }}
+                          onClick={() => {
+                            setOpenModal((prev) => !prev);
+                          }}
+                        />
+                        <ShopTimeTable
+                          openHours={value}
+                          onUpdate={(openHours) => {
+                            setValues(openHours);
+                          }}
+                        />
+                        <Button
+                          variant={'contained'}
+                          onClick={() => {
+                            setOpenModal((prev) => !prev);
+                          }}
+                          sx={{ marginTop: 4 }}
+                        >
+                          Enregistrer
+                        </Button>
+                      </Box>
+                    </Modal>
+                  </>
+                )}
+              </Field>
+            </Grid>
+            <Grid item xs={12}>
+              <Field name={'image'}>
                 {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
+                  field: { name, value },
+                  form: { setFieldValue },
                 }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
+                  <>
+                    {value ? (
+                      <img
+                        src={getImageUrl(value)}
+                        style={{ maxWidth: '100%' }}
+                      />
+                    ) : null}
+                    <Button variant="contained" component="label">
+                      {value ? "Remplacer l'image" : 'Ajouter une image'}
+                      <input
+                        name={name}
+                        hidden
+                        accept="image/*"
+                        multiple
+                        type="file"
+                        onChange={async (e) => {
+                          const image = await uploadImage(e.target.files);
+                          setFieldValue(name, image);
+                        }}
+                      />
+                    </Button>
+                  </>
                 )}
               </Field>
             </Grid>

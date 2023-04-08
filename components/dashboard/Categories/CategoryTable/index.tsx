@@ -1,5 +1,5 @@
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Category } from '@prisma/client';
+import { Category } from 'lib/supabase/categories';
 
 interface Props {
   data: Category[];
@@ -8,21 +8,15 @@ interface Props {
 
 const CategoryTable: React.FC<Props> = ({ data, onSelectionModelChange }) => {
   const columns: GridColDef[] = [
-    { field: 'name', headerName: 'Nom', flex: 40 },
-    { field: 'slug', headerName: 'Slug', flex: 40 },
-    {
-      field: 'icon',
-      headerName: 'Image',
-      flex: 20,
-      renderCell: ({ value }) => <img src={value} />,
-    },
+    { field: 'name', headerName: 'Nom', flex: 50 },
+    { field: 'slug', headerName: 'Slug', flex: 50 },
   ];
 
   return (
     <DataGrid
       columns={columns}
       rows={data}
-      pageSize={5}
+      pageSize={10}
       onSelectionModelChange={(selectionModel) => {
         onSelectionModelChange(selectionModel[0] as string);
       }}

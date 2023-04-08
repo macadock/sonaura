@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Product } from 'gql/__generated__/product';
 import { Categories } from 'types';
 import { useCart } from 'react-use-cart';
 import ProductDialog from './ProductDialog';
@@ -15,41 +14,62 @@ import Shops from './Shops';
 import { Grid } from '@mui/material';
 import Price from 'utils/Price';
 import { BoxProps } from '@mui/system';
-
-type Image = Product['product']['mainAsset'];
+import { Product } from 'lib/supabase/products';
+import { useSiteData } from 'contexts/data';
+import { useRouter } from 'next/router';
+import supabase from 'lib/supabase';
 
 interface Props {
   product: Product;
 }
 
+const getProductMainImage = (
+  productSlug: string,
+  categorySlug: string,
+): string => {
+  const isPreOwned = categorySlug === 'occasion';
+  const bucket = 'products';
+  const file = `${isPreOwned ? 'occasions' : categorySlug}/${productSlug}/main`;
+  const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+  return data.publicUrl;
+};
+
 const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const { t } = useTranslation('product');
   const theme = useTheme();
+  const router = useRouter();
+  const categorySlug = router.query.category as string;
+  const { categories } = useSiteData();
+  const category = useMemo(() => {
+    if (!categories) {
+      return null;
+    }
+    return categories.find((category) => category.slug === categorySlug);
+  }, [categorySlug, categories?.length]);
 
   if (product === null) return null;
 
-  const { product: currentProduct } = product;
+  const [variantImages, setVariantImages] = useState<string[]>([]);
+  const mainImage = useMemo(() => {
+    return getProductMainImage(product.slug, category?.slug);
+  }, [categorySlug]);
+  const [current, setCurrent] = useState(mainImage);
 
-  const [variantImages, setVariantImages] = useState<Array<{ url: string }>>(
-    [],
-  );
-  const [current, setCurrent] = useState<Image>(currentProduct.mainAsset);
-
-  const [size, setSize] = useState<Product['product']['sizes'][number]>(null);
-  const [color, setColor] =
-    useState<Product['product']['colors'][number]>(null);
-  const [positionning, setPositionning] =
-    useState<Product['product']['positionnings'][number]>(null);
-  const [frameColor, setFrameColor] =
-    useState<Product['product']['frameColors'][number]>(null);
-  const [soundbarColor, setSoundbarColor] =
-    useState<Product['product']['soundbarColors'][number]>(null);
-  const [supportColor, setSupportColor] =
-    useState<Product['product']['supportColors'][number]>(null);
+  // const [size, setSize] = useState<Product['product']['sizes'][number]>(null);
+  // const [color, setColor] =
+  //   useState<Product['product']['colors'][number]>(null);
+  // const [positionning, setPositionning] =
+  //   useState<Product['product']['positionnings'][number]>(null);
+  // const [frameColor, setFrameColor] =
+  //   useState<Product['product']['frameColors'][number]>(null);
+  // const [soundbarColor, setSoundbarColor] =
+  //   useState<Product['product']['soundbarColors'][number]>(null);
+  // const [supportColor, setSupportColor] =
+  //   useState<Product['product']['supportColors'][number]>(null);
   const [alreadyAddedToCart, setAlreadyAddedToCart] = useState<boolean>(false);
   const [dialogState, setDialogState] = useState<boolean>(false);
 
-  const isOccasion = currentProduct.category.name === Categories.OCCASION;
+  const isOccasion = categorySlug === 'occasion';
 
   const dialogTitle = isOccasion ? t('preOwned.book') : t('demonstration.book');
   const dialogOrigin = isOccasion
@@ -62,7 +82,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const { addItem, items } = useCart();
 
   const addToCart = () => {
-    addItem({ id: currentProduct.id, price: currentProduct.price / 100 });
+    addItem({ id: product.id, price: product?.price, quantity: 1 });
     setAlreadyAddedToCart(true);
     toast.success(t('addedToCart'));
   };
@@ -76,7 +96,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   };
 
   useEffect(() => {
-    const item = items.find((item) => item.id === currentProduct.id);
+    const item = items.find((item) => item.id === product.id);
     if (item) {
       setAlreadyAddedToCart(true);
       return;
@@ -84,54 +104,54 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
     setAlreadyAddedToCart(false);
   }, [items]);
 
-  const variantAssets = useMemo(() => {
-    if (currentProduct.assetsByProductVariants === null) return null;
+  // const variantAssets = useMemo(() => {
+  //   if (currentProduct.assetsByProductVariants === null) return null;
 
-    const selectedAttributes = [
-      size,
-      color,
-      positionning,
-      frameColor,
-      soundbarColor,
-      supportColor,
-    ].filter((val) => val !== null);
+  //   const selectedAttributes = [
+  //     size,
+  //     color,
+  //     positionning,
+  //     frameColor,
+  //     soundbarColor,
+  //     supportColor,
+  //   ].filter((val) => val !== null);
 
-    if (selectedAttributes.length === 0) return null;
+  //   if (selectedAttributes.length === 0) return null;
 
-    const { assetsByProductVariants } = currentProduct;
+  //   const { assetsByProductVariants } = currentProduct;
 
-    return assetsByProductVariants.filter((asset) => {
-      const filterResult = selectedAttributes.map((attribute) => {
-        switch (attribute.__typename) {
-          case 'ProductSize':
-            return asset.size === attribute.size;
-          case 'ProductFrameColor':
-            return asset.frameColor === attribute.frameColor;
-          case 'ProductColor':
-            return asset.color === attribute.color;
-          case 'ProductPositionning':
-            return asset.positionning === attribute.positionning;
-          case 'ProductSoundbarColor':
-            return asset.soundbarColor === attribute.color;
-          case 'ProductSupportColor':
-            return asset.supportColor === attribute.supportColor;
-        }
-      });
+  //   return assetsByProductVariants.filter((asset) => {
+  //     const filterResult = selectedAttributes.map((attribute) => {
+  //       switch (attribute.__typename) {
+  //         case 'ProductSize':
+  //           return asset.size === attribute.size;
+  //         case 'ProductFrameColor':
+  //           return asset.frameColor === attribute.frameColor;
+  //         case 'ProductColor':
+  //           return asset.color === attribute.color;
+  //         case 'ProductPositionning':
+  //           return asset.positionning === attribute.positionning;
+  //         case 'ProductSoundbarColor':
+  //           return asset.soundbarColor === attribute.color;
+  //         case 'ProductSupportColor':
+  //           return asset.supportColor === attribute.supportColor;
+  //       }
+  //     });
 
-      return filterResult.find((res) => res === false) === undefined
-        ? true
-        : false;
-    });
-  }, [size, color, positionning, frameColor, soundbarColor, supportColor]);
+  //     return filterResult.find((res) => res === false) === undefined
+  //       ? true
+  //       : false;
+  //   });
+  // }, [size, color, positionning, frameColor, soundbarColor, supportColor]);
 
-  useEffect(() => {
-    if (currentProduct.assetsByProductVariants === null) return null;
+  // useEffect(() => {
+  //   if (currentProduct.assetsByProductVariants === null) return null;
 
-    if (variantAssets) {
-      const assetsToAdd = variantAssets.flatMap((variant) => variant.asset);
-      setVariantImages([...assetsToAdd]);
-    }
-  }, [variantAssets]);
+  //   if (variantAssets) {
+  //     const assetsToAdd = variantAssets.flatMap((variant) => variant.asset);
+  //     setVariantImages([...assetsToAdd]);
+  //   }
+  // }, [variantAssets]);
 
   useEffect(() => {
     if (variantImages.length > 0) {
@@ -158,7 +178,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                   },
                 }}
               >
-                <img src={current.url} alt={currentProduct.name} />
+                <img src={current} alt={product.name} />
               </Box>
             )}
             <Stack
@@ -168,7 +188,6 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               flexWrap={'wrap'}
             >
               <Box
-                onClick={() => setCurrent(currentProduct.mainAsset)}
                 sx={{
                   width: 80,
                   height: 'auto',
@@ -181,35 +200,34 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                   },
                 }}
               >
-                <img
-                  src={currentProduct.mainAsset.url}
-                  alt={currentProduct.name}
-                />
+                <img src={mainImage} alt={product.name} />
               </Box>
-              {variantImages.map((item, i) => (
-                <Box
-                  key={i}
-                  onClick={() => setCurrent(item)}
-                  sx={{
-                    width: 80,
-                    height: 'auto',
-                    cursor: 'pointer',
-                    '& img': {
-                      width: 1,
-                      height: 1,
-                      objectFit: 'cover',
-                      borderRadius: 2,
-                    },
-                    position: 'relative',
-                  }}
-                >
-                  <Bubble
-                    color={theme.palette.primary.main}
-                    position={'absolute'}
-                  />
-                  <img src={item.url} alt={currentProduct.name} />
-                </Box>
-              ))}
+              {variantImages.length > 0
+                ? variantImages.map((item, i) => (
+                    <Box
+                      key={i}
+                      onClick={() => setCurrent(item)}
+                      sx={{
+                        width: 80,
+                        height: 'auto',
+                        cursor: 'pointer',
+                        '& img': {
+                          width: 1,
+                          height: 1,
+                          objectFit: 'cover',
+                          borderRadius: 2,
+                        },
+                        position: 'relative',
+                      }}
+                    >
+                      <Bubble
+                        color={theme.palette.primary.main}
+                        position={'absolute'}
+                      />
+                      <img src={item} alt={product.name} />
+                    </Box>
+                  ))
+                : null}
             </Stack>
             {variantImages.length > 0 ? (
               <Box display={'flex'} alignItems={'center'} gap={'0.5rem'}>
@@ -223,7 +241,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
         </Grid>
         <Grid item xs={12} md={5}>
           <Box>
-            {currentProduct.isNew && (
+            {/* {currentProduct.isNew && (
               <Box
                 padding={1}
                 display={'inline-flex'}
@@ -235,16 +253,16 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                   {t('new')}
                 </Typography>
               </Box>
-            )}
+            )} */}
             <Typography variant={'h4'} fontWeight={700}>
-              {currentProduct.name}
+              {product.name}
             </Typography>
             <Box marginY={3}>
               <Box display={'flex'} alignItems={'baseline'}>
-                {currentProduct.price && (
+                {product.price && (
                   <>
                     <Typography variant={'h5'} fontWeight={700}>
-                      <Price priceWithCents={currentProduct.price} />
+                      <Price priceWithCents={product.price} />
                     </Typography>
                     <Typography variant="body2" sx={{ marginLeft: '0.5rem' }}>
                       {t('pricePreOwnedConditions')}
@@ -258,7 +276,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               variant={'subtitle2'}
               color={'text.secondary'}
             >
-              {currentProduct.description}
+              {product.description}
             </Typography>
             <ProductDialog
               open={dialogState}
@@ -266,14 +284,14 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               title={dialogTitle}
               origin={dialogOrigin}
               button={dialogButton}
-              product={currentProduct}
+              product={product}
             />
-            {currentProduct.quantity > 0 && isOccasion ? (
+            {product.quantity > 0 && isOccasion ? (
               <>
                 <Stack marginTop={3} direction={'column'} spacing={2}>
                   <Button
                     onClick={addToCart}
-                    disabled={alreadyAddedToCart}
+                    disabled={alreadyAddedToCart || product.quantity <= 0}
                     variant={'contained'}
                     color={'primary'}
                     size={'large'}
@@ -312,7 +330,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 </Button>
               </Stack>
             )}
-            <Box marginY={3}>
+            {/* <Box marginY={3}>
               {currentProduct.sizes.length > 0 && (
                 <Box>
                   <Typography>
@@ -527,7 +545,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     <Shops shops={currentProduct.shops} />
                   )
                 : null}
-            </Box>
+            </Box> */}
           </Box>
         </Grid>
       </Grid>

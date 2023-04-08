@@ -3,24 +3,20 @@ import i18nConfig from 'next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { NextPage } from 'next';
 import InstallationView from 'views/InstallationsView';
-import { GET_INSTALLATIONS } from 'gql/get-installations';
-import { client } from 'pages/_app';
-import { Installations } from 'gql/__generated__/installations';
+import { getInstallations, Installation } from 'lib/supabase/installations';
 
 const Realisations: NextPage<{
-  installations: Installations;
+  installations: Installation[];
 }> = ({ installations }) => {
   return <InstallationView installations={installations} />;
 };
 
 export const getStaticProps = async ({ locale }) => {
-  const { data: installations } = await client.query<Installations>({
-    query: GET_INSTALLATIONS,
-  });
+  const { data } = await getInstallations();
 
   return {
     props: {
-      installations,
+      installations: data,
       ...(await serverSideTranslations(
         locale,
         ['common', 'installations'],

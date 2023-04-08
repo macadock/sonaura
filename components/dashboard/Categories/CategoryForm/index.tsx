@@ -1,37 +1,18 @@
-import { useMutation } from '@apollo/client';
-import { Button, Grid, Stack, TextField } from '@mui/material';
-import { Category } from '@prisma/client';
-import { gql } from 'apollo-server-micro';
+import { Box, Button, Grid, Input, Stack, TextField } from '@mui/material';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
-import { useMemo, useState } from 'react';
-import { client } from '../../../../lib/apollo';
+import supabase from 'lib/supabase';
 import {
-  initialValues,
-  categoryForm,
-  categoryFormTypes,
-} from './category.validator';
-
-const CREATE_CATEGORY = gql`
-  mutation CreateCategory($createCategoryInput: CreateCategoryInput!) {
-    createCategory(createCategoryInput: $createCategoryInput) {
-      id
-      name
-      slug
-      icon
-    }
-  }
-`;
-
-const UPDATE_CATEGORY = gql`
-  mutation UpdateCategory($updateCategoryInput: UpdateCategoryInput!) {
-    updateCategory(updateCategoryInput: $updateCategoryInput) {
-      id
-      name
-      slug
-      icon
-    }
-  }
-`;
+  Category,
+  createCategory,
+  CreateCategoryInput,
+  removeCategory,
+  updateCategory,
+  UpdateCategoryInput,
+} from 'lib/supabase/categories';
+import { ChangeEvent, useMemo, useState } from 'react';
+import { initialValues, categoryForm } from './category.validator';
+import { v4 as uuidv4 } from 'uuid';
+import toast from 'react-hot-toast';
 
 interface Props {
   categoryId: string;
@@ -39,32 +20,57 @@ interface Props {
   onCompletedOrUpdated: () => void;
 }
 
+export type InsertOrUpdateCategory = CreateCategoryInput | UpdateCategoryInput;
+
+const getImageUrl = (value: string | object): string => {
+  let image: object;
+  console.log(value);
+  try {
+    image = typeof value === 'string' ? JSON.parse(value) : value;
+  } catch (e) {
+    return '';
+  }
+  const bucket = image['bucket'];
+  const file = image['file'];
+  const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+  return data ? data.publicUrl : '';
+};
+
 const CategoryForm: React.FC<Props> = ({
   categoryId,
   categories,
   onCompletedOrUpdated,
 }) => {
   type FormMode = 'creation' | 'edit';
-
   const [formMode, setFormMode] = useState<FormMode>('creation');
   const selectedCategory = useMemo((): Category => {
     if (!categoryId) return undefined;
     return categories.find((category) => category.id === categoryId);
   }, [categoryId]);
 
-  const [createCategory] = useMutation(CREATE_CATEGORY, {
-    client,
-    onCompleted: () => {
-      onCompletedOrUpdated();
-    },
-  });
+  const create = async (category: CreateCategoryInput) => {
+    const { error } = await createCategory(category);
+    if (error) {
+      return;
+    }
+    onCompletedOrUpdated();
+  };
 
-  const [updateCategory] = useMutation(UPDATE_CATEGORY, {
-    client,
-    onCompleted: () => {
-      onCompletedOrUpdated();
-    },
-  });
+  const update = async (category: UpdateCategoryInput) => {
+    const { error } = await updateCategory(category);
+    if (error) {
+      return;
+    }
+    onCompletedOrUpdated();
+  };
+
+  const remove = async () => {
+    const { error } = await removeCategory(categoryId);
+    if (error) {
+      return;
+    }
+    onCompletedOrUpdated();
+  };
 
   const handleEditMode = () => {
     setFormMode('edit');
@@ -75,8 +81,8 @@ const CategoryForm: React.FC<Props> = ({
   };
 
   const onSubmit = (
-    values: categoryFormTypes,
-    actions: FormikHelpers<categoryFormTypes>,
+    values: InsertOrUpdateCategory,
+    actions: FormikHelpers<InsertOrUpdateCategory>,
   ) => {
     const { icon, name, slug } = values;
     const input = {
@@ -86,30 +92,37 @@ const CategoryForm: React.FC<Props> = ({
     };
 
     if (formMode === 'creation') {
-      return createCategory({
-        variables: {
-          createCategoryInput: {
-            ...input,
-          },
-        },
-      });
+      return create(input);
     }
 
-    updateCategory({
-      variables: {
-        updateCategoryInput: {
-          ...input,
-          id: categoryId,
-        },
-      },
+    update({
+      ...input,
+      id: categoryId,
     });
 
     actions.resetForm();
     setFormMode('creation');
   };
 
+  const uploadImage = async (files: FileList): Promise<object> => {
+    const bucket = 'categories';
+    const fileName = uuidv4();
+    const { error } = await supabase.storage
+      .from(bucket)
+      .upload(fileName, files[0]);
+    if (error) {
+      toast.error('Erreur lors du chargement');
+      return {};
+    }
+    toast.success('Image chargée');
+    return {
+      bucket,
+      file: fileName,
+    };
+  };
+
   return (
-    <Formik<categoryFormTypes>
+    <Formik<InsertOrUpdateCategory>
       initialValues={formMode === 'creation' ? initialValues : selectedCategory}
       enableReinitialize={true}
       onSubmit={onSubmit}
@@ -124,6 +137,13 @@ const CategoryForm: React.FC<Props> = ({
               onClick={handleEditMode}
             >
               {'Editer'}
+            </Button>
+            <Button
+              variant={'outlined'}
+              disabled={categoryId === null}
+              onClick={remove}
+            >
+              {'Supprimer'}
             </Button>
             <Button variant={'outlined'} onClick={handleCreateMode}>
               {'Créer une nouvelle catégorie'}
@@ -168,29 +188,37 @@ const CategoryForm: React.FC<Props> = ({
                 )}
               </Field>
             </Grid>
-            <Field name={'icon'}>
-              {({
-                field: { name, onBlur, onChange, value },
-                meta: { error, touched },
-              }: FieldProps) => (
-                <>
-                  <Grid item xs={6}>
-                    <TextField
-                      name={name}
-                      label={name}
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      error={touched && Boolean(error)}
-                      helperText={touched && error ? '' : null}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    {value && !error ? <img src={value} /> : null}
-                  </Grid>
-                </>
-              )}
-            </Field>
+            <Grid item xs={12}>
+              <Field name={'icon'}>
+                {({
+                  field: { name, value },
+                  form: { setFieldValue },
+                }: FieldProps) => (
+                  <>
+                    {value ? (
+                      <img
+                        src={getImageUrl(value)}
+                        style={{ maxWidth: '100%' }}
+                      />
+                    ) : null}
+                    <Button variant="contained" component="label">
+                      {value ? "Remplacer l'image" : 'Ajouter une image'}
+                      <input
+                        name={name}
+                        hidden
+                        accept="image/*"
+                        multiple
+                        type="file"
+                        onChange={async (e) => {
+                          const image = await uploadImage(e.target.files);
+                          setFieldValue(name, image);
+                        }}
+                      />
+                    </Button>
+                  </>
+                )}
+              </Field>
+            </Grid>
             <Grid item xs={12}>
               <Button
                 variant={'contained'}

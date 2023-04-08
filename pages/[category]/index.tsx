@@ -3,36 +3,39 @@ import i18nConfig from 'next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { GetStaticPropsContext, NextPage } from 'next';
 import CategoryView from 'views/CategoryView';
-import { GET_CATEGORIES, GET_CATEGORY } from 'gql/get-categories';
-import { Category } from 'gql/__generated__/category';
-import { client } from 'pages/_app';
-import { Categories } from 'gql/__generated__/categories';
+import {
+  Category,
+  getCategories,
+  getCategoryBySlug,
+} from 'lib/supabase/categories';
+import { getProductsByCategory, Product } from 'lib/supabase/products';
 
-const Category: NextPage<{
+interface Props {
   category: Category;
-}> = ({ category }) => {
-  return <CategoryView category={category} />;
+  products: Product[];
+}
+
+const Category: NextPage<Props> = ({ category, products }) => {
+  return <CategoryView category={category} products={products} />;
 };
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const slug = context.params.category;
 
-  const { data: category } = await client.query<Category>({
-    query: GET_CATEGORY,
-    variables: {
-      slug: slug,
-    },
-  });
+  const { data: category } = await getCategoryBySlug(slug as string);
 
-  if (category.category === null) {
+  if (category[0] === null) {
     return {
       notFound: true,
     };
   }
 
+  const { data: products } = await getProductsByCategory(category[0].id);
+
   return {
     props: {
-      category,
+      category: category[0],
+      products: products,
       ...(await serverSideTranslations(context.locale, ['common'], i18nConfig)),
     },
     revalidate: TIME_TO_INVALIDATE_CACHE_SEC,
@@ -40,11 +43,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 };
 
 export const getStaticPaths = async () => {
-  const { data } = await client.query<Categories>({
-    query: GET_CATEGORIES,
-  });
-
-  const categories = data.categories;
+  const { data: categories } = await getCategories();
 
   // Get the paths we want to pre-render based on posts
   const paths = categories.map((category) => ({

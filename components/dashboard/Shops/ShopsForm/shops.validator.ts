@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { JsonValue } from 'type-fest';
+import { InsertOrUpdateShop } from 'components/dashboard/Shops/ShopsForm';
 
 export const shopForm = yup.object({
   address: yup.string().trim().required(),
@@ -9,30 +9,42 @@ export const shopForm = yup.object({
   phoneNumber: yup.string().trim().required(),
   email: yup.string().trim().email().required(),
   openHours: yup.object().required(),
-  image: yup.string().url().required(),
+  image: yup.object().optional(),
   googleMapsUrl: yup.string().url().required(),
 });
 
-export const initialValues: shopFormTypes = {
+export const initialValues: InsertOrUpdateShop = {
   address: '',
   postalCode: '',
   city: '',
   country: '',
   phoneNumber: '',
   email: '',
-  openHours: '',
+  openHours: {
+    hours: [
+      {
+        '1': [],
+      },
+      {
+        '2': [],
+      },
+      {
+        '3': [],
+      },
+      {
+        '4': [],
+      },
+      {
+        '5': [],
+      },
+      {
+        '6': [],
+      },
+      {
+        '7': [],
+      },
+    ],
+  },
   image: '',
   googleMapsUrl: '',
 };
-
-export interface shopFormTypes {
-  address: string;
-  postalCode: string;
-  city: string;
-  country: string;
-  phoneNumber: string;
-  email: string;
-  openHours: JsonValue;
-  image: string;
-  googleMapsUrl: string;
-}

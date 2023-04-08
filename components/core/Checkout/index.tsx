@@ -25,12 +25,7 @@ import { ApiUrls, getRoutePath } from 'appConstants';
 import toast from 'react-hot-toast';
 import FormikSessionStorage from 'components/system/FormikSessionStorage';
 import CreatePaymentInput from 'PayPlug/dto/create-payment.input';
-import { useQuery } from '@apollo/client';
-import {
-  GetProductsByIds,
-  GetProductsByIdsVariables,
-} from '../../../gql/__generated__/get-products-by-ids';
-import { GET_PRODUCTS_BY_IDS } from '../../../gql/get-products';
+import { getProductsByIds } from 'lib/supabase/products';
 
 export const uniqueName = 'checkout';
 
@@ -39,34 +34,48 @@ const Checkout: React.FC = () => {
   const router = useRouter();
 
   const [paymentInProgress, setPaymentInProgress] = useState<boolean>(false);
+  const [products, setProducts] = useState(null);
 
   const { isEmpty, cartTotal, items } = useCart();
 
-  const ids = items.map((item) => item.id);
+  const fetchProducts = async () => {
+    if (!items) return;
 
-  const { data } = useQuery<GetProductsByIds, GetProductsByIdsVariables>(
-    GET_PRODUCTS_BY_IDS,
-    {
-      variables: {
-        ids,
-      },
-      skip: !ids,
-    },
-  );
+    const ids = items.map((item) => item.id);
 
-  const products = useMemo(() => {
-    if (!data) return null;
+    const { data } = await getProductsByIds(ids);
 
-    return data.products.map((product) => {
-      const item = items.find((item) => item.id === product.id);
+    if (!data) return;
+
+    const products = items.map((item) => {
+      const product = data.find((product) => product.id === item.id);
+
       return {
-        [product.name]: {
-          quantity: item.quantity,
-          price: item.price,
-        },
+        ...item,
+        ...product,
       };
     });
-  }, [items, data?.products]);
+
+    setProducts(products);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [items]);
+
+  const productsInCart = useMemo(() => {
+    if (!items) return null;
+
+    return items.map((item) => {
+      if (!products) return {};
+      const product = products.find((product) => product.id === item.id);
+
+      return {
+        ...item,
+        ...product,
+      };
+    });
+  }, [products]);
 
   const onSubmit = async (values: checkoutFormTypes) => {
     interface PaymentResponseBody {
@@ -81,7 +90,7 @@ const Checkout: React.FC = () => {
       ...values,
       phoneNumber: formatPhoneNumber(values.phoneNumber),
       amount: cartTotal,
-      products: products,
+      products: productsInCart,
     };
 
     try {

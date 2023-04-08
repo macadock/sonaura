@@ -1,26 +1,23 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import {
-  InstallationFragment,
-  Installations,
-} from 'gql/__generated__/installations';
 import Column from './Column';
+import { Installation } from 'lib/supabase/installations';
 
 interface Props {
-  installations: Installations;
+  installations: Installation[];
 }
 
 const Main: React.FC<Props> = ({ installations }) => {
-  const instArray: [
-    InstallationFragment[],
-    InstallationFragment[],
-    InstallationFragment[],
-  ] = [[], [], []];
+  const instArray: [Installation[], Installation[], Installation[]] = [
+    [],
+    [],
+    [],
+  ];
 
   let counter = 0;
 
-  installations.installations.map((installation) => {
+  installations.map((installation) => {
     counter > 2 ? (counter = 0) : null;
     instArray[counter] = [...instArray[counter], installation];
 

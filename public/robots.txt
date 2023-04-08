@@ -1,3 +1,2 @@
 User-agent: *
-Disallow: /panier/
-Sitemap: https://www.sonaura.fr/sitemap.xml
+Sitemap: https://sonaura.fr/sitemap.xml

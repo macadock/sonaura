@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -7,20 +7,16 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import { useCart } from 'react-use-cart';
-import { useQuery } from '@apollo/client';
-import {
-  GetProductsByIds,
-  GetProductsByIdsVariables,
-} from 'gql/__generated__/get-products-by-ids';
-import { GET_PRODUCTS_BY_IDS } from 'gql/get-products';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
 import { useFormikContext } from 'formik';
+import { getProductsByIds } from 'lib/supabase/products';
 
 const Orders = (): JSX.Element => {
   const theme = useTheme();
   const { t } = useTranslation('checkout');
   const { handleSubmit, isValid, dirty } = useFormikContext();
+  const [products, setProducts] = useState(null);
 
   const { isEmpty, items, cartTotal } = useCart();
 
@@ -30,32 +26,44 @@ const Orders = (): JSX.Element => {
 
   const ids = items.map((item) => item.id);
 
-  const { data, refetch } = useQuery<
-    GetProductsByIds,
-    GetProductsByIdsVariables
-  >(GET_PRODUCTS_BY_IDS, {
-    variables: {
-      ids,
-    },
-    skip: !ids,
-  });
+  const fetchProducts = async () => {
+    if (!items) return;
 
-  useEffect(() => {
-    refetch();
-  }, [items]);
+    const ids = items.map((item) => item.id);
 
-  const products = useMemo(() => {
-    if (!items || !data) return null;
+    const { data } = await getProductsByIds(ids);
 
-    return items.map((item) => {
-      const product = data.products.find((product) => product.id === item.id);
+    if (!data) return;
+
+    const products = items.map((item) => {
+      const product = data.find((product) => product.id === item.id);
 
       return {
         ...item,
         ...product,
       };
     });
-  }, [data?.products]);
+
+    setProducts(products);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [items]);
+
+  const productsInCart = useMemo(() => {
+    if (!items) return null;
+
+    return items.map((item) => {
+      if (!products) return {};
+      const product = products.find((product) => product.id === item.id);
+
+      return {
+        ...item,
+        ...product,
+      };
+    });
+  }, [products]);
 
   return (
     <>
@@ -67,7 +75,7 @@ const Orders = (): JSX.Element => {
                 <Box display={'flex'}>
                   <Box
                     component={'img'}
-                    src={product.mainAsset.url}
+                    src={'https://media.graphassets.com/wEANADQnT5W9C9HgeaLv'}
                     alt={product.name}
                     sx={{
                       borderRadius: 2,

@@ -7,11 +7,10 @@ import People from 'components/core/Home/People';
 import Products from 'components/core/Home/Products';
 import Container from 'components/system/Container';
 import React from 'react';
-import { Categories as Cat } from 'gql/__generated__/categories';
 import PreOwnedProducts from 'components/core/Home/PreOwnedProducts';
 
 interface Props {
-  categories: Cat;
+  categories: any;
 }
 
 const HomeView: React.FC<Props> = ({ categories }) => {
@@ -24,7 +23,7 @@ const HomeView: React.FC<Props> = ({ categories }) => {
         <People />
       </Container>
       <Container>
-        <Categories categories={categories} />
+        <Categories />
       </Container>
       <Box bgcolor={'secondary.main'}>
         <Container>
