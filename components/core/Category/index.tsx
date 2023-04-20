@@ -18,13 +18,9 @@ interface Props {
   products: Product[];
 }
 
-const getProductMainImage = (
-  productSlug: string,
-  categorySlug: string,
-): string => {
-  const isPreOwned = categorySlug === 'occasion';
+const getProductMainImage = (productId: string): string => {
   const bucket = 'products';
-  const file = `${isPreOwned ? 'occasions' : categorySlug}/${productSlug}/main`;
+  const file = `${productId}/main`;
   const { data } = supabase.storage.from(bucket).getPublicUrl(file);
   return data.publicUrl;
 };
@@ -65,7 +61,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                 <Link href={`/${slug}/${product.slug}`}>
                   <CardMedia
                     title={product.name}
-                    image={getProductMainImage(product.slug, slug)}
+                    image={getProductMainImage(product.id)}
                     sx={{
                       position: 'relative',
                       height: 320,

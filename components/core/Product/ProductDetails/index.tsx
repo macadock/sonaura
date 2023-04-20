@@ -23,13 +23,9 @@ interface Props {
   product: Product;
 }
 
-const getProductMainImage = (
-  productSlug: string,
-  categorySlug: string,
-): string => {
-  const isPreOwned = categorySlug === 'occasion';
+const getProductMainImage = (productId: string): string => {
   const bucket = 'products';
-  const file = `${isPreOwned ? 'occasions' : categorySlug}/${productSlug}/main`;
+  const file = `${productId}/main`;
   const { data } = supabase.storage.from(bucket).getPublicUrl(file);
   return data.publicUrl;
 };
@@ -51,7 +47,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
   const [variantImages, setVariantImages] = useState<string[]>([]);
   const mainImage = useMemo(() => {
-    return getProductMainImage(product.slug, category?.slug);
+    return getProductMainImage(product.id);
   }, [categorySlug]);
   const [current, setCurrent] = useState(mainImage);
 

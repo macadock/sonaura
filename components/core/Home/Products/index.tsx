@@ -34,9 +34,8 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
   }, []);
 
   const getProductMainImage = (productId: string): string => {
-    const product = products.find((product) => product.id === productId);
     const bucket = 'products';
-    const file = `/${product.categories.slug}/${product.slug}/main`;
+    const file = `${productId}/main`;
     const { data } = supabase.storage.from(bucket).getPublicUrl(file);
     return data.publicUrl;
   };
