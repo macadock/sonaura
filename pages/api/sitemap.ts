@@ -1,10 +1,7 @@
 import { globby } from 'globby';
+import { getCategories } from 'lib/supabase/categories';
+import { getProducts } from 'lib/supabase/products';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { GET_CATEGORIES } from 'gql/get-categories';
-import { GET_PRODUCTS } from 'gql/get-products';
-import { Categories } from 'gql/__generated__/categories';
-import { Products } from 'gql/__generated__/products';
-import { client } from 'pages/_app';
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,12 +13,10 @@ export default async function handler(
   // Instructing the Vercel edge to cache the file
   res.setHeader('Cache-control', 'stale-while-revalidate, s-maxage=3600');
 
-  async function getCategories(): Promise<string[]> {
-    const { data } = await client.query<Categories>({
-      query: GET_CATEGORIES,
-    });
+  async function fetchCategories(): Promise<string[]> {
+    const { data } = await getCategories();
 
-    return data.categories.map((category) => {
+    return data.map((category) => {
       return `  <url>
         <loc>${`${process.env.NEXT_PUBLIC_WEBSITE_URL}/${category.slug}/`}</loc>
         <changefreq>daily</changefreq>
@@ -29,14 +24,12 @@ export default async function handler(
     });
   }
 
-  async function getProducts(): Promise<string[]> {
-    const { data } = await client.query<Products>({
-      query: GET_PRODUCTS,
-    });
+  async function fetchProducts(): Promise<string[]> {
+    const { data } = await getProducts();
 
-    return data.products.map((product) => {
+    return data.map((product) => {
       return `  <url>
-        <loc>${`${process.env.NEXT_PUBLIC_WEBSITE_URL}/${product.category.slug}/${product.slug}/`}</loc>
+        <loc>${`${process.env.NEXT_PUBLIC_WEBSITE_URL}/${product.categories[0].slug}/${product.slug}/`}</loc>
         <changefreq>daily</changefreq>
       </url>`;
     });
@@ -65,8 +58,8 @@ export default async function handler(
       '!src/pages/404.tsx',
     ]);
 
-    const products = await getProducts();
-    const categories = await getCategories();
+    const products = await fetchProducts();
+    const categories = await fetchCategories();
 
     console.log(
       pages

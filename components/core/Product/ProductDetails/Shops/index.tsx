@@ -11,7 +11,7 @@ const Shops: React.FC<Props> = ({ shop }) => {
   const theme = useTheme();
   const { t } = useTranslation('product');
 
-  const hours = shop.openHours['hours'] as ShopHours['hours'];
+  // const hours = shop.openHours['hours'] as ShopHours['hours'];
   const todayDate = new Date();
 
   return (
@@ -26,7 +26,7 @@ const Shops: React.FC<Props> = ({ shop }) => {
       <Typography
         sx={{ fontWeight: 'bold', marginBottom: '0.5rem' }}
       >{`Bang & Olufsen ${shop.city}`}</Typography>
-      {hours.map((hour) => {
+      {/* {hours.map((hour) => {
         const day = parseInt(Object.keys(hour)[0]);
         const today = day === todayDate.getDay();
         const values = Object.values(hour)[0];
@@ -65,7 +65,7 @@ const Shops: React.FC<Props> = ({ shop }) => {
             </Typography>
           </Box>
         );
-      })}
+      })} */}
     </Box>
   );
 };

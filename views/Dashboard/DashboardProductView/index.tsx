@@ -1,28 +1,35 @@
 import { Box, Grid, Typography } from '@mui/material';
-import { useState } from 'react';
-import { Product } from '@prisma/client';
-import { useQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import LoadingScreen from 'components/system/LoadingScreen';
+import { getProducts, Product } from 'lib/supabase/products';
 import ProductTable from 'components/dashboard/Products/ProductTable';
 import ProductForm from 'components/dashboard/Products/ProductForm';
-import { GET_PRODUCTS } from '../../../gql/product';
 
 const DashboardProductView: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [productId, setProductId] = useState<string>(null);
+  const [products, setProducts] = useState<Product[]>(null);
 
-  type Products = {
-    products: Product[];
+  const fetchCategories = async () => {
+    const { data } = await getProducts();
+    if (data) {
+      setProducts(data);
+    }
+    setLoading(false);
   };
 
-  const { data, loading, error, refetch } = useQuery<Products>(GET_PRODUCTS);
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
-  if (loading || error) return null;
+  if (loading) return <LoadingScreen />;
 
-  const handleCategorySelection = (productId: string) => {
-    setProductId(productId);
+  const handleCategorySelection = (categoryId: string) => {
+    setProductId(categoryId);
   };
 
   const onCompletedOrUpdated = () => {
-    refetch();
+    fetchCategories();
     setProductId(null);
   };
 
@@ -30,17 +37,17 @@ const DashboardProductView: React.FC = () => {
     <Box>
       <Grid container spacing={4}>
         <Grid item xs={12}>
-          <Typography variant="h1">{'Produits'}</Typography>
+          <Typography variant="h1">{'Catégories'}</Typography>
         </Grid>
         <Grid item xs={12} md={6} height={'50vh'}>
           <ProductTable
-            data={data.products}
+            data={products}
             onSelectionModelChange={handleCategorySelection}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <ProductForm
-            products={data.products}
+            products={products}
             productId={productId}
             onCompletedOrUpdated={onCompletedOrUpdated}
           />

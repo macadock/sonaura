@@ -24,8 +24,6 @@ const TimeTableLine: React.FC<Props> = ({
 }) => {
   const [closed, setClosed] = useState<boolean>(false);
 
-  useEffect(() => {}, []);
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <FormControlLabel

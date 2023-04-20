@@ -25,11 +25,11 @@ const ShopTimeTable: React.FC<Props> = ({ openHours = {}, onUpdate }) => {
 
   const days = Object.keys(daysTranslation);
 
-  const onCloseUpdate = (day: number) => {};
+  // const onCloseUpdate = (day: number) => {};
 
-  const onMorningUpdate = (newTime: TimeUpdate) => {};
+  // const onMorningUpdate = (newTime: TimeUpdate) => {};
 
-  const onAfternoonUpdate = (newTime: TimeUpdate) => {};
+  // const onAfternoonUpdate = (newTime: TimeUpdate) => {};
 
   return (
     <Grid

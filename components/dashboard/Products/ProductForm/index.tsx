@@ -1,4 +1,3 @@
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
   Grid,
@@ -8,23 +7,43 @@ import {
   TextField,
 } from '@mui/material';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
-import { useMemo, useState } from 'react';
-import { CREATE_PRODUCT, UPDATE_PRODUCT } from 'gql/product';
-import {
-  initialValues,
-  productFrom,
-  productFormTypes,
-} from './product.validator';
-import { GET_CATEGORIES } from 'gql/category';
-import { GET_SHOPS } from 'gql/shop';
+import { useEffect, useMemo, useState } from 'react';
+import { initialValues, productFrom } from './product.validator';
 import VariantsDialog from '../Variants/VariantsDialog';
+import {
+  createProduct,
+  CreateProductInput,
+  Product,
+  removeProduct,
+  updateProduct,
+  UpdateProductInput,
+} from 'lib/supabase/products';
+import supabase from 'lib/supabase';
+import { Category, getCategories } from 'lib/supabase/categories';
+import { Categories } from 'types';
+import { getShops, Shop } from 'lib/supabase/shops';
 
 interface Props {
   productId: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  products: any[];
+  products: Product[];
   onCompletedOrUpdated: () => void;
 }
+
+export type InsertOrUpdateProduct = CreateProductInput | UpdateProductInput;
+
+const getImageUrl = (value: string | object): string => {
+  let image: object;
+  console.log(value);
+  try {
+    image = typeof value === 'string' ? JSON.parse(value) : value;
+  } catch (e) {
+    return '';
+  }
+  const bucket = image['bucket'];
+  const file = image['file'];
+  const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+  return data ? data.publicUrl : '';
+};
 
 const ProductForm: React.FC<Props> = ({
   productId,
@@ -35,31 +54,61 @@ const ProductForm: React.FC<Props> = ({
 
   const [modal, setModal] = useState<boolean>(false);
   const [formMode, setFormMode] = useState<FormMode>('creation');
+  const [categories, setCategories] = useState<Category[]>(null);
+  const [shops, setShops] = useState<Shop[]>(null);
+
   const selectedProduct = useMemo(() => {
     if (!productId) return undefined;
     const product = products.find((category) => category.id === productId);
     return {
       ...product,
-      categoryId: product.category.id || '',
-      shopId: product.shop?.id || '',
+      categoryId: product.categoryId || '',
+      shopId: product.shopId || '',
     };
   }, [productId]);
 
-  const [createCategory] = useMutation(CREATE_PRODUCT, {
-    onCompleted: () => {
-      onCompletedOrUpdated();
-    },
-  });
+  const fetchCategories = async () => {
+    const { data } = await getCategories();
+    if (data) {
+      setCategories(data);
+    }
+  };
 
-  const [updateCategory] = useMutation(UPDATE_PRODUCT, {
-    onCompleted: () => {
-      onCompletedOrUpdated();
-    },
-  });
+  const fetchShops = async () => {
+    const { data } = await getShops();
+    if (data) {
+      setShops(data);
+    }
+  };
 
-  const { data: categories } = useQuery(GET_CATEGORIES);
+  useEffect(() => {
+    fetchCategories();
+    fetchShops();
+  }, []);
 
-  const { data: shops } = useQuery(GET_SHOPS);
+  const create = async (product: CreateProductInput) => {
+    const { error } = await createProduct(product);
+    if (error) {
+      return;
+    }
+    onCompletedOrUpdated();
+  };
+
+  const update = async (product: UpdateProductInput) => {
+    const { error } = await updateProduct(product);
+    if (error) {
+      return;
+    }
+    onCompletedOrUpdated();
+  };
+
+  const remove = async () => {
+    const { error } = await removeProduct(productId);
+    if (error) {
+      return;
+    }
+    onCompletedOrUpdated();
+  };
 
   const handleEditMode = () => {
     setFormMode('edit');
@@ -74,14 +123,13 @@ const ProductForm: React.FC<Props> = ({
   };
 
   const onSubmit = (
-    values: productFormTypes,
-    actions: FormikHelpers<productFormTypes>,
+    values: InsertOrUpdateProduct,
+    actions: FormikHelpers<InsertOrUpdateProduct>,
   ) => {
     const {
       name,
       description,
       fromPrice,
-      mainAsset,
       price,
       quantity,
       slug,
@@ -93,7 +141,6 @@ const ProductForm: React.FC<Props> = ({
       name,
       description,
       fromPrice,
-      mainAsset,
       price,
       quantity,
       slug,
@@ -102,22 +149,12 @@ const ProductForm: React.FC<Props> = ({
     };
 
     if (formMode === 'creation') {
-      return createCategory({
-        variables: {
-          createProductInput: {
-            ...input,
-          },
-        },
-      });
+      return create(input);
     }
 
-    updateCategory({
-      variables: {
-        updateProductInput: {
-          ...input,
-          id: productId,
-        },
-      },
+    update({
+      ...input,
+      id: productId,
     });
 
     actions.resetForm();
@@ -125,7 +162,7 @@ const ProductForm: React.FC<Props> = ({
   };
 
   return (
-    <Formik<productFormTypes>
+    <Formik<InsertOrUpdateProduct>
       initialValues={formMode === 'creation' ? initialValues : selectedProduct}
       enableReinitialize={true}
       onSubmit={onSubmit}
@@ -264,11 +301,13 @@ const ProductForm: React.FC<Props> = ({
                     onChange={onChange}
                     error={touched && Boolean(error)}
                   >
-                    {categories?.categories.map((category) => (
-                      <MenuItem key={category.id} value={category.id}>
-                        {category.name}
-                      </MenuItem>
-                    ))}
+                    {categories
+                      ? categories.map((category) => (
+                          <MenuItem key={category.id} value={category.id}>
+                            {category.name}
+                          </MenuItem>
+                        ))
+                      : false}
                   </Select>
                 )}
               </Field>
@@ -287,11 +326,13 @@ const ProductForm: React.FC<Props> = ({
                     onChange={onChange}
                     error={touched && Boolean(error)}
                   >
-                    {shops?.shops.map((shop) => (
-                      <MenuItem key={shop.id} value={shop.id}>
-                        {shop.city}
-                      </MenuItem>
-                    ))}
+                    {shops
+                      ? shops.map((shop) => (
+                          <MenuItem key={shop.id} value={shop.id}>
+                            {shop.city}
+                          </MenuItem>
+                        ))
+                      : false}
                   </Select>
                 )}
               </Field>

@@ -1,8 +1,4 @@
 import { InsertOrUpdateCategory } from 'components/dashboard/Categories/CategoryForm';
-import {
-  CreateCategoryInput,
-  UpdateCategoryInput,
-} from 'lib/supabase/categories';
 import * as yup from 'yup';
 
 export const categoryForm = yup.object({

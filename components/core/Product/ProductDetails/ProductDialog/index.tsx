@@ -1,6 +1,5 @@
 import { Close } from '@mui/icons-material';
 import { Box, Dialog, useMediaQuery, useTheme } from '@mui/material';
-import { ProductFragment } from 'gql/__generated__/product-fragment';
 import ProductForm from '../ProductForm';
 
 interface Props {
@@ -9,7 +8,7 @@ interface Props {
   title: string;
   origin: string;
   button?: string;
-  product: ProductFragment;
+  product: any;
 }
 
 const ProductDialog: React.FC<Props> = ({

@@ -1,5 +1,5 @@
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Product } from '@prisma/client';
+import { Product } from 'lib/supabase/products';
 
 interface Props {
   data: Product[];

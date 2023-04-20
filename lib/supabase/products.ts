@@ -3,6 +3,10 @@ import { getCategoryBySlug } from 'lib/supabase/categories';
 import { Database } from 'types/supabase';
 
 export type Product = Database['public']['Tables']['products']['Row'];
+export type CreateProductInput =
+  Database['public']['Tables']['products']['Insert'];
+export type UpdateProductInput =
+  Database['public']['Tables']['products']['Update'];
 
 export async function getProductById(id: string) {
   return supabase
@@ -45,4 +49,21 @@ export async function getProductsBySlugAndCategory(slug, categorySlug: string) {
     .select('*')
     .eq('slug', slug)
     .eq('categoryId', data[0].id);
+}
+
+export async function createProduct(product: CreateProductInput) {
+  return supabase.from('products').insert([product]);
+}
+
+export async function updateProduct(product: UpdateProductInput) {
+  return supabase
+    .from('products')
+    .update({
+      ...product,
+    })
+    .eq('id', product.id);
+}
+
+export async function removeProduct(id: string) {
+  return supabase.from('products').delete().eq('id', id);
 }

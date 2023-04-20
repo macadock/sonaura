@@ -29,7 +29,9 @@ const Login: React.FC = () => {
         },
       });
       setEmailSent(true);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (

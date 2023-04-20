@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Input, Stack, TextField } from '@mui/material';
+import { Button, Grid, Stack, TextField } from '@mui/material';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import supabase from 'lib/supabase';
 import {
@@ -9,7 +9,7 @@ import {
   updateCategory,
   UpdateCategoryInput,
 } from 'lib/supabase/categories';
-import { ChangeEvent, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { initialValues, categoryForm } from './category.validator';
 import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
