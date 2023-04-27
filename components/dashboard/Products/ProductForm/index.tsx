@@ -1,11 +1,4 @@
-import {
-  Button,
-  Grid,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-} from '@mui/material';
+import { Button, Grid, Stack } from '@mui/material';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import { useEffect, useMemo, useState } from 'react';
 import { initialValues, productFrom } from './product.validator';
@@ -20,8 +13,13 @@ import {
 } from 'lib/supabase/products';
 import supabase from 'lib/supabase';
 import { Category, getCategories } from 'lib/supabase/categories';
-import { Categories } from 'types';
 import { getShops, Shop } from 'lib/supabase/shops';
+import NumericField from 'components/dashboard/Products/ProductForm/NumericField';
+import TextField from 'components/dashboard/Products/ProductForm/TextField';
+import SelectField from 'components/dashboard/Products/ProductForm/SelectField';
+import { Delete } from '@mui/icons-material';
+import toast from 'react-hot-toast';
+import { isNumber } from 'class-validator';
 
 interface Props {
   productId: string;
@@ -33,7 +31,6 @@ export type InsertOrUpdateProduct = CreateProductInput | UpdateProductInput;
 
 const getImageUrl = (value: string | object): string => {
   let image: object;
-  console.log(value);
   try {
     image = typeof value === 'string' ? JSON.parse(value) : value;
   } catch (e) {
@@ -97,6 +94,7 @@ const ProductForm: React.FC<Props> = ({
   const update = async (product: UpdateProductInput) => {
     const { error } = await updateProduct(product);
     if (error) {
+      console.log(error);
       return;
     }
     onCompletedOrUpdated();
@@ -105,6 +103,7 @@ const ProductForm: React.FC<Props> = ({
   const remove = async () => {
     const { error } = await removeProduct(productId);
     if (error) {
+      console.log(error);
       return;
     }
     onCompletedOrUpdated();
@@ -135,17 +134,26 @@ const ProductForm: React.FC<Props> = ({
       slug,
       categoryId,
       shopId,
+      mainImage,
     } = values;
+
+    const sanitizeNumber = (number: number): number => {
+      if (!isNumber(number)) {
+        number = null;
+      }
+      return number;
+    };
 
     const input = {
       name,
       description,
-      fromPrice,
-      price,
-      quantity,
+      fromPrice: sanitizeNumber(fromPrice),
+      price: sanitizeNumber(price),
+      quantity: sanitizeNumber(quantity),
       slug,
       categoryId,
-      shopId,
+      shopId: shopId === '' ? null : shopId,
+      mainImage,
     };
 
     if (formMode === 'creation') {
@@ -161,9 +169,42 @@ const ProductForm: React.FC<Props> = ({
     setFormMode('creation');
   };
 
+  const formValues = useMemo(() => {
+    const input = {
+      ...initialValues,
+      price: '',
+      fromPrice: '',
+    };
+    if (formMode === 'creation') {
+      return input;
+    }
+
+    return {
+      ...input,
+      ...selectedProduct,
+    };
+  }, [formMode, selectedProduct?.id]);
+
+  const uploadImage = async (files: FileList): Promise<object> => {
+    const bucket = 'products';
+    const fileName = `${productId}/main`;
+    const { error } = await supabase.storage
+      .from(bucket)
+      .upload(fileName, files[0]);
+    if (error) {
+      toast.error('Erreur lors du chargement');
+      return {};
+    }
+    toast.success('Image chargée');
+    return {
+      bucket,
+      file: fileName,
+    };
+  };
+
   return (
     <Formik<InsertOrUpdateProduct>
-      initialValues={formMode === 'creation' ? initialValues : selectedProduct}
+      initialValues={formValues as InsertOrUpdateProduct}
       enableReinitialize={true}
       onSubmit={onSubmit}
       validationSchema={productFrom}
@@ -179,11 +220,18 @@ const ProductForm: React.FC<Props> = ({
               {'Editer'}
             </Button>
             <Button variant={'outlined'} onClick={handleCreateMode}>
-              {'Créer un nouveau produit'}
+              {'Nouveau produit'}
             </Button>
             <Button
               variant={'outlined'}
               disabled={productId === null}
+              onClick={remove}
+            >
+              <Delete />
+            </Button>
+            <Button
+              variant={'outlined'}
+              disabled={productId === null || formMode === 'creation'}
               onClick={handleModal}
             >
               {'Gérer les variantes'}
@@ -191,168 +239,61 @@ const ProductForm: React.FC<Props> = ({
           </Stack>
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <Field name={'name'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
+              <TextField name={'name'} />
             </Grid>
             <Grid item xs={6}>
-              <Field name={'slug'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
+              <TextField name={'slug'} />
             </Grid>
             <Grid item xs={12}>
-              <Field name={'description'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
+              <TextField
+                name={'description'}
+                multiline
+                minRows={2}
+                maxRows={10}
+              />
             </Grid>
             <Grid item xs={6}>
-              <Field name={'price'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    type={'number'}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
+              <NumericField name={'price'} />
             </Grid>
             <Grid item xs={6}>
-              <Field name={'fromPrice'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    type={'number'}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
+              <NumericField name={'fromPrice'} />
             </Grid>
             <Grid item xs={6}>
-              <Field name={'categoryId'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <Select
-                    fullWidth
-                    name={name}
-                    value={value}
-                    onBlur={onBlur}
-                    onChange={onChange}
-                    error={touched && Boolean(error)}
-                  >
-                    {categories
-                      ? categories.map((category) => (
-                          <MenuItem key={category.id} value={category.id}>
-                            {category.name}
-                          </MenuItem>
-                        ))
-                      : false}
-                  </Select>
-                )}
-              </Field>
+              <SelectField name={'categoryId'} datas={categories} />
             </Grid>
             <Grid item xs={6}>
-              <Field name={'shopId'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <Select
-                    fullWidth
-                    name={name}
-                    value={value}
-                    onBlur={onBlur}
-                    onChange={onChange}
-                    error={touched && Boolean(error)}
-                  >
-                    {shops
-                      ? shops.map((shop) => (
-                          <MenuItem key={shop.id} value={shop.id}>
-                            {shop.city}
-                          </MenuItem>
-                        ))
-                      : false}
-                  </Select>
-                )}
-              </Field>
+              <SelectField name={'shopId'} datas={shops} menuName={'city'} />
             </Grid>
             <Grid item xs={12}>
-              <Field name={'mainAsset'}>
+              <Field name={'mainImage'}>
                 {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
+                  field: { name, value },
+                  form: { setFieldValue },
                 }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
+                  <>
+                    {value ? (
+                      <img
+                        src={getImageUrl(value)}
+                        style={{ maxWidth: '100%' }}
+                      />
+                    ) : null}
+                    {formMode === 'edit' ? (
+                      <Button variant="contained" component="label">
+                        {value ? "Remplacer l'image" : 'Ajouter une image'}
+                        <input
+                          name={name}
+                          hidden
+                          accept="image/*"
+                          multiple
+                          type="file"
+                          onChange={async (e) => {
+                            const image = await uploadImage(e.target.files);
+                            setFieldValue(name, image);
+                          }}
+                        />
+                      </Button>
+                    ) : null}
+                  </>
                 )}
               </Field>
             </Grid>

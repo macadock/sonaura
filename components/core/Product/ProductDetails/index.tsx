@@ -23,6 +23,11 @@ interface Props {
   product: Product;
 }
 
+type Attribute = {
+  name: string;
+  values: string[];
+};
+
 const getProductMainImage = (productId: string): string => {
   const bucket = 'products';
   const file = `${productId}/main`;
@@ -45,23 +50,22 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
   if (product === null) return null;
 
+  const [variants, variantNames] = useMemo(() => {
+    if (product.variants === null) return [[], []];
+    const variants = product.variants as Attribute[];
+    return [variants, variants.map((variant) => variant.name).sort()];
+  }, []);
+
+  const [selectedVariants, setSelectedVariants] = useState<
+    { name: string; value: string }[]
+  >([]);
+
   const [variantImages, setVariantImages] = useState<string[]>([]);
   const mainImage = useMemo(() => {
     return getProductMainImage(product.id);
   }, [categorySlug]);
   const [current, setCurrent] = useState(mainImage);
 
-  // const [size, setSize] = useState<Product['product']['sizes'][number]>(null);
-  // const [color, setColor] =
-  //   useState<Product['product']['colors'][number]>(null);
-  // const [positionning, setPositionning] =
-  //   useState<Product['product']['positionnings'][number]>(null);
-  // const [frameColor, setFrameColor] =
-  //   useState<Product['product']['frameColors'][number]>(null);
-  // const [soundbarColor, setSoundbarColor] =
-  //   useState<Product['product']['soundbarColors'][number]>(null);
-  // const [supportColor, setSupportColor] =
-  //   useState<Product['product']['supportColors'][number]>(null);
   const [alreadyAddedToCart, setAlreadyAddedToCart] = useState<boolean>(false);
   const [dialogState, setDialogState] = useState<boolean>(false);
 
@@ -148,6 +152,20 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   //     setVariantImages([...assetsToAdd]);
   //   }
   // }, [variantAssets]);
+
+  const handleVariantSelection = (variantName: string, value: string) => {
+    setSelectedVariants((prev) => {
+      const otherVariants = prev.filter(
+        (variant) => variant.name !== variantName,
+      );
+      const selectedVariant = {
+        name: variantName,
+        value,
+      };
+
+      return [...otherVariants, selectedVariant];
+    });
+  };
 
   useEffect(() => {
     if (variantImages.length > 0) {
@@ -326,37 +344,47 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 </Button>
               </Stack>
             )}
-            {/* <Box marginY={3}>
-              {currentProduct.sizes.length > 0 && (
-                <Box>
-                  <Typography>
-                    {`${t('attributes.size')} : `}
-                    <Typography component={'span'} fontWeight={700}>
-                      {size?.name || ''}
-                    </Typography>
+            {variantNames.map((variantName) => (
+              <Box key={variantName} marginY={3}>
+                <Typography>
+                  {`${t(`attributes.${variantName}`)} : `}
+                  <Typography component={'span'} fontWeight={700}>
+                    {
+                      selectedVariants.find(
+                        (variant) => variant.name === variantName,
+                      )?.value
+                    }
                   </Typography>
-                  <Stack direction={'row'} spacing={1} marginTop={0.5}>
-                    {currentProduct.sizes.map((item) => (
+                </Typography>
+                <Stack direction={'row'} spacing={1} marginTop={0.5}>
+                  {variants
+                    .find((v) => v.name === variantName)
+                    .values.map((value) => (
                       <Box
-                        key={item.id}
-                        onClick={() => setSize(item)}
+                        key={value}
+                        onClick={() => {
+                          handleVariantSelection(variantName, value);
+                        }}
                         sx={{
                           borderRadius: 1,
                           padding: 1,
                           border: `2px solid ${
-                            size?.id === item.id
+                            selectedVariants.find(
+                              (variant) => variant.name === variantName,
+                            )?.value === value
                               ? theme.palette.primary.main
                               : theme.palette.divider
                           }`,
                           cursor: 'pointer',
                         }}
                       >
-                        <Typography>{item.name}</Typography>
+                        <Typography>{value}</Typography>
                       </Box>
                     ))}
-                  </Stack>
-                </Box>
-              )}
+                </Stack>
+              </Box>
+            ))}
+            {/* <Box marginY={3}>
               {currentProduct.colors.length > 0 && (
                 <Box marginY={2}>
                   <Typography>
@@ -394,150 +422,9 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                   </Stack>
                 </Box>
               )}
-              {currentProduct.frameColors.length > 0 && (
-                <Box marginY={2}>
-                  <Typography>
-                    {`${t('attributes.frameColor')} : `}
-                    <Typography component={'span'} fontWeight={700}>
-                      {frameColor?.name || ''}
-                    </Typography>
-                  </Typography>
-                  <Stack direction={'row'} spacing={1} marginTop={0.5}>
-                    {currentProduct.frameColors.map((item) => (
-                      <Box
-                        key={item.id}
-                        onClick={() => setFrameColor(item)}
-                        sx={{
-                          borderRadius: '100%',
-                          padding: 0.5,
-                          border: `2px solid ${
-                            frameColor?.id === item.id
-                              ? theme.palette.primary.main
-                              : theme.palette.divider
-                          }`,
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            borderRadius: '100%',
-                            padding: 1.5,
-                            bgcolor: item.colorCode.hex,
-                            border: `1px solid ${theme.palette.divider}`,
-                          }}
-                        />
-                      </Box>
-                    ))}
-                  </Stack>
-                </Box>
-              )}
-              {currentProduct.soundbarColors.length > 0 && (
-                <Box marginY={2}>
-                  <Typography>
-                    {`${t('attributes.soundbarColor')} : `}
-                    <Typography component={'span'} fontWeight={700}>
-                      {soundbarColor?.name || ''}
-                    </Typography>
-                  </Typography>
-                  <Stack direction={'row'} spacing={1} marginTop={0.5}>
-                    {currentProduct.soundbarColors.map((item) => (
-                      <Box
-                        key={item.id}
-                        onClick={() => setSoundbarColor(item)}
-                        sx={{
-                          borderRadius: '100%',
-                          padding: 0.5,
-                          border: `2px solid ${
-                            soundbarColor?.id === item.id
-                              ? theme.palette.primary.main
-                              : theme.palette.divider
-                          }`,
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            borderRadius: '100%',
-                            padding: 1.5,
-                            bgcolor: item.colorCode.hex,
-                            border: `1px solid ${theme.palette.divider}`,
-                          }}
-                        />
-                      </Box>
-                    ))}
-                  </Stack>
-                </Box>
-              )}
-              {currentProduct.supportColors.length > 0 && (
-                <Box marginY={2}>
-                  <Typography>
-                    {`${t('attributes.supportColor')} : `}
-                    <Typography component={'span'} fontWeight={700}>
-                      {supportColor?.name || ''}
-                    </Typography>
-                  </Typography>
-                  <Stack direction={'row'} spacing={1} marginTop={0.5}>
-                    {currentProduct.supportColors.map((item) => (
-                      <Box
-                        key={item.id}
-                        onClick={() => setSupportColor(item)}
-                        sx={{
-                          borderRadius: '100%',
-                          padding: 0.5,
-                          border: `2px solid ${
-                            supportColor?.id === item.id
-                              ? theme.palette.primary.main
-                              : theme.palette.divider
-                          }`,
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            borderRadius: '100%',
-                            padding: 1.5,
-                            bgcolor: item.colorCode.hex,
-                            border: `1px solid ${theme.palette.divider}`,
-                          }}
-                        />
-                      </Box>
-                    ))}
-                  </Stack>
-                </Box>
-              )}
-              {currentProduct.positionnings.length > 0 && (
-                <Box marginY={2}>
-                  <Typography>
-                    {`${t('attributes.support')} : `}
-                    <Typography component={'span'} fontWeight={700}>
-                      {positionning?.name || ''}
-                    </Typography>
-                  </Typography>
-                  <Stack direction={'row'} spacing={1} marginTop={0.5}>
-                    {currentProduct.positionnings.map((item) => (
-                      <Box
-                        key={item.id}
-                        onClick={() => setPositionning(item)}
-                        sx={{
-                          borderRadius: 1,
-                          padding: 1,
-                          border: `2px solid ${
-                            positionning?.id === item.id
-                              ? theme.palette.primary.main
-                              : theme.palette.divider
-                          }`,
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <Typography>{item.name}</Typography>
-                      </Box>
-                    ))}
-                  </Stack>
-                </Box>
-              )}
 
               {isOccasion
-                ? currentProduct?.shops && (
+                ? product?.shopId && (
                     <Shops shops={currentProduct.shops} />
                   )
                 : null}

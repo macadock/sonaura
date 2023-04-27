@@ -13,6 +13,7 @@ import { useMemo, useState } from 'react';
 import { initialValues, categoryForm } from './category.validator';
 import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
+import { Delete } from '@mui/icons-material';
 
 interface Props {
   categoryId: string;
@@ -143,7 +144,7 @@ const CategoryForm: React.FC<Props> = ({
               disabled={categoryId === null}
               onClick={remove}
             >
-              {'Supprimer'}
+              <Delete />
             </Button>
             <Button variant={'outlined'} onClick={handleCreateMode}>
               {'Créer une nouvelle catégorie'}

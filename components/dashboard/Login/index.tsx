@@ -8,6 +8,7 @@ import Container from 'components/system/Container';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { websiteUrl } from 'appConstants';
 import { Alert } from '@mui/material';
+import { isEmail } from 'class-validator';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -34,6 +35,8 @@ const Login: React.FC = () => {
     }
   };
 
+  const error = email.length > 3 && !isEmail(email);
+
   return (
     <Box bgcolor={'alternate.main'} height={'100vh'}>
       <Container maxWidth={800}>
@@ -59,16 +62,21 @@ const Login: React.FC = () => {
               <TextField
                 label="Email *"
                 variant="outlined"
+                type={'email'}
                 name={'email'}
                 value={email}
                 onChange={onChange}
+                error={error}
+                helperText={
+                  error ? 'Merci de saisir une adresse email valide' : null
+                }
                 fullWidth
               />
               <Button
                 size={'large'}
                 variant={'contained'}
                 type={'submit'}
-                disabled={emailSent === true}
+                disabled={emailSent === true || !isEmail(email)}
               >
                 Connexion
               </Button>

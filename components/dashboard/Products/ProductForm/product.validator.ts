@@ -4,20 +4,18 @@ import * as yup from 'yup';
 export const productFrom = yup.object({
   name: yup.string().trim().required(),
   description: yup.string().trim().required(),
-  fromPrice: yup.number(),
-  price: yup.number(),
-  quantity: yup.number(),
+  fromPrice: yup.string().nullable(),
+  price: yup.string().nullable(),
+  quantity: yup.string().nullable(),
   slug: yup.string().trim().required(),
   categoryId: yup.string().trim().required(),
-  shopId: yup.string().trim(),
+  shopId: yup.string().trim().nullable(),
+  mainImage: yup.object().optional(),
 });
 
 export const initialValues: InsertOrUpdateProduct = {
   name: '',
   description: '',
-  fromPrice: 0,
-  price: 0,
-  quantity: 0,
   slug: '',
   categoryId: '',
   shopId: '',

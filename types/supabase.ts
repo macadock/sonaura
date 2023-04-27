@@ -65,6 +65,7 @@ export interface Database {
           description: string | null;
           fromPrice: number | null;
           id: string;
+          mainImage: Json | null;
           name: string;
           price: number | null;
           quantity: number | null;
@@ -78,6 +79,7 @@ export interface Database {
           description?: string | null;
           fromPrice?: number | null;
           id?: string;
+          mainImage?: Json | null;
           name: string;
           price?: number | null;
           quantity?: number | null;
@@ -91,6 +93,7 @@ export interface Database {
           description?: string | null;
           fromPrice?: number | null;
           id?: string;
+          mainImage?: Json | null;
           name?: string;
           price?: number | null;
           quantity?: number | null;

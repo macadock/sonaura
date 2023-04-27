@@ -24,7 +24,7 @@ import { useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import { initialValues, shopForm } from './shops.validator';
 import { v4 as uuidv4 } from 'uuid';
-import { Close } from '@mui/icons-material';
+import { Close, Delete } from '@mui/icons-material';
 import ShopTimeTable from 'components/dashboard/Shops/ShopTimeTable';
 
 interface Props {
@@ -166,10 +166,10 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
               disabled={shopId === null}
               onClick={remove}
             >
-              {'Supprimer'}
+              <Delete />
             </Button>
             <Button variant={'outlined'} onClick={handleCreateMode}>
-              {'Créer un nouveau magasin'}
+              {'Nouveau magasin'}
             </Button>
           </Stack>
           <Grid container spacing={2}>
@@ -311,14 +311,14 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
               <Field name={'openHours'}>
                 {({ field: { value }, form: { setValues } }: FieldProps) => (
                   <>
-                    <Button
+                    {/* <Button
                       variant={'contained'}
                       onClick={() => {
                         setOpenModal((prev) => !prev);
                       }}
                     >
                       Horaires : ajouter/modifier
-                    </Button>
+                    </Button> */}
                     <Modal open={openModal}>
                       <Box
                         display={'flex'}
@@ -397,9 +397,7 @@ const ShopForm: React.FC<Props> = ({ shopId, shops, onCompletedOrUpdated }) => {
                   handleSubmit();
                 }}
               >
-                {formMode === 'creation'
-                  ? 'Créer la catégorie'
-                  : 'Mettre à jour'}
+                {formMode === 'creation' ? 'Créer le magasin' : 'Mettre à jour'}
               </Button>
             </Grid>
           </Grid>

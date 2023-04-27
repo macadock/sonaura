@@ -7,7 +7,7 @@ export {
   sendInBlueUrl,
 } from './send-in-blue';
 
-const TIME_TO_INVALIDATE_CACHE_SEC = 86400; // 1 day
+const TIME_TO_INVALIDATE_CACHE_SEC = 30;
 
 export const siteEnv = process.env.NEXT_PUBLIC_SITE_ENV;
 

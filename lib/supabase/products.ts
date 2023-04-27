@@ -12,7 +12,8 @@ export async function getProductById(id: string) {
   return supabase
     .from('products')
     .select(`*, categories ( slug )`)
-    .eq('id', id);
+    .eq('id', id)
+    .single();
 }
 
 export async function getProductsByIds(ids: string[]) {
@@ -66,4 +67,14 @@ export async function updateProduct(product: UpdateProductInput) {
 
 export async function removeProduct(id: string) {
   return supabase.from('products').delete().eq('id', id);
+}
+
+export async function updateProductVariants(
+  productId: string,
+  variants: Product['variants'],
+) {
+  return supabase
+    .from('products')
+    .update({ variants: variants })
+    .eq('id', productId);
 }
