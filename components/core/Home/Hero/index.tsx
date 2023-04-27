@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { useTranslation } from 'next-i18next';
+import supabase from 'lib/supabase';
 
 const Hero: React.FC = () => {
   const { t } = useTranslation('homepage', { keyPrefix: 'hero' });
@@ -13,6 +14,10 @@ const Hero: React.FC = () => {
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
   });
+
+  const { data } = supabase.storage
+    .from('marketing')
+    .getPublicUrl('home_video');
 
   return (
     <Box position={'relative'}>
@@ -29,10 +34,7 @@ const Hero: React.FC = () => {
           borderRadius: '1rem',
         }}
       >
-        <source
-          src="https://ik.imagekit.io/sonaura/Videos/Beosound_Theatre_xUSPtr4Ad.mp4"
-          type="video/mp4"
-        />
+        <source src={data.publicUrl} type="video/mp4" />
       </video>
       <Box
         data-aos={isMd ? 'fade-left' : 'fade-up'}

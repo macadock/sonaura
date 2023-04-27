@@ -6,8 +6,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Link from '@mui/material/Link';
 
 import NavItem from './NavItem';
-import { Categories } from 'gql/__generated__/categories';
-import { Pages } from 'gql/__generated__/pages';
 import TopNav from 'components/system/TopNav';
 import { ShoppingCartTwoTone } from '@mui/icons-material';
 import CartDrawer from '../../core/Cart/CartDrawer';
@@ -16,22 +14,23 @@ import { useTranslation } from 'next-i18next';
 import { useCart } from 'react-use-cart';
 import moveCategoryToPage from './exlude-from-menu';
 import { Typography } from '@mui/material';
+import { useSiteData } from 'contexts/data';
+
+interface Category {
+  id: string;
+  slug: string;
+  name: string;
+}
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
   onSidebarOpen: () => void;
-  pages: Pages['pages'];
-  categories: Categories['categories'];
   colorInvert?: boolean;
 }
 
-const Topbar: React.FC<Props> = ({
-  onSidebarOpen,
-  pages,
-  categories,
-  colorInvert = false,
-}) => {
+const Topbar: React.FC<Props> = ({ onSidebarOpen, colorInvert = false }) => {
   const { t } = useTranslation('common');
+  const { categories, pages } = useSiteData();
   const [cartState, setCartState] = useState<boolean>(false);
   const theme = useTheme();
   const { mode } = theme.palette;
@@ -51,12 +50,16 @@ const Topbar: React.FC<Props> = ({
       alignItems={'center'}
       width={1}
     >
-      <Box width={210} sx={{ marginY: '1rem' }}>
+      <Box width={210}>
         <Box
           display={'flex'}
+          flexDirection={'column'}
           component="a"
           href="/"
           title={t('config.website')}
+          sx={{
+            textDecoration: 'none',
+          }}
         >
           <Box
             component={'img'}
@@ -68,16 +71,17 @@ const Topbar: React.FC<Props> = ({
             }
             height={1}
             width={1}
+            marginTop={'1rem'}
           />
+          <Typography
+            marginTop={'.5rem'}
+            component={'p'}
+            color={theme.palette.text.primary}
+            variant="caption"
+          >
+            {'Votre distributeur Bang & Olufsen en Auvergne Rhône-Alpes'}
+          </Typography>
         </Box>
-        <Typography
-          marginTop={'.5rem'}
-          component={'p'}
-          color={theme.palette.text.primary}
-          variant="caption"
-        >
-          {'Votre distributeur Bang & Olufsen en Auvergne Rhône-Alpes'}
-        </Typography>
       </Box>
 
       <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems={'center'}>
@@ -93,16 +97,16 @@ const Topbar: React.FC<Props> = ({
         )}
         {customPages &&
           customPages.map((page) => (
-            <Box key={page.id}>
+            <Box key={page.slug}>
               <Link
                 sx={{ paddingX: { md: 0.8, lg: 2 } }}
                 underline="none"
                 component="a"
-                href={page.url}
+                href={page.slug}
                 color={colorInvert ? 'common.white' : 'text.primary'}
-                fontWeight={asPath.includes(page.url) ? 700 : 400}
+                fontWeight={asPath.includes(page.slug) ? 700 : 400}
               >
-                {page.title}
+                {page.name}
               </Link>
             </Box>
           ))}

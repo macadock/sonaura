@@ -6,6 +6,14 @@ import Design from 'components/core/Professionals/Design';
 import Contact from 'components/core/Professionals/Contact';
 import Elegance from 'components/core/Professionals/Elegance';
 import Image from 'next/image';
+import supabase from 'lib/supabase';
+
+const getImage = (name: string): string => {
+  const { data } = supabase.storage
+    .from('marketing')
+    .getPublicUrl(`professionnals/${name}`);
+  return data.publicUrl;
+};
 
 const ProfessionalsView: React.FC = () => {
   useEffect(() => {
@@ -86,7 +94,7 @@ const ProfessionalsView: React.FC = () => {
       >
         <Image
           className={'jarallax-img'}
-          src={'https://media.graphassets.com/izREvI8T72Nismbx2bXg'}
+          src={getImage('slide-1')}
           layout={'fill'}
           objectFit={'cover'}
         />
@@ -105,7 +113,7 @@ const ProfessionalsView: React.FC = () => {
       >
         <Image
           className={'jarallax-img'}
-          src={'https://media.graphassets.com/jPoZthdR6qwNsfe5Ipuw'}
+          src={getImage('slide-2')}
           layout={'fill'}
           objectFit={'cover'}
         />
@@ -126,7 +134,7 @@ const ProfessionalsView: React.FC = () => {
       >
         <Image
           className={'jarallax-img'}
-          src={'https://media.graphassets.com/q3KUbWoRQpqgTEmdclCa'}
+          src={getImage('slide-3')}
           layout={'fill'}
           objectFit={'cover'}
         />

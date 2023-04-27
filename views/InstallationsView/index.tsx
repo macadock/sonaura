@@ -3,10 +3,10 @@ import React from 'react';
 import { Container } from '@mui/material';
 import Hero from 'components/core/Installations/Hero';
 import Main from 'components/core/Installations/Main';
-import { Installations } from 'gql/__generated__/installations';
+import { Installation } from 'lib/supabase/installations';
 
 interface Props {
-  installations: Installations;
+  installations: Installation[];
 }
 
 const InstallationView: React.FC<Props> = ({ installations }) => {

@@ -2,11 +2,19 @@ import { Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { InstallationFragment } from 'gql/__generated__/installation-fragment';
+import { Installation } from 'lib/supabase/installations';
+import supabase from 'lib/supabase';
 
 interface Props {
-  installation: InstallationFragment;
+  installation: Installation;
 }
+
+const getInstallationMainImage = (installationId: string): string => {
+  const bucket = 'installations';
+  const file = `${installationId}/main`;
+  const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+  return data.publicUrl;
+};
 
 const Card: React.FC<Props> = ({ installation }) => {
   const theme = useTheme();
@@ -37,21 +45,25 @@ const Card: React.FC<Props> = ({ installation }) => {
           },
         }}
       >
-        <Box
-          component={LazyLoadImage}
-          height={1}
-          width={1}
-          src={installation.images[0].url}
-          alt="..."
-          effect="blur"
-          maxHeight={{ xs: 400, sm: 600, md: 1 }}
-          sx={{
-            transition: 'transform .7s ease !important',
-            transform: 'scale(1.0)',
-            objectFit: 'cover',
-            filter: theme.palette.mode === 'dark' ? 'brightness(0.7)' : 'none',
-          }}
-        />
+        {installation ? (
+          <Box
+            component={LazyLoadImage}
+            height={1}
+            width={1}
+            src={getInstallationMainImage(installation.id)}
+            alt="..."
+            effect="blur"
+            maxHeight={{ xs: 400, sm: 600, md: 1 }}
+            sx={{
+              aspectRatio: '1/1',
+              transition: 'transform .7s ease !important',
+              transform: 'scale(1.0)',
+              objectFit: 'cover',
+              filter:
+                theme.palette.mode === 'dark' ? 'brightness(0.7)' : 'none',
+            }}
+          />
+        ) : null}
         <Box
           position={'absolute'}
           bottom={'-100%'}

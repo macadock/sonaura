@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Drawer from '@mui/material/Drawer';
 import {
   Box,
@@ -9,17 +9,14 @@ import {
   Link,
 } from '@mui/material';
 import { useCart } from 'react-use-cart';
-import { useQuery } from '@apollo/client';
-import { GET_PRODUCTS_BY_IDS } from 'gql/get-products';
-import {
-  GetProductsByIds,
-  GetProductsByIdsVariables,
-} from 'gql/__generated__/get-products-by-ids';
 import { Close, Delete } from '@mui/icons-material';
 
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
+import supabase from 'lib/supabase';
+import { getProductsByIds } from 'lib/supabase/products';
+import { useSiteData } from 'contexts/data';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -28,37 +25,40 @@ interface Props {
 }
 
 const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
+  const [products, setProducts] = useState(null);
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
   const { isEmpty, items, removeItem, totalItems } = useCart();
+  const { categories } = useSiteData();
 
-  const ids = items.map((item) => item.id);
+  const getCategorySlug = (categoryId: string): string => {
+    if (!categories) return '';
+    return categories.find((category) => category.id === categoryId).slug;
+  };
 
-  const { data, refetch } = useQuery<
-    GetProductsByIds,
-    GetProductsByIdsVariables
-  >(GET_PRODUCTS_BY_IDS, {
-    variables: {
-      ids,
-    },
-    skip: !ids,
-  });
+  const fetchProducts = async () => {
+    if (!items) return;
 
-  useEffect(() => {
-    refetch();
-  }, [items]);
+    const ids = items.map((item) => item.id);
 
-  const products = useMemo(() => {
-    if (!items || !data) return null;
+    const { data } = await getProductsByIds(ids);
 
-    return items.map((item) => {
-      const product = data.products.find((product) => product.id === item.id);
+    if (!data) return;
+
+    const products = items.map((item) => {
+      const product = data.find((product) => product.id === item.id);
 
       return {
         ...item,
         ...product,
       };
     });
-  }, [data?.products]);
+
+    setProducts(products);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [items]);
 
   const closeCart = () => {
     onClose();
@@ -139,10 +139,14 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                         }}
                       >
                         <Link
-                          href={`/${product.category.slug}/${product.slug}`}
+                          href={`/${getCategorySlug(product.categoryId)}/${
+                            product.slug
+                          }`}
                         >
                           <Image
-                            src={product.mainAsset.url}
+                            src={
+                              'https://media.graphassets.com/wEANADQnT5W9C9HgeaLv'
+                            }
                             objectFit={'cover'}
                             layout={'responsive'}
                             width={'5rem'}
@@ -153,7 +157,7 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                       </Box>
                       <Box>
                         <Link
-                          href={`/${product.category.slug}/${product.slug}`}
+                          href={`/${product.categories.slug}/${product.slug}`}
                         >
                           <Typography
                             sx={{

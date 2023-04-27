@@ -1,48 +1,35 @@
 import { Box, Grid, Typography } from '@mui/material';
-import { useState } from 'react';
-import { gql } from 'apollo-server-micro';
-import { Shop } from '@prisma/client';
-import { useQuery } from '@apollo/client';
-import { client } from 'lib/apollo';
+import { useEffect, useState } from 'react';
 import ShopsTable from 'components/dashboard/Shops/ShopsTable';
 import ShopForm from 'components/dashboard/Shops/ShopsForm';
+import { getShops, Shop } from 'lib/supabase/shops';
+import LoadingScreen from 'components/system/LoadingScreen';
 
 const DashboardShopView: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [shopId, setShopId] = useState<string>(null);
+  const [shops, setShops] = useState<Shop[]>(null);
 
-  const query = gql`
-    query shops {
-      shops {
-        id
-        city
-        country
-        address
-        postalCode
-        phoneNumber
-        image
-        googleMapsUrl
-        email
-        openHours
-      }
+  const fetchShops = async () => {
+    const { data } = await getShops();
+    if (data) {
+      setShops(data);
     }
-  `;
-
-  type Shops = {
-    shops: Shop[];
+    setLoading(false);
   };
 
-  const { data, loading, error, refetch } = useQuery<Shops>(query, {
-    client,
-  });
+  useEffect(() => {
+    fetchShops();
+  }, []);
 
-  if (loading || error) return null;
+  if (loading) return <LoadingScreen />;
 
   const handleShopSelection = (shopId: string) => {
     setShopId(shopId);
   };
 
   const onCompletedOrUpdated = () => {
-    refetch();
+    fetchShops();
     setShopId(null);
   };
 
@@ -54,13 +41,13 @@ const DashboardShopView: React.FC = () => {
         </Grid>
         <Grid item xs={12} md={6} height={'50vh'}>
           <ShopsTable
-            data={data.shops}
+            data={shops}
             onSelectionModelChange={handleShopSelection}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <ShopForm
-            shops={data.shops}
+            shops={shops}
             shopId={shopId}
             onCompletedOrUpdated={onCompletedOrUpdated}
           />

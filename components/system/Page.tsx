@@ -8,6 +8,8 @@ import getTheme from 'theme';
 import Main from 'layouts/Main';
 import { useRouter } from 'next/router';
 import DashboardMain from 'layouts/DashboardMain';
+import { DataProvider } from 'contexts/data';
+import { CartProvider } from 'react-use-cart';
 
 export const useDarkMode = (): [string, () => void, boolean] => {
   const [themeMode, setTheme] = useState('light');
@@ -79,7 +81,11 @@ const Page: React.FC<Props> = ({ children }) => {
           {isDashboard ? (
             <DashboardMain>{children}</DashboardMain>
           ) : (
-            <Main>{children}</Main>
+            <DataProvider>
+              <CartProvider>
+                <Main>{children}</Main>
+              </CartProvider>
+            </DataProvider>
           )}
         </Paper>
       </ThemeProvider>

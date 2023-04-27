@@ -1,21 +1,20 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from 'next-i18next.config';
 import { GetStaticPropsContext, NextPage } from 'next';
-import { GET_CATEGORIES } from 'gql/get-categories';
-import { GET_PRODUCT } from 'gql/get-products';
-import { Categories } from 'gql/__generated__/categories';
-import { Product } from 'gql/__generated__/product';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import ProductView from 'views/ProductView';
-import { client } from 'pages/_app';
 import Head from 'next/head';
+import {
+  getProducts,
+  getProductsBySlugAndCategory,
+  Product,
+} from 'lib/supabase/products';
+import { getCategories } from 'lib/supabase/categories';
 
 const ProductPage: NextPage<{
   product: Product;
 }> = ({ product }) => {
-  const {
-    product: { name, description },
-  } = product;
+  const { name, description } = product;
 
   const pageTitle = `${name} - Sonaura, Distributeur Bang & Olufsen`;
 
@@ -37,16 +36,15 @@ const ProductPage: NextPage<{
 };
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const slug = context.params.product;
+  const productSlug = context.params.product as string;
+  const categorySlug = context.params.category as string;
 
-  const { data: product } = await client.query<Product>({
-    query: GET_PRODUCT,
-    variables: {
-      slug: slug,
-    },
-  });
+  const { data: product } = await getProductsBySlugAndCategory(
+    productSlug,
+    categorySlug,
+  );
 
-  if (product.product.id === null) {
+  if (product[0] === null) {
     return {
       notFound: true,
     };
@@ -54,7 +52,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   return {
     props: {
-      product,
+      product: product[0],
       ...(await serverSideTranslations(
         context.locale,
         ['common', 'product'],
@@ -66,17 +64,18 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 };
 
 export const getStaticPaths = async () => {
-  const { data } = await client.query<Categories>({
-    query: GET_CATEGORIES,
-  });
-
-  const categories = data.categories;
+  const { data: categories } = await getCategories();
+  const { data: products } = await getProducts();
 
   // Get the paths we want to pre-render based on posts
 
   let paths = [];
-  categories.map((category) =>
-    category.products.map(
+  categories.map((category) => {
+    const productsForCategory = products.filter(
+      (product) => product.categoryId === category.id,
+    );
+
+    return productsForCategory.map(
       (product) =>
         (paths = [
           ...paths,
@@ -87,8 +86,8 @@ export const getStaticPaths = async () => {
             },
           },
         ]),
-    ),
-  );
+    );
+  });
 
   // We'll pre-render only these paths at build time.
   // { fallback: blocking } will server-render pages

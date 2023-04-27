@@ -3,20 +3,19 @@ import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import NavItem from '../NavItem';
 import { Link } from '@mui/material';
-import { Pages } from 'gql/__generated__/pages';
 import TopNav from 'components/system/TopNav';
 import { useTranslation } from 'next-i18next';
-import { Categories } from 'gql/__generated__/categories';
 
-interface Props {
-  pages: Pages['pages'];
-  categories: Categories['categories'];
-}
+import { useSiteData } from 'contexts/data';
+import moveCategoryToPage from 'components/system/Topbar/exlude-from-menu';
 
-const SidebarNav: React.FC<Props> = ({ pages, categories }) => {
+const SidebarNav: React.FC = () => {
   const { t } = useTranslation('common');
   const theme = useTheme();
   const { mode } = theme.palette;
+
+  const { categories, pages } = useSiteData();
+  const [customCategories, customPages] = moveCategoryToPage(categories, pages);
 
   return (
     <Box>
@@ -43,20 +42,20 @@ const SidebarNav: React.FC<Props> = ({ pages, categories }) => {
         </Box>
       </Box>
       <Box paddingX={2} paddingY={2}>
-        {categories.length !== 0 && (
+        {customCategories.length !== 0 && (
           <Box>
             <NavItem title={t('categories.title')} items={categories} />
           </Box>
         )}
-        {pages.map((page) => (
-          <Box key={page.id} sx={{ marginBottom: '.8rem' }}>
+        {customPages.map((page) => (
+          <Box key={page.slug} sx={{ marginBottom: '.8rem' }}>
             <Link
               underline="none"
               component="a"
-              href={page.url}
+              href={page.slug}
               color="text.primary"
             >
-              {page.title}
+              {page.name}
             </Link>
           </Box>
         ))}

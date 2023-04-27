@@ -8,15 +8,26 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 
 import Container from 'components/system/Container';
-import { ProductFragment } from 'gql/__generated__/categories';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
+import { Product } from 'lib/supabase/products';
+import { useRouter } from 'next/router';
+import supabase from 'lib/supabase';
 
 interface Props {
-  products: ProductFragment[];
+  products: Product[];
 }
 
+const getProductMainImage = (productId: string): string => {
+  const bucket = 'products';
+  const file = `${productId}/main`;
+  const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+  return data.publicUrl;
+};
+
 const ProductGrid: React.FC<Props> = ({ products }) => {
+  const router = useRouter();
+  const slug = router.query['category'] as string;
   const { t } = useTranslation('common', { keyPrefix: 'categories' });
   if (products.length === 0) {
     return (
@@ -47,10 +58,10 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                   backgroundImage: 'none',
                 }}
               >
-                <Link href={`/${product.category.slug}/${product.slug}`}>
+                <Link href={`/${slug}/${product.slug}`}>
                   <CardMedia
                     title={product.name}
-                    image={product.mainAsset.url}
+                    image={getProductMainImage(product.id)}
                     sx={{
                       position: 'relative',
                       height: 320,
@@ -61,7 +72,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                 </Link>
                 <Box marginTop={2}>
                   <Link
-                    href={`/${product.category.slug}/${product.slug}`}
+                    href={`/${slug}/${product.slug}`}
                     underline="none"
                     color="inherit"
                   >
@@ -100,7 +111,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                 <Box marginTop={2}>
                   <Button
                     component={Link}
-                    href={`/${product.category.slug}/${product.slug}`}
+                    href={`/${slug}/${product.slug}`}
                     variant={'contained'}
                     color={'primary'}
                     size={'large'}

@@ -12,7 +12,6 @@ import axios from 'axios';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'next-i18next';
 import { ApiUrls, getRoutePath, PagesUrls } from 'appConstants';
-import { ProductFragment } from 'gql/__generated__/product-fragment';
 import FormikSessionStorage from 'components/system/FormikSessionStorage';
 import {
   productFormSchema,
@@ -26,7 +25,7 @@ import { Categories } from 'types';
 interface Props {
   title: string;
   origin: string;
-  product: ProductFragment;
+  product: any;
   button?: string;
 }
 

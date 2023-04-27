@@ -1,12 +1,14 @@
-import { Category } from 'gql/__generated__/category';
 import { Box, Typography } from '@mui/material';
 import ProductGrid from 'components/core/Category';
+import { Category } from 'lib/supabase/categories';
+import { Product } from 'lib/supabase/products';
 
 interface Props {
   category: Category;
+  products: Product[];
 }
 
-const CategoryView: React.FC<Props> = ({ category }) => {
+const CategoryView: React.FC<Props> = ({ category, products }) => {
   return (
     <Box
       sx={{
@@ -16,8 +18,8 @@ const CategoryView: React.FC<Props> = ({ category }) => {
         marginTop: '2rem',
       }}
     >
-      <Typography variant="h1">{category.category.name}</Typography>
-      <ProductGrid products={category.category.products} />
+      <Typography variant="h1">{category.name}</Typography>
+      <ProductGrid products={products} />
     </Box>
   );
 };

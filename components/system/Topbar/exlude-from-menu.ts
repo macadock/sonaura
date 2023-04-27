@@ -1,14 +1,17 @@
-import { Categories } from 'gql/__generated__/categories';
-import { Pages } from 'gql/__generated__/pages';
+import { DataContextValue } from 'contexts/data';
+import { NavLink } from 'types';
 
 const pagesToExcludeFromMenu = [{ slug: 'occasion', name: 'Nos Occasions' }];
 
+type Categories = DataContextValue['categories'];
+type Pages = DataContextValue['pages'];
+
 const moveCategoryToPage = (
-  categories: Categories['categories'],
-  pages: Pages['pages'],
-): [Categories['categories'], Pages['pages']] => {
-  const customPages: Pages['pages'] = [];
-  const customCategories: Categories['categories'] = [];
+  categories: Categories,
+  pages: Pages,
+): [Categories, Pages] => {
+  const customPages: NavLink[] = [];
+  const customCategories: Categories = [];
 
   if (categories && pages) {
     customCategories.push(...categories);
@@ -16,11 +19,8 @@ const moveCategoryToPage = (
       const category = categories.find((c) => c.slug === exclude.slug);
       if (category !== undefined) {
         customPages.push({
-          id: category.id,
-          name: category.slug,
-          pageType: 'Page',
-          title: exclude.name,
-          url: `/${category.slug}`,
+          name: category.name,
+          slug: `/${category.slug}`,
         });
 
         const index = customCategories.findIndex(

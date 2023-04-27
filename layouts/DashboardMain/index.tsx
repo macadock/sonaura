@@ -4,11 +4,11 @@ import AppBar from '@mui/material/AppBar';
 
 import Container from 'components/system/Container';
 import { useTranslation } from 'next-i18next';
-import { Button, Link, Typography } from '@mui/material';
+import { Button, Link } from '@mui/material';
 import { useRouter } from 'next/router';
-import { signOut, useSession } from 'next-auth/react';
-import { UserRole } from '@prisma/client';
-import LoadingScreen from '../../components/system/LoadingScreen';
+import { useSession } from '@supabase/auth-helpers-react';
+import Login from 'components/dashboard/Login';
+import supabase from 'lib/supabase';
 
 interface Props {
   children: React.ReactNode;
@@ -17,31 +17,15 @@ interface Props {
 
 const DashboardMain: React.FC<Props> = ({ children }) => {
   const { t } = useTranslation('common');
-  const { asPath } = useRouter();
+  const router = useRouter();
+  const session = useSession();
 
-  const { data, status } = useSession();
+  const signOut = () => {
+    supabase.auth.signOut();
+  };
 
-  const user = data?.user;
-
-  const isAdmin = user?.role === UserRole.ADMIN;
-  const isEditor = user?.role === UserRole.EDITOR;
-  const isAuthorized = isAdmin || isEditor;
-
-  if (!isAuthorized) {
-    return (
-      <Box>
-        {status === 'loading' ? (
-          <LoadingScreen />
-        ) : (
-          <>
-            <Typography>{"Vous n'avez pas l'autorisation"}</Typography>
-            <Button variant={'contained'} onClick={() => signOut()}>
-              {'Se déconecter'}
-            </Button>
-          </>
-        )}
-      </Box>
-    );
+  if (!session) {
+    return <Login />;
   }
 
   return (
@@ -75,10 +59,22 @@ const DashboardMain: React.FC<Props> = ({ children }) => {
                 sx={{ paddingX: { md: 0.8, lg: 2 } }}
                 underline="none"
                 component="a"
+                href={'/dashboard/products'}
+                color={'text.primary'}
+                fontWeight={
+                  router.asPath.includes('/dashboard/products') ? 700 : 400
+                }
+              >
+                {'Produits'}
+              </Link>
+              <Link
+                sx={{ paddingX: { md: 0.8, lg: 2 } }}
+                underline="none"
+                component="a"
                 href={'/dashboard/categories'}
                 color={'text.primary'}
                 fontWeight={
-                  asPath.includes('/dashboard/categories') ? 700 : 400
+                  router.asPath.includes('/dashboard/categories') ? 700 : 400
                 }
               >
                 {'Catégories'}
@@ -89,14 +85,13 @@ const DashboardMain: React.FC<Props> = ({ children }) => {
                 component="a"
                 href={'/dashboard/shops'}
                 color={'text.primary'}
-                fontWeight={asPath.includes('/dashboard/shops') ? 700 : 400}
+                fontWeight={
+                  router.asPath.includes('/dashboard/shops') ? 700 : 400
+                }
               >
                 {'Magasins'}
               </Link>
-              <Button
-                sx={{ paddingX: { md: 0.8, lg: 2 } }}
-                onClick={() => signOut()}
-              >
+              <Button onClick={signOut} sx={{ paddingX: { md: 0.8, lg: 2 } }}>
                 {'Se déconnecter'}
               </Button>
             </Box>

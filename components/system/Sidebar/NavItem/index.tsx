@@ -8,11 +8,11 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { CategoryFragment } from 'gql/__generated__/category-fragment';
+import { Database } from 'types/supabase';
 
 interface Props {
   title: string;
-  items: CategoryFragment[];
+  items: Database['public']['Tables']['categories']['Row'][];
 }
 
 const NavItem: React.FC<Props> = ({ title, items }: Props) => {
@@ -51,7 +51,7 @@ const NavItem: React.FC<Props> = ({ title, items }: Props) => {
                 <Button
                   size={'large'}
                   component={'a'}
-                  href={p.slug}
+                  href={`/${p.slug}`}
                   fullWidth
                   sx={{
                     justifyContent: 'flex-start',

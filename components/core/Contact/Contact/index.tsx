@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -9,65 +9,73 @@ import Avatar from '@mui/material/Avatar';
 import { useTheme } from '@mui/material/styles';
 
 import Container from 'components/system/Container';
-import { ShopFragment } from 'gql/__generated__/shop-fragment';
 import { useTranslation } from 'next-i18next';
+import { useSiteData } from 'contexts/data';
 
-interface Props {
-  shops: ShopFragment[];
-}
-
-const Contact: React.FC<Props> = ({ shops }) => {
+const Contact: React.FC = () => {
+  const { shops } = useSiteData();
   return (
     <Box sx={{ display: { sm: 'block', md: 'flex' } }}>
-      {shops.map((shop) => (
-        <Box
-          maxWidth={{ sm: 1, md: '50%' }}
-          key={shop.id}
-          sx={{
-            width: 1,
-            height: 1,
-            overflow: 'hidden',
-          }}
-        >
-          <Container paddingX={0} paddingY={0} maxWidth={{ sm: 1, md: 1236 }}>
+      {shops
+        ? shops.map((shop) => (
             <Box
-              display={'flex'}
-              flexDirection={{ xs: 'column', md: 'row' }}
-              position={'relative'}
+              maxWidth={{ sm: 1, md: '50%' }}
+              key={shop.id}
+              sx={{
+                width: 1,
+                height: 1,
+                overflow: 'hidden',
+              }}
             >
-              <Box
-                display={'flex'}
-                alignItems={'center'}
-                width={1}
-                order={{ xs: 2, md: 1 }}
+              <Container
+                paddingX={0}
+                paddingY={0}
+                maxWidth={{ sm: 1, md: 1236 }}
               >
-                <Container>
-                  <Details shop={shop} />
-                  <Map shop={shop} />
-                </Container>
-              </Box>
+                <Box
+                  display={'flex'}
+                  flexDirection={{ xs: 'column', md: 'row' }}
+                  position={'relative'}
+                >
+                  <Box
+                    display={'flex'}
+                    alignItems={'center'}
+                    width={1}
+                    order={{ xs: 2, md: 1 }}
+                  >
+                    <Container>
+                      <Details shopId={shop.id} />
+                      <Map shopId={shop.id} />
+                    </Container>
+                  </Box>
+                </Box>
+              </Container>
+              <Divider />
             </Box>
-          </Container>
-          <Divider />
-        </Box>
-      ))}
+          ))
+        : null}
     </Box>
   );
 };
 
-interface ShopProps {
-  shop: ShopFragment;
+interface Props {
+  shopId: string;
 }
 
-const Details: React.FC<ShopProps> = ({ shop }) => {
+const Details: React.FC<Props> = ({ shopId }) => {
   const { t } = useTranslation('contact');
   const theme = useTheme();
+  const { shops } = useSiteData();
+
+  const shop = useMemo(() => {
+    return shops.find((shop) => shop.id === shopId);
+  }, [shopId]);
 
   return (
     <Box marginX={{ sm: 0, md: 5 }}>
       <Box marginBottom={2}>
         <Typography variant={'h4'} sx={{ fontWeight: 700 }} gutterBottom>
-          {shop.name}
+          {shop.city}
         </Typography>
         {/* <Typography color="text.secondary">
           Description sur le magasin...
@@ -177,8 +185,13 @@ const Details: React.FC<ShopProps> = ({ shop }) => {
   );
 };
 
-const Map: React.FC<ShopProps> = ({ shop }) => {
+const Map: React.FC<Props> = ({ shopId }) => {
   const theme = useTheme();
+  const { shops } = useSiteData();
+
+  const shop = useMemo(() => {
+    return shops.find((shop) => shop.id === shopId);
+  }, [shopId]);
 
   return (
     <React.Fragment>

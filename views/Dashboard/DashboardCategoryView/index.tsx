@@ -1,42 +1,35 @@
 import { Box, Grid, Typography } from '@mui/material';
 import CategoryTable from 'components/dashboard/Categories/CategoryTable';
 import CategoryForm from 'components/dashboard/Categories/CategoryForm';
-import { useState } from 'react';
-import { gql } from 'apollo-server-micro';
-import { Category } from '@prisma/client';
-import { useQuery } from '@apollo/client';
-import { client } from 'lib/apollo';
+import { useEffect, useState } from 'react';
+import { Category, getCategories } from 'lib/supabase/categories';
+import LoadingScreen from 'components/system/LoadingScreen';
 
 const DashboardCategoryView: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [categoryId, setCategoryId] = useState<string>(null);
+  const [categories, setCategories] = useState<Category[]>(null);
 
-  const query = gql`
-    query categories {
-      categories {
-        id
-        name
-        slug
-        icon
-      }
+  const fetchCategories = async () => {
+    const { data } = await getCategories();
+    if (data) {
+      setCategories(data);
     }
-  `;
-
-  type Categories = {
-    categories: Category[];
+    setLoading(false);
   };
 
-  const { data, loading, error, refetch } = useQuery<Categories>(query, {
-    client,
-  });
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
-  if (loading || error) return null;
+  if (loading) return <LoadingScreen />;
 
   const handleCategorySelection = (categoryId: string) => {
     setCategoryId(categoryId);
   };
 
   const onCompletedOrUpdated = () => {
-    refetch();
+    fetchCategories();
     setCategoryId(null);
   };
 
@@ -48,13 +41,13 @@ const DashboardCategoryView: React.FC = () => {
         </Grid>
         <Grid item xs={12} md={6} height={'50vh'}>
           <CategoryTable
-            data={data.categories}
+            data={categories}
             onSelectionModelChange={handleCategorySelection}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <CategoryForm
-            categories={data.categories}
+            categories={categories}
             categoryId={categoryId}
             onCompletedOrUpdated={onCompletedOrUpdated}
           />
