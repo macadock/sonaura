@@ -16,9 +16,14 @@ import { appWithTranslation } from 'next-i18next';
 
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import supabase from 'lib/supabase';
+import { useRouter } from 'next/router';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function App({ Component, pageProps }) {
+  const router = useRouter();
+
+  const isDashboard = router.pathname.includes('/dashboard');
+
   return (
     <SessionContextProvider supabaseClient={supabase}>
       <Head>
@@ -26,6 +31,7 @@ function App({ Component, pageProps }) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        {isDashboard ? <meta name="robots" content="noindex" /> : false}
         <title>Sonaura</title>
       </Head>
       <Page>
