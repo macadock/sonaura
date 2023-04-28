@@ -1,3 +1,5 @@
+import { websiteUrl } from 'appConstants';
+
 export enum PagesUrls {
   HOMEPAGE = '/',
   CATEGORY = '/[category]',
@@ -30,9 +32,6 @@ interface Props {
 }
 
 export function getRoutePath({ page, api }: Props): string {
-  const websiteUrl =
-    process.env.NEXT_PUBLIC_WEBSITE_URL || process.env.NEXT_PUBLIC_WEBSITE_URL;
-
   if (api) {
     return `${websiteUrl}${api}`;
   }
