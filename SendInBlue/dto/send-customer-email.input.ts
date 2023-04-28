@@ -1,5 +1,3 @@
-import { Json } from 'types/supabase';
-
 export default class SendCustomerEmailInput {
   firstName: string;
   lastName: string;
@@ -11,5 +9,7 @@ export default class SendCustomerEmailInput {
     merchant: number;
   };
   includeListIds?: number[];
-  params?: Json;
+  params?: {
+    [key: string]: string;
+  };
 }
