@@ -12,9 +12,16 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { getProductById, updateProductVariants } from 'lib/supabase/products';
+import { Variant, VariantImage } from 'types';
+import VariantsTable from 'components/dashboard/Products/Variants/VariantsTable';
+import {
+  getProductById,
+  updateProduct,
+  updateProductVariants,
+} from 'lib/supabase/products';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { v4 as uudiv4 } from 'uuid';
 
 interface Props {
   open: boolean;
@@ -31,15 +38,11 @@ const attributesName = [
   'supportColor',
 ];
 
-type Attribute = {
-  name: string;
-  values: string[];
-};
-
 const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [attributes, setAttributes] = useState<Attribute[]>([]);
+  const [variants, setVariants] = useState<Variant[]>([]);
+  const [variantsImages, setVariantsImages] = useState<VariantImage[]>([]);
 
   const handleMenu = (event?: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(!openMenu ? event?.currentTarget : null);
@@ -49,11 +52,17 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   const fetchProduct = async () => {
     const { data } = await getProductById(productId);
     if (data) {
-      setAttributes(
-        data.variants === null ? [] : Array.from(data.variants as Attribute[]),
+      setVariants(
+        data.variants === null ? [] : Array.from(data.variants as Variant[]),
+      );
+      setVariantsImages(
+        data.variantsImages === null
+          ? []
+          : Array.from(data.variantsImages as VariantImage[]),
       );
     } else {
-      setAttributes([]);
+      setVariants([]);
+      setVariantsImages([]);
     }
   };
 
@@ -64,7 +73,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   }, [productId, open]);
 
   const saveVariants = async () => {
-    const { error } = await updateProductVariants(productId, attributes);
+    const { error } = await updateProductVariants(productId, variants);
     if (error) {
       toast.error("Erreur lors de l'enregistrement");
       return;
@@ -73,19 +82,20 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   };
 
   const addAttribute = (attr: string) => {
-    const newAttribute: Attribute = {
+    const newAttribute: Variant = {
       name: attr,
+      id: uudiv4(),
       values: [],
     };
-    setAttributes((prev) => [...prev, newAttribute]);
+    setVariants((prev) => [...prev, newAttribute]);
   };
 
   const deleteAttribute = (attr: string) => {
-    setAttributes((prev) => prev.filter((a) => a.name !== attr));
+    setVariants((prev) => prev.filter((a) => a.name !== attr));
   };
 
   const addOption = (attrName: string, value: string) => {
-    setAttributes((prev) => {
+    setVariants((prev) => {
       const attr = prev.find((a) => a.name === attrName);
 
       const values = attr.values.filter((val) => val !== value);
@@ -95,6 +105,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
         ...prev.filter((a) => a.name !== attrName),
         {
           name: attrName,
+          id: attr.id,
           values,
         },
       ];
@@ -102,7 +113,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   };
 
   const deleteOption = (attrName: string, value: string) => {
-    setAttributes((prev) => {
+    setVariants((prev) => {
       const attr = prev.find((a) => a.name === attrName);
 
       const values = attr.values.filter((val) => val !== value);
@@ -111,10 +122,29 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
         ...prev.filter((a) => a.name !== attrName),
         {
           name: attrName,
+          id: attr.id,
           values,
         },
       ];
     });
+  };
+
+  const onImageUpdate = async (image: VariantImage) => {
+    // const filteredVariants = variantsImages.filter(
+    //   (variant) =>
+    //     variant.variantId !== image.variantId &&
+    //     variant.option !== image.option,
+    // );
+    // const { error } = await updateProduct({
+    //   id: productId,
+    //   variantsImages: [...filteredVariants, image],
+    // });
+    // if (error) {
+    //   toast.error('Erreur lors du chargement');
+    //   return;
+    // }
+    // toast.success('Image ajoutée');
+    // fetchProduct();
   };
 
   return (
@@ -143,8 +173,8 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
                   handleMenu();
                 }}
                 disabled={
-                  attributes &&
-                  Boolean(attributes.find((attr) => attr.name === attribute))
+                  variants &&
+                  Boolean(variants.find((attr) => attr.name === attribute))
                 }
               >
                 {attribute}
@@ -157,11 +187,11 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
         </Button>
       </Box>
       <Box padding={'1rem'}>
-        {attributes.length > 0 ? (
+        {variants.length > 0 ? (
           <Box marginTop={'2rem'}>
             <Typography variant="h3">{'Attributs'}</Typography>
             <Stack direction={{ xs: 'column', sm: 'row' }} gap={'2rem'}>
-              {attributes.map((attribute) => (
+              {variants.map((attribute) => (
                 <AttributeCard
                   key={attribute.name}
                   attribute={attribute}
@@ -176,12 +206,17 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
           <Typography variant="h4">{'Aucunes variantes'}</Typography>
         )}
       </Box>
+      <VariantsTable
+        variants={variants}
+        onImageUpdate={onImageUpdate}
+        productId={productId}
+      />
     </Dialog>
   );
 };
 
 interface CardProps {
-  attribute: Attribute;
+  attribute: Variant;
   addOption: (attrName: string, value: string) => void;
   deleteOption: (attrName: string, value: string) => void;
   deleteAttribute: (attrName: string) => void;
@@ -213,40 +248,52 @@ const AttributeCard: React.FC<CardProps> = ({
         },
       }}
     >
-      <CardContent>
-        <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
-          marginBottom={'1rem'}
-        >
-          <Typography variant="h4">{attribute.name}</Typography>
-          <Button
-            onClick={() => {
-              deleteAttribute(attribute.name);
-            }}
-            endIcon={<Delete />}
+      <CardContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100%',
+        }}
+      >
+        <Box>
+          <Stack
+            direction={'row'}
+            alignItems={'center'}
+            justifyContent={'space-between'}
+            marginBottom={'1rem'}
           >
-            {"Supprimer l'attribut"}
-          </Button>
-        </Stack>
-        <Typography variant="h5">{'Valeurs'}</Typography>
-        <Stack
-          direction={'row'}
-          alignItems={'center'}
-          gap={'0.5rem'}
-          marginBottom={'1rem'}
-        >
-          {attribute.values.map((value) => (
-            <Chip
-              key={value}
-              label={value}
-              onDelete={() => {
-                deleteOption(attribute.name, value);
+            <Typography>{attribute.name}</Typography>
+            <Button
+              onClick={() => {
+                deleteAttribute(attribute.name);
               }}
-            />
-          ))}
-        </Stack>
+              endIcon={<Delete />}
+            >
+              {'Supprimer'}
+            </Button>
+          </Stack>
+          {attribute.values.length === 0 ? (
+            <Typography>{'Pas de valeurs'}</Typography>
+          ) : null}
+          <Stack
+            direction={'row'}
+            alignItems={'center'}
+            gap={'0.5rem'}
+            marginBottom={'1rem'}
+            flexWrap={'wrap'}
+          >
+            {attribute.values.map((value) => (
+              <Chip
+                key={value}
+                label={value}
+                onDelete={() => {
+                  deleteOption(attribute.name, value);
+                }}
+              />
+            ))}
+          </Stack>
+        </Box>
         <Stack>
           <TextField
             label={'Ajouter une option'}

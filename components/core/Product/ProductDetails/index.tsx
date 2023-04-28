@@ -13,18 +13,13 @@ import { Grid } from '@mui/material';
 import Price from 'utils/Price';
 import { BoxProps } from '@mui/system';
 import { Product } from 'lib/supabase/products';
-import { useSiteData } from 'contexts/data';
 import { useRouter } from 'next/router';
 import supabase from 'lib/supabase';
+import { Variant } from 'types';
 
 interface Props {
   product: Product;
 }
-
-type Attribute = {
-  name: string;
-  values: string[];
-};
 
 const getProductMainImage = (productId: string): string => {
   const bucket = 'products';
@@ -43,7 +38,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
   const [variants, variantNames] = useMemo(() => {
     if (product.variants === null) return [[], []];
-    const variants = product.variants as Attribute[];
+    const variants = product.variants as Variant[];
     return [variants, variants.map((variant) => variant.name).sort()];
   }, []);
 
