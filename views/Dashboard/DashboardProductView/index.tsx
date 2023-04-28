@@ -37,7 +37,7 @@ const DashboardProductView: React.FC = () => {
     <Box>
       <Grid container spacing={4}>
         <Grid item xs={12}>
-          <Typography variant="h1">{'Catégories'}</Typography>
+          <Typography variant="h1">{'Produits'}</Typography>
         </Grid>
         <Grid item xs={12} md={6} height={'50vh'}>
           <ProductTable
