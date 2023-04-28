@@ -3,8 +3,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
 import { FormControlLabel, Switch } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { Day, ShopHours } from 'lib/supabase/shops';
+import { useState } from 'react';
+import { Day } from 'lib/supabase/shops';
 
 interface Props {
   hours: Day;
@@ -17,11 +17,7 @@ export type TimeUpdate = {
   finish: Date;
 };
 
-const TimeTableLine: React.FC<Props> = ({
-  hours,
-  onMorningUpdate,
-  onAfternoonUpdate,
-}) => {
+const TimeTableLine: React.FC<Props> = ({ hours }) => {
   const [closed, setClosed] = useState<boolean>(false);
 
   return (

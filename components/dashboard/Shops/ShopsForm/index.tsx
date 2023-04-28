@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  Input,
-  Modal,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Grid, Modal, Stack, TextField } from '@mui/material';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import supabase from 'lib/supabase';
 import {

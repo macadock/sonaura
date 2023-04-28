@@ -6,7 +6,7 @@ interface Props {
   name: string;
 }
 
-const NumericField: React.FC<Props & TextFieldProps> = ({ name, ...props }) => {
+const NumericField: React.FC<Props & TextFieldProps> = ({ name }) => {
   return (
     <Field name={name}>{(props: FieldProps) => <FormField {...props} />}</Field>
   );

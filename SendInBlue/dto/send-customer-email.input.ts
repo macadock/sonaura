@@ -1,3 +1,5 @@
+import { Json } from 'types/supabase';
+
 export default class SendCustomerEmailInput {
   firstName: string;
   lastName: string;
@@ -9,6 +11,5 @@ export default class SendCustomerEmailInput {
     merchant: number;
   };
   includeListIds?: number[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params?: any;
+  params?: Json;
 }

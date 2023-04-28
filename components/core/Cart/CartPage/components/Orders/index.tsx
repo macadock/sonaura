@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -73,7 +73,7 @@ const Orders: React.FC<Props> = ({ products }) => {
                     </Typography>
                   </Link>
                   <Typography sx={{ fontWeight: 'bold' }}>
-                    <Price priceWithCents={product.price} />
+                    <Price price={product.price} />
                   </Typography>
                 </Box>
                 <Typography>

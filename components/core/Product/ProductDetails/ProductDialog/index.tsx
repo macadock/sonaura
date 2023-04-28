@@ -1,5 +1,6 @@
 import { Close } from '@mui/icons-material';
 import { Box, Dialog, useMediaQuery, useTheme } from '@mui/material';
+import { Product } from 'lib/supabase/products';
 import ProductForm from '../ProductForm';
 
 interface Props {
@@ -8,7 +9,8 @@ interface Props {
   title: string;
   origin: string;
   button?: string;
-  product: any;
+  product: Product;
+  isOccasion: boolean;
 }
 
 const ProductDialog: React.FC<Props> = ({
@@ -18,6 +20,7 @@ const ProductDialog: React.FC<Props> = ({
   origin,
   button,
   product,
+  isOccasion,
 }) => {
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
@@ -33,6 +36,7 @@ const ProductDialog: React.FC<Props> = ({
           origin={origin}
           button={button}
           product={product}
+          isOccasion={isOccasion}
         />
       </Box>
     </Dialog>

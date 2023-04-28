@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -24,8 +24,6 @@ const Orders = (): JSX.Element => {
 
   const vat = cartTotal * 0.2;
 
-  const ids = items.map((item) => item.id);
-
   const fetchProducts = async () => {
     if (!items) return;
 
@@ -50,20 +48,6 @@ const Orders = (): JSX.Element => {
   useEffect(() => {
     fetchProducts();
   }, [items]);
-
-  const productsInCart = useMemo(() => {
-    if (!items) return null;
-
-    return items.map((item) => {
-      if (!products) return {};
-      const product = products.find((product) => product.id === item.id);
-
-      return {
-        ...item,
-        ...product,
-      };
-    });
-  }, [products]);
 
   return (
     <>
@@ -103,7 +87,7 @@ const Orders = (): JSX.Element => {
                     </Box>
                     <Box>
                       <Typography fontWeight={700} variant={'subtitle2'}>
-                        <Price priceWithCents={product.price} />
+                        <Price price={product.price} />
                       </Typography>
                     </Box>
                   </Box>
@@ -120,13 +104,13 @@ const Orders = (): JSX.Element => {
             <Box display={'flex'} justifyContent={'space-between'}>
               <Typography color={'text.secondary'}>{t('subtotal')}</Typography>
               <Typography color={'text.secondary'} fontWeight={700}>
-                <Price formatedPrice={cartTotal} />
+                <Price price={cartTotal} />
               </Typography>
             </Box>
             <Box display={'flex'} justifyContent={'space-between'}>
               <Typography color={'text.secondary'}>{t('vat')}</Typography>
               <Typography color={'text.secondary'} fontWeight={700}>
-                <Price formatedPrice={vat} />
+                <Price price={vat} />
               </Typography>
             </Box>
             <Divider />
@@ -135,7 +119,7 @@ const Orders = (): JSX.Element => {
                 {t('total')}
               </Typography>
               <Typography variant={'h6'} fontWeight={700}>
-                <Price formatedPrice={cartTotal} />
+                <Price price={cartTotal} />
               </Typography>
             </Box>
             <Button

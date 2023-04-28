@@ -12,11 +12,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import {
-  Product,
-  getProductById,
-  updateProductVariants,
-} from 'lib/supabase/products';
+import { getProductById, updateProductVariants } from 'lib/supabase/products';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -62,8 +58,10 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   };
 
   useEffect(() => {
-    fetchProduct();
-  }, [productId]);
+    if (open) {
+      fetchProduct();
+    }
+  }, [productId, open]);
 
   const saveVariants = async () => {
     const { error } = await updateProductVariants(productId, attributes);

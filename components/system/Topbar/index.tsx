@@ -16,12 +16,6 @@ import moveCategoryToPage from './exlude-from-menu';
 import { Typography } from '@mui/material';
 import { useSiteData } from 'contexts/data';
 
-interface Category {
-  id: string;
-  slug: string;
-  name: string;
-}
-
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
   onSidebarOpen: () => void;

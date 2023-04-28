@@ -1,11 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import Container from 'components/system/Container';
 
-interface Props {
-  legals: any;
-}
-
-const LegalNoticeView: React.FC<Props> = ({ legals }) => {
+const LegalNoticeView: React.FC = () => {
   return (
     <Container>
       <Box
