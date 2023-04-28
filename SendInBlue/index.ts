@@ -87,7 +87,7 @@ export default class SendInBlue {
         customerEmail: email,
         customerFullName: fullName,
         message,
-        ...params,
+        params,
       },
     });
 
@@ -128,7 +128,7 @@ export default class SendInBlue {
         email,
         fullName,
         message,
-        ...params,
+        params,
       },
     });
 
