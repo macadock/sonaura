@@ -4,13 +4,11 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Categories } from 'types';
 import { useCart } from 'react-use-cart';
 import ProductDialog from './ProductDialog';
 import { Info, Phone, ShoppingCartTwoTone } from '@mui/icons-material';
 import { useTranslation } from 'next-i18next';
 import toast from 'react-hot-toast';
-import Shops from './Shops';
 import { Grid } from '@mui/material';
 import Price from 'utils/Price';
 import { BoxProps } from '@mui/system';
@@ -40,13 +38,6 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const theme = useTheme();
   const router = useRouter();
   const categorySlug = router.query.category as string;
-  const { categories } = useSiteData();
-  const category = useMemo(() => {
-    if (!categories) {
-      return null;
-    }
-    return categories.find((category) => category.slug === categorySlug);
-  }, [categorySlug, categories?.length]);
 
   if (product === null) return null;
 
@@ -276,7 +267,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 {product.price && (
                   <>
                     <Typography variant={'h5'} fontWeight={700}>
-                      <Price priceWithCents={product.price} />
+                      <Price price={product.price} />
                     </Typography>
                     <Typography variant="body2" sx={{ marginLeft: '0.5rem' }}>
                       {t('pricePreOwnedConditions')}
@@ -299,6 +290,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               origin={dialogOrigin}
               button={dialogButton}
               product={product}
+              isOccasion={isOccasion}
             />
             {product.quantity > 0 && isOccasion ? (
               <>

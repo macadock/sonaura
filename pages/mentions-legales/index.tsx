@@ -4,10 +4,8 @@ import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { NextPage } from 'next';
 import LegalNoticeView from 'views/LegalNoticeView';
 
-const LegalNotice: NextPage<{
-  legals: any;
-}> = ({ legals }) => {
-  return <LegalNoticeView legals={legals} />;
+const LegalNotice: NextPage = () => {
+  return <LegalNoticeView />;
 };
 
 export const getStaticProps = async ({ locale }) => {

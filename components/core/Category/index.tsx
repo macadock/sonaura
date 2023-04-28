@@ -105,7 +105,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                   justifyContent={'space-between'}
                 >
                   <Typography fontWeight={700}>
-                    <Price priceWithCents={product.price} />
+                    <Price price={product.price} />
                   </Typography>
                 </Box>
                 <Box marginTop={2}>

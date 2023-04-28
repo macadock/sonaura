@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Drawer from '@mui/material/Drawer';
 import {
   Box,
@@ -14,7 +14,6 @@ import { Close, Delete } from '@mui/icons-material';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
-import supabase from 'lib/supabase';
 import { getProductsByIds } from 'lib/supabase/products';
 import { useSiteData } from 'contexts/data';
 
@@ -170,7 +169,7 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                           </Typography>
                         </Link>
                         <Typography>
-                          <Price priceWithCents={product.price} />
+                          <Price price={product.price} />
                         </Typography>
                       </Box>
                     </Box>

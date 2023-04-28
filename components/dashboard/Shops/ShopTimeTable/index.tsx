@@ -1,9 +1,6 @@
 import { Grid, Stack, Typography } from '@mui/material';
 import { Shop, ShopHours } from 'lib/supabase/shops';
-import { useState } from 'react';
-import TimeTableLine, {
-  TimeUpdate,
-} from 'components/dashboard/Shops/ShopTimeTable/TimeTableLine';
+import TimeTableLine from 'components/dashboard/Shops/ShopTimeTable/TimeTableLine';
 
 type OpenHours = Shop['openHours'];
 
@@ -12,7 +9,7 @@ interface Props {
   onUpdate: (openHours: OpenHours) => void;
 }
 
-const ShopTimeTable: React.FC<Props> = ({ openHours = {}, onUpdate }) => {
+const ShopTimeTable: React.FC<Props> = ({ openHours = {} }) => {
   const daysTranslation = {
     monday: 'Lundi',
     tuesday: 'Mardi',

@@ -2,11 +2,7 @@ import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Container from 'components/system/Container';
 
-interface Props {
-  legals: any;
-}
-
-const PrivacyPolicyView: React.FC<Props> = ({ legals }) => {
+const PrivacyPolicyView: React.FC = () => {
   return (
     <Container>
       <Box

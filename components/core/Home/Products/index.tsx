@@ -9,7 +9,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { useTheme } from '@mui/material/styles';
-import { CircularProgress, Link } from '@mui/material';
+import { Link } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
 import { getProducts } from 'lib/supabase/products';
@@ -146,7 +146,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
                                 sx={{ fontWeight: 700 }}
                                 color={'primary'}
                               >
-                                <Price priceWithCents={product.price} />
+                                <Price price={product.price} />
                               </Typography>
                             )}
                             <Button

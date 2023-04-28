@@ -9,11 +9,7 @@ import Container from 'components/system/Container';
 import React from 'react';
 import PreOwnedProducts from 'components/core/Home/PreOwnedProducts';
 
-interface Props {
-  categories: any;
-}
-
-const HomeView: React.FC<Props> = ({ categories }) => {
+const HomeView: React.FC = () => {
   return (
     <React.Fragment>
       <Container>

@@ -4,10 +4,8 @@ import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { NextPage } from 'next';
 import PrivacyPolicyView from 'views/PrivacyPolicyView';
 
-const PrivacyPolicy: NextPage<{
-  legals: any;
-}> = ({ legals }) => {
-  return <PrivacyPolicyView legals={legals} />;
+const PrivacyPolicy: NextPage = () => {
+  return <PrivacyPolicyView />;
 };
 
 export const getStaticProps = async ({ locale }) => {

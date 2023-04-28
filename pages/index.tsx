@@ -3,18 +3,14 @@ import { i18n } from '../next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../appConstants';
 import type { NextPage } from 'next';
 import HomeView from 'views/HomeView';
-import { getCategories } from 'lib/supabase/categories';
 
-const Home: NextPage<{ categories: any }> = ({ categories }) => {
-  return <HomeView categories={categories} />;
+const Home: NextPage = () => {
+  return <HomeView />;
 };
 
 export const getStaticProps = async ({ locale }) => {
-  const { data: categories } = await getCategories();
-
   return {
     props: {
-      categories,
       ...(await serverSideTranslations(locale, ['homepage', 'common'], {
         i18n: {
           locales: i18n.locales,

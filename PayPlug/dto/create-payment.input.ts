@@ -2,6 +2,7 @@ import {
   checkoutFormTypes,
   Country,
 } from 'components/core/Checkout/checkout.validator';
+import { Product } from 'lib/supabase/products';
 
 export default class CreatePaymentInput implements checkoutFormTypes {
   firstName: string;
@@ -13,6 +14,5 @@ export default class CreatePaymentInput implements checkoutFormTypes {
   postalCode: string;
   email: string;
   amount: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  products: any;
+  products: Product[];
 }

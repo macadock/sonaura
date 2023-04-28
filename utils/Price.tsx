@@ -1,12 +1,11 @@
 import NumberFormat from 'react-number-format';
 
 interface Props {
-  priceWithCents?: number;
-  formatedPrice?: number;
+  price: number;
 }
 
-const Price: React.FC<Props> = ({ priceWithCents, formatedPrice }) => {
-  const emptyNumber = !(Boolean(priceWithCents) || Boolean(formatedPrice));
+const Price: React.FC<Props> = ({ price }) => {
+  const emptyNumber = !(Boolean(price) || Boolean(price));
 
   if (emptyNumber) {
     return null;
@@ -14,7 +13,7 @@ const Price: React.FC<Props> = ({ priceWithCents, formatedPrice }) => {
 
   return (
     <NumberFormat
-      value={formatedPrice || priceWithCents / 100}
+      value={price}
       displayType="text"
       thousandSeparator=" "
       suffix=" €"

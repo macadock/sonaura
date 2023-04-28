@@ -20,26 +20,34 @@ import {
 } from './productForm.validator';
 import SendEmailInput from 'SendInBlue/dto/send-customer-email.input';
 import toast from 'react-hot-toast';
-import { Categories } from 'types';
+import { Product } from 'lib/supabase/products';
+import { useRouter } from 'next/router';
 
 interface Props {
   title: string;
   origin: string;
-  product: any;
+  product: Product;
+  isOccasion: boolean;
   button?: string;
 }
 
-const ProductForm: React.FC<Props> = ({ title, origin, button, product }) => {
+const ProductForm: React.FC<Props> = ({
+  title,
+  origin,
+  button,
+  product,
+  isOccasion,
+}) => {
   const { t } = useTranslation('product', { keyPrefix: 'form' });
   const theme = useTheme();
+
+  const router = useRouter();
 
   const onSubmit = (
     values: productFormTypes,
     actions: FormikHelpers<productFormTypes>,
   ) => {
     const { firstName, lastName, email, message, phone, gdpr } = values;
-
-    const isOccasion = product.category.name === Categories.OCCASION;
 
     if (!gdpr) {
       toast.error(t('acceptGdpr'));
@@ -59,8 +67,8 @@ const ProductForm: React.FC<Props> = ({ title, origin, button, product }) => {
       params: {
         product: product.name,
         url: getRoutePath({ page: PagesUrls.PRODUCT })
-          .replace('[category]', product.category.slug)
-          .replace('[product]', product.slug),
+          .replace('[category]', `${router.query['category']}`)
+          .replace('[product]', `${router.query['product']}`),
       },
     };
 

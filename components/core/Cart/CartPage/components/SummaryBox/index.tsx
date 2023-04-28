@@ -36,13 +36,13 @@ const SummaryBox: React.FC<Props> = ({ cartTotal }) => {
         <Box display={'flex'} justifyContent={'space-between'}>
           <Typography color={'text.secondary'}>{t('subtotal')}</Typography>
           <Typography color={'text.secondary'} fontWeight={700}>
-            <Price formatedPrice={cartTotal} />
+            <Price price={cartTotal} />
           </Typography>
         </Box>
         <Box display={'flex'} justifyContent={'space-between'}>
           <Typography color={'text.secondary'}>{t('vat')}</Typography>
           <Typography color={'text.secondary'} fontWeight={700}>
-            <Price formatedPrice={vat} />
+            <Price price={vat} />
           </Typography>
         </Box>
         <Divider />
@@ -51,7 +51,7 @@ const SummaryBox: React.FC<Props> = ({ cartTotal }) => {
             {t('total')}
           </Typography>
           <Typography variant={'h6'} fontWeight={700}>
-            <Price formatedPrice={cartTotal} />
+            <Price price={cartTotal} />
           </Typography>
         </Box>
         <Button
