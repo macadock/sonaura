@@ -1,5 +1,5 @@
-import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef';
-import { DataGrid } from '@mui/x-data-grid/DataGrid/DataGrid';
+import { DataGrid } from '@mui/x-data-grid/DataGrid';
+import { GridColDef } from '@mui/x-data-grid/models/colDef';
 import LoadingScreen from 'components/system/LoadingScreen';
 import { Category, getCategories } from 'lib/supabase/categories';
 import { getProducts, Product } from 'lib/supabase/products';

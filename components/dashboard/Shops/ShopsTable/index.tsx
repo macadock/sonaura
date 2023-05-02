@@ -1,5 +1,5 @@
-import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef';
-import { DataGrid } from '@mui/x-data-grid/DataGrid/DataGrid';
+import { DataGrid } from '@mui/x-data-grid/DataGrid';
+import { GridColDef } from '@mui/x-data-grid/models/colDef';
 import { Shop } from 'lib/supabase/shops';
 
 interface Props {

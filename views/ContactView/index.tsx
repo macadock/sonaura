@@ -4,7 +4,7 @@ import Contact from 'components/core/Contact/Contact';
 import Form from 'components/core/Contact/Form';
 import Hero from 'components/core/Contact/Hero';
 import Container from 'components/system/Container';
-import useTheme from '@mui/material/styles/useTheme';
+import { useTheme } from '@mui/material/styles';
 
 const ContactView: React.FC = () => {
   const theme = useTheme();
