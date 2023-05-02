@@ -1,4 +1,3 @@
-import { Box, Card, Grid, Link, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useMemo, useState } from 'react';
 import { useCart } from 'react-use-cart';
@@ -6,6 +5,11 @@ import Container from 'components/system/Container';
 import Orders from './components/Orders';
 import SummaryBox from './components/SummaryBox';
 import { getProductsByIds } from 'lib/supabase/products';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import Card from '@mui/material/Card';
 
 const CartPage: React.FC = () => {
   const { t } = useTranslation('common', { keyPrefix: 'cart' });

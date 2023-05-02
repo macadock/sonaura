@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Drawer from '@mui/material/Drawer';
-import {
-  Box,
-  Button,
-  Typography,
-  Link as MuiLink,
-  Stack,
-  Link,
-} from '@mui/material';
+
 import { useCart } from 'react-use-cart';
-import { Close, Delete } from '@mui/icons-material';
+import Close from '@mui/icons-material/Close';
+import Delete from '@mui/icons-material/Delete';
 
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
 import { getProductsByIds } from 'lib/supabase/products';
 import { useSiteData } from 'contexts/data';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Link from 'next/link';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import MuiLink from '@mui/material/Link';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -141,6 +141,7 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                           href={`/${getCategorySlug(product.categoryId)}/${
                             product.slug
                           }`}
+                          passHref
                         >
                           <Image
                             src={
@@ -157,6 +158,7 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                       <Box>
                         <Link
                           href={`/${product.categories.slug}/${product.slug}`}
+                          passHref
                         >
                           <Typography
                             sx={{

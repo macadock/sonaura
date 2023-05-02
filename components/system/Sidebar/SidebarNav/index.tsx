@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import NavItem from '../NavItem';
-import { Link } from '@mui/material';
+import Link from '@mui/material/Link';
 import TopNav from 'components/system/TopNav';
 import { useTranslation } from 'next-i18next';
 

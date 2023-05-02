@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
-import { Box, Container, NoSsr } from '@mui/material';
+import NoSsr from '@mui/material/NoSsr';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import Welcome from 'components/core/Professionals/Welcome';
 import Integration from 'components/core/Professionals/Integration';
 import Design from 'components/core/Professionals/Design';

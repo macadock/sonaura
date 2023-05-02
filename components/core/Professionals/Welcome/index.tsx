@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useTranslation } from 'next-i18next';
-import { Link } from '@mui/material';
+import Link from '@mui/material/Link';
 
 const Welcome: React.FC = () => {
   const { t } = useTranslation('pro');

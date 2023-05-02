@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Container from 'components/system/Container';
 
 const PrivacyPolicyView: React.FC = () => {

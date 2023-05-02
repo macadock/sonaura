@@ -1,4 +1,6 @@
-import { Box, Grid, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import ShopsTable from 'components/dashboard/Shops/ShopsTable';
 import ShopForm from 'components/dashboard/Shops/ShopsForm';

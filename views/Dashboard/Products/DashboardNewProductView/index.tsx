@@ -1,5 +1,8 @@
-import { ArrowBack } from '@mui/icons-material';
-import { Box, Button, Typography } from '@mui/material';
+import ArrowBack from '@mui/icons-material/ArrowBack';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
 import ProductForm, {
   InsertOrUpdateProduct,
 } from 'components/dashboard/Products/ProductForm';

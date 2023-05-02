@@ -1,17 +1,19 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useCart } from 'react-use-cart';
 import ProductDialog from './ProductDialog';
-import { Info, Phone, ShoppingCartTwoTone } from '@mui/icons-material';
+import Info from '@mui/icons-material/Info';
+import Phone from '@mui/icons-material/Phone';
+import ShoppingCartTwoTone from '@mui/icons-material/ShoppingCartTwoTone';
 import { useTranslation } from 'next-i18next';
 import toast from 'react-hot-toast';
-import { Grid } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import Price from 'utils/Price';
-import { BoxProps } from '@mui/system';
+
 import { Product } from 'lib/supabase/products';
 import { useSiteData } from 'contexts/data';
 import { useRouter } from 'next/router';
