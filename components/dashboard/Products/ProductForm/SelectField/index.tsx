@@ -1,4 +1,5 @@
-import { MenuItem, Select, SelectProps } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectProps } from '@mui/material/Select';
 import { Field, FieldProps } from 'formik';
 
 interface Props<T> {

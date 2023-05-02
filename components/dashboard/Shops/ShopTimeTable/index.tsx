@@ -1,6 +1,8 @@
-import { Grid, Stack, Typography } from '@mui/material';
 import { Shop, ShopHours } from 'lib/supabase/shops';
 import TimeTableLine from 'components/dashboard/Shops/ShopTimeTable/TimeTableLine';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 type OpenHours = Shop['openHours'];
 

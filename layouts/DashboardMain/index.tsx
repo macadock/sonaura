@@ -4,7 +4,8 @@ import AppBar from '@mui/material/AppBar';
 
 import Container from 'components/system/Container';
 import { useTranslation } from 'next-i18next';
-import { Button, Link } from '@mui/material';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 import { useRouter } from 'next/router';
 import { useSession } from '@supabase/auth-helpers-react';
 import Login from 'components/dashboard/Login';

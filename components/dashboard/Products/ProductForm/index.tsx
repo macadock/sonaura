@@ -1,4 +1,3 @@
-import { Button, Grid, Stack } from '@mui/material';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import { useEffect, useState } from 'react';
 import { productFrom } from './product.validator';
@@ -11,8 +10,11 @@ import TextField from 'components/dashboard/Products/ProductForm/TextField';
 import SelectField from 'components/dashboard/Products/ProductForm/SelectField';
 import toast from 'react-hot-toast';
 import React from 'react';
-import { Box } from '@mui/system';
+import Box from '@mui/material/Box';
 import { v4 as uuidv4 } from 'uuid';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 export type InsertOrUpdateProduct = CreateProductInput | UpdateProductInput;
 

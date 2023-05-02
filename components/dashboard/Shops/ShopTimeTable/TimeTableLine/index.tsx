@@ -2,7 +2,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
-import { FormControlLabel, Switch } from '@mui/material';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import { useState } from 'react';
 import { Day } from 'lib/supabase/shops';
 

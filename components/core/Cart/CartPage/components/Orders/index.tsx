@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { useCart } from 'react-use-cart';
 import { useTranslation } from 'next-i18next';
-import { Delete } from '@mui/icons-material';
+import Delete from '@mui/icons-material/Delete';
 import NextLink from 'next/link';
 import Price from 'utils/Price';
 import { Product } from 'lib/supabase/products';

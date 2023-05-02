@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import { Link } from '@mui/material';
+import Link from '@mui/material/Link';
 import { useTranslation } from 'next-i18next';
 
 const Contact: React.FC = () => {

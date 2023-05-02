@@ -7,7 +7,7 @@ import Link from '@mui/material/Link';
 
 import NavItem from './NavItem';
 import TopNav from 'components/system/TopNav';
-import { ShoppingCartTwoTone } from '@mui/icons-material';
+import ShoppingCartTwoTone from '@mui/icons-material/ShoppingCartTwoTone';
 import CartDrawer from '../../core/Cart/CartDrawer';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';

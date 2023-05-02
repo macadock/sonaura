@@ -1,4 +1,4 @@
-import { TextField, TextFieldProps } from '@mui/material';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { Field, FieldProps } from 'formik';
 import { useEffect, useState } from 'react';
 

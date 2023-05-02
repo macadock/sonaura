@@ -21,20 +21,6 @@ const moduleExports = {
       },
     ];
   },
-  modularizeImports: {
-    '@mui/icons-material': {
-      transform: '@mui/icons-material/{{member}}',
-    },
-    '@mui/material': {
-      transform: '@mui/material/{{member}}',
-    },
-    '@mui/x-data-grid': {
-      transform: '@mui/x-data-grid/{{member}}',
-    },
-    '@mui/x-date-pickers': {
-      transform: '@mui/x-date-pickers/{{member}}',
-    },
-  },
 };
 
 const sentryWebpackPluginOptions = {

@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import Container from '@mui/material/Container';
 import Success from 'components/core/Checkout/Success';
 
 const SuccessCheckoutView: React.FC = () => {
