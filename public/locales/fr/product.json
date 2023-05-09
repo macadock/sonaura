@@ -19,7 +19,7 @@
     "frameColor": "Couleur du cadre",
     "soundbarColor": "Couleur de la barre de son",
     "supportColor": "Couleur du support",
-    "support": "Support"
+    "positioning": "Support"
   },
   "form": {
     "firstName": "Prénom",

@@ -28,13 +28,6 @@ type Attribute = {
   values: string[];
 };
 
-const getProductMainImage = (productId: string): string => {
-  const bucket = 'products';
-  const file = `${productId}/main`;
-  const { data } = supabase.storage.from(bucket).getPublicUrl(file);
-  return data.publicUrl;
-};
-
 const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const { t } = useTranslation('product');
   const theme = useTheme();
@@ -42,6 +35,14 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const categorySlug = router.query.category as string;
 
   if (product === null) return null;
+
+  const getProductMainImage = (): string => {
+    if (!product?.mainImage) return '';
+    const bucket = product.mainImage['bucket'];
+    const file = product.mainImage['file'];
+    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+    return data.publicUrl;
+  };
 
   const [variants, variantNames] = useMemo(() => {
     if (product.variants === null) return [[], []];
@@ -55,7 +56,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
   const [variantImages, setVariantImages] = useState<string[]>([]);
   const mainImage = useMemo(() => {
-    return getProductMainImage(product.id);
+    return getProductMainImage();
   }, [categorySlug]);
   const [current, setCurrent] = useState(mainImage);
 
