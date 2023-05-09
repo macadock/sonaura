@@ -1,0 +1,71 @@
+{
+  "products": {
+    "name": "Produits",
+    "new": "Ajouter un produit",
+    "add": {
+      "title": "Ajouter un nouveau produit",
+      "success": "Le produit a été ajouté",
+      "error": "Erreur lors de la création",
+      "cta": "Ajouter le produit"
+    },
+    "edit": {
+      "success": "Le produit a été mis à jour",
+      "error": "Erreur lors de la mise à jour",
+      "cta": "Mettre à jour le produit"
+    },
+    "remove": {
+      "success": "Le produit a été supprimé",
+      "error": "Erreur lors de la suppression",
+      "cta": "Supprimer le produit"
+    },
+    "manageVariants": "Gérer les variantes",
+    "variants": {
+      "add": "Ajouter un attribut",
+      "success": "Variantes mises à jour",
+      "error": "Erreur lors de l'enregistrement"
+    }
+  },
+  "categories": {
+    "name": "Catégories",
+    "new": "Ajouter une catégorie"
+  },
+  "shops": {
+    "name": "Magasins",
+    "new": "Ajouter un magasin"
+  },
+  "attributes": {
+    "name": "Attributs",
+    "size": "Taille",
+    "color": "Couleur",
+    "frameColor": "Couleur du cadre",
+    "soundbarColor": "Couleur de la barre de son",
+    "supportColor": "Couleur du support",
+    "positioning": "Support",
+    "empty": "Aucunes variants",
+    "values": "Valeurs",
+    "addOption": "Ajouter une option"
+  },
+  "select": {
+    "shopId": "Magasin",
+    "categoryId": "Catégorie"
+  },
+  "name": "Nom",
+  "slug": "Slug",
+  "fromPrice": "Prix à partir de",
+  "price": "Prix fixe",
+  "category": "Catégorie",
+  "shop": "Magasin",
+  "description": "Description",
+  "back": "Retour",
+  "addImage": "Ajouter une image",
+  "replaceImage": "Remplacer l'image",
+  "image": {
+    "success": "Image chargée",
+    "error": "Erreur lors du chargement"
+  },
+  "save": "Enregistrer",
+  "close": "Fermer",
+  "delete": "Supprimer",
+  "add": "Ajouter",
+  "logout": "Se déconnecter"
+}

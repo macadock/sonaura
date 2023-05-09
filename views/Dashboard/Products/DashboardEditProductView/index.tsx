@@ -13,6 +13,7 @@ import {
   updateProduct,
   UpdateProductInput,
 } from 'lib/supabase/products';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -20,6 +21,7 @@ import toast from 'react-hot-toast';
 const DashboardEditProductView: React.FC = () => {
   const router = useRouter();
   const productId = `${router.query['id']}`;
+  const { t } = useTranslation('dashboard');
 
   const [product, setProduct] = useState<Product | null>(null);
 
@@ -44,10 +46,10 @@ const DashboardEditProductView: React.FC = () => {
     const { error } = await updateProduct(product);
     if (error) {
       console.log(error);
-      toast.error('Erreur lors de la mise à jour');
+      toast.error(t('products.add.error'));
       return;
     }
-    toast.success('Le produit a été mis à jour');
+    toast.success(t('products.add.success'));
     router.push('/dashboard/products');
   };
 
@@ -55,10 +57,10 @@ const DashboardEditProductView: React.FC = () => {
     const { error } = await removeProduct(productId);
     if (error) {
       console.log(error);
-      toast.error('Erreur lors de la suppression');
+      toast.error(t('products.remove.error'));
       return;
     }
-    toast.success(`Le produit a été supprimé`);
+    toast.success(t('products.remove.success'));
     router.push('/dashboard/products');
   };
 
@@ -106,7 +108,7 @@ const DashboardEditProductView: React.FC = () => {
 
   const leftButtons = (
     <Button variant={'outlined'} onClick={handleModal}>
-      {'Gérer les variantes'}
+      {t('products.manageVariants')}
     </Button>
   );
 
@@ -118,7 +120,7 @@ const DashboardEditProductView: React.FC = () => {
       endIcon={<Delete />}
       color="error"
     >
-      {'Supprimer le produit'}
+      {t('products.remove.cta')}
     </Button>
   );
 
@@ -131,7 +133,7 @@ const DashboardEditProductView: React.FC = () => {
           router.push('/dashboard/products');
         }}
       >
-        {'Retour'}
+        {t('back')}
       </Button>
       {product ? (
         <ProductForm

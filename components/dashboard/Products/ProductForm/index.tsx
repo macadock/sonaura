@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { useTranslation } from 'next-i18next';
 
 export type InsertOrUpdateProduct = CreateProductInput | UpdateProductInput;
 
@@ -51,6 +52,7 @@ const ProductForm: React.FC<Props> = ({
 }) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [shops, setShops] = useState<Shop[]>([]);
+  const { t } = useTranslation('dashboard');
 
   const fetchCategories = async () => {
     const { data } = await getCategories();
@@ -78,10 +80,10 @@ const ProductForm: React.FC<Props> = ({
       .from(bucket)
       .upload(fileName, files[0]);
     if (error) {
-      toast.error('Erreur lors du chargement');
+      toast.error(t('image.error'));
       return {};
     }
-    toast.success('Image chargée');
+    toast.success(t('image.success'));
     return {
       bucket,
       file: fileName,
@@ -114,8 +116,8 @@ const ProductForm: React.FC<Props> = ({
                     }}
                   >
                     {formMode === 'create'
-                      ? 'Ajouter le produit'
-                      : 'Mettre à jour le produit'}
+                      ? t('products.add.cta')
+                      : t('products.edit.cta')}
                   </Button>
                   {leftButtons}
                 </Box>

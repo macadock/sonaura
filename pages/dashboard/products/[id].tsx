@@ -11,7 +11,7 @@ const DashboardEditProduct: NextPage = () => {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const translations = await serverSideTranslations(
     locale,
-    ['common'],
+    ['common', 'dashboard'],
     i18nConfig,
   );
 

@@ -8,20 +8,23 @@ import ProductForm, {
 } from 'components/dashboard/Products/ProductForm';
 import { initialValues } from 'components/dashboard/Products/ProductForm/product.validator';
 import { createProduct, CreateProductInput } from 'lib/supabase/products';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 
 const DashboardNewProductView: React.FC = () => {
   const router = useRouter();
 
+  const { t } = useTranslation('dashboard');
+
   const create = async (product: CreateProductInput) => {
     const { error } = await createProduct(product);
     if (error) {
       console.log(error);
-      toast.error('Erreur lors de la création');
+      toast.error(t('products.add.error'));
       return;
     }
-    toast.success(`Le produit a été ajouté`);
+    toast.success(t('products.add.success'));
     router.push('/dashboard/products');
   };
 
@@ -73,10 +76,10 @@ const DashboardNewProductView: React.FC = () => {
           router.push('/dashboard/products');
         }}
       >
-        {'Retour'}
+        {t('back')}
       </Button>
       <Typography sx={{ marginY: '1rem' }} variant="h1">
-        {'Ajouter un nouveau produit'}
+        {t('products.add.title')}
       </Typography>
       <ProductForm
         formMode={'create'}

@@ -11,7 +11,11 @@ const DashboardProducts: NextPage = () => {
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
+      ...(await serverSideTranslations(
+        locale,
+        ['common', 'dashboard'],
+        i18nConfig,
+      )),
     },
   };
 };
