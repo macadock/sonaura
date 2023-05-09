@@ -4,6 +4,7 @@ import LoadingScreen from 'components/system/LoadingScreen';
 import { Category, getCategories } from 'lib/supabase/categories';
 import { getProducts, Product } from 'lib/supabase/products';
 import { getShops, Shop } from 'lib/supabase/shops';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -13,6 +14,7 @@ const ProductTable: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [shops, setShops] = useState<Shop[]>([]);
   const router = useRouter();
+  const { t } = useTranslation('dashboard');
 
   const fetchProducts = async () => {
     const { data } = await getProducts();
@@ -43,20 +45,20 @@ const ProductTable: React.FC = () => {
   }, []);
 
   const columns: GridColDef[] = [
-    { field: 'name', headerName: 'Nom', flex: 15 },
-    { field: 'slug', headerName: 'Slug', flex: 15 },
-    { field: 'fromPrice', headerName: 'Prix à partir de', flex: 15 },
-    { field: 'price', headerName: 'Prix fixe', flex: 15 },
+    { field: 'name', headerName: t('name'), flex: 15 },
+    { field: 'slug', headerName: t('slug'), flex: 15 },
+    { field: 'fromPrice', headerName: t('fromPrice'), flex: 15 },
+    { field: 'price', headerName: t('price'), flex: 15 },
     {
       field: 'categoryId',
-      headerName: 'Catégorie',
+      headerName: t('category'),
       flex: 15,
       renderCell: ({ value }) =>
         categories.find((category) => category.id === value)?.name,
     },
     {
       field: 'shopId',
-      headerName: 'Magasin',
+      headerName: t('shop'),
       flex: 15,
       renderCell: ({ value }) => shops.find((shop) => shop.id === value)?.city,
     },

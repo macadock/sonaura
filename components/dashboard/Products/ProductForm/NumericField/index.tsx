@@ -1,5 +1,6 @@
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { Field, FieldProps } from 'formik';
+import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 
 interface Props {
@@ -19,6 +20,8 @@ const FormField: React.FunctionComponent<FieldProps> = (props) => {
     form: { setFieldValue },
   } = props;
 
+  const { t } = useTranslation('dashboard');
+
   const [value, setValue] = useState('');
 
   useEffect(() => {
@@ -28,7 +31,7 @@ const FormField: React.FunctionComponent<FieldProps> = (props) => {
   return (
     <TextField
       name={name}
-      label={name}
+      label={t(name)}
       onChange={(e) => {
         setFieldValue(name, e.target.value);
       }}

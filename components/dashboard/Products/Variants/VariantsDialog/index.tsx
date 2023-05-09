@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import { getProductById, updateProductVariants } from 'lib/supabase/products';
+import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -40,6 +41,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [attributes, setAttributes] = useState<Attribute[]>([]);
+  const { t } = useTranslation('dashboard');
 
   const handleMenu = (event?: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(!openMenu ? event?.currentTarget : null);
@@ -66,10 +68,10 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   const saveVariants = async () => {
     const { error } = await updateProductVariants(productId, attributes);
     if (error) {
-      toast.error("Erreur lors de l'enregistrement");
+      toast.error(t('products.variants.error'));
       return;
     }
-    toast.success('Variantes mises à jour');
+    toast.success(t('products.variants.success'));
   };
 
   const addAttribute = (attr: string) => {
@@ -122,10 +124,10 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
       <Box padding={'1rem'} display={'flex'} justifyContent={'space-between'}>
         <Stack direction={'row'} gap={'1rem'}>
           <Button variant={'contained'} onClick={saveVariants}>
-            {'Enregistrer'}
+            {t('save')}
           </Button>
           <Button endIcon={<Add />} variant={'outlined'} onClick={handleMenu}>
-            {'Ajouter un attribut'}
+            {t('products.variants.add')}
           </Button>
           <Menu
             open={openMenu}
@@ -147,19 +149,19 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
                   Boolean(attributes.find((attr) => attr.name === attribute))
                 }
               >
-                {attribute}
+                {t(`attributes.${attribute}`)}
               </MenuItem>
             ))}
           </Menu>
         </Stack>
         <Button variant={'outlined'} onClick={handleClose}>
-          {'Fermer'}
+          {t('close')}
         </Button>
       </Box>
       <Box padding={'1rem'}>
         {attributes.length > 0 ? (
           <Box marginTop={'2rem'}>
-            <Typography variant="h3">{'Attributs'}</Typography>
+            <Typography variant="h3">{t('attributes.name')}</Typography>
             <Stack direction={{ xs: 'column', sm: 'row' }} gap={'2rem'}>
               {attributes.map((attribute) => (
                 <AttributeCard
@@ -173,7 +175,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
             </Stack>
           </Box>
         ) : (
-          <Typography variant="h4">{'Aucunes variantes'}</Typography>
+          <Typography variant="h4">{t('attributes.empty')}</Typography>
         )}
       </Box>
     </Dialog>
@@ -194,6 +196,7 @@ const AttributeCard: React.FC<CardProps> = ({
   deleteAttribute,
 }) => {
   const [value, setValue] = useState<string>('');
+  const { t } = useTranslation('dashboard');
 
   const handleAddOption = () => {
     if (value.trim().length === 0) return;
@@ -220,17 +223,19 @@ const AttributeCard: React.FC<CardProps> = ({
           justifyContent={'space-between'}
           marginBottom={'1rem'}
         >
-          <Typography variant="h4">{attribute.name}</Typography>
+          <Typography variant="h4">
+            {t(`attributes.${attribute.name}`)}
+          </Typography>
           <Button
             onClick={() => {
               deleteAttribute(attribute.name);
             }}
             endIcon={<Delete />}
           >
-            {"Supprimer l'attribut"}
+            {t('delete')}
           </Button>
         </Stack>
-        <Typography variant="h5">{'Valeurs'}</Typography>
+        <Typography variant="h5">{t('attributes.values')}</Typography>
         <Stack
           direction={'row'}
           alignItems={'center'}
@@ -249,7 +254,7 @@ const AttributeCard: React.FC<CardProps> = ({
         </Stack>
         <Stack>
           <TextField
-            label={'Ajouter une option'}
+            label={t('attributes.addOption')}
             value={value}
             onChange={(e) => {
               setValue(e.target.value);
@@ -262,7 +267,7 @@ const AttributeCard: React.FC<CardProps> = ({
             size="small"
           />
           <Button onClick={handleAddOption} endIcon={<Add />}>
-            {'Ajouter'}
+            {t('add')}
           </Button>
         </Stack>
       </CardContent>
