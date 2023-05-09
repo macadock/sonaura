@@ -12,7 +12,7 @@ import { useTheme } from '@mui/material/styles';
 import { Link } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
-import { getProducts } from 'lib/supabase/products';
+import { getProducts, Product } from 'lib/supabase/products';
 import supabase from 'lib/supabase';
 
 const Products: React.FC<{ productNumberMax?: number }> = ({
@@ -33,9 +33,10 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
     fetchProducts();
   }, []);
 
-  const getProductMainImage = (productId: string): string => {
-    const bucket = 'products';
-    const file = `${productId}/main`;
+  const getProductMainImage = (product: Product): string => {
+    if (!product?.mainImage) return '';
+    const bucket = product.mainImage['bucket'];
+    const file = product.mainImage['file'];
     const { data } = supabase.storage.from(bucket).getPublicUrl(file);
     return data.publicUrl;
   };
@@ -113,7 +114,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
                           <Box
                             component={LazyLoadImage}
                             effect="blur"
-                            src={getProductMainImage(product.id)}
+                            src={getProductMainImage(product)}
                             sx={{
                               width: '100%',
                               objectFit: 'cover',
