@@ -72,6 +72,7 @@ export interface Database {
           shopId: string | null;
           slug: string;
           variants: Json | null;
+          variantsImages: Json | null;
         };
         Insert: {
           categoryId: string;
@@ -86,6 +87,7 @@ export interface Database {
           shopId?: string | null;
           slug: string;
           variants?: Json | null;
+          variantsImages?: Json | null;
         };
         Update: {
           categoryId?: string;
@@ -100,6 +102,7 @@ export interface Database {
           shopId?: string | null;
           slug?: string;
           variants?: Json | null;
+          variantsImages?: Json | null;
         };
       };
       shops: {

@@ -34,7 +34,7 @@ const DashboardEditProductView: React.FC = () => {
   const fetchProduct = async () => {
     const { data } = await getProductById(productId);
     if (data) {
-      setProduct(data);
+      setProduct(data as Product);
     }
   };
 

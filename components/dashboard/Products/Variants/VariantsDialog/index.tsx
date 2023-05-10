@@ -11,11 +11,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import VariantsTable from 'components/dashboard/Products/Variants/VariantsTable';
 
 import { getProductById, updateProductVariants } from 'lib/supabase/products';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { Variant } from 'types';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   open: boolean;
@@ -23,7 +26,7 @@ interface Props {
   productId: string;
 }
 
-const attributesName = [
+const variantsName = [
   'color',
   'size',
   'frameColor',
@@ -32,15 +35,10 @@ const attributesName = [
   'supportColor',
 ];
 
-type Attribute = {
-  name: string;
-  values: string[];
-};
-
 const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [attributes, setAttributes] = useState<Attribute[]>([]);
+  const [variants, setVariants] = useState<Variant[]>([]);
   const { t } = useTranslation('dashboard');
 
   const handleMenu = (event?: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,11 +49,11 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   const fetchProduct = async () => {
     const { data } = await getProductById(productId);
     if (data) {
-      setAttributes(
-        data.variants === null ? [] : Array.from(data.variants as Attribute[]),
+      setVariants(
+        data.variants === null ? [] : Array.from(data.variants as Variant[]),
       );
     } else {
-      setAttributes([]);
+      setVariants([]);
     }
   };
 
@@ -66,7 +64,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   }, [productId, open]);
 
   const saveVariants = async () => {
-    const { error } = await updateProductVariants(productId, attributes);
+    const { error } = await updateProductVariants(productId, variants);
     if (error) {
       toast.error(t('products.variants.error'));
       return;
@@ -75,19 +73,20 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   };
 
   const addAttribute = (attr: string) => {
-    const newAttribute: Attribute = {
+    const newAttribute: Variant = {
+      id: uuidv4(),
       name: attr,
       values: [],
     };
-    setAttributes((prev) => [...prev, newAttribute]);
+    setVariants((prev) => [...prev, newAttribute]);
   };
 
   const deleteAttribute = (attr: string) => {
-    setAttributes((prev) => prev.filter((a) => a.name !== attr));
+    setVariants((prev) => prev.filter((a) => a.name !== attr));
   };
 
   const addOption = (attrName: string, value: string) => {
-    setAttributes((prev) => {
+    setVariants((prev) => {
       const attr = prev.find((a) => a.name === attrName);
 
       const values = attr.values.filter((val) => val !== value);
@@ -97,6 +96,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
         ...prev.filter((a) => a.name !== attrName),
         {
           name: attrName,
+          id: attr.id,
           values,
         },
       ];
@@ -104,7 +104,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   };
 
   const deleteOption = (attrName: string, value: string) => {
-    setAttributes((prev) => {
+    setVariants((prev) => {
       const attr = prev.find((a) => a.name === attrName);
 
       const values = attr.values.filter((val) => val !== value);
@@ -113,6 +113,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
         ...prev.filter((a) => a.name !== attrName),
         {
           name: attrName,
+          id: attr.id,
           values,
         },
       ];
@@ -137,7 +138,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
               'aria-labelledby': 'basic-button',
             }}
           >
-            {attributesName.map((attribute) => (
+            {variantsName.map((attribute) => (
               <MenuItem
                 key={attribute}
                 onClick={() => {
@@ -145,8 +146,8 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
                   handleMenu();
                 }}
                 disabled={
-                  attributes &&
-                  Boolean(attributes.find((attr) => attr.name === attribute))
+                  variants &&
+                  Boolean(variants.find((attr) => attr.name === attribute))
                 }
               >
                 {t(`attributes.${attribute}`)}
@@ -159,11 +160,15 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
         </Button>
       </Box>
       <Box padding={'1rem'}>
-        {attributes.length > 0 ? (
+        {variants.length > 0 ? (
           <Box marginTop={'2rem'}>
             <Typography variant="h3">{t('attributes.name')}</Typography>
-            <Stack direction={{ xs: 'column', sm: 'row' }} gap={'2rem'}>
-              {attributes.map((attribute) => (
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              gap={'2rem'}
+              flexWrap={'wrap'}
+            >
+              {variants.map((attribute) => (
                 <AttributeCard
                   key={attribute.name}
                   attribute={attribute}
@@ -178,12 +183,13 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
           <Typography variant="h4">{t('attributes.empty')}</Typography>
         )}
       </Box>
+      <VariantsTable productId={productId} variants={variants} />
     </Dialog>
   );
 };
 
 interface CardProps {
-  attribute: Attribute;
+  attribute: Variant;
   addOption: (attrName: string, value: string) => void;
   deleteOption: (attrName: string, value: string) => void;
   deleteAttribute: (attrName: string) => void;
@@ -211,8 +217,7 @@ const AttributeCard: React.FC<CardProps> = ({
         marginTop: '1.5rem',
         width: {
           xs: '100%',
-          md: '33%',
-          lg: '25%',
+          md: '30%',
         },
       }}
     >
@@ -241,6 +246,7 @@ const AttributeCard: React.FC<CardProps> = ({
           alignItems={'center'}
           gap={'0.5rem'}
           marginBottom={'1rem'}
+          flexWrap={'wrap'}
         >
           {attribute.values.map((value) => (
             <Chip

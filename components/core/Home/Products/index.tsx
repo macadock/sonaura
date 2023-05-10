@@ -20,12 +20,12 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
 }) => {
   const { t } = useTranslation('homepage', { keyPrefix: 'products' });
   const theme = useTheme();
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const fetchProducts = async () => {
     const { data } = await getProducts();
     if (data) {
-      setProducts(data);
+      setProducts(data as Product[]);
     }
   };
 
@@ -142,13 +142,26 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
                           </Typography>
 
                           <CardActions sx={{ justifyContent: 'space-between' }}>
-                            {product.price && (
+                            {product.price ? (
                               <Typography
                                 sx={{ fontWeight: 700 }}
                                 color={'primary'}
                               >
                                 <Price price={product.price} />
                               </Typography>
+                            ) : (
+                              false
+                            )}
+                            {product.fromPrice ? (
+                              <Typography
+                                sx={{ fontWeight: 700 }}
+                                color={'primary'}
+                              >
+                                {t('fromPrice')}
+                                <Price price={product.fromPrice} />
+                              </Typography>
+                            ) : (
+                              false
                             )}
                             <Button
                               component={Link}

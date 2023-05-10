@@ -13,6 +13,7 @@
   "addToCart": "Ajouter au panier",
   "pricePreOwnedConditions": "prix hors livraison et installation",
   "addedToCart": "Ajouté au panier",
+  "fromPrice": "A partir de ",
   "attributes": {
     "size": "Taille",
     "color": "Couleur",

@@ -1,0 +1,182 @@
+import Delete from '@mui/icons-material/Delete';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import AttributeDropdown from 'components/dashboard/Products/Variants/VariantsTable/AttributeDropdown';
+import supabase from 'lib/supabase';
+import {
+  getProductById,
+  updateProductVariantsImage,
+} from 'lib/supabase/products';
+import { useTranslation } from 'next-i18next';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { ImageVariant, Variant } from 'types';
+import { v4 as uuidv4 } from 'uuid';
+
+interface Props {
+  productId: string;
+  variants: Variant[];
+}
+
+const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
+  const { t } = useTranslation('dashboard');
+
+  const [images, setImages] = useState<ImageVariant[]>([]);
+
+  const fetchProduct = async () => {
+    const { data } = await getProductById(productId);
+    if (data?.variantsImages) {
+      setImages(data.variantsImages as ImageVariant[]);
+    }
+  };
+
+  useEffect(() => {
+    fetchProduct();
+  }, []);
+
+  const handleImageUpload = async (files: FileList) => {
+    const bucket = 'products';
+    const fileName = uuidv4();
+    const { error } = await supabase.storage
+      .from(bucket)
+      .upload(fileName, files[0]);
+    if (error) {
+      toast.error(t('image.error'));
+      return;
+    }
+
+    const image: ImageVariant = {
+      image: {
+        bucket,
+        file: fileName,
+      },
+    };
+
+    setImages((prev) => [...prev, image]);
+  };
+
+  const handleImageVariant = async (
+    image: ImageVariant,
+    option: ImageVariant['variants'][number],
+  ) => {
+    let variant = images.find(
+      ({ image: im }) =>
+        im.bucket === image.image.bucket && im.file === image.image.file,
+    );
+    if (variant === undefined) return;
+    variant = {
+      image: variant.image,
+      variants: variant.variants
+        ? [...variant.variants.filter((v) => v.name !== option.name), option]
+        : [option],
+    };
+    setImages((prev) => [
+      ...prev.filter((img) => img.image.file !== variant.image.file),
+      variant,
+    ]);
+  };
+
+  const handleDeleteImageVariant = (id: string) => {
+    setImages((prev) => prev.filter((image) => image.image.file !== id));
+  };
+
+  const handleSave = async () => {
+    const { error } = await updateProductVariantsImage(productId, images);
+    if (error) {
+      toast.error(t('products.variants.error'));
+      return;
+    }
+    toast.success(t('products.variants.success'));
+  };
+
+  const variantsColumns: GridColDef[] = variants.map((variant) => ({
+    field: variant.name,
+    headerName: t(`attributes.${variant.name}`),
+    renderCell: ({ id }) => {
+      const image = images.find(
+        (im) => im.image.bucket === 'products' && im.image.file === id,
+      );
+      return (
+        <AttributeDropdown
+          variant={variant}
+          image={image}
+          handleChange={handleImageVariant}
+        />
+      );
+    },
+    flex: 20,
+  }));
+
+  const columns: GridColDef[] = [
+    {
+      field: 'delete',
+      headerName: t('delete'),
+      renderCell: ({ id }) => (
+        <Button
+          onClick={() => {
+            handleDeleteImageVariant(id as string);
+          }}
+        >
+          <Delete />
+        </Button>
+      ),
+    },
+    {
+      field: 'image',
+      renderCell: ({ value }) => {
+        if (!value) return '';
+        const bucket = value['bucket'];
+        const file = value['file'];
+        const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+        return (
+          <img
+            src={data.publicUrl}
+            width={50}
+            height={50}
+            style={{ objectFit: 'cover' }}
+          />
+        );
+      },
+    },
+    ...variantsColumns,
+  ];
+
+  return (
+    <Box padding={'1rem'} height={'100%'}>
+      <Typography variant="h3">{t('imageManagement')}</Typography>
+      <Stack direction={'row'} gap={'1rem'} sx={{ marginY: '2rem' }}>
+        <Button variant="contained" component="label">
+          {t('addImage')}
+          <input
+            hidden
+            accept="image/*"
+            type="file"
+            onChange={(e) => {
+              handleImageUpload(e.target.files);
+            }}
+          />
+        </Button>
+        <Button variant="contained" onClick={handleSave}>
+          {t('save')}
+        </Button>
+      </Stack>
+
+      {images.length > 0 ? (
+        <DataGrid
+          columns={columns}
+          rows={images}
+          density="comfortable"
+          isRowSelectable={() => false}
+          getRowId={(row) => row.image['file']}
+        />
+      ) : (
+        <Typography>{t('attributes.addImagePerAttribute')}</Typography>
+      )}
+    </Box>
+  );
+};
+
+export default VariantsTable;

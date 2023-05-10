@@ -19,7 +19,7 @@ const ProductTable: React.FC = () => {
   const fetchProducts = async () => {
     const { data } = await getProducts();
     if (data) {
-      setProducts(data);
+      setProducts(data as Product[]);
     }
     setLoading(false);
   };

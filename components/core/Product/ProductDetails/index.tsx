@@ -15,18 +15,14 @@ import Grid from '@mui/material/Grid';
 import Price from 'utils/Price';
 
 import { Product } from 'lib/supabase/products';
-import { useSiteData } from 'contexts/data';
 import { useRouter } from 'next/router';
 import supabase from 'lib/supabase';
+import { Variant } from 'types';
+import Chip from '@mui/material/Chip';
 
 interface Props {
   product: Product;
 }
-
-type Attribute = {
-  name: string;
-  values: string[];
-};
 
 const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const { t } = useTranslation('product');
@@ -46,7 +42,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
   const [variants, variantNames] = useMemo(() => {
     if (product.variants === null) return [[], []];
-    const variants = product.variants as Attribute[];
+    const variants = product.variants as Variant[];
     return [variants, variants.map((variant) => variant.name).sort()];
   }, []);
 
@@ -161,6 +157,12 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
     });
   };
 
+  const handleVariantDeletion = (variantName: string) => {
+    setSelectedVariants((prev) =>
+      prev.filter((variant) => variant.name !== variantName),
+    );
+  };
+
   useEffect(() => {
     if (variantImages.length > 0) {
       setCurrent(variantImages[0]);
@@ -267,7 +269,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
             </Typography>
             <Box marginY={3}>
               <Box display={'flex'} alignItems={'baseline'}>
-                {product.price && (
+                {product.price ? (
                   <>
                     <Typography variant={'h5'} fontWeight={700}>
                       <Price price={product.price} />
@@ -276,6 +278,18 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                       {t('pricePreOwnedConditions')}
                     </Typography>
                   </>
+                ) : (
+                  false
+                )}
+                {product.fromPrice ? (
+                  <>
+                    <Typography variant={'h5'} fontWeight={700}>
+                      {t('fromPrice')}
+                      <Price price={product.fromPrice} />
+                    </Typography>
+                  </>
+                ) : (
+                  false
                 )}
               </Box>
             </Box>
@@ -341,28 +355,22 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
             )}
             {variantNames.map((variantName) => (
               <Box key={variantName} marginY={3}>
-                <Typography>
-                  {`${t(`attributes.${variantName}`)} : `}
-                  <Typography component={'span'} fontWeight={700}>
-                    {
-                      selectedVariants.find(
-                        (variant) => variant.name === variantName,
-                      )?.value
-                    }
-                  </Typography>
+                <Typography fontWeight={'bold'}>
+                  {t(`attributes.${variantName}`)}
                 </Typography>
-                <Stack direction={'row'} spacing={1} marginTop={0.5}>
+                <Stack
+                  direction={'row'}
+                  flexWrap={'wrap'}
+                  gap={1}
+                  marginTop={0.5}
+                >
                   {variants
                     .find((v) => v.name === variantName)
                     .values.map((value) => (
-                      <Box
+                      <Chip
+                        label={value}
                         key={value}
-                        onClick={() => {
-                          handleVariantSelection(variantName, value);
-                        }}
                         sx={{
-                          borderRadius: 1,
-                          padding: 1,
                           border: `2px solid ${
                             selectedVariants.find(
                               (variant) => variant.name === variantName,
@@ -370,11 +378,20 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                               ? theme.palette.primary.main
                               : theme.palette.divider
                           }`,
-                          cursor: 'pointer',
                         }}
-                      >
-                        <Typography>{value}</Typography>
-                      </Box>
+                        onClick={() => {
+                          handleVariantSelection(variantName, value);
+                        }}
+                        onDelete={
+                          selectedVariants.find(
+                            (variant) => variant.name === variantName,
+                          )?.value === value
+                            ? () => {
+                                handleVariantDeletion(variantName);
+                              }
+                            : null
+                        }
+                      />
                     ))}
                 </Stack>
               </Box>

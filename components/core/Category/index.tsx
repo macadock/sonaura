@@ -108,9 +108,22 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                   alignItems={'center'}
                   justifyContent={'space-between'}
                 >
-                  <Typography fontWeight={700}>
-                    <Price price={product.price} />
-                  </Typography>
+                  {product.price ? (
+                    <Typography fontWeight={700}>
+                      <Price price={product.price} />
+                    </Typography>
+                  ) : (
+                    false
+                  )}
+
+                  {product.fromPrice ? (
+                    <Typography fontWeight={700}>
+                      {t('fromPrice')}
+                      <Price price={product.fromPrice} />
+                    </Typography>
+                  ) : (
+                    false
+                  )}
                 </Box>
                 <Box marginTop={2}>
                   <Button

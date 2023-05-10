@@ -43,7 +43,8 @@
     "positioning": "Support",
     "empty": "Aucunes variants",
     "values": "Valeurs",
-    "addOption": "Ajouter une option"
+    "addOption": "Ajouter une option",
+    "addImagePerAttribute": "Ajoutez une image pour attribuer un visuel à chaque combinaison d'attributs."
   },
   "select": {
     "shopId": "Magasin",
@@ -61,11 +62,12 @@
   "replaceImage": "Remplacer l'image",
   "image": {
     "success": "Image chargée",
-    "error": "Erreur lors du chargement"
+    "error": "Erreur lors du chargement de l'image"
   },
   "save": "Enregistrer",
   "close": "Fermer",
   "delete": "Supprimer",
   "add": "Ajouter",
-  "logout": "Se déconnecter"
+  "logout": "Se déconnecter",
+  "imageManagement": "Gestion des images"
 }

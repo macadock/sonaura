@@ -2,7 +2,11 @@ import supabase from 'lib/supabase';
 import { getCategoryBySlug } from 'lib/supabase/categories';
 import { Database } from 'types/supabase';
 
-export type Product = Database['public']['Tables']['products']['Row'];
+export type Product = Database['public']['Tables']['products']['Row'] & {
+  categories: {
+    slug: string;
+  };
+};
 export type CreateProductInput =
   Database['public']['Tables']['products']['Insert'];
 export type UpdateProductInput =
@@ -86,5 +90,15 @@ export async function updateProductVariants(
   return supabase
     .from('products')
     .update({ variants: variants })
+    .eq('id', productId);
+}
+
+export async function updateProductVariantsImage(
+  productId: string,
+  variantsImages: Product['variantsImages'],
+) {
+  return supabase
+    .from('products')
+    .update({ variantsImages })
     .eq('id', productId);
 }

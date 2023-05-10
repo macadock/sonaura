@@ -5,7 +5,8 @@
   "categories": {
     "title": "Catégories",
     "noProducts": "Aucuns produits",
-    "moreDetails": "Plus en détail"
+    "moreDetails": "Plus en détail",
+    "fromPrice": "A partir de "
   },
   "cart": {
     "title": "Panier",
