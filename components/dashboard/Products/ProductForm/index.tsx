@@ -1,31 +1,21 @@
-import { Button, Grid, Stack } from '@mui/material';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
-import { useEffect, useMemo, useState } from 'react';
-import { initialValues, productFrom } from './product.validator';
-import VariantsDialog from '../Variants/VariantsDialog';
-import {
-  createProduct,
-  CreateProductInput,
-  Product,
-  removeProduct,
-  updateProduct,
-  UpdateProductInput,
-} from 'lib/supabase/products';
+import { useEffect, useState } from 'react';
+import { productFrom } from './product.validator';
+import { CreateProductInput, UpdateProductInput } from 'lib/supabase/products';
 import supabase from 'lib/supabase';
 import { Category, getCategories } from 'lib/supabase/categories';
 import { getShops, Shop } from 'lib/supabase/shops';
 import NumericField from 'components/dashboard/Products/ProductForm/NumericField';
 import TextField from 'components/dashboard/Products/ProductForm/TextField';
 import SelectField from 'components/dashboard/Products/ProductForm/SelectField';
-import { Delete } from '@mui/icons-material';
 import toast from 'react-hot-toast';
-import { isNumber } from 'class-validator';
-
-interface Props {
-  productId: string;
-  products: Product[];
-  onCompletedOrUpdated: () => void;
-}
+import React from 'react';
+import Box from '@mui/material/Box';
+import { v4 as uuidv4 } from 'uuid';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { useTranslation } from 'next-i18next';
 
 export type InsertOrUpdateProduct = CreateProductInput | UpdateProductInput;
 
@@ -42,27 +32,27 @@ const getImageUrl = (value: string | object): string => {
   return data ? data.publicUrl : '';
 };
 
+interface Props {
+  formMode: 'create' | 'edit';
+  initialValues: InsertOrUpdateProduct;
+  onSubmit: (
+    values: InsertOrUpdateProduct,
+    actions?: FormikHelpers<InsertOrUpdateProduct>,
+  ) => void;
+  leftButtons?: React.ReactNode;
+  rightButtons?: React.ReactNode;
+}
+
 const ProductForm: React.FC<Props> = ({
-  productId,
-  products,
-  onCompletedOrUpdated,
+  formMode,
+  initialValues,
+  onSubmit,
+  leftButtons = null,
+  rightButtons = null,
 }) => {
-  type FormMode = 'creation' | 'edit';
-
-  const [modal, setModal] = useState<boolean>(false);
-  const [formMode, setFormMode] = useState<FormMode>('creation');
-  const [categories, setCategories] = useState<Category[]>(null);
-  const [shops, setShops] = useState<Shop[]>(null);
-
-  const selectedProduct = useMemo(() => {
-    if (!productId) return undefined;
-    const product = products.find((category) => category.id === productId);
-    return {
-      ...product,
-      categoryId: product.categoryId || '',
-      shopId: product.shopId || '',
-    };
-  }, [productId]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [shops, setShops] = useState<Shop[]>([]);
+  const { t } = useTranslation('dashboard');
 
   const fetchCategories = async () => {
     const { data } = await getCategories();
@@ -83,119 +73,17 @@ const ProductForm: React.FC<Props> = ({
     fetchShops();
   }, []);
 
-  const create = async (product: CreateProductInput) => {
-    const { error } = await createProduct(product);
-    if (error) {
-      return;
-    }
-    onCompletedOrUpdated();
-  };
-
-  const update = async (product: UpdateProductInput) => {
-    const { error } = await updateProduct(product);
-    if (error) {
-      console.log(error);
-      return;
-    }
-    onCompletedOrUpdated();
-  };
-
-  const remove = async () => {
-    const { error } = await removeProduct(productId);
-    if (error) {
-      console.log(error);
-      return;
-    }
-    onCompletedOrUpdated();
-  };
-
-  const handleEditMode = () => {
-    setFormMode('edit');
-  };
-
-  const handleCreateMode = () => {
-    setFormMode('creation');
-  };
-
-  const handleModal = () => {
-    setModal((prev) => !prev);
-  };
-
-  const onSubmit = (
-    values: InsertOrUpdateProduct,
-    actions: FormikHelpers<InsertOrUpdateProduct>,
-  ) => {
-    const {
-      name,
-      description,
-      fromPrice,
-      price,
-      quantity,
-      slug,
-      categoryId,
-      shopId,
-      mainImage,
-    } = values;
-
-    const sanitizeNumber = (number: number): number => {
-      if (!isNumber(number)) {
-        number = null;
-      }
-      return number;
-    };
-
-    const input = {
-      name,
-      description,
-      fromPrice: sanitizeNumber(fromPrice),
-      price: sanitizeNumber(price),
-      quantity: sanitizeNumber(quantity),
-      slug,
-      categoryId,
-      shopId: shopId === '' ? null : shopId,
-      mainImage,
-    };
-
-    if (formMode === 'creation') {
-      return create(input);
-    }
-
-    update({
-      ...input,
-      id: productId,
-    });
-
-    actions.resetForm();
-    setFormMode('creation');
-  };
-
-  const formValues = useMemo(() => {
-    const input = {
-      ...initialValues,
-      price: '',
-      fromPrice: '',
-    };
-    if (formMode === 'creation') {
-      return input;
-    }
-
-    return {
-      ...input,
-      ...selectedProduct,
-    };
-  }, [formMode, selectedProduct?.id]);
-
   const uploadImage = async (files: FileList): Promise<object> => {
     const bucket = 'products';
-    const fileName = `${productId}/main`;
+    const fileName = `${uuidv4()}`;
     const { error } = await supabase.storage
       .from(bucket)
       .upload(fileName, files[0]);
     if (error) {
-      toast.error('Erreur lors du chargement');
+      toast.error(t('image.error'));
       return {};
     }
-    toast.success('Image chargée');
+    toast.success(t('image.success'));
     return {
       bucket,
       file: fileName,
@@ -204,40 +92,38 @@ const ProductForm: React.FC<Props> = ({
 
   return (
     <Formik<InsertOrUpdateProduct>
-      initialValues={formValues as InsertOrUpdateProduct}
-      enableReinitialize={true}
+      initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={productFrom}
     >
       {({ isValid, dirty, handleSubmit }) => (
-        <>
-          <Stack direction={'row'} marginBottom={2} spacing={1}>
-            <Button
-              variant={'contained'}
-              disabled={productId === null}
-              onClick={handleEditMode}
-            >
-              {'Editer'}
-            </Button>
-            <Button variant={'outlined'} onClick={handleCreateMode}>
-              {'Nouveau produit'}
-            </Button>
-            <Button
-              variant={'outlined'}
-              disabled={productId === null}
-              onClick={remove}
-            >
-              <Delete />
-            </Button>
-            <Button
-              variant={'outlined'}
-              disabled={productId === null || formMode === 'creation'}
-              onClick={handleModal}
-            >
-              {'Gérer les variantes'}
-            </Button>
-          </Stack>
+        <React.Fragment>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Stack
+                direction={'row'}
+                marginBottom={2}
+                spacing={1}
+                display={'flex'}
+                justifyContent={'space-between'}
+              >
+                <Box display={'flex'} gap={'1rem'}>
+                  <Button
+                    variant={'contained'}
+                    disabled={!isValid || !dirty}
+                    onClick={() => {
+                      handleSubmit();
+                    }}
+                  >
+                    {formMode === 'create'
+                      ? t('products.add.cta')
+                      : t('products.edit.cta')}
+                  </Button>
+                  {leftButtons}
+                </Box>
+                {rightButtons}
+              </Stack>
+            </Grid>
             <Grid item xs={6}>
               <TextField name={'name'} />
             </Grid>
@@ -259,10 +145,18 @@ const ProductForm: React.FC<Props> = ({
               <NumericField name={'fromPrice'} />
             </Grid>
             <Grid item xs={6}>
-              <SelectField name={'categoryId'} datas={categories} />
+              {categories ? (
+                <SelectField name={'categoryId'} datas={categories} />
+              ) : (
+                false
+              )}
             </Grid>
             <Grid item xs={6}>
-              <SelectField name={'shopId'} datas={shops} menuName={'city'} />
+              {shops ? (
+                <SelectField name={'shopId'} datas={shops} menuName={'city'} />
+              ) : (
+                false
+              )}
             </Grid>
             <Grid item xs={12}>
               <Field name={'mainImage'}>
@@ -277,44 +171,26 @@ const ProductForm: React.FC<Props> = ({
                         style={{ maxWidth: '100%' }}
                       />
                     ) : null}
-                    {formMode === 'edit' ? (
-                      <Button variant="contained" component="label">
-                        {value ? "Remplacer l'image" : 'Ajouter une image'}
-                        <input
-                          name={name}
-                          hidden
-                          accept="image/*"
-                          multiple
-                          type="file"
-                          onChange={async (e) => {
-                            const image = await uploadImage(e.target.files);
-                            setFieldValue(name, image);
-                          }}
-                        />
-                      </Button>
-                    ) : null}
+                    <Button variant="contained" component="label">
+                      {value ? "Remplacer l'image" : 'Ajouter une image'}
+                      <input
+                        name={name}
+                        hidden
+                        accept="image/*"
+                        multiple
+                        type="file"
+                        onChange={async (e) => {
+                          const image = await uploadImage(e.target.files);
+                          setFieldValue(name, image);
+                        }}
+                      />
+                    </Button>
                   </>
                 )}
               </Field>
             </Grid>
-            <Grid item xs={12}>
-              <Button
-                variant={'contained'}
-                disabled={!isValid || !dirty}
-                onClick={() => {
-                  handleSubmit();
-                }}
-              >
-                {formMode === 'creation' ? 'Créer le produit' : 'Mettre à jour'}
-              </Button>
-            </Grid>
           </Grid>
-          <VariantsDialog
-            open={modal}
-            handleClose={handleModal}
-            productId={productId}
-          />
-        </>
+        </React.Fragment>
       )}
     </Formik>
   );

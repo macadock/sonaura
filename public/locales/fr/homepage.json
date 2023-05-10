@@ -22,7 +22,8 @@
     "title": "Produits mis en avant",
     "subtitle": "Produits",
     "description": "Vivez une expérience audiovisuelle comme jamais auparavant.",
-    "moreDetails": "Plus en détail"
+    "moreDetails": "Plus en détail",
+    "fromPrice": "A partir de "
   },
   "preOwned": {
     "title": "Produits d'occasion",

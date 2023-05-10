@@ -1,32 +1,81 @@
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Product } from 'lib/supabase/products';
+import { DataGrid } from '@mui/x-data-grid/DataGrid';
+import { GridColDef } from '@mui/x-data-grid/models/colDef';
+import LoadingScreen from 'components/system/LoadingScreen';
+import { Category, getCategories } from 'lib/supabase/categories';
+import { getProducts, Product } from 'lib/supabase/products';
+import { getShops, Shop } from 'lib/supabase/shops';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-interface Props {
-  data: Product[];
-  onSelectionModelChange: (id: string) => void;
-}
+const ProductTable: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [shops, setShops] = useState<Shop[]>([]);
+  const router = useRouter();
+  const { t } = useTranslation('dashboard');
 
-const ProductTable: React.FC<Props> = ({ data, onSelectionModelChange }) => {
+  const fetchProducts = async () => {
+    const { data } = await getProducts();
+    if (data) {
+      setProducts(data as Product[]);
+    }
+    setLoading(false);
+  };
+
+  const fetchCategories = async () => {
+    const { data } = await getCategories();
+    if (data) {
+      setCategories(data);
+    }
+  };
+
+  const fetchShops = async () => {
+    const { data } = await getShops();
+    if (data) {
+      setShops(data);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+    fetchCategories();
+    fetchShops();
+  }, []);
+
   const columns: GridColDef[] = [
-    { field: 'name', headerName: 'Nom' },
-    { field: 'slug', headerName: 'Slug' },
-    { field: 'description', headerName: 'Description' },
-    { field: 'fromPrice', headerName: 'Prix à partir de' },
-    { field: 'price', headerName: 'Prix fixe' },
-    { field: 'mainAsset', headerName: 'image' },
-    { field: 'quantity', headerName: 'Quantité' },
-    { field: 'categoryId', headerName: 'Catégorie' },
-    { field: 'shopId', headerName: 'Magasin' },
+    { field: 'name', headerName: t('name'), flex: 15 },
+    { field: 'slug', headerName: t('slug'), flex: 15 },
+    { field: 'fromPrice', headerName: t('fromPrice'), flex: 15 },
+    { field: 'price', headerName: t('price'), flex: 15 },
+    {
+      field: 'categoryId',
+      headerName: t('category'),
+      flex: 15,
+      renderCell: ({ value }) =>
+        categories.find((category) => category.id === value)?.name,
+    },
+    {
+      field: 'shopId',
+      headerName: t('shop'),
+      flex: 15,
+      renderCell: ({ value }) => shops.find((shop) => shop.id === value)?.city,
+    },
   ];
+
+  if (loading) return <LoadingScreen />;
 
   return (
     <DataGrid
       columns={columns}
-      rows={data}
-      pageSize={5}
-      onSelectionModelChange={(selectionModel) => {
-        onSelectionModelChange(selectionModel[0] as string);
+      rows={products}
+      pageSize={10}
+      onRowClick={({ id }) => {
+        router.push(`/dashboard/products/${id}`);
       }}
+      autoHeight
+      sx={{ cursor: 'pointer' }}
     />
   );
 };

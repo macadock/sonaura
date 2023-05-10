@@ -2,16 +2,20 @@ import { NextPage } from 'next';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from 'next-i18next.config';
-import DashboardProductView from 'views/Dashboard/DashboardProductView';
+import DashboardProductsView from 'views/Dashboard/Products/DashboardProductsView';
 
 const DashboardProducts: NextPage = () => {
-  return <DashboardProductView />;
+  return <DashboardProductsView />;
 };
 
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
+      ...(await serverSideTranslations(
+        locale,
+        ['common', 'dashboard'],
+        i18nConfig,
+      )),
     },
   };
 };

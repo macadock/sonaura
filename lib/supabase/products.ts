@@ -2,7 +2,11 @@ import supabase from 'lib/supabase';
 import { getCategoryBySlug } from 'lib/supabase/categories';
 import { Database } from 'types/supabase';
 
-export type Product = Database['public']['Tables']['products']['Row'];
+export type Product = Database['public']['Tables']['products']['Row'] & {
+  categories: {
+    slug: string;
+  };
+};
 export type CreateProductInput =
   Database['public']['Tables']['products']['Insert'];
 export type UpdateProductInput =
@@ -20,11 +24,15 @@ export async function getProductsByIds(ids: string[]) {
   return supabase
     .from('products')
     .select(`*, categories ( slug )`)
+    .order('name', { ascending: true })
     .in('id', ids);
 }
 
 export async function getProducts() {
-  return supabase.from('products').select(`*, categories ( slug )`);
+  return supabase
+    .from('products')
+    .select(`*, categories ( slug )`)
+    .order('name', { ascending: true });
 }
 
 export async function getPreOwnedProducts() {
@@ -36,11 +44,16 @@ export async function getPreOwnedProducts() {
   return supabase
     .from('products')
     .select(`*, categories ( slug )`)
+    .order('name', { ascending: true })
     .eq('categoryId', data[0].id);
 }
 
 export async function getProductsByCategory(categoryId: string) {
-  return supabase.from('products').select('*').eq('categoryId', categoryId);
+  return supabase
+    .from('products')
+    .select('*')
+    .order('name', { ascending: true })
+    .eq('categoryId', categoryId);
 }
 
 export async function getProductsBySlugAndCategory(slug, categorySlug: string) {
@@ -49,7 +62,8 @@ export async function getProductsBySlugAndCategory(slug, categorySlug: string) {
     .from('products')
     .select('*')
     .eq('slug', slug)
-    .eq('categoryId', data[0].id);
+    .eq('categoryId', data[0].id)
+    .order('name', { ascending: true });
 }
 
 export async function createProduct(product: CreateProductInput) {
@@ -76,5 +90,15 @@ export async function updateProductVariants(
   return supabase
     .from('products')
     .update({ variants: variants })
+    .eq('id', productId);
+}
+
+export async function updateProductVariantsImage(
+  productId: string,
+  variantsImages: Product['variantsImages'],
+) {
+  return supabase
+    .from('products')
+    .update({ variantsImages })
     .eq('id', productId);
 }

@@ -1,32 +1,28 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useCart } from 'react-use-cart';
 import ProductDialog from './ProductDialog';
-import { Info, Phone, ShoppingCartTwoTone } from '@mui/icons-material';
+import Info from '@mui/icons-material/Info';
+import Phone from '@mui/icons-material/Phone';
+import ShoppingCartTwoTone from '@mui/icons-material/ShoppingCartTwoTone';
 import { useTranslation } from 'next-i18next';
 import toast from 'react-hot-toast';
-import { Grid } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import Price from 'utils/Price';
-import { BoxProps } from '@mui/system';
+
 import { Product } from 'lib/supabase/products';
 import { useRouter } from 'next/router';
 import supabase from 'lib/supabase';
 import { Variant } from 'types';
+import Chip from '@mui/material/Chip';
 
 interface Props {
   product: Product;
 }
-
-const getProductMainImage = (productId: string): string => {
-  const bucket = 'products';
-  const file = `${productId}/main`;
-  const { data } = supabase.storage.from(bucket).getPublicUrl(file);
-  return data.publicUrl;
-};
 
 const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const { t } = useTranslation('product');
@@ -35,6 +31,14 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const categorySlug = router.query.category as string;
 
   if (product === null) return null;
+
+  const getProductMainImage = (): string => {
+    if (!product?.mainImage) return '';
+    const bucket = product.mainImage['bucket'];
+    const file = product.mainImage['file'];
+    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+    return data.publicUrl;
+  };
 
   const [variants, variantNames] = useMemo(() => {
     if (product.variants === null) return [[], []];
@@ -48,7 +52,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
   const [variantImages, setVariantImages] = useState<string[]>([]);
   const mainImage = useMemo(() => {
-    return getProductMainImage(product.id);
+    return getProductMainImage();
   }, [categorySlug]);
   const [current, setCurrent] = useState(mainImage);
 
@@ -151,6 +155,12 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
       return [...otherVariants, selectedVariant];
     });
+  };
+
+  const handleVariantDeletion = (variantName: string) => {
+    setSelectedVariants((prev) =>
+      prev.filter((variant) => variant.name !== variantName),
+    );
   };
 
   useEffect(() => {
@@ -259,7 +269,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
             </Typography>
             <Box marginY={3}>
               <Box display={'flex'} alignItems={'baseline'}>
-                {product.price && (
+                {product.price ? (
                   <>
                     <Typography variant={'h5'} fontWeight={700}>
                       <Price price={product.price} />
@@ -268,6 +278,18 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                       {t('pricePreOwnedConditions')}
                     </Typography>
                   </>
+                ) : (
+                  false
+                )}
+                {product.fromPrice ? (
+                  <>
+                    <Typography variant={'h5'} fontWeight={700}>
+                      {t('fromPrice')}
+                      <Price price={product.fromPrice} />
+                    </Typography>
+                  </>
+                ) : (
+                  false
                 )}
               </Box>
             </Box>
@@ -333,28 +355,22 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
             )}
             {variantNames.map((variantName) => (
               <Box key={variantName} marginY={3}>
-                <Typography>
-                  {`${t(`attributes.${variantName}`)} : `}
-                  <Typography component={'span'} fontWeight={700}>
-                    {
-                      selectedVariants.find(
-                        (variant) => variant.name === variantName,
-                      )?.value
-                    }
-                  </Typography>
+                <Typography fontWeight={'bold'}>
+                  {t(`attributes.${variantName}`)}
                 </Typography>
-                <Stack direction={'row'} spacing={1} marginTop={0.5}>
+                <Stack
+                  direction={'row'}
+                  flexWrap={'wrap'}
+                  gap={1}
+                  marginTop={0.5}
+                >
                   {variants
                     .find((v) => v.name === variantName)
                     .values.map((value) => (
-                      <Box
+                      <Chip
+                        label={value}
                         key={value}
-                        onClick={() => {
-                          handleVariantSelection(variantName, value);
-                        }}
                         sx={{
-                          borderRadius: 1,
-                          padding: 1,
                           border: `2px solid ${
                             selectedVariants.find(
                               (variant) => variant.name === variantName,
@@ -362,11 +378,20 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                               ? theme.palette.primary.main
                               : theme.palette.divider
                           }`,
-                          cursor: 'pointer',
                         }}
-                      >
-                        <Typography>{value}</Typography>
-                      </Box>
+                        onClick={() => {
+                          handleVariantSelection(variantName, value);
+                        }}
+                        onDelete={
+                          selectedVariants.find(
+                            (variant) => variant.name === variantName,
+                          )?.value === value
+                            ? () => {
+                                handleVariantDeletion(variantName);
+                              }
+                            : null
+                        }
+                      />
                     ))}
                 </Stack>
               </Box>

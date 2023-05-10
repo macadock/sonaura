@@ -1,4 +1,3 @@
-import { Box, Button, Grid, Modal, Stack, TextField } from '@mui/material';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import supabase from 'lib/supabase';
 import {
@@ -13,8 +12,15 @@ import { useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import { initialValues, shopForm } from './shops.validator';
 import { v4 as uuidv4 } from 'uuid';
-import { Close, Delete } from '@mui/icons-material';
+import Close from '@mui/icons-material/Close';
+import Delete from '@mui/icons-material/Delete';
 import ShopTimeTable from 'components/dashboard/Shops/ShopTimeTable';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 
 interface Props {
   shopId: string;

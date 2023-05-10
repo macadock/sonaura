@@ -1,8 +1,11 @@
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import i18nConfig from '../../next-i18next.config';
+import { NextPage } from 'next';
 
-const DashboardHome: React.FC = () => {
-  return null;
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import i18nConfig from 'next-i18next.config';
+import DashboardNewProductView from 'views/Dashboard/Products/DashboardNewProductView';
+
+const DashboardNewProduct: NextPage = () => {
+  return <DashboardNewProductView />;
 };
 
 export const getStaticProps = async ({ locale }) => {
@@ -17,4 +20,4 @@ export const getStaticProps = async ({ locale }) => {
   };
 };
 
-export default DashboardHome;
+export default DashboardNewProduct;

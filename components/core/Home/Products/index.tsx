@@ -12,7 +12,7 @@ import { useTheme } from '@mui/material/styles';
 import { Link } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
-import { getProducts } from 'lib/supabase/products';
+import { getProducts, Product } from 'lib/supabase/products';
 import supabase from 'lib/supabase';
 
 const Products: React.FC<{ productNumberMax?: number }> = ({
@@ -20,12 +20,12 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
 }) => {
   const { t } = useTranslation('homepage', { keyPrefix: 'products' });
   const theme = useTheme();
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const fetchProducts = async () => {
     const { data } = await getProducts();
     if (data) {
-      setProducts(data);
+      setProducts(data as Product[]);
     }
   };
 
@@ -33,9 +33,10 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
     fetchProducts();
   }, []);
 
-  const getProductMainImage = (productId: string): string => {
-    const bucket = 'products';
-    const file = `${productId}/main`;
+  const getProductMainImage = (product: Product): string => {
+    if (!product?.mainImage) return '';
+    const bucket = product.mainImage['bucket'];
+    const file = product.mainImage['file'];
     const { data } = supabase.storage.from(bucket).getPublicUrl(file);
     return data.publicUrl;
   };
@@ -113,7 +114,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
                           <Box
                             component={LazyLoadImage}
                             effect="blur"
-                            src={getProductMainImage(product.id)}
+                            src={getProductMainImage(product)}
                             sx={{
                               width: '100%',
                               objectFit: 'cover',
@@ -141,13 +142,26 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
                           </Typography>
 
                           <CardActions sx={{ justifyContent: 'space-between' }}>
-                            {product.price && (
+                            {product.price ? (
                               <Typography
                                 sx={{ fontWeight: 700 }}
                                 color={'primary'}
                               >
                                 <Price price={product.price} />
                               </Typography>
+                            ) : (
+                              false
+                            )}
+                            {product.fromPrice ? (
+                              <Typography
+                                sx={{ fontWeight: 700 }}
+                                color={'primary'}
+                              >
+                                {t('fromPrice')}
+                                <Price price={product.fromPrice} />
+                              </Typography>
+                            ) : (
+                              false
                             )}
                             <Button
                               component={Link}

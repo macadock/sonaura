@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import Categories from 'components/core/Home/Categories';
 import Banner from 'components/core/Home/Banner';
 import Hero from 'components/core/Home/Hero';

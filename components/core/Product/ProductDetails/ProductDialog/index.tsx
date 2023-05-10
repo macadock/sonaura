@@ -1,5 +1,8 @@
-import { Close } from '@mui/icons-material';
-import { Box, Dialog, useMediaQuery, useTheme } from '@mui/material';
+import Close from '@mui/icons-material/Close';
+import Box from '@mui/material/Box';
+import Dialog from '@mui/material/Dialog';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Product } from 'lib/supabase/products';
 import ProductForm from '../ProductForm';
 

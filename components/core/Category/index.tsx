@@ -18,9 +18,9 @@ interface Props {
   products: Product[];
 }
 
-const getProductMainImage = (productId: string): string => {
-  const bucket = 'products';
-  const file = `${productId}/main`;
+const getProductMainImage = (image: Product['mainImage']): string => {
+  const bucket = image['bucket'];
+  const file = image['file'];
   const { data } = supabase.storage.from(bucket).getPublicUrl(file);
   return data.publicUrl;
 };
@@ -61,7 +61,11 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                 <Link href={`/${slug}/${product.slug}`}>
                   <CardMedia
                     title={product.name}
-                    image={getProductMainImage(product.id)}
+                    image={
+                      product?.mainImage
+                        ? getProductMainImage(product.mainImage)
+                        : ''
+                    }
                     sx={{
                       position: 'relative',
                       height: 320,
@@ -104,9 +108,22 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                   alignItems={'center'}
                   justifyContent={'space-between'}
                 >
-                  <Typography fontWeight={700}>
-                    <Price price={product.price} />
-                  </Typography>
+                  {product.price ? (
+                    <Typography fontWeight={700}>
+                      <Price price={product.price} />
+                    </Typography>
+                  ) : (
+                    false
+                  )}
+
+                  {product.fromPrice ? (
+                    <Typography fontWeight={700}>
+                      {t('fromPrice')}
+                      <Price price={product.fromPrice} />
+                    </Typography>
+                  ) : (
+                    false
+                  )}
                 </Box>
                 <Box marginTop={2}>
                   <Button

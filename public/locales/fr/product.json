@@ -13,13 +13,14 @@
   "addToCart": "Ajouter au panier",
   "pricePreOwnedConditions": "prix hors livraison et installation",
   "addedToCart": "Ajouté au panier",
+  "fromPrice": "A partir de ",
   "attributes": {
     "size": "Taille",
     "color": "Couleur",
     "frameColor": "Couleur du cadre",
     "soundbarColor": "Couleur de la barre de son",
     "supportColor": "Couleur du support",
-    "support": "Support"
+    "positioning": "Support"
   },
   "form": {
     "firstName": "Prénom",

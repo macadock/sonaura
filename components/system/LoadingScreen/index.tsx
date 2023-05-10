@@ -1,5 +1,6 @@
-import { CircularProgress, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import { useTranslation } from 'next-i18next';
 
 interface Props {

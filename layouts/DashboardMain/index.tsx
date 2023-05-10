@@ -4,7 +4,8 @@ import AppBar from '@mui/material/AppBar';
 
 import Container from 'components/system/Container';
 import { useTranslation } from 'next-i18next';
-import { Button, Link } from '@mui/material';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 import { useRouter } from 'next/router';
 import { useSession } from '@supabase/auth-helpers-react';
 import Login from 'components/dashboard/Login';
@@ -16,7 +17,7 @@ interface Props {
 }
 
 const DashboardMain: React.FC<Props> = ({ children }) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'dashboard']);
   const router = useRouter();
   const session = useSession();
 
@@ -65,7 +66,7 @@ const DashboardMain: React.FC<Props> = ({ children }) => {
                   router.asPath.includes('/dashboard/products') ? 700 : 400
                 }
               >
-                {'Produits'}
+                {t('products.name', { ns: 'dashboard' })}
               </Link>
               <Link
                 sx={{ paddingX: { md: 0.8, lg: 2 } }}
@@ -77,7 +78,7 @@ const DashboardMain: React.FC<Props> = ({ children }) => {
                   router.asPath.includes('/dashboard/categories') ? 700 : 400
                 }
               >
-                {'Catégories'}
+                {t('categories.name', { ns: 'dashboard' })}
               </Link>
               <Link
                 sx={{ paddingX: { md: 0.8, lg: 2 } }}
@@ -89,10 +90,10 @@ const DashboardMain: React.FC<Props> = ({ children }) => {
                   router.asPath.includes('/dashboard/shops') ? 700 : 400
                 }
               >
-                {'Magasins'}
+                {t('shops.name', { ns: 'dashboard' })}
               </Link>
               <Button onClick={signOut} sx={{ paddingX: { md: 0.8, lg: 2 } }}>
-                {'Se déconnecter'}
+                {t('logout', { ns: 'dashboard' })}
               </Button>
             </Box>
           </Box>

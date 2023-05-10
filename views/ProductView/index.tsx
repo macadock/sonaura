@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 
 import Container from 'components/system/Container';
 import ProductDetails from 'components/core/Product/ProductDetails';
-import { Breadcrumbs, Link } from '@mui/material';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
 import { merchantName } from 'appConstants';
 import { Product } from 'lib/supabase/products';
 import { useRouter } from 'next/router';

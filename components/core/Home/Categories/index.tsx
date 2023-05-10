@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
-import { useTheme } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useSiteData } from 'contexts/data';
 import supabase from 'lib/supabase';
 

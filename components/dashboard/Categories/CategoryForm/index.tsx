@@ -1,4 +1,3 @@
-import { Button, Grid, Stack, TextField } from '@mui/material';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import supabase from 'lib/supabase';
 import {
@@ -13,7 +12,11 @@ import { useMemo, useState } from 'react';
 import { initialValues, categoryForm } from './category.validator';
 import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
-import { Delete } from '@mui/icons-material';
+import Delete from '@mui/icons-material/Delete';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 
 interface Props {
   categoryId: string;
