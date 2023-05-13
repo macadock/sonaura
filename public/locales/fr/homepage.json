@@ -23,16 +23,16 @@
     "subtitle": "Produits",
     "description": "Vivez une expérience audiovisuelle comme jamais auparavant.",
     "moreDetails": "Plus en détail",
-    "fromPrice": "A partir de "
+    "fromPrice": "À partir de "
   },
   "preOwned": {
     "title": "Produits d'occasion",
-    "subtitle": "Occasion",
+    "subtitle": "Occasions",
     "description": "Prolongez la vie de produits Bang & Olufsen tout en vous faisant plaisir.",
     "moreDetails": "Plus en détail"
   },
   "newsletter": {
-    "title": "Inscrivez-vous à notre newsletter",
+    "title": "Inscrivez-vous à la newsletter Sonaura",
     "subtitle": "Soyez informé des dernières nouveautés Bang & Olufsen",
     "placeholder": "Votre adresse email",
     "loading": "Inscription...",

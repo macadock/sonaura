@@ -67,6 +67,7 @@ export interface Database {
           id: string;
           mainImage: Json | null;
           name: string;
+          onHomepage: boolean;
           price: number | null;
           quantity: number | null;
           shopId: string | null;
@@ -82,6 +83,7 @@ export interface Database {
           id?: string;
           mainImage?: Json | null;
           name: string;
+          onHomepage?: boolean;
           price?: number | null;
           quantity?: number | null;
           shopId?: string | null;
@@ -97,6 +99,7 @@ export interface Database {
           id?: string;
           mainImage?: Json | null;
           name?: string;
+          onHomepage?: boolean;
           price?: number | null;
           quantity?: number | null;
           shopId?: string | null;

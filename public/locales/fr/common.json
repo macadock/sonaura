@@ -6,7 +6,7 @@
     "title": "Catégories",
     "noProducts": "Aucuns produits",
     "moreDetails": "Plus en détail",
-    "fromPrice": "A partir de "
+    "fromPrice": "À partir de "
   },
   "cart": {
     "title": "Panier",
@@ -18,7 +18,7 @@
     "discoverPreOwnedProducts": "Découvrez nos produits d'occasion",
     "close": "Fermer",
     "noDelivery": "Nos produits d'occasion ne font pas l'objet d'une livraison.",
-    "contactUsToCollect": "Merci de nous contacter pour les modalités de retrait.",
+    "contactUsToCollect": "Merci de nous contacter pour les modalités de retrait et de livraison de nos produits d'occasion.",
     "ourShops": "Nos boutiques."
   },
   "footer": {

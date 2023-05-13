@@ -12,7 +12,10 @@ export async function getCategoryBySlug(slug: string) {
 }
 
 export async function getCategories() {
-  return supabase.from('categories').select('*');
+  return supabase
+    .from('categories')
+    .select('*')
+    .order('name', { ascending: true });
 }
 
 export async function createCategory(category: CreateCategoryInput) {

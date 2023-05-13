@@ -17,6 +17,7 @@ const People: React.FC = () => {
               src={'https://media.graphassets.com/CGglaVGhTJCqbPy0ftfx'}
               layout={'fill'}
               objectFit={'cover'}
+              objectPosition={'top'}
               alt={'Gérant du magasin de Lyon'}
             />
           </Box>
