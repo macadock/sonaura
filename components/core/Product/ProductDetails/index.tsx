@@ -274,9 +274,13 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     <Typography variant={'h5'} fontWeight={700}>
                       <Price price={product.price} />
                     </Typography>
-                    <Typography variant="body2" sx={{ marginLeft: '0.5rem' }}>
-                      {t('pricePreOwnedConditions')}
-                    </Typography>
+                    {isOccasion ? (
+                      <Typography variant="body2" sx={{ marginLeft: '0.5rem' }}>
+                        {t('pricePreOwnedConditions')}
+                      </Typography>
+                    ) : (
+                      false
+                    )}
                   </>
                 ) : (
                   false
@@ -309,7 +313,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               product={product}
               isOccasion={isOccasion}
             />
-            {product.quantity > 0 && isOccasion ? (
+            {isOccasion ? (
               <>
                 <Stack marginTop={3} direction={'column'} spacing={2}>
                   <Button

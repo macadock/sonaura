@@ -31,8 +31,8 @@ export const DataContext = React.createContext<DataContextValue>({
 });
 
 export const DataProvider: React.FC = (props) => {
-  const [categories, setCategories] = React.useState(null);
-  const [shops, setShops] = React.useState(null);
+  const [categories, setCategories] = React.useState<Category[]>([]);
+  const [shops, setShops] = React.useState<Shop[]>([]);
 
   const fetch = async () => {
     const { data: category } = await getCategories();
