@@ -3,14 +3,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
-import { ImageVariant, Variant } from 'types';
+import { VariantImage, Variant } from 'types';
 
 interface Props {
   variant: Variant;
-  image: ImageVariant;
+  image: VariantImage;
   handleChange: (
-    image: ImageVariant,
-    option: ImageVariant['variants'][number],
+    image: VariantImage,
+    option: VariantImage['variants'][number],
   ) => Promise<void>;
 }
 const AttributeDropdown: React.FC<Props> = ({

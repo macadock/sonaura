@@ -17,7 +17,7 @@ import Price from 'utils/Price';
 import { Product } from 'lib/supabase/products';
 import { useRouter } from 'next/router';
 import supabase from 'lib/supabase';
-import { Variant } from 'types';
+import { VariantImage, Variant } from 'types';
 import Chip from '@mui/material/Chip';
 
 interface Props {
@@ -40,6 +40,13 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
     return data.publicUrl;
   };
 
+  const getProductImage = (image: VariantImage): string => {
+    const bucket = image.image['bucket'];
+    const file = image.image['file'];
+    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+    return data.publicUrl;
+  };
+
   const [variants, variantNames] = useMemo(() => {
     if (product.variants === null) return [[], []];
     const variants = product.variants as Variant[];
@@ -50,14 +57,42 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
     { name: string; value: string }[]
   >([]);
 
-  const [variantImages, setVariantImages] = useState<string[]>([]);
+  const [variantImages, setVariantImages] = useState<VariantImage[]>([]);
   const mainImage = useMemo(() => {
     return getProductMainImage();
   }, [categorySlug]);
-  const [current, setCurrent] = useState(mainImage);
+  const [current, setCurrent] = useState<string>(mainImage);
 
   const [alreadyAddedToCart, setAlreadyAddedToCart] = useState<boolean>(false);
   const [dialogState, setDialogState] = useState<boolean>(false);
+
+  useEffect(() => {
+    const keys = selectedVariants.map((variant) => variant.name);
+    if (keys.length === 0) {
+      setVariantImages([]);
+      return;
+    }
+
+    const images = (product.variantsImages as VariantImage[]).filter(
+      (variantImage) => {
+        const keep: boolean[] = [];
+        keys.forEach((key) => {
+          const getVariant = selectedVariants.find((s) => s.name === key);
+          const variant = variantImage.variants.find(
+            (variant) => variant.value === getVariant.value,
+          );
+          if (variant) {
+            keep.push(true);
+          } else {
+            keep.push(false);
+          }
+        });
+        const hasFalseValues = keep.find((k) => k === false);
+        return hasFalseValues === undefined ? true : false;
+      },
+    );
+    setVariantImages(images);
+  }, [selectedVariants]);
 
   const isOccasion = categorySlug === 'occasion';
 
@@ -165,7 +200,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
   useEffect(() => {
     if (variantImages.length > 0) {
-      setCurrent(variantImages[0]);
+      setCurrent(getProductImage(variantImages[0]));
     }
   }, [variantImages]);
 
@@ -209,35 +244,34 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     borderRadius: 2,
                   },
                 }}
+                onClick={() => setCurrent(getProductMainImage())}
               >
                 <img src={mainImage} alt={product.name} />
               </Box>
-              {variantImages.length > 0
-                ? variantImages.map((item, i) => (
-                    <Box
-                      key={i}
-                      onClick={() => setCurrent(item)}
-                      sx={{
-                        width: 80,
-                        height: 'auto',
-                        cursor: 'pointer',
-                        '& img': {
-                          width: 1,
-                          height: 1,
-                          objectFit: 'cover',
-                          borderRadius: 2,
-                        },
-                        position: 'relative',
-                      }}
-                    >
-                      <Bubble
-                        color={theme.palette.primary.main}
-                        position={'absolute'}
-                      />
-                      <img src={item} alt={product.name} />
-                    </Box>
-                  ))
-                : null}
+              {variantImages.map((item, i) => (
+                <Box
+                  key={i}
+                  onClick={() => setCurrent(getProductImage(item))}
+                  sx={{
+                    width: 80,
+                    height: 'auto',
+                    cursor: 'pointer',
+                    '& img': {
+                      width: 1,
+                      height: 1,
+                      objectFit: 'cover',
+                      borderRadius: 2,
+                    },
+                    position: 'relative',
+                  }}
+                >
+                  <Bubble
+                    color={theme.palette.primary.main}
+                    position={'absolute'}
+                  />
+                  <img src={getProductImage(item)} alt={product.name} />
+                </Box>
+              ))}
             </Stack>
             {variantImages.length > 0 ? (
               <Box display={'flex'} alignItems={'center'} gap={'0.5rem'}>
