@@ -17,6 +17,7 @@ import { appWithTranslation } from 'next-i18next';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import supabase from 'lib/supabase';
 import { useRouter } from 'next/router';
+import { Analytics } from '@vercel/analytics/react';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function App({ Component, pageProps }) {
@@ -37,6 +38,7 @@ function App({ Component, pageProps }) {
       <Page>
         <Component {...pageProps} />
         <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
+        <Analytics />
       </Page>
     </SessionContextProvider>
   );
