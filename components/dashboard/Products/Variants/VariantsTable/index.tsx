@@ -13,7 +13,7 @@ import {
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { ImageVariant, Variant } from 'types';
+import { VariantImage, Variant } from 'types';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
@@ -24,12 +24,12 @@ interface Props {
 const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
   const { t } = useTranslation('dashboard');
 
-  const [images, setImages] = useState<ImageVariant[]>([]);
+  const [images, setImages] = useState<VariantImage[]>([]);
 
   const fetchProduct = async () => {
     const { data } = await getProductById(productId);
     if (data?.variantsImages) {
-      setImages(data.variantsImages as ImageVariant[]);
+      setImages(data.variantsImages as VariantImage[]);
     }
   };
 
@@ -48,7 +48,7 @@ const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
       return;
     }
 
-    const image: ImageVariant = {
+    const image: VariantImage = {
       image: {
         bucket,
         file: fileName,
@@ -59,8 +59,8 @@ const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
   };
 
   const handleImageVariant = async (
-    image: ImageVariant,
-    option: ImageVariant['variants'][number],
+    image: VariantImage,
+    option: VariantImage['variants'][number],
   ) => {
     let variant = images.find(
       ({ image: im }) =>

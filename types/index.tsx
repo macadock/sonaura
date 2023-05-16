@@ -9,27 +9,17 @@ export type Variant = {
   values: string[];
 };
 
-export type VariantImage = {
-  variants: VariantReference[];
-  image: Image;
-};
-
-export type VariantReference = {
-  id: string;
-  option: string;
-};
-
 export type Image = {
   bucket: string;
   file: string;
 };
 
-export type ImageVariant = {
+export type VariantImage = {
   image: Image;
-  variants?: ImageVariantOption[];
+  variants?: VariantImageOption[];
 };
 
-export type ImageVariantOption = {
+export type VariantImageOption = {
   name: string;
   value: string;
 };
