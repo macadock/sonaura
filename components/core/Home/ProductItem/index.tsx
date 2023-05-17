@@ -6,13 +6,13 @@ import { useTheme } from '@mui/material/styles';
 import supabase from 'lib/supabase';
 import { Product } from 'lib/supabase/products';
 import Link from 'next/link';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTranslation } from 'next-i18next';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import Price from 'utils/Price';
 import Button from '@mui/material/Button';
+import Image from 'next/image';
 
 interface Props {
   product: Product;
@@ -57,33 +57,19 @@ const ProductItem: React.FC<Props> = ({ product, index }) => {
                 height: { xs: 240, sm: 340, md: 280 },
                 overflow: 'hidden',
                 paddingBottom: 0,
-                background: theme.palette.alternate.main,
+                background: theme.palette.background.default,
                 display: 'flex',
                 alignItems: 'flex-end',
                 justifyContent: 'center',
                 cursor: 'pointer',
               }}
             >
-              <Box
-                component={LazyLoadImage}
-                effect="blur"
+              <Image
                 src={getProductMainImage(product)}
-                sx={{
-                  width: '100%',
-                  objectFit: 'cover',
-                  '& img': {},
-                }}
+                alt={product.name}
+                layout={'fill'}
+                objectFit={'contain'}
               />
-              <Box
-                display={'flex'}
-                justifyContent={'flex-end'}
-                position={'absolute'}
-                top={0}
-                left={0}
-                right={0}
-                padding={2}
-                width={1}
-              ></Box>
             </CardMedia>
           </Link>
           <CardContent>

@@ -6,7 +6,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Link from '@mui/material/Link';
 
 import NavItem from './NavItem';
-import TopNav from 'components/system/TopNav';
 import ShoppingCartTwoTone from '@mui/icons-material/ShoppingCartTwoTone';
 import CartDrawer from '../../core/Cart/CartDrawer';
 import { useRouter } from 'next/router';
@@ -118,9 +117,6 @@ const Topbar: React.FC<Props> = ({ onSidebarOpen, colorInvert = false }) => {
               right={'0.6rem'}
             />
           ) : null}
-        </Box>
-        <Box>
-          <TopNav />
         </Box>
       </Box>
       <Box sx={{ display: { xs: 'flex', md: 'none' } }} alignItems={'center'}>

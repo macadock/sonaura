@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import supabase from 'lib/supabase';
 import { VariantImage, Variant } from 'types';
 import Chip from '@mui/material/Chip';
+import Image from 'next/image';
 
 interface Props {
   product: Product;
@@ -66,13 +67,18 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const [alreadyAddedToCart, setAlreadyAddedToCart] = useState<boolean>(false);
   const [dialogState, setDialogState] = useState<boolean>(false);
 
+  const noOptionSelected = selectedVariants.length === 0;
+  const isMissingOptionSelection =
+    selectedVariants.length < variantNames.length;
+
   useEffect(() => {
-    const keys = selectedVariants.map((variant) => variant.name);
-    if (keys.length === 0) {
+    if (noOptionSelected || isMissingOptionSelection) {
       setVariantImages([]);
+      setCurrent(getProductMainImage());
       return;
     }
 
+    const keys = selectedVariants.map((variant) => variant.name);
     const images = (product.variantsImages as VariantImage[]).filter(
       (variantImage) => {
         const keep: boolean[] = [];
@@ -211,19 +217,19 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
           <Box>
             {current && (
               <Box
+                position={'relative'}
                 sx={{
                   marginBottom: 2,
-                  width: 1,
-                  height: 'auto',
-                  '& img': {
-                    width: 1,
-                    height: 1,
-                    objectFit: 'cover',
-                    borderRadius: 2,
-                  },
+                  width: '100%',
+                  aspectRatio: '1 / 1',
                 }}
               >
-                <img src={current} alt={product.name} />
+                <Image
+                  src={current}
+                  alt={product.name}
+                  layout="fill"
+                  objectFit="contain"
+                />
               </Box>
             )}
             <Stack
@@ -233,9 +239,10 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               flexWrap={'wrap'}
             >
               <Box
+                position={'relative'}
                 sx={{
                   width: 80,
-                  height: 'auto',
+                  height: 80,
                   cursor: 'pointer',
                   '& img': {
                     width: 1,
@@ -246,15 +253,21 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 }}
                 onClick={() => setCurrent(getProductMainImage())}
               >
-                <img src={mainImage} alt={product.name} />
+                <Image
+                  src={mainImage}
+                  alt={product.name}
+                  layout="fill"
+                  objectFit="contain"
+                />
               </Box>
               {variantImages.map((item, i) => (
                 <Box
                   key={i}
+                  position={'relative'}
                   onClick={() => setCurrent(getProductImage(item))}
                   sx={{
                     width: 80,
-                    height: 'auto',
+                    height: 80,
                     cursor: 'pointer',
                     '& img': {
                       width: 1,
@@ -262,14 +275,18 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                       objectFit: 'cover',
                       borderRadius: 2,
                     },
-                    position: 'relative',
                   }}
                 >
                   <Bubble
                     color={theme.palette.primary.main}
                     position={'absolute'}
                   />
-                  <img src={getProductImage(item)} alt={product.name} />
+                  <Image
+                    src={getProductImage(item)}
+                    alt={product.name}
+                    layout="fill"
+                    objectFit="contain"
+                  />
                 </Box>
               ))}
             </Stack>
@@ -391,6 +408,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 </Button>
               </Stack>
             )}
+
             {variantNames.map((variantName) => (
               <Box key={variantName} marginY={3}>
                 <Typography fontWeight={'bold'}>
@@ -434,6 +452,13 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 </Stack>
               </Box>
             ))}
+            {!noOptionSelected && isMissingOptionSelection ? (
+              <Typography variant={'caption'}>
+                {t('selectAllVariants')}
+              </Typography>
+            ) : (
+              false
+            )}
             {/* <Box marginY={3}>
               {currentProduct.colors.length > 0 && (
                 <Box marginY={2}>

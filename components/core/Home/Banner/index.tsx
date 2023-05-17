@@ -5,13 +5,14 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
 
 const Banner: React.FC = () => {
   const { t } = useTranslation('homepage', { keyPrefix: 'banner' });
   return (
     <Box position={'relative'}>
       <Grid container>
-        <Grid item xs={12} sm={6} data-aos={'fade-up'}>
+        <Grid item xs={12} md={6} data-aos={'fade-up'}>
           <Box marginBottom={2}>
             <Typography
               variant="h4"
@@ -44,10 +45,33 @@ const Banner: React.FC = () => {
         </Grid>
       </Grid>
       <Box
+        sx={{
+          width: 500,
+          height: 500,
+          position: 'absolute',
+          bottom: '-190px',
+          right: 0,
+          display: { xs: 'none', md: 'block' },
+        }}
+      >
+        <Box position={'relative'} width="100%" height="100%">
+          <Image
+            src={
+              'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/banner_image'
+            }
+            width={'100%'}
+            height={'100%'}
+            alt=""
+            layout={'fill'}
+            objectFit="contain"
+          />
+        </Box>
+      </Box>
+      {/* <Box
         component={'img'}
-        src={
-          'https://images.ctfassets.net/8cd2csgvqd3m/5prVp155k2D9mTTeNayQC1/ba075fd5e50c90514ec70d60c7390390/Hamorny_Fabric_65_open_cms.png?q=90&fm=webp&w=1200&h=1200&fit=fill'
-        }
+        // src={
+        //   'https://images.ctfassets.net/8cd2csgvqd3m/5prVp155k2D9mTTeNayQC1/ba075fd5e50c90514ec70d60c7390390/Hamorny_Fabric_65_open_cms.png?q=90&fm=webp&w=1200&h=1200&fit=fill'
+        // }
         sx={{
           maxWidth: 500,
           height: 'auto',
@@ -56,7 +80,7 @@ const Banner: React.FC = () => {
           right: 0,
           display: { xs: 'none', sm: 'block' },
         }}
-      />
+      /> */}
     </Box>
   );
 };
