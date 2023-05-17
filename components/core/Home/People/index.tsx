@@ -14,7 +14,9 @@ const People: React.FC = () => {
         <Grid item xs={12} md={4} height={{ xs: '40vh', md: 'auto' }}>
           <Box position={'relative'} width={'100%'} height={'100%'}>
             <Image
-              src={'https://media.graphassets.com/CGglaVGhTJCqbPy0ftfx'}
+              src={
+                'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/gerant_lyon'
+              }
               layout={'fill'}
               objectFit={'cover'}
               objectPosition={'top'}
@@ -49,7 +51,9 @@ const People: React.FC = () => {
         <Grid item xs={12} md={4} height={{ xs: '40vh', md: 'auto' }}>
           <Box position={'relative'} width={'100%'} height={'100%'}>
             <Image
-              src={'https://media.graphassets.com/tiVZCCX5QYy3Y6SHD80r'}
+              src={
+                'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/gerant_grenoble'
+              }
               layout={'fill'}
               objectFit={'cover'}
               alt={'Gérant du magasin de Grenoble'}

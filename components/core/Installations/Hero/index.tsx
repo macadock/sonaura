@@ -13,7 +13,7 @@ const Hero: React.FC = () => {
       position={'relative'}
       sx={{
         backgroundImage:
-          'url("https://images.ctfassets.net/8cd2csgvqd3m/3WFnLzP1lRikvOvVk8axRD/ff583fa5408c351fb0ec6667099b5736/stage_in_living_room.png")',
+          'url("https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/installations_hero")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         marginTop: -13,

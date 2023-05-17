@@ -13,6 +13,7 @@ import Price from 'utils/Price';
 import { Product } from 'lib/supabase/products';
 import { useRouter } from 'next/router';
 import supabase from 'lib/supabase';
+import Image from 'next/image';
 
 interface Props {
   products: Product[];
@@ -60,19 +61,19 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
               >
                 <Link href={`/${slug}/${product.slug}`}>
                   <CardMedia
-                    title={product.name}
-                    image={
-                      product?.mainImage
-                        ? getProductMainImage(product.mainImage)
-                        : ''
-                    }
                     sx={{
                       position: 'relative',
                       height: 320,
                       overflow: 'hidden',
-                      borderRadius: 2,
                     }}
-                  ></CardMedia>
+                  >
+                    <Image
+                      src={getProductMainImage(product.mainImage)}
+                      alt={product.name}
+                      layout={'fill'}
+                      objectFit={'contain'}
+                    />
+                  </CardMedia>
                 </Link>
                 <Box marginTop={2}>
                   <Link
