@@ -72,7 +72,7 @@ const Topbar: React.FC<Props> = ({ onSidebarOpen, colorInvert = false }) => {
             color={theme.palette.text.primary}
             variant="caption"
           >
-            {'Votre distributeur Bang & Olufsen en Auvergne Rhône-Alpes'}
+            {'Distributeur Bang & Olufsen Auvergne Rhône-Alpes'}
           </Typography>
         </Box>
       </Box>

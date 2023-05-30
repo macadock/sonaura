@@ -7,7 +7,7 @@
   },
   "people": {
     "title": "Passionnés.",
-    "text": "Vos boutiques de Lyon et Grenoble sont gérées par des passionnés qui sont présents pour partager leur passion et leur savoir-faire autour de Bang & Olufsen."
+    "text": "Vos boutiques de Lyon et Grenoble sont gérées par des passionnés qui sont présents pour partager leur passion Bang & Olufsen et leur savoir-faire."
   },
   "categories": {
     "title": "Explorez nos produits",
@@ -33,7 +33,7 @@
   },
   "newsletter": {
     "title": "Inscrivez-vous à la newsletter Sonaura",
-    "subtitle": "Soyez informé des dernières nouveautés Bang & Olufsen",
+    "subtitle": "Tenez-vous informé",
     "placeholder": "Votre adresse email",
     "loading": "Inscription...",
     "success": "Vous allez recevoir un email pour confirmer l'inscription",
