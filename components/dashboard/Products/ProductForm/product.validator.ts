@@ -23,4 +23,5 @@ export const initialValues: InsertOrUpdateProduct = {
   slug: '',
   categoryId: '',
   shopId: '',
+  quantity: 1,
 };

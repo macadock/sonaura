@@ -158,6 +158,9 @@ const ProductForm: React.FC<Props> = ({
                 false
               )}
             </Grid>
+            <Grid item xs={6}>
+              <NumericField name={'quantity'} />
+            </Grid>
             <Grid item xs={12}>
               <Field name={'mainImage'}>
                 {({

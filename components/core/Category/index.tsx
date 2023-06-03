@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -38,6 +38,18 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
     );
   }
 
+  const sortedProducts = useMemo(() => {
+    return products.sort((prev, product) => {
+      const priceA = prev.price || prev.fromPrice;
+      const priceB = product.price || product.fromPrice;
+
+      if (priceA < priceB) return -1;
+      if (priceA > priceB) return 1;
+
+      return 0;
+    });
+  }, [products]);
+
   return (
     <Container>
       <Grid
@@ -45,7 +57,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
         spacing={4}
         sx={{ display: 'flex', justifyContent: 'center' }}
       >
-        {products.map((product, i) => (
+        {sortedProducts.map((product, i) => (
           <Grid item xs={12} sm={6} md={3} key={i}>
             <Box display={'block'} width={1} height={1}>
               <Card

@@ -54,6 +54,7 @@
   "slug": "Slug",
   "fromPrice": "Prix à partir de",
   "price": "Prix fixe",
+  "quantity": "Quantité",
   "category": "Catégorie",
   "shop": "Magasin",
   "description": "Description",
