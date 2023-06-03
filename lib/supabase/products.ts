@@ -52,7 +52,7 @@ export async function getProductsByCategory(categoryId: string) {
   return supabase
     .from('products')
     .select('*')
-    .order('name', { ascending: true })
+    .order('price', { ascending: true })
     .eq('categoryId', categoryId);
 }
 

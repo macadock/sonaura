@@ -8,7 +8,7 @@ import Delete from '@mui/icons-material/Delete';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
-import { getProductsByIds } from 'lib/supabase/products';
+import { getProductsByIds, Product } from 'lib/supabase/products';
 import { useSiteData } from 'contexts/data';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -16,6 +16,7 @@ import Link from 'next/link';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import MuiLink from '@mui/material/Link';
+import supabase from 'lib/supabase';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -24,15 +25,9 @@ interface Props {
 }
 
 const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState<Product[]>([]);
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
   const { isEmpty, items, removeItem, totalItems } = useCart();
-  const { categories } = useSiteData();
-
-  const getCategorySlug = (categoryId: string): string => {
-    if (!categories) return '';
-    return categories.find((category) => category.id === categoryId).slug;
-  };
 
   const fetchProducts = async () => {
     if (!items) return;
@@ -41,7 +36,10 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
 
     const { data } = await getProductsByIds(ids);
 
-    if (!data) return;
+    if (!data) {
+      setProducts([]);
+      return;
+    }
 
     const products = items.map((item) => {
       const product = data.find((product) => product.id === item.id);
@@ -52,7 +50,7 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
       };
     });
 
-    setProducts(products);
+    setProducts(products as Product[]);
   };
 
   useEffect(() => {
@@ -61,6 +59,14 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
 
   const closeCart = () => {
     onClose();
+  };
+
+  const getProductImage = (image: Product['mainImage']): string => {
+    const bucket = image['bucket'];
+    const file = image['file'];
+
+    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+    return data.publicUrl;
   };
 
   return (
@@ -138,15 +144,11 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                         }}
                       >
                         <Link
-                          href={`/${getCategorySlug(product.categoryId)}/${
-                            product.slug
-                          }`}
+                          href={`/${product.categories.slug}/${product.slug}`}
                           passHref
                         >
                           <Image
-                            src={
-                              'https://media.graphassets.com/wEANADQnT5W9C9HgeaLv'
-                            }
+                            src={getProductImage(product.mainImage)}
                             objectFit={'cover'}
                             layout={'responsive'}
                             width={'5rem'}

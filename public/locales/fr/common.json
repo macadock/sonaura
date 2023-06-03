@@ -17,8 +17,8 @@
     "product_other": "{{ count }} produits d'occasion",
     "discoverPreOwnedProducts": "Découvrez nos produits d'occasion",
     "close": "Fermer",
-    "noDelivery": "Nos produits d'occasion ne font pas l'objet d'une livraison.",
-    "contactUsToCollect": "Merci de nous contacter pour les modalités de retrait et de livraison de nos produits d'occasion.",
+    "noDelivery": "Besoin d'une livraison et/ou d'une installation ?",
+    "contactUsToCollect": "Nous sommes là pour répondre à vos besoins.",
     "ourShops": "Nos boutiques."
   },
   "footer": {
@@ -33,5 +33,9 @@
     "button": "Changer de thème",
     "notification": "Vous utilisez le thème {{ theme }}"
   },
-  "loading": "Chargement en cours"
+  "loading": "Chargement en cours",
+  "preOwned": {
+    "title": "Le prix de nos produits d'occasion inclus l'expédition partout en France.\nPour la livraison et/ou l'installation merci de nous contacter.",
+    "subtitle": "Nos produits d'occasion sont garantis 3 mois, sauf exception mentionnée en description du produit d'occasion et produits d'exposition."
+  }
 }

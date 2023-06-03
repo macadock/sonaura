@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import ProductGrid from 'components/core/Category';
 import { Category } from 'lib/supabase/categories';
 import { Product } from 'lib/supabase/products';
+import { useTranslation } from 'next-i18next';
 
 interface Props {
   category: Category;
@@ -10,6 +11,10 @@ interface Props {
 }
 
 const CategoryView: React.FC<Props> = ({ category, products }) => {
+  const isOccasion = category.slug === 'occasion';
+
+  const { t } = useTranslation('common', { keyPrefix: 'preOwned' });
+
   return (
     <Box
       sx={{
@@ -20,6 +25,14 @@ const CategoryView: React.FC<Props> = ({ category, products }) => {
       }}
     >
       <Typography variant="h1">{category.name}</Typography>
+      {isOccasion ? (
+        <Box paddingX={'2rem'} paddingY={'1rem'} textAlign={'center'}>
+          <Typography>{t('title')}</Typography>
+          <Typography>{t('subtitle')}</Typography>
+        </Box>
+      ) : (
+        false
+      )}
       <ProductGrid products={products} />
     </Box>
   );
