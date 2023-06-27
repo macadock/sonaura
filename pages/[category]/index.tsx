@@ -24,17 +24,17 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   const { data: category } = await getCategoryBySlug(slug as string);
 
-  if (category[0] === null) {
+  if (category === null) {
     return {
       notFound: true,
     };
   }
 
-  const { data: products } = await getProductsByCategory(category[0].id);
+  const { data: products } = await getProductsByCategory(category.id);
 
   return {
     props: {
-      category: category[0],
+      category,
       products: products,
       ...(await serverSideTranslations(context.locale, ['common'], i18nConfig)),
     },
