@@ -8,7 +8,11 @@ export type UpdateCategoryInput =
   Database['public']['Tables']['categories']['Update'];
 
 export async function getCategoryBySlug(slug: string) {
-  return supabase.from('categories').select('*').eq('slug', slug);
+  return supabase.from('categories').select('*').eq('slug', slug).single();
+}
+
+export async function getCategoryById(id: string) {
+  return supabase.from('categories').select('*').eq('id', id).single();
 }
 
 export async function getCategories() {

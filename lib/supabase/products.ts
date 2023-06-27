@@ -62,7 +62,7 @@ export async function getProductsBySlugAndCategory(slug, categorySlug: string) {
     .from('products')
     .select('*')
     .eq('slug', slug)
-    .eq('categoryId', data[0].id)
+    .eq('categoryId', data.id)
     .order('name', { ascending: true });
 }
 

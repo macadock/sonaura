@@ -1,34 +1,24 @@
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import supabase from 'lib/supabase';
 import {
-  Category,
-  createCategory,
   CreateCategoryInput,
-  removeCategory,
-  updateCategory,
   UpdateCategoryInput,
 } from 'lib/supabase/categories';
-import { useMemo, useState } from 'react';
-import { initialValues, categoryForm } from './category.validator';
-import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
-import Delete from '@mui/icons-material/Delete';
+import React from 'react';
+import Box from '@mui/material/Box';
+import { v4 as uuidv4 } from 'uuid';
+import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-
-interface Props {
-  categoryId: string;
-  categories: Category[];
-  onCompletedOrUpdated: () => void;
-}
+import { useTranslation } from 'next-i18next';
+import { categoryForm } from 'components/dashboard/Categories/CategoryForm/category.validator';
+import TextField from 'components/system/Form/TextField';
 
 export type InsertOrUpdateCategory = CreateCategoryInput | UpdateCategoryInput;
 
 const getImageUrl = (value: string | object): string => {
   let image: object;
-  console.log(value);
   try {
     image = typeof value === 'string' ? JSON.parse(value) : value;
   } catch (e) {
@@ -40,85 +30,37 @@ const getImageUrl = (value: string | object): string => {
   return data ? data.publicUrl : '';
 };
 
-const CategoryForm: React.FC<Props> = ({
-  categoryId,
-  categories,
-  onCompletedOrUpdated,
-}) => {
-  type FormMode = 'creation' | 'edit';
-  const [formMode, setFormMode] = useState<FormMode>('creation');
-  const selectedCategory = useMemo((): Category => {
-    if (!categoryId) return undefined;
-    return categories.find((category) => category.id === categoryId);
-  }, [categoryId]);
-
-  const create = async (category: CreateCategoryInput) => {
-    const { error } = await createCategory(category);
-    if (error) {
-      return;
-    }
-    onCompletedOrUpdated();
-  };
-
-  const update = async (category: UpdateCategoryInput) => {
-    const { error } = await updateCategory(category);
-    if (error) {
-      return;
-    }
-    onCompletedOrUpdated();
-  };
-
-  const remove = async () => {
-    const { error } = await removeCategory(categoryId);
-    if (error) {
-      return;
-    }
-    onCompletedOrUpdated();
-  };
-
-  const handleEditMode = () => {
-    setFormMode('edit');
-  };
-
-  const handleCreateMode = () => {
-    setFormMode('creation');
-  };
-
-  const onSubmit = (
+interface Props {
+  formMode: 'create' | 'edit';
+  initialValues: InsertOrUpdateCategory;
+  onSubmit: (
     values: InsertOrUpdateCategory,
-    actions: FormikHelpers<InsertOrUpdateCategory>,
-  ) => {
-    const { icon, name, slug } = values;
-    const input = {
-      name,
-      slug,
-      icon,
-    };
+    actions?: FormikHelpers<InsertOrUpdateCategory>,
+  ) => void;
+  leftButtons?: React.ReactNode;
+  rightButtons?: React.ReactNode;
+}
 
-    if (formMode === 'creation') {
-      return create(input);
-    }
-
-    update({
-      ...input,
-      id: categoryId,
-    });
-
-    actions.resetForm();
-    setFormMode('creation');
-  };
+const CategoryForm: React.FC<Props> = ({
+  formMode,
+  initialValues,
+  onSubmit,
+  leftButtons = null,
+  rightButtons = null,
+}) => {
+  const { t } = useTranslation('dashboard');
 
   const uploadImage = async (files: FileList): Promise<object> => {
     const bucket = 'categories';
-    const fileName = uuidv4();
+    const fileName = `${uuidv4()}`;
     const { error } = await supabase.storage
       .from(bucket)
       .upload(fileName, files[0]);
     if (error) {
-      toast.error('Erreur lors du chargement');
+      toast.error(t('image.error'));
       return {};
     }
-    toast.success('Image chargée');
+    toast.success(t('image.success'));
     return {
       bucket,
       file: fileName,
@@ -127,72 +69,45 @@ const CategoryForm: React.FC<Props> = ({
 
   return (
     <Formik<InsertOrUpdateCategory>
-      initialValues={formMode === 'creation' ? initialValues : selectedCategory}
-      enableReinitialize={true}
+      initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={categoryForm}
     >
       {({ isValid, dirty, handleSubmit }) => (
-        <>
-          <Stack direction={'row'} marginBottom={2} spacing={1}>
-            <Button
-              variant={'outlined'}
-              disabled={categoryId === null}
-              onClick={handleEditMode}
-            >
-              {'Editer'}
-            </Button>
-            <Button
-              variant={'outlined'}
-              disabled={categoryId === null}
-              onClick={remove}
-            >
-              <Delete />
-            </Button>
-            <Button variant={'outlined'} onClick={handleCreateMode}>
-              {'Créer une nouvelle catégorie'}
-            </Button>
-          </Stack>
+        <React.Fragment>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Field name={'name'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
-            </Grid>
-            <Grid item xs={6}>
-              <Field name={'slug'}>
-                {({
-                  field: { name, onBlur, onChange, value },
-                  meta: { error, touched },
-                }: FieldProps) => (
-                  <TextField
-                    name={name}
-                    label={name}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    error={touched && Boolean(error)}
-                    helperText={touched && error ? '' : null}
-                    fullWidth
-                  />
-                )}
-              </Field>
-            </Grid>
             <Grid item xs={12}>
+              <Stack
+                direction={'row'}
+                marginBottom={2}
+                spacing={1}
+                display={'flex'}
+                justifyContent={'space-between'}
+              >
+                <Box display={'flex'} gap={'1rem'}>
+                  <Button
+                    variant={'contained'}
+                    disabled={!isValid || !dirty}
+                    onClick={() => {
+                      handleSubmit();
+                    }}
+                  >
+                    {formMode === 'create'
+                      ? t('categories.add.cta')
+                      : t('categories.edit.cta')}
+                  </Button>
+                  {leftButtons}
+                </Box>
+                {rightButtons}
+              </Stack>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField name={'name'} />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField name={'slug'} />
+            </Grid>
+            <Grid item xs={12} sm={4}>
               <Field name={'icon'}>
                 {({
                   field: { name, value },
@@ -223,21 +138,8 @@ const CategoryForm: React.FC<Props> = ({
                 )}
               </Field>
             </Grid>
-            <Grid item xs={12}>
-              <Button
-                variant={'contained'}
-                disabled={!isValid || !dirty}
-                onClick={() => {
-                  handleSubmit();
-                }}
-              >
-                {formMode === 'creation'
-                  ? 'Créer la catégorie'
-                  : 'Mettre à jour'}
-              </Button>
-            </Grid>
           </Grid>
-        </>
+        </React.Fragment>
       )}
     </Formik>
   );

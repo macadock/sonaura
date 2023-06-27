@@ -27,11 +27,43 @@
   },
   "categories": {
     "name": "Catégories",
-    "new": "Ajouter une catégorie"
+    "new": "Ajouter une catégorie",
+    "add": {
+      "title": "Ajouter une nouvelle catégorie",
+      "success": "La catégories a été ajoutée",
+      "error": "Erreur lors de la création",
+      "cta": "Ajouter la catégorie"
+    },
+    "edit": {
+      "success": "La catégorie a été mise à jour",
+      "error": "Erreur lors de la mise à jour",
+      "cta": "Mettre à jour la catégorie"
+    },
+    "remove": {
+      "success": "La catégorie a été supprimée",
+      "error": "Erreur lors de la suppression",
+      "cta": "Supprimer la catégorie"
+    }
   },
   "shops": {
     "name": "Magasins",
-    "new": "Ajouter un magasin"
+    "new": "Ajouter un magasin",
+    "add": {
+      "title": "Ajouter un nouveau magasin",
+      "success": "Le magasin a été ajouté",
+      "error": "Erreur lors de la création",
+      "cta": "Ajouter le magasin"
+    },
+    "edit": {
+      "success": "Le magasin a été mis à jour",
+      "error": "Erreur lors de la mise à jour",
+      "cta": "Mettre à jour le magasin"
+    },
+    "remove": {
+      "success": "Le magasin a été supprimé",
+      "error": "Erreur lors de la suppression",
+      "cta": "Supprimer le magasin"
+    }
   },
   "attributes": {
     "name": "Attributs",

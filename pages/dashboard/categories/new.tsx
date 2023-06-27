@@ -2,10 +2,10 @@ import { NextPage } from 'next';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from 'next-i18next.config';
-import DashboardCategoryView from 'views/Dashboard/DashboardCategoryView';
+import DashboardNewCategoryView from 'views/Dashboard/Categories/DashboardNewCategoryView';
 
-const DashboardCategories: NextPage = () => {
-  return <DashboardCategoryView />;
+const DashboardNewCategory: NextPage = () => {
+  return <DashboardNewCategoryView />;
 };
 
 export const getStaticProps = async ({ locale }) => {
@@ -20,4 +20,4 @@ export const getStaticProps = async ({ locale }) => {
   };
 };
 
-export default DashboardCategories;
+export default DashboardNewCategory;
