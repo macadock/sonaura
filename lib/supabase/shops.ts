@@ -29,6 +29,10 @@ export async function getShops() {
   return supabase.from('shops').select('*');
 }
 
+export async function getShopById(id: string) {
+  return supabase.from('shops').select('*').eq('id', id).single();
+}
+
 export async function createShop(shop: CreateShopInput) {
   return supabase.from('shops').insert([shop]);
 }
