@@ -63,7 +63,14 @@
       "success": "Le magasin a été supprimé",
       "error": "Erreur lors de la suppression",
       "cta": "Supprimer le magasin"
-    }
+    },
+    "city": "Ville",
+    "address": "Adresse",
+    "postalCode": "Code postal",
+    "country": "Pays",
+    "phoneNumber": "Numéro de téléphone",
+    "email": "Email",
+    "googleMapsUrl": "Google Maps"
   },
   "attributes": {
     "name": "Attributs",

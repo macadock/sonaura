@@ -1,31 +1,51 @@
+import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid/DataGrid';
 import { GridColDef } from '@mui/x-data-grid/models/colDef';
-import { Shop } from 'lib/supabase/shops';
+import { getShops, Shop } from 'lib/supabase/shops';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+import LoadingScreen from 'components/system/LoadingScreen';
 
-interface Props {
-  data: Shop[];
-  onSelectionModelChange: (id: string) => void;
-}
+const ShopsTable: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [shops, setShops] = useState<Shop[]>([]);
+  const router = useRouter();
+  const { t } = useTranslation('dashboard');
 
-const ShopsTable: React.FC<Props> = ({ data, onSelectionModelChange }) => {
+  const fetchShops = async () => {
+    const { data } = await getShops();
+    if (data) {
+      setShops(data);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchShops();
+  }, []);
+
+  if (loading) return <LoadingScreen />;
+
   const columns: GridColDef[] = [
-    { field: 'city', headerName: 'Ville' },
-    { field: 'address', headerName: 'Adresse' },
-    { field: 'postalCode', headerName: 'Code postal' },
-    { field: 'country', headerName: 'Pays' },
-    { field: 'phoneNumber', headerName: 'Numéro de téléphone' },
-    { field: 'email', headerName: 'Adresse email' },
-    { field: 'googleMapsUrl', headerName: 'Google Maps' },
+    { field: 'city', headerName: t('shops.city'), flex: 10 },
+    { field: 'address', headerName: t('shops.address'), flex: 10 },
+    { field: 'postalCode', headerName: t('shops.postalCode'), flex: 10 },
+    { field: 'country', headerName: t('shops.country'), flex: 10 },
+    { field: 'phoneNumber', headerName: t('shops.phoneNumber'), flex: 10 },
+    { field: 'email', headerName: t('shops.email'), flex: 10 },
+    { field: 'googleMapsUrl', headerName: t('shops.googleMapsUrl'), flex: 10 },
   ];
 
   return (
     <DataGrid
       columns={columns}
-      rows={data}
-      pageSize={5}
-      onSelectionModelChange={(selectionModel) => {
-        onSelectionModelChange(selectionModel[0] as string);
+      rows={shops}
+      pageSize={10}
+      onRowClick={({ id }) => {
+        router.push(`/dashboard/shops/${id}`);
       }}
+      autoHeight
+      sx={{ cursor: 'pointer' }}
     />
   );
 };

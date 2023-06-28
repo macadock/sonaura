@@ -59,28 +59,12 @@ const Banner: React.FC = () => {
             src={
               'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/banner_image'
             }
-            width={'100%'}
-            height={'100%'}
             alt=""
             layout={'fill'}
             objectFit="contain"
           />
         </Box>
       </Box>
-      {/* <Box
-        component={'img'}
-        // src={
-        //   'https://images.ctfassets.net/8cd2csgvqd3m/5prVp155k2D9mTTeNayQC1/ba075fd5e50c90514ec70d60c7390390/Hamorny_Fabric_65_open_cms.png?q=90&fm=webp&w=1200&h=1200&fit=fill'
-        // }
-        sx={{
-          maxWidth: 500,
-          height: 'auto',
-          position: 'absolute',
-          bottom: '-190px',
-          right: 0,
-          display: { xs: 'none', sm: 'block' },
-        }}
-      /> */}
     </Box>
   );
 };
