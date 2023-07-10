@@ -1,8 +1,9 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import DashboardOrderView from 'views/Dashboard/Orders/DashboardOrderView';
 import i18nConfig from '../../next-i18next.config';
 
 const DashboardHome: React.FC = () => {
-  return null;
+  return <DashboardOrderView />;
 };
 
 export const getStaticProps = async ({ locale }) => {

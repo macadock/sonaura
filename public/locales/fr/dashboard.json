@@ -72,6 +72,26 @@
     "email": "Email",
     "googleMapsUrl": "Google Maps"
   },
+  "orders": {
+    "name": "Commandes",
+    "new": "Créer une commande",
+    "add": {
+      "title": "Créer une nouvelle commande",
+      "success": "La commande a été créée",
+      "error": "Erreur lors de la création",
+      "cta": "Créer la commande"
+    },
+    "edit": {
+      "success": "La commande a été mise à jour",
+      "error": "Erreur lors de la mise à jour",
+      "cta": "Mettre à jour la commande"
+    },
+    "cancel": {
+      "success": "La commande a été annulée",
+      "error": "Erreur lors de l'annulation",
+      "cta": "Annuler la commande"
+    }
+  },
   "attributes": {
     "name": "Attributs",
     "size": "Taille",
