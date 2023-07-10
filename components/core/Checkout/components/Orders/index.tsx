@@ -10,13 +10,14 @@ import { useCart } from 'react-use-cart';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
 import { useFormikContext } from 'formik';
-import { getProductsByIds } from 'lib/supabase/products';
+import { getProductsByIds, Product } from 'lib/supabase/products';
+import supabase from 'lib/supabase';
 
 const Orders = (): JSX.Element => {
   const theme = useTheme();
   const { t } = useTranslation('checkout');
   const { handleSubmit, isValid, dirty } = useFormikContext();
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const { isEmpty, items, cartTotal } = useCart();
 
@@ -42,12 +43,20 @@ const Orders = (): JSX.Element => {
       };
     });
 
-    setProducts(products);
+    setProducts(products as Product[]);
   };
 
   useEffect(() => {
     fetchProducts();
   }, [items]);
+
+  const getProductImage = (image: Product['mainImage']): string => {
+    const bucket = image['bucket'];
+    const file = image['file'];
+
+    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+    return data.publicUrl;
+  };
 
   return (
     <>
@@ -59,7 +68,7 @@ const Orders = (): JSX.Element => {
                 <Box display={'flex'}>
                   <Box
                     component={'img'}
-                    src={'https://media.graphassets.com/wEANADQnT5W9C9HgeaLv'}
+                    src={getProductImage(product.mainImage)}
                     alt={product.name}
                     sx={{
                       borderRadius: 2,

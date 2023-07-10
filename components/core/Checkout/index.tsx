@@ -165,7 +165,7 @@ const Checkout: React.FC = () => {
                         fontWeight={700}
                         marginBottom={4}
                       >
-                        {t('shippingAddress')}
+                        {t('billingAddress')}
                       </Typography>
                       <Shipping />
                     </Grid>
