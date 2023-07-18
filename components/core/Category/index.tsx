@@ -13,7 +13,7 @@ import Price from 'utils/Price';
 import { Product } from 'lib/supabase/products';
 import { useRouter } from 'next/router';
 import supabase from 'lib/supabase';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 interface Props {
   products: Product[];

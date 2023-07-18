@@ -5,11 +5,10 @@ import { useCart } from 'react-use-cart';
 import Close from '@mui/icons-material/Close';
 import Delete from '@mui/icons-material/Delete';
 
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
 import { getProductsByIds, Product } from 'lib/supabase/products';
-import { useSiteData } from 'contexts/data';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
@@ -145,14 +144,15 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                       >
                         <Link
                           href={`/${product.categories.slug}/${product.slug}`}
+                          style={{ textDecoration: 'none' }}
                           passHref
                         >
                           <Image
                             src={getProductImage(product.mainImage)}
                             objectFit={'cover'}
                             layout={'responsive'}
-                            width={'5rem'}
-                            height={'5rem'}
+                            width={1}
+                            height={1}
                             onClick={closeCart}
                           />
                         </Link>
@@ -160,6 +160,7 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                       <Box>
                         <Link
                           href={`/${product.categories.slug}/${product.slug}`}
+                          style={{ textDecoration: 'none' }}
                           passHref
                         >
                           <Typography
@@ -209,7 +210,11 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
               {t('contactUsToCollect')}
             </Typography>
             <Typography variant={'caption'}>
-              <Link href={'/contact'} target={'_blank'}>
+              <Link
+                href={'/contact'}
+                style={{ textDecoration: 'none' }}
+                target={'_blank'}
+              >
                 {t('ourShops')}
               </Link>
             </Typography>

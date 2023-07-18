@@ -1,5 +1,5 @@
 {
-  "shippingAddress": "Adresse d'expédition",
+  "billingAddress": "Adresse de facturation",
   "orderSummary": "Résumé de la commande",
   "chooseCountry": "Choisissez un pays",
   "firstName": "Prénom",

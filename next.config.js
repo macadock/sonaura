@@ -10,7 +10,7 @@ const { i18n } = require('./next-i18next.config');
 const moduleExports = {
   reactStrictMode: true,
   images: {
-    domains: ['media.graphassets.com', 'omzwibopitojmqdieuml.supabase.co'],
+    domains: ['omzwibopitojmqdieuml.supabase.co'],
   },
   i18n,
   async rewrites() {

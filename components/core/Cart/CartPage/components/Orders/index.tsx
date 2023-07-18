@@ -70,14 +70,15 @@ const Orders: React.FC = () => {
     return data.publicUrl;
   };
 
-  console.log(productsInCart);
-
   return (
     <Box>
       {productsInCart.map((product, i) => (
         <Box key={product.id}>
           <Box display={'flex'}>
-            <NextLink href={`/${product.categories?.slug}/${product.slug}`}>
+            <NextLink
+              href={`/${product.categories?.slug}/${product.slug}`}
+              style={{ textDecoration: 'none' }}
+            >
               <Box
                 component={'img'}
                 src={getProductImage(product.mainImage)}

@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import Price from 'utils/Price';
 import Button from '@mui/material/Button';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 interface Props {
   product: Product;
@@ -50,7 +50,11 @@ const ProductItem: React.FC<Props> = ({ product, index }) => {
           display={'flex'}
           flexDirection={'column'}
         >
-          <Link passHref href={`/${product.categories.slug}/${product.slug}`}>
+          <Link
+            passHref
+            href={`/${product.categories.slug}/${product.slug}`}
+            style={{ textDecoration: 'none' }}
+          >
             <CardMedia
               sx={{
                 position: 'relative',
@@ -94,8 +98,9 @@ const ProductItem: React.FC<Props> = ({ product, index }) => {
                 false
               )}
               <Link
-                passHref
                 href={`/${product.categories.slug}/${product.slug}`}
+                style={{ textDecoration: 'none' }}
+                passHref
               >
                 <Button
                   variant={'outlined'}

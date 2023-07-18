@@ -1,7 +1,7 @@
 import { Toaster } from 'react-hot-toast';
 
 /* eslint-disable react/prop-types */
-import React, { FC } from 'react';
+import React, { FC, StrictMode } from 'react';
 import Head from 'next/head';
 
 import Page from 'components/system/Page';
@@ -35,11 +35,13 @@ function App({ Component, pageProps }) {
         {isDashboard ? <meta name="robots" content="noindex" /> : false}
         <title>Sonaura</title>
       </Head>
-      <Page>
-        <Component {...pageProps} />
-        <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
-        <Analytics />
-      </Page>
+      <StrictMode>
+        <Page>
+          <Component {...pageProps} />
+          <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
+          <Analytics />
+        </Page>
+      </StrictMode>
     </SessionContextProvider>
   );
 }

@@ -81,7 +81,11 @@ const CategoryItem: React.FC<Props> = ({ category, index }) => {
 
   return (
     <Grid item xs={6} md={2}>
-      <Link href={`/${category.slug}`} passHref>
+      <Link
+        href={`/${category.slug}`}
+        style={{ textDecoration: 'none' }}
+        passHref
+      >
         <Box
           display={'block'}
           width={1}
