@@ -19,7 +19,7 @@ import { useRouter } from 'next/router';
 import supabase from 'lib/supabase';
 import { VariantImage, Variant } from 'types';
 import Chip from '@mui/material/Chip';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 interface Props {
   product: Product;

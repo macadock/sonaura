@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import Price from 'utils/Price';
 import Button from '@mui/material/Button';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 interface Props {
   product: Product;

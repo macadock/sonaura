@@ -70,8 +70,6 @@ const Orders: React.FC = () => {
     return data.publicUrl;
   };
 
-  console.log(productsInCart);
-
   return (
     <Box>
       {productsInCart.map((product, i) => (
