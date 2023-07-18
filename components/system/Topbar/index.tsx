@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { alpha, useTheme } from '@mui/material/styles';
@@ -30,9 +30,23 @@ const Topbar: React.FC<Props> = ({ onSidebarOpen, colorInvert = false }) => {
   const { asPath } = useRouter();
   const { isEmpty } = useCart();
 
+  const redPillRefDesktop = useRef<HTMLDivElement>();
+  const redPillRefMobile = useRef<HTMLDivElement>();
+
   const handleCart = () => {
     setCartState(!cartState);
   };
+
+  useEffect(() => {
+    if (!redPillRefDesktop.current || !redPillRefMobile.current) return;
+    if (!isEmpty) {
+      redPillRefDesktop.current.style.visibility = 'visible';
+      redPillRefMobile.current.style.visibility = 'visible';
+    } else {
+      redPillRefDesktop.current.style.visibility = 'hidden';
+      redPillRefMobile.current.style.visibility = 'hidden';
+    }
+  }, [isEmpty]);
 
   const [customCategories, customPages] = moveCategoryToPage(categories, pages);
 
@@ -107,18 +121,19 @@ const Topbar: React.FC<Props> = ({ onSidebarOpen, colorInvert = false }) => {
           <Button onClick={handleCart} title={t('cart.title')}>
             <ShoppingCartTwoTone />
           </Button>
-          {!isEmpty ? (
-            <Box
-              width={'0.5rem'}
-              height={'0.5rem'}
-              sx={{ position: 'absolute', borderRadius: '50%' }}
-              bgcolor={theme.palette.red[900]}
-              top={'0.5rem'}
-              right={'0.6rem'}
-            />
-          ) : null}
+          <Box
+            ref={redPillRefDesktop}
+            width={'0.5rem'}
+            height={'0.5rem'}
+            sx={{ position: 'absolute', borderRadius: '50%' }}
+            visibility={'hidden'}
+            bgcolor={theme.palette.red[900]}
+            top={'0.5rem'}
+            right={'0.6rem'}
+          />
         </Box>
       </Box>
+
       <Box sx={{ display: { xs: 'flex', md: 'none' } }} alignItems={'center'}>
         <Button
           onClick={handleCart}
@@ -133,16 +148,15 @@ const Topbar: React.FC<Props> = ({ onSidebarOpen, colorInvert = false }) => {
           }}
         >
           <ShoppingCartTwoTone sx={{ position: 'relative' }} />
-          {!isEmpty ? (
-            <Box
-              width={'0.5rem'}
-              height={'0.5rem'}
-              sx={{ position: 'absolute', borderRadius: '50%' }}
-              bgcolor={theme.palette.red[900]}
-              top={'0.2rem'}
-              right={'0.2rem'}
-            />
-          ) : null}
+          <Box
+            ref={redPillRefMobile}
+            width={'0.5rem'}
+            height={'0.5rem'}
+            sx={{ position: 'absolute', borderRadius: '50%' }}
+            bgcolor={theme.palette.red[900]}
+            top={'0.2rem'}
+            right={'0.2rem'}
+          />
         </Button>
         <Button
           onClick={onSidebarOpen}

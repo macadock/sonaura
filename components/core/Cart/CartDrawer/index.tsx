@@ -5,7 +5,7 @@ import { useCart } from 'react-use-cart';
 import Close from '@mui/icons-material/Close';
 import Delete from '@mui/icons-material/Delete';
 
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { useTranslation } from 'next-i18next';
 import Price from 'utils/Price';
 import { getProductsByIds, Product } from 'lib/supabase/products';
@@ -151,8 +151,8 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                             src={getProductImage(product.mainImage)}
                             objectFit={'cover'}
                             layout={'responsive'}
-                            width={'5rem'}
-                            height={'5rem'}
+                            width={1}
+                            height={1}
                             onClick={closeCart}
                           />
                         </Link>

@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'next-i18next';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 const Banner: React.FC = () => {
   const { t } = useTranslation('homepage', { keyPrefix: 'banner' });

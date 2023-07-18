@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'next-i18next';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 const People: React.FC = () => {
   const { t } = useTranslation('homepage', { keyPrefix: 'people' });

@@ -7,7 +7,7 @@ import Integration from 'components/core/Professionals/Integration';
 import Design from 'components/core/Professionals/Design';
 import Contact from 'components/core/Professionals/Contact';
 import Elegance from 'components/core/Professionals/Elegance';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import supabase from 'lib/supabase';
 
 const getImage = (name: string): string => {
