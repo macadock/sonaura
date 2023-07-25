@@ -71,7 +71,7 @@ export default class SendInBlue {
   public static sendMerchantEmail(sendEmailInput: SendMerchantEmailInput) {
     const url = `${sendInBlueUrl}/smtp/email`;
 
-    const { email, message, templateId, firstName, lastName, params } =
+    const { email, message, templateId, firstName, lastName, phone, params } =
       sendEmailInput;
 
     const fullName = `${firstName} ${lastName}`;
@@ -86,6 +86,7 @@ export default class SendInBlue {
       params: {
         customerEmail: email,
         customerFullName: fullName,
+        phone,
         message,
         params,
       },
@@ -137,6 +138,7 @@ export default class SendInBlue {
         email,
         firstName,
         lastName,
+        phone,
         message,
         params,
         templateId: templateId.merchant,
