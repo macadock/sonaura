@@ -2,8 +2,10 @@ import Delete from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { isNumberString } from 'class-validator';
 import AttributeDropdown from 'components/dashboard/Products/Variants/VariantsTable/AttributeDropdown';
 import supabase from 'lib/supabase';
 import {
@@ -83,6 +85,16 @@ const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
     setImages((prev) => prev.filter((image) => image.image.file !== id));
   };
 
+  const handlePriceUpdate = (id: string, price: string) => {
+    setImages((prev) => {
+      const imagesTemp = [...prev];
+      const imageIndex = imagesTemp.findIndex((im) => im.image.file === id);
+      imagesTemp[imageIndex].price = price;
+
+      return imagesTemp;
+    });
+  };
+
   const handleSave = async () => {
     const { error } = await updateProductVariantsImage(productId, images);
     if (error) {
@@ -140,6 +152,18 @@ const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
           />
         );
       },
+    },
+    {
+      field: 'price',
+      renderCell: ({ row, id }) => (
+        <TextField
+          value={row.price || ''}
+          onChange={(e) => {
+            const price = e.target.value.replace(',', '.');
+            handlePriceUpdate(id.toString(), price);
+          }}
+        />
+      ),
     },
     ...variantsColumns,
   ];
