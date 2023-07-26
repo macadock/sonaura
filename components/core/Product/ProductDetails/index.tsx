@@ -67,6 +67,10 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const [alreadyAddedToCart, setAlreadyAddedToCart] = useState<boolean>(false);
   const [dialogState, setDialogState] = useState<boolean>(false);
 
+  const [priceVariant, setPriceVariant] = useState<number | undefined>(
+    undefined,
+  );
+
   const noOptionSelected = selectedVariants.length === 0;
   const isMissingOptionSelection =
     selectedVariants.length < variantNames.length;
@@ -75,6 +79,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
     if (noOptionSelected || isMissingOptionSelection) {
       setVariantImages([]);
       setCurrent(getProductMainImage());
+      setPriceVariant(undefined);
       return;
     }
 
@@ -97,6 +102,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
         return hasFalseValues === undefined ? true : false;
       },
     );
+    setPriceVariant(parseInt(images[0].price) || undefined);
     setVariantImages(images);
   }, [selectedVariants]);
 
@@ -113,7 +119,11 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const { addItem, items } = useCart();
 
   const addToCart = () => {
-    addItem({ id: product.id, price: product?.price, quantity: 1 });
+    addItem({
+      id: product.id,
+      price: priceVariant || product?.price,
+      quantity: 1,
+    });
     setAlreadyAddedToCart(true);
     toast.success(t('addedToCart'));
   };
@@ -134,55 +144,6 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
     }
     setAlreadyAddedToCart(false);
   }, [items]);
-
-  // const variantAssets = useMemo(() => {
-  //   if (currentProduct.assetsByProductVariants === null) return null;
-
-  //   const selectedAttributes = [
-  //     size,
-  //     color,
-  //     positionning,
-  //     frameColor,
-  //     soundbarColor,
-  //     supportColor,
-  //   ].filter((val) => val !== null);
-
-  //   if (selectedAttributes.length === 0) return null;
-
-  //   const { assetsByProductVariants } = currentProduct;
-
-  //   return assetsByProductVariants.filter((asset) => {
-  //     const filterResult = selectedAttributes.map((attribute) => {
-  //       switch (attribute.__typename) {
-  //         case 'ProductSize':
-  //           return asset.size === attribute.size;
-  //         case 'ProductFrameColor':
-  //           return asset.frameColor === attribute.frameColor;
-  //         case 'ProductColor':
-  //           return asset.color === attribute.color;
-  //         case 'ProductPositionning':
-  //           return asset.positionning === attribute.positionning;
-  //         case 'ProductSoundbarColor':
-  //           return asset.soundbarColor === attribute.color;
-  //         case 'ProductSupportColor':
-  //           return asset.supportColor === attribute.supportColor;
-  //       }
-  //     });
-
-  //     return filterResult.find((res) => res === false) === undefined
-  //       ? true
-  //       : false;
-  //   });
-  // }, [size, color, positionning, frameColor, soundbarColor, supportColor]);
-
-  // useEffect(() => {
-  //   if (currentProduct.assetsByProductVariants === null) return null;
-
-  //   if (variantAssets) {
-  //     const assetsToAdd = variantAssets.flatMap((variant) => variant.asset);
-  //     setVariantImages([...assetsToAdd]);
-  //   }
-  // }, [variantAssets]);
 
   const handleVariantSelection = (variantName: string, value: string) => {
     setSelectedVariants((prev) => {
@@ -320,10 +281,10 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
             </Typography>
             <Box marginY={3}>
               <Box display={'flex'} alignItems={'baseline'}>
-                {product.price ? (
+                {priceVariant || product.price ? (
                   <>
                     <Typography variant={'h5'} fontWeight={700}>
-                      <Price price={product.price} />
+                      <Price price={priceVariant || product.price} />
                     </Typography>
                     {isOccasion ? (
                       <Typography variant="body2" sx={{ marginLeft: '0.5rem' }}>
@@ -336,7 +297,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 ) : (
                   false
                 )}
-                {product.fromPrice ? (
+                {product.fromPrice && !priceVariant ? (
                   <>
                     <Typography variant={'h5'} fontWeight={700}>
                       {t('fromPrice')}

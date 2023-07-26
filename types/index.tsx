@@ -17,6 +17,7 @@ export type Image = {
 export type VariantImage = {
   image: Image;
   variants?: VariantImageOption[];
+  price?: string;
 };
 
 export type VariantImageOption = {
