@@ -41,28 +41,34 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
     threshold: 38,
   });
 
+  const today = new Date();
+  const endDate = new Date(2023, 7, 22, 9, 0); // 22/08/2023 9:00 UTC+2
+  const displayClosedMessage = today <= endDate;
+
   return (
     <Box>
-      <Box
-        sx={{
-          paddingX: '1rem',
-          paddingY: '0.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: theme.palette.primary.main,
-        }}
-      >
-        <Typography
-          color={theme.palette.text.primary}
+      {displayClosedMessage ? (
+        <Box
           sx={{
-            fontSize: { xs: '0.875rem', md: '1rem' },
+            paddingX: '1rem',
+            paddingY: '0.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: theme.palette.primary.main,
           }}
         >
-          Nos magasins de Lyon et Grenoble seront fermés du 1er au 21 Août 2023
-          inclus. Réouverture le Mardi 22 Août 2023.
-        </Typography>
-      </Box>
+          <Typography
+            color={theme.palette.text.primary}
+            sx={{
+              fontSize: { xs: '0.875rem', md: '1rem' },
+            }}
+          >
+            Nos magasins de Lyon et Grenoble seront fermés du 1er au 21 Août
+            2023 inclus. Réouverture le Mardi 22 Août 2023.
+          </Typography>
+        </Box>
+      ) : null}
       <AppBar
         position={'sticky'}
         sx={{
