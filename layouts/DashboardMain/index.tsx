@@ -84,6 +84,18 @@ const DashboardMain: React.FC<Props> = ({ children }) => {
                 sx={{ paddingX: { md: 0.8, lg: 2 } }}
                 underline="none"
                 component="a"
+                href={'/dashboard/installations'}
+                color={'text.primary'}
+                fontWeight={
+                  router.asPath.includes('/dashboard/installations') ? 700 : 400
+                }
+              >
+                {t('installations.name', { ns: 'dashboard' })}
+              </Link>
+              <Link
+                sx={{ paddingX: { md: 0.8, lg: 2 } }}
+                underline="none"
+                component="a"
                 href={'/dashboard/shops'}
                 color={'text.primary'}
                 fontWeight={

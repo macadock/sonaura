@@ -45,6 +45,26 @@
       "cta": "Supprimer la catégorie"
     }
   },
+  "installations": {
+    "name": "Réalisations",
+    "new": "Ajouter une réalisation",
+    "add": {
+      "title": "Ajouter une nouvelle réalisation",
+      "success": "La réalisation a été ajoutée",
+      "error": "Erreur lors de la création",
+      "cta": "Ajouter la réalisation"
+    },
+    "edit": {
+      "success": "La réalisation a été mise à jour",
+      "error": "Erreur lors de la mise à jour",
+      "cta": "Mettre à jour la réalisation"
+    },
+    "remove": {
+      "success": "La réalisation a été supprimée",
+      "error": "Erreur lors de la suppression",
+      "cta": "Supprimer la réalisation"
+    }
+  },
   "shops": {
     "name": "Magasins",
     "new": "Ajouter un magasin",
@@ -129,5 +149,7 @@
   "delete": "Supprimer",
   "add": "Ajouter",
   "logout": "Se déconnecter",
-  "imageManagement": "Gestion des images"
+  "imageManagement": "Gestion des images",
+  "title": "Titre",
+  "date": "Date"
 }

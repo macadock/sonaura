@@ -4,14 +4,17 @@ import { useTheme } from '@mui/material/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Installation } from 'lib/supabase/installations';
 import supabase from 'lib/supabase';
+import { Image as ImageType } from 'types';
+import Image from 'next/legacy/image';
 
 interface Props {
   installation: Installation;
 }
 
-const getInstallationMainImage = (installationId: string): string => {
-  const bucket = 'installations';
-  const file = `${installationId}/main`;
+const getInstallationMainImage = (image: ImageType): string => {
+  if (!image) return '';
+  const bucket = image.bucket;
+  const file = image.file;
   const { data } = supabase.storage.from(bucket).getPublicUrl(file);
   return data.publicUrl;
 };
@@ -50,8 +53,8 @@ const Card: React.FC<Props> = ({ installation }) => {
             component={LazyLoadImage}
             height={1}
             width={1}
-            src={getInstallationMainImage(installation.id)}
-            alt="..."
+            src={getInstallationMainImage(installation.images as ImageType)}
+            alt={installation.title}
             effect="blur"
             maxHeight={{ xs: 400, sm: 600, md: 1 }}
             sx={{
@@ -62,7 +65,7 @@ const Card: React.FC<Props> = ({ installation }) => {
               filter:
                 theme.palette.mode === 'dark' ? 'brightness(0.7)' : 'none',
             }}
-          />
+          ></Box>
         ) : null}
         <Box
           position={'absolute'}
@@ -96,10 +99,17 @@ const Card: React.FC<Props> = ({ installation }) => {
               d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"
             ></path>
           </Box>
-          <Typography variant={'h6'} fontWeight={700} gutterBottom>
+          <Typography
+            sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}
+            variant={'h6'}
+            fontWeight={700}
+            gutterBottom
+          >
             {installation.title}
           </Typography>
-          <Typography>{installation.description}</Typography>
+          <Typography sx={{ fontSize: { xs: '0.8rem', md: '1rem' } }}>
+            {installation.description}
+          </Typography>
         </Box>
       </Box>
     </Box>
