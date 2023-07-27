@@ -11,6 +11,7 @@ import Container from 'components/system/Container';
 import Topbar from 'components/system/Topbar';
 import Sidebar from 'components/system/Sidebar';
 import Footer from 'components/system/Footer';
+import { Typography } from '@mui/material';
 
 interface Props {
   children: React.ReactNode;
@@ -42,6 +43,26 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
 
   return (
     <Box>
+      <Box
+        sx={{
+          paddingX: '1rem',
+          paddingY: '0.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: theme.palette.primary.main,
+        }}
+      >
+        <Typography
+          color={theme.palette.text.primary}
+          sx={{
+            fontSize: { xs: '0.875rem', md: '1rem' },
+          }}
+        >
+          Nos magasins de Lyon et Grenoble seront fermés du 1er au 21 Août 2023
+          inclus. Réouverture le Mardi 22 Août 2023.
+        </Typography>
+      </Box>
       <AppBar
         position={'sticky'}
         sx={{
