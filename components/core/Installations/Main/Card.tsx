@@ -4,14 +4,13 @@ import { useTheme } from '@mui/material/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Installation } from 'lib/supabase/installations';
 import supabase from 'lib/supabase';
-import { Image as ImageType } from 'types';
-import Image from 'next/legacy/image';
+import { Image } from 'types';
 
 interface Props {
   installation: Installation;
 }
 
-const getInstallationMainImage = (image: ImageType): string => {
+const getInstallationMainImage = (image: Image): string => {
   if (!image) return '';
   const bucket = image.bucket;
   const file = image.file;
@@ -53,7 +52,7 @@ const Card: React.FC<Props> = ({ installation }) => {
             component={LazyLoadImage}
             height={1}
             width={1}
-            src={getInstallationMainImage(installation.images as ImageType)}
+            src={getInstallationMainImage(installation.images as Image)}
             alt={installation.title}
             effect="blur"
             maxHeight={{ xs: 400, sm: 600, md: 1 }}
