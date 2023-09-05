@@ -18,6 +18,7 @@ import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import supabase from 'lib/supabase';
 import { useRouter } from 'next/router';
 import { Analytics } from '@vercel/analytics/react';
+import Script from 'next/script';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function App({ Component, pageProps }) {
@@ -39,6 +40,7 @@ function App({ Component, pageProps }) {
         <Page>
           <Component {...pageProps} />
           <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
+          <Script src="https://app.tinyanalytics.io/pixel/mBNeXw7pZDVudKdQ" />
           <Analytics />
         </Page>
       </StrictMode>
