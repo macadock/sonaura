@@ -42,7 +42,7 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
   });
 
   const today = new Date();
-  const endDate = new Date(2023, 7, 22, 9, 0); // 22/08/2023 9:00 UTC+2
+  const endDate = new Date(2024, 5, 1, 9, 0); // 01/06/2024 9:00 UTC+2
   const displayClosedMessage = today <= endDate;
 
   return (
@@ -64,8 +64,7 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
               fontSize: { xs: '0.875rem', md: '1rem' },
             }}
           >
-            Nos magasins de Lyon et Grenoble seront fermés du 1er au 21 Août
-            2023 inclus. Réouverture le Mardi 22 Août 2023.
+            Ouverture de notre nouveau point de vente à Annecy - Printemps 2024
           </Typography>
         </Box>
       ) : null}
