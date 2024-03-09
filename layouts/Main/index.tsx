@@ -59,9 +59,10 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
           }}
         >
           <Typography
-            color={theme.palette.text.primary}
+            color={theme.palette.primary.contrastText}
             sx={{
               fontSize: { xs: '0.875rem', md: '1rem' },
+fontWeight: 700
             }}
           >
             Ouverture de notre nouveau point de vente à Annecy - Printemps 2024
