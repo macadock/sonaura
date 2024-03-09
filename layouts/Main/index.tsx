@@ -47,6 +47,24 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
 
   return (
     <Box>
+      <AppBar
+        position={'sticky'}
+        sx={{
+          top: 0,
+          backgroundColor: trigger
+            ? alpha(theme.palette.background.paper, 1)
+            : alpha(theme.palette.background.paper, 0.4),
+        }}
+        elevation={trigger ? 1 : 0}
+      >
+        <Container paddingY={1}>
+          <Topbar
+            onSidebarOpen={handleSidebarOpen}
+            colorInvert={trigger ? false : colorInvert}
+          />
+        </Container>
+      </AppBar>
+      <Sidebar onClose={handleSidebarClose} open={open} variant="temporary" />
       {displayClosedMessage ? (
         <Box
           sx={{
@@ -69,24 +87,6 @@ fontWeight: 700
           </Typography>
         </Box>
       ) : null}
-      <AppBar
-        position={'sticky'}
-        sx={{
-          top: 0,
-          backgroundColor: trigger
-            ? alpha(theme.palette.background.paper, 1)
-            : alpha(theme.palette.background.paper, 0.4),
-        }}
-        elevation={trigger ? 1 : 0}
-      >
-        <Container paddingY={1}>
-          <Topbar
-            onSidebarOpen={handleSidebarOpen}
-            colorInvert={trigger ? false : colorInvert}
-          />
-        </Container>
-      </AppBar>
-      <Sidebar onClose={handleSidebarClose} open={open} variant="temporary" />
       <main style={{ minHeight: '75vh' }}>{children}</main>
       <Divider />
       <Container paddingY={4} component={'footer'}>
