@@ -56,7 +56,6 @@ const ExceptionalOffer: React.FC = () => {
                 {'Offre exceptionnelle'}
               </Typography>
               <Typography
-                variant="h5"
                 color="text.primary"
                 align={'left'}
                 fontStyle={'italic'}
