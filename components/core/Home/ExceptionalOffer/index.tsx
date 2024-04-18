@@ -61,14 +61,7 @@ const ExceptionalOffer: React.FC = () => {
                 fontStyle={'italic'}
               >
                 <span>
-                  {'sur nos produits d’exposition à saisir jusqu’au '}
-                </span>
-                <span
-                  style={{
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {'13 avril 2024'}
+                  {'sur nos produits d’exposition'}
                 </span>
               </Typography>
             </Box>
