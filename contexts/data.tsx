@@ -1,10 +1,10 @@
-import { Category, getCategories } from 'lib/supabase/categories';
+import { CategoryType, getCategories } from 'lib/supabase/categories';
 import { getShops, Shop } from 'lib/supabase/shops';
-import React, { useEffect } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import { NavLink } from 'types';
 
 export interface DataContextValue {
-  categories: Category[];
+  categories: CategoryType[];
   pages: NavLink[];
   shops: Shop[];
 }
@@ -30,8 +30,8 @@ export const DataContext = React.createContext<DataContextValue>({
   shops: [],
 });
 
-export const DataProvider: React.FC = (props) => {
-  const [categories, setCategories] = React.useState<Category[]>([]);
+export const DataProvider = (props: PropsWithChildren) => {
+  const [categories, setCategories] = React.useState<CategoryType[]>([]);
   const [shops, setShops] = React.useState<Shop[]>([]);
 
   const fetch = async () => {

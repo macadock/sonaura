@@ -1,12 +1,12 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ProductGrid from 'components/core/Category';
-import { Category } from 'lib/supabase/categories';
+import { CategoryType } from 'lib/supabase/categories';
 import { Product } from 'lib/supabase/products';
 import { useTranslation } from 'next-i18next';
 
 interface Props {
-  category: Category;
+  category: CategoryType;
   products: Product[];
 }
 

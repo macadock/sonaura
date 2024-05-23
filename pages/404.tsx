@@ -3,6 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from '../next-i18next.config';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { UserConfig } from 'next-i18next';
 
 const Custom404: NextPage = () => {
   return (
@@ -15,7 +16,11 @@ const Custom404: NextPage = () => {
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
+      ...(await serverSideTranslations(
+        locale,
+        ['common'],
+        i18nConfig as unknown as UserConfig,
+      )),
     },
   };
 };

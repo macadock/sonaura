@@ -22,10 +22,13 @@ const ExceptionalOffer: React.FC = () => {
               }
               style={{
                 objectFit: 'cover',
+                objectPosition: 'center',
+                width: '100%',
+                height: '100%',
               }}
               alt={"Produits d'exposition"}
-              width={1920}
-              height={1080}
+              width={1440}
+              height={1920}
             />
           </Box>
         </Grid>
@@ -63,9 +66,7 @@ const ExceptionalOffer: React.FC = () => {
                 align={'left'}
                 fontStyle={'italic'}
               >
-                <span>
-                  {'sur nos produits d’exposition'}
-                </span>
+                <span>{'sur nos produits d’exposition'}</span>
               </Typography>
             </Box>
             <Typography align={'left'} component={'div'}>

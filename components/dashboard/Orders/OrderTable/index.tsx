@@ -80,7 +80,6 @@ const OrderTable: React.FC = () => {
     <DataGrid
       columns={columns}
       rows={orders}
-      pageSize={10}
       onRowClick={({ id }) => {
         router.push(`/dashboard/orders/${id}`);
       }}

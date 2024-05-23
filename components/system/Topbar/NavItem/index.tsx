@@ -7,12 +7,12 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/router';
-import { Category } from 'lib/supabase/categories';
+import { CategoryType } from 'lib/supabase/categories';
 
 interface Props {
   title: string;
   id: string;
-  items: Category[];
+  items: CategoryType[];
   colorInvert?: boolean;
 }
 

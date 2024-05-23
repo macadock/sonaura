@@ -40,7 +40,6 @@ const ShopsTable: React.FC = () => {
     <DataGrid
       columns={columns}
       rows={shops}
-      pageSize={10}
       onRowClick={({ id }) => {
         router.push(`/dashboard/shops/${id}`);
       }}

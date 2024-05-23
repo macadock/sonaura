@@ -18,7 +18,6 @@ import MuiLink from '@mui/material/Link';
 import supabase from 'lib/supabase';
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   onClose: () => void;
   open: boolean;
 }

@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import SidebarNav from './SidebarNav';
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   onClose: () => void;
   open: boolean;
   variant: 'permanent' | 'persistent' | 'temporary' | undefined;

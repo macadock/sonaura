@@ -10,6 +10,7 @@ import {
   Product,
 } from 'lib/supabase/products';
 import { getCategories } from 'lib/supabase/categories';
+import { UserConfig } from 'next-i18next';
 
 const ProductPage: NextPage<{
   product: Product;
@@ -56,7 +57,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       ...(await serverSideTranslations(
         context.locale,
         ['common', 'product'],
-        i18nConfig,
+        i18nConfig as unknown as UserConfig,
       )),
     },
     revalidate: TIME_TO_INVALIDATE_CACHE_SEC,

@@ -5,6 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Installation } from 'lib/supabase/installations';
 import supabase from 'lib/supabase';
 import { Image } from 'types';
+import NextImage from 'next/image';
 
 interface Props {
   installation: Installation;
@@ -49,7 +50,9 @@ const Card: React.FC<Props> = ({ installation }) => {
       >
         {installation ? (
           <Box
-            component={LazyLoadImage}
+            component={(props) => {
+              return <NextImage {...props} height={600} width={600} />;
+            }}
             height={1}
             width={1}
             src={getInstallationMainImage(installation.images as Image)}
@@ -64,7 +67,7 @@ const Card: React.FC<Props> = ({ installation }) => {
               filter:
                 theme.palette.mode === 'dark' ? 'brightness(0.7)' : 'none',
             }}
-          ></Box>
+          />
         ) : null}
         <Box
           position={'absolute'}

@@ -27,7 +27,6 @@ MyError.getInitialProps = async (context: NextPageContext) => {
   const errorInitialProps: AppErrorProps =
     await NextErrorComponent.getInitialProps(context);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { res, err, asPath } = context;
 
   // Workaround for https://github.com/vercel/next.js/issues/8592, mark when

@@ -31,8 +31,6 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const router = useRouter();
   const categorySlug = router.query.category as string;
 
-  if (product === null) return null;
-
   const getProductMainImage = (): string => {
     if (!product?.mainImage) return '';
     const bucket = product.mainImage['bucket'];
@@ -170,6 +168,8 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
       setCurrent(getProductImage(variantImages[0]));
     }
   }, [variantImages]);
+
+  if (product === null) return null;
 
   return (
     <Box sx={{ marginTop: '2rem' }}>

@@ -1,7 +1,7 @@
 import { DataGrid } from '@mui/x-data-grid/DataGrid';
 import { GridColDef } from '@mui/x-data-grid/models/colDef';
 import LoadingScreen from 'components/system/LoadingScreen';
-import { Category, getCategories } from 'lib/supabase/categories';
+import { CategoryType, getCategories } from 'lib/supabase/categories';
 import { getProducts, Product } from 'lib/supabase/products';
 import { getShops, Shop } from 'lib/supabase/shops';
 import { useTranslation } from 'next-i18next';
@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 const ProductTable: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
   const [shops, setShops] = useState<Shop[]>([]);
   const router = useRouter();
   const { t } = useTranslation('dashboard');
@@ -70,7 +70,6 @@ const ProductTable: React.FC = () => {
     <DataGrid
       columns={columns}
       rows={products}
-      pageSize={10}
       onRowClick={({ id }) => {
         router.push(`/dashboard/products/${id}`);
       }}

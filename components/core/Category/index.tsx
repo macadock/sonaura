@@ -30,13 +30,6 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
   const router = useRouter();
   const slug = router.query['category'] as string;
   const { t } = useTranslation('common', { keyPrefix: 'categories' });
-  if (products.length === 0) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', padding: '5rem' }}>
-        <Typography>{t('noProducts')}</Typography>
-      </Box>
-    );
-  }
 
   const sortedProducts = useMemo(() => {
     return products.sort((prev, product) => {
@@ -49,6 +42,14 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
       return 0;
     });
   }, [products]);
+
+  if (products.length === 0) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', padding: '5rem' }}>
+        <Typography>{t('noProducts')}</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Container>

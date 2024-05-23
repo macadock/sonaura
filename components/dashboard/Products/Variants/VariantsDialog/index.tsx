@@ -18,7 +18,6 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Variant } from 'types';
-import * as crypto from 'node:crypto';
 
 interface Props {
   open: boolean;

@@ -4,6 +4,7 @@ import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { NextPage } from 'next';
 import InstallationView from 'views/InstallationsView';
 import { getInstallations, Installation } from 'lib/supabase/installations';
+import { UserConfig } from 'next-i18next';
 
 const Realisations: NextPage<{
   installations: Installation[];
@@ -20,7 +21,7 @@ export const getStaticProps = async ({ locale }) => {
       ...(await serverSideTranslations(
         locale,
         ['common', 'installations'],
-        i18nConfig,
+        i18nConfig as unknown as UserConfig,
       )),
     },
     revalidate: TIME_TO_INVALIDATE_CACHE_SEC,

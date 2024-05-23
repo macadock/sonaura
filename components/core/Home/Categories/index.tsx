@@ -9,7 +9,7 @@ import { useTranslation } from 'next-i18next';
 import { useTheme } from '@mui/material/styles';
 import { useSiteData } from 'contexts/data';
 import supabase from 'lib/supabase';
-import { Category } from 'lib/supabase/categories';
+import { CategoryType } from 'lib/supabase/categories';
 
 const Categories: React.FC = () => {
   const { categories } = useSiteData();
@@ -64,7 +64,7 @@ const Categories: React.FC = () => {
 };
 
 interface Props {
-  category: Category;
+  category: CategoryType;
   index: number;
 }
 

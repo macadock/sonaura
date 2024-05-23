@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { productFrom } from './product.validator';
 import { CreateProductInput, UpdateProductInput } from 'lib/supabase/products';
 import supabase from 'lib/supabase';
-import { Category, getCategories } from 'lib/supabase/categories';
+import { CategoryType, getCategories } from 'lib/supabase/categories';
 import { getShops, Shop } from 'lib/supabase/shops';
 import NumericField from 'components/system/Form/NumericField';
 import TextField from 'components/system/Form/TextField';
@@ -49,7 +49,7 @@ const ProductForm: React.FC<Props> = ({
   leftButtons = null,
   rightButtons = null,
 }) => {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
   const [shops, setShops] = useState<Shop[]>([]);
   const { t } = useTranslation('dashboard');
 

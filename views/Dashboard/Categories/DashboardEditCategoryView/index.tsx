@@ -11,7 +11,7 @@ import CategoryForm, {
   InsertOrUpdateCategory,
 } from 'components/dashboard/Categories/CategoryForm';
 import {
-  Category,
+  CategoryType,
   getCategoryById,
   removeCategory,
   updateCategory,
@@ -23,7 +23,7 @@ const DashboardEditCategoryView: React.FC = () => {
   const categoryId = `${router.query['id']}`;
   const { t } = useTranslation('dashboard');
 
-  const [category, setCategory] = useState<Category | null>(null);
+  const [category, setCategory] = useState<CategoryType | null>(null);
 
   const fetchCategory = async () => {
     const { data } = await getCategoryById(categoryId);

@@ -1,7 +1,7 @@
 import supabase from 'lib/supabase';
 import { Database } from 'types/supabase';
 
-export type Category = Database['public']['Tables']['categories']['Row'];
+export type CategoryType = Database['public']['Tables']['categories']['Row'];
 export type CreateCategoryInput =
   Database['public']['Tables']['categories']['Insert'];
 export type UpdateCategoryInput =

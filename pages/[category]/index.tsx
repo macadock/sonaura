@@ -4,14 +4,15 @@ import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
 import type { GetStaticPropsContext, NextPage } from 'next';
 import CategoryView from 'views/CategoryView';
 import {
-  Category,
+  CategoryType,
   getCategories,
   getCategoryBySlug,
 } from 'lib/supabase/categories';
 import { getProductsByCategory, Product } from 'lib/supabase/products';
+import { UserConfig } from 'next-i18next';
 
 interface Props {
-  category: Category;
+  category: CategoryType;
   products: Product[];
 }
 
@@ -36,7 +37,11 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     props: {
       category,
       products: products,
-      ...(await serverSideTranslations(context.locale, ['common'], i18nConfig)),
+      ...(await serverSideTranslations(
+        context.locale,
+        ['common'],
+        i18nConfig as unknown as UserConfig,
+      )),
     },
     revalidate: TIME_TO_INVALIDATE_CACHE_SEC,
   };

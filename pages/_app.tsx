@@ -1,6 +1,5 @@
 import { Toaster } from 'react-hot-toast';
 
-/* eslint-disable react/prop-types */
 import React, { FC, StrictMode } from 'react';
 import Head from 'next/head';
 
@@ -20,7 +19,6 @@ import { useRouter } from 'next/router';
 import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function App({ Component, pageProps }) {
   const router = useRouter();
 

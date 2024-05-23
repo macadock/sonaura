@@ -44,7 +44,6 @@ const InstallationTable: React.FC = () => {
     <DataGrid
       columns={columns}
       rows={installations}
-      pageSize={10}
       onRowClick={({ id }) => {
         router.push(`/dashboard/installations/${id}`);
       }}

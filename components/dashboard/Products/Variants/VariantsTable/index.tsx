@@ -16,7 +16,6 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { VariantImage, Variant } from 'types';
-import * as crypto from 'node:crypto';
 
 interface Props {
   productId: string;

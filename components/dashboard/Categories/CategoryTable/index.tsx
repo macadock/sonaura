@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { DataGrid } from '@mui/x-data-grid/DataGrid';
 import { GridColDef } from '@mui/x-data-grid/models/colDef';
-import { Category, getCategories } from 'lib/supabase/categories';
+import { CategoryType, getCategories } from 'lib/supabase/categories';
 import LoadingScreen from 'components/system/LoadingScreen';
 
 const CategoryTable: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
   const router = useRouter();
   const { t } = useTranslation('dashboard');
 
@@ -35,7 +35,6 @@ const CategoryTable: React.FC = () => {
     <DataGrid
       columns={columns}
       rows={categories}
-      pageSize={10}
       onRowClick={({ id }) => {
         router.push(`/dashboard/categories/${id}`);
       }}

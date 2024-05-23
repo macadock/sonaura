@@ -16,7 +16,6 @@ import { Typography } from '@mui/material';
 import { useSiteData } from 'contexts/data';
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   onSidebarOpen: () => void;
   colorInvert?: boolean;
 }
