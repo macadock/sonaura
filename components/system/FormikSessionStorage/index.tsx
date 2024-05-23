@@ -5,7 +5,7 @@ interface Props {
   uniqueName: string;
 }
 
-const FormikSessionStorage: React.FC<Props> = ({ uniqueName }) => {
+const FormikSessionStorage = ({ uniqueName }: Props) => {
   const { values, setValues } = useFormikContext();
   const [savedValues, setSavedValues] = useState();
 
@@ -14,19 +14,19 @@ const FormikSessionStorage: React.FC<Props> = ({ uniqueName }) => {
       const a = sessionStorage.getItem(uniqueName);
       setSavedValues(JSON.parse(a));
     }
-  }, []);
+  }, [uniqueName]);
 
   useEffect(() => {
     if (savedValues) {
       setValues(savedValues);
     }
-  }, [savedValues]);
+  }, [savedValues, setValues]);
 
   useEffect(() => {
     if (values) {
       sessionStorage.setItem(uniqueName, JSON.stringify(values));
     }
-  }, [values]);
+  }, [uniqueName, values]);
 
   return <div />;
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -25,16 +25,16 @@ const DashboardEditShopView: React.FC = () => {
 
   const [shop, setShop] = useState<Shop | null>(null);
 
-  const fetchShop = async () => {
+  const fetchShop = useCallback(async () => {
     const { data } = await getShopById(shopId);
     if (data) {
       setShop(data);
     }
-  };
+  }, [shopId]);
 
   useEffect(() => {
     fetchShop();
-  }, []);
+  }, [fetchShop]);
 
   const update = async (shop: UpdateShopInput) => {
     const { error } = await updateShop(shop);

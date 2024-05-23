@@ -69,7 +69,7 @@ const Details: React.FC<Props> = ({ shopId }) => {
 
   const shop = useMemo(() => {
     return shops.find((shop) => shop.id === shopId);
-  }, [shopId]);
+  }, [shopId, shops]);
 
   return (
     <Box marginX={{ sm: 0, md: 5 }}>
@@ -191,7 +191,7 @@ const Map: React.FC<Props> = ({ shopId }) => {
 
   const shop = useMemo(() => {
     return shops.find((shop) => shop.id === shopId);
-  }, [shopId]);
+  }, [shopId, shops]);
 
   return (
     <React.Fragment>

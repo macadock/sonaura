@@ -23,7 +23,7 @@ const ProductView: React.FC<Props> = ({ product }) => {
       return null;
     }
     return categories.find((category) => category.slug === categorySlug);
-  }, [categorySlug, categories?.length]);
+  }, [categories, categorySlug]);
 
   return (
     <Container>

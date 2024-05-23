@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -25,16 +25,16 @@ const DashboardEditInstallationView: React.FC = () => {
 
   const [installation, setInstallation] = useState<Installation | null>(null);
 
-  const fetchInstallation = async () => {
+  const fetchInstallation = useCallback(async () => {
     const { data } = await getInstallationById(installationId);
     if (data) {
       setInstallation(data);
     }
-  };
+  }, [installationId]);
 
   useEffect(() => {
     fetchInstallation();
-  }, []);
+  }, [fetchInstallation]);
 
   const update = async (installation: UpdateInstallationInput) => {
     const { error } = await updateInstallation(installation);

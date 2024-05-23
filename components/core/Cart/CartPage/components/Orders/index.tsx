@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -19,7 +19,7 @@ const Orders: React.FC = () => {
 
   const [products, setProducts] = useState<Product[]>([]);
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     if (!items) return;
 
     const ids = items.map((item) => item.id);
@@ -41,11 +41,11 @@ const Orders: React.FC = () => {
     });
 
     setProducts(products as Product[]);
-  };
+  }, [items]);
 
   useEffect(() => {
     fetchProducts();
-  }, [items]);
+  }, [fetchProducts, items]);
 
   const productsInCart = useMemo(() => {
     if (!items) return [];
@@ -59,7 +59,7 @@ const Orders: React.FC = () => {
         ...product,
       };
     });
-  }, [products]);
+  }, [items, products]);
 
   const getProductImage = (image: Product['mainImage']): string => {
     if (!image) return '';

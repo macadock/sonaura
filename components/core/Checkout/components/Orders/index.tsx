@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -25,7 +25,7 @@ const Orders = (): JSX.Element => {
 
   const vat = cartTotal * 0.2;
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     if (!items) return;
 
     const ids = items.map((item) => item.id);
@@ -44,11 +44,11 @@ const Orders = (): JSX.Element => {
     });
 
     setProducts(products as Product[]);
-  };
+  }, [items]);
 
   useEffect(() => {
     fetchProducts();
-  }, [items]);
+  }, [fetchProducts, items]);
 
   const getProductImage = (image: Product['mainImage']): string => {
     const bucket = image['bucket'];

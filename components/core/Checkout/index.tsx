@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { useCart } from 'react-use-cart';
 import Orders from './components/Orders';
@@ -36,7 +36,7 @@ const Checkout: React.FC = () => {
 
   const { isEmpty, cartTotal, items } = useCart();
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     if (!items) return;
 
     const ids = items.map((item) => item.id);
@@ -55,11 +55,11 @@ const Checkout: React.FC = () => {
     });
 
     setProducts(products);
-  };
+  }, [items]);
 
   useEffect(() => {
     fetchProducts();
-  }, [items]);
+  }, [fetchProducts, items]);
 
   const productsInCart = useMemo(() => {
     if (!items) return null;
@@ -73,7 +73,7 @@ const Checkout: React.FC = () => {
         ...product,
       };
     });
-  }, [products]);
+  }, [items, products]);
 
   const onSubmit = async (values: checkoutFormTypes) => {
     interface PaymentResponseBody {
@@ -114,7 +114,7 @@ const Checkout: React.FC = () => {
     if (isEmpty) {
       router.replace('/');
     }
-  }, [isEmpty]);
+  }, [isEmpty, router]);
 
   if (paymentInProgress) {
     return <LoadingScreen loadingText={t('inProgress')} />;

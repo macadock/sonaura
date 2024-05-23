@@ -15,7 +15,7 @@ import VariantsTable from 'components/dashboard/Products/Variants/VariantsTable'
 
 import { getProductById, updateProductVariants } from 'lib/supabase/products';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Variant } from 'types';
 
@@ -45,7 +45,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
     setOpenMenu((prev) => !prev);
   };
 
-  const fetchProduct = async () => {
+  const fetchProduct = useCallback(async () => {
     const { data } = await getProductById(productId);
     if (data) {
       setVariants(
@@ -54,13 +54,13 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
     } else {
       setVariants([]);
     }
-  };
+  }, [productId]);
 
   useEffect(() => {
     if (open) {
       fetchProduct();
     }
-  }, [productId, open]);
+  }, [productId, open, fetchProduct]);
 
   const saveVariants = async () => {
     const { error } = await updateProductVariants(productId, variants);

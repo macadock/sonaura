@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -25,16 +25,16 @@ const DashboardEditCategoryView: React.FC = () => {
 
   const [category, setCategory] = useState<CategoryType | null>(null);
 
-  const fetchCategory = async () => {
+  const fetchCategory = useCallback(async () => {
     const { data } = await getCategoryById(categoryId);
     if (data) {
       setCategory(data);
     }
-  };
+  }, [categoryId]);
 
   useEffect(() => {
     fetchCategory();
-  }, []);
+  }, [fetchCategory]);
 
   const update = async (category: UpdateCategoryInput) => {
     const { error } = await updateCategory(category);

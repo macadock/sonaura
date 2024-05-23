@@ -99,6 +99,7 @@ const ProfessionalsView: React.FC = () => {
           src={getImage('slide-1')}
           layout={'fill'}
           objectFit={'cover'}
+          alt={'Intégration'}
         />
         <Container>
           <Integration />
@@ -118,6 +119,7 @@ const ProfessionalsView: React.FC = () => {
           src={getImage('slide-2')}
           layout={'fill'}
           objectFit={'cover'}
+          alt={'Design'}
         />
 
         <Container>
@@ -139,6 +141,7 @@ const ProfessionalsView: React.FC = () => {
           src={getImage('slide-3')}
           layout={'fill'}
           objectFit={'cover'}
+          alt={'Elegance'}
         />
         <Container>
           <Elegance />

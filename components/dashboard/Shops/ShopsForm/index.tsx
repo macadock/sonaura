@@ -7,7 +7,6 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'next-i18next';
-import { categoryForm } from 'components/dashboard/Categories/CategoryForm/category.validator';
 import TextField from 'components/system/Form/TextField';
 import { CreateShopInput, UpdateShopInput } from 'lib/supabase/shops';
 import { shopForm } from 'components/dashboard/Shops/ShopsForm/shops.validator';
@@ -129,6 +128,7 @@ const ShopForm: React.FC<Props> = ({
                     {value ? (
                       <img
                         src={getImageUrl(value)}
+                        alt={name}
                         style={{ maxWidth: '100%' }}
                       />
                     ) : null}

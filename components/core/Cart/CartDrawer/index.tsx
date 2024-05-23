@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Drawer from '@mui/material/Drawer';
 
 import { useCart } from 'react-use-cart';
@@ -27,7 +27,7 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
   const { isEmpty, items, removeItem, totalItems } = useCart();
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     if (!items) return;
 
     const ids = items.map((item) => item.id);
@@ -49,11 +49,11 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
     });
 
     setProducts(products as Product[]);
-  };
+  }, [items]);
 
   useEffect(() => {
     fetchProducts();
-  }, [items]);
+  }, [fetchProducts, items]);
 
   const closeCart = () => {
     onClose();
@@ -148,6 +148,7 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                         >
                           <Image
                             src={getProductImage(product.mainImage)}
+                            alt={product.name}
                             objectFit={'cover'}
                             layout={'responsive'}
                             width={1}

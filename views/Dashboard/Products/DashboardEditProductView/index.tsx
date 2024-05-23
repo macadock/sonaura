@@ -15,7 +15,7 @@ import {
 } from 'lib/supabase/products';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const DashboardEditProductView: React.FC = () => {
@@ -31,16 +31,16 @@ const DashboardEditProductView: React.FC = () => {
     setModal((prev) => !prev);
   };
 
-  const fetchProduct = async () => {
+  const fetchProduct = useCallback(async () => {
     const { data } = await getProductById(productId);
     if (data) {
       setProduct(data as Product);
     }
-  };
+  }, [productId]);
 
   useEffect(() => {
     fetchProduct();
-  }, []);
+  }, [fetchProduct]);
 
   const update = async (product: UpdateProductInput) => {
     const { error } = await updateProduct(product);

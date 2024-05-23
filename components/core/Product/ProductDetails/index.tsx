@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -31,13 +31,13 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const router = useRouter();
   const categorySlug = router.query.category as string;
 
-  const getProductMainImage = (): string => {
+  const getProductMainImage = useCallback((): string => {
     if (!product?.mainImage) return '';
     const bucket = product.mainImage['bucket'];
     const file = product.mainImage['file'];
     const { data } = supabase.storage.from(bucket).getPublicUrl(file);
     return data.publicUrl;
-  };
+  }, [product.mainImage]);
 
   const getProductImage = (image: VariantImage): string => {
     const bucket = image.image['bucket'];
@@ -50,7 +50,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
     if (product.variants === null) return [[], []];
     const variants = product.variants as Variant[];
     return [variants, variants.map((variant) => variant.name).sort()];
-  }, []);
+  }, [product.variants]);
 
   const [selectedVariants, setSelectedVariants] = useState<
     { name: string; value: string }[]
@@ -59,7 +59,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const [variantImages, setVariantImages] = useState<VariantImage[]>([]);
   const mainImage = useMemo(() => {
     return getProductMainImage();
-  }, [categorySlug]);
+  }, [getProductMainImage]);
   const [current, setCurrent] = useState<string>(mainImage);
 
   const [alreadyAddedToCart, setAlreadyAddedToCart] = useState<boolean>(false);
@@ -102,7 +102,13 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
     );
     setPriceVariant(parseInt(images[0].price) || undefined);
     setVariantImages(images);
-  }, [selectedVariants]);
+  }, [
+    getProductMainImage,
+    isMissingOptionSelection,
+    noOptionSelected,
+    product.variantsImages,
+    selectedVariants,
+  ]);
 
   const isOccasion = categorySlug === 'occasion';
 
@@ -141,7 +147,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
       return;
     }
     setAlreadyAddedToCart(false);
-  }, [items]);
+  }, [items, product.id]);
 
   const handleVariantSelection = (variantName: string, value: string) => {
     setSelectedVariants((prev) => {

@@ -13,7 +13,7 @@ import {
   updateProductVariantsImage,
 } from 'lib/supabase/products';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { VariantImage, Variant } from 'types';
 
@@ -27,16 +27,16 @@ const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
 
   const [images, setImages] = useState<VariantImage[]>([]);
 
-  const fetchProduct = async () => {
+  const fetchProduct = useCallback(async () => {
     const { data } = await getProductById(productId);
     if (data?.variantsImages) {
       setImages(data.variantsImages as VariantImage[]);
     }
-  };
+  }, [productId]);
 
   useEffect(() => {
     fetchProduct();
-  }, []);
+  }, [fetchProduct]);
 
   const handleImageUpload = async (files: FileList) => {
     const bucket = 'products';
@@ -145,6 +145,7 @@ const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
         return (
           <img
             src={data.publicUrl}
+            alt={file}
             width={50}
             height={50}
             style={{ objectFit: 'cover' }}

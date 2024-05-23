@@ -116,6 +116,7 @@ const CategoryForm: React.FC<Props> = ({
                     {value ? (
                       <img
                         src={getImageUrl(value)}
+                        alt={name}
                         style={{ maxWidth: '100%' }}
                       />
                     ) : null}
