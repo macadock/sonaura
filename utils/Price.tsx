@@ -1,4 +1,4 @@
-import NumberFormat from 'react-number-format';
+import { NumericFormat } from 'react-number-format';
 
 interface Props {
   price: number;
@@ -12,7 +12,7 @@ const Price: React.FC<Props> = ({ price }) => {
   }
 
   return (
-    <NumberFormat
+    <NumericFormat
       value={price}
       displayType="text"
       thousandSeparator=" "

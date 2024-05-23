@@ -10,7 +10,9 @@ const { i18n } = require('./next-i18next.config');
 const moduleExports = {
   reactStrictMode: true,
   images: {
-    domains: ['omzwibopitojmqdieuml.supabase.co'],
+    remotePatterns: [{
+      hostname: 'omzwibopitojmqdieuml.supabase.co',
+    }],
   },
   i18n,
   async rewrites() {

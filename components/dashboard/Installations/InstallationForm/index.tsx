@@ -3,7 +3,6 @@ import supabase from 'lib/supabase';
 import toast from 'react-hot-toast';
 import React from 'react';
 import Box from '@mui/material/Box';
-import { v4 as uuidv4 } from 'uuid';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -54,7 +53,7 @@ const InstallationForm: React.FC<Props> = ({
 
   const uploadImage = async (files: FileList): Promise<object> => {
     const bucket = 'installations';
-    const fileName = `${uuidv4()}`;
+    const fileName = crypto.randomUUID();
     const { error } = await supabase.storage
       .from(bucket)
       .upload(fileName, files[0]);

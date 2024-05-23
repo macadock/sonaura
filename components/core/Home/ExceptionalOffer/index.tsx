@@ -20,9 +20,12 @@ const ExceptionalOffer: React.FC = () => {
               src={
                 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/harmony-beoloab-50.jpg'
               }
+              style={{
+                objectFit: 'cover',
+              }}
               alt={"Produits d'exposition"}
-              layout={'fill'}
-              objectFit={'cover'}
+              width={1920}
+              height={1080}
             />
           </Box>
         </Grid>

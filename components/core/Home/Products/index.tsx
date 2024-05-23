@@ -65,9 +65,7 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
                 <React.Fragment key={product.id}>
                   {i < productNumberMax ? (
                     <ProductItem product={product} index={i} />
-                  ) : (
-                    false
-                  )}
+                  ) : false}
                 </React.Fragment>
               ))
           : null}

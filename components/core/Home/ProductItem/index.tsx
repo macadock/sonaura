@@ -86,17 +86,13 @@ const ProductItem: React.FC<Props> = ({ product, index }) => {
                 <Typography sx={{ fontWeight: 700 }} color={'primary'}>
                   <Price price={product.price} />
                 </Typography>
-              ) : (
-                false
-              )}
+              ) : false}
               {product.fromPrice ? (
                 <Typography sx={{ fontWeight: 700 }} color={'primary'}>
                   {t('fromPrice')}
                   <Price price={product.fromPrice} />
                 </Typography>
-              ) : (
-                false
-              )}
+              ) : false}
               <Link
                 href={`/${product.categories.slug}/${product.slug}`}
                 style={{ textDecoration: 'none' }}

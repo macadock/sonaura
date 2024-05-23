@@ -18,7 +18,7 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Variant } from 'types';
-import { v4 as uuidv4 } from 'uuid';
+import * as crypto from 'node:crypto';
 
 interface Props {
   open: boolean;
@@ -74,7 +74,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
 
   const addAttribute = (attr: string) => {
     const newAttribute: Variant = {
-      id: uuidv4(),
+      id: crypto.randomUUID(),
       name: attr,
       values: [],
     };

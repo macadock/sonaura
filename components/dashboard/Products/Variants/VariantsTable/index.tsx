@@ -16,7 +16,7 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { VariantImage, Variant } from 'types';
-import { v4 as uuidv4 } from 'uuid';
+import * as crypto from 'node:crypto';
 
 interface Props {
   productId: string;
@@ -41,7 +41,7 @@ const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
 
   const handleImageUpload = async (files: FileList) => {
     const bucket = 'products';
-    const fileName = uuidv4();
+    const fileName = crypto.randomUUID();
     const { error } = await supabase.storage
       .from(bucket)
       .upload(fileName, files[0]);
