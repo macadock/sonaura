@@ -11,7 +11,7 @@ interface Props {
   cartTotal: number;
 }
 
-const SummaryBox: React.FC<Props> = ({ cartTotal }) => {
+const SummaryBox = ({ cartTotal }: Props) => {
   const { t } = useTranslation('checkout');
 
   const vat = cartTotal * 0.2;

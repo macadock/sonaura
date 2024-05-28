@@ -12,7 +12,7 @@ import ShopForm, {
 } from '@/components/dashboard/Shops/ShopsForm';
 import { initialValues } from '@/components/dashboard/Shops/ShopsForm/shops.validator';
 
-const DashboardNewShopView: React.FC = () => {
+const DashboardNewShopView = () => {
   const router = useRouter();
 
   const { t } = useTranslation('dashboard');

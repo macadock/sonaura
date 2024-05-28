@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import Button from '@mui/material/Button';
 
-const DashboardShopView: React.FC = () => {
+const DashboardShopView = () => {
   const router = useRouter();
   const { t } = useTranslation('dashboard');
 

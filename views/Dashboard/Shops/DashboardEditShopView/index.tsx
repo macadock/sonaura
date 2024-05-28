@@ -18,7 +18,7 @@ import ShopForm, {
   InsertOrUpdateShop,
 } from '@/components/dashboard/Shops/ShopsForm';
 
-const DashboardEditShopView: React.FC = () => {
+const DashboardEditShopView = () => {
   const router = useRouter();
   const shopId = `${router.query['id']}`;
   const { t } = useTranslation('dashboard');

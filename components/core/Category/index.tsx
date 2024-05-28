@@ -14,15 +14,17 @@ import { Product } from '@/lib/supabase/products';
 import { useRouter } from 'next/router';
 import supabase from '@/lib/supabase';
 import Image from 'next/legacy/image';
+import pick from 'lodash/pick';
 
 interface Props {
   products: Product[];
 }
 
-const getProductMainImage = (image: Product['mainImage']): string => {
-  const bucket = image['bucket'];
-  const file = image['file'];
-  const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+const getProductImage = (image: Product['mainImage']): string => {
+  const bucket = pick(image, 'bucket');
+  const file = pick(image, 'file');
+
+  const { data } = supabase.storage.from(`${bucket}`).getPublicUrl(`${file}`);
   return data.publicUrl;
 };
 
@@ -36,8 +38,10 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
       const priceA = prev.price || prev.fromPrice;
       const priceB = product.price || product.fromPrice;
 
-      if (priceA < priceB) return -1;
-      if (priceA > priceB) return 1;
+      if (priceA && priceB) {
+        if (priceA < priceB) return -1;
+        if (priceA > priceB) return 1;
+      }
 
       return 0;
     });
@@ -81,7 +85,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                     }}
                   >
                     <Image
-                      src={getProductMainImage(product.mainImage)}
+                      src={getProductImage(product.mainImage)}
                       alt={product.name}
                       layout={'fill'}
                       objectFit={'contain'}

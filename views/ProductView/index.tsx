@@ -13,7 +13,7 @@ import { useSiteData } from '@/contexts/data';
 interface Props {
   product: Product;
 }
-const ProductView: React.FC<Props> = ({ product }) => {
+const ProductView = ({ product }: Props) => {
   const { categories } = useSiteData();
   const router = useRouter();
   const categorySlug = router.query.category as string;

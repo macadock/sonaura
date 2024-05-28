@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/legacy/image';
 
-const Banner: React.FC = () => {
+const Banner = () => {
   const { t } = useTranslation('homepage', { keyPrefix: 'banner' });
   return (
     <Box position={'relative'}>

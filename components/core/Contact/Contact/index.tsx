@@ -12,7 +12,7 @@ import Container from '@/components/system/Container';
 import { useTranslation } from 'next-i18next';
 import { useSiteData } from '@/contexts/data';
 
-const Contact: React.FC = () => {
+const Contact = () => {
   const { shops } = useSiteData();
   return (
     <Box sx={{ display: { sm: 'block', md: 'flex' } }}>
@@ -62,7 +62,7 @@ interface Props {
   shopId: string;
 }
 
-const Details: React.FC<Props> = ({ shopId }) => {
+const Details = ({ shopId }: Props) => {
   const { t } = useTranslation('contact');
   const theme = useTheme();
   const { shops } = useSiteData();
@@ -70,6 +70,10 @@ const Details: React.FC<Props> = ({ shopId }) => {
   const shop = useMemo(() => {
     return shops.find((shop) => shop.id === shopId);
   }, [shopId, shops]);
+
+  if (!shop) {
+    return null;
+  }
 
   return (
     <Box marginX={{ sm: 0, md: 5 }}>
@@ -111,7 +115,7 @@ const Details: React.FC<Props> = ({ shopId }) => {
             </Box>
           </Box>
           <a
-            href={`tel:${shop.phoneNumber.trim()}`}
+            href={`tel:${shop?.phoneNumber?.trim()}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <ListItemText primary={t('phone')} secondary={shop.phoneNumber} />
@@ -192,6 +196,10 @@ const Map: React.FC<Props> = ({ shopId }) => {
   const shop = useMemo(() => {
     return shops.find((shop) => shop.id === shopId);
   }, [shopId, shops]);
+
+  if (!shop || !shop.googleMapsUrl) {
+    return null;
+  }
 
   return (
     <React.Fragment>

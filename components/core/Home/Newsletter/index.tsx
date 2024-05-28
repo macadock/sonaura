@@ -17,7 +17,7 @@ import {
 } from './newsletterForm.validator';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 
-const Newsletter: React.FC = () => {
+const Newsletter = () => {
   const { t } = useTranslation('homepage', { keyPrefix: 'newsletter' });
   const theme = useTheme();
 

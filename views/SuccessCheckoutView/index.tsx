@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import Success from '@/components/core/Checkout/Success';
 
-const SuccessCheckoutView: React.FC = () => {
+const SuccessCheckoutView = () => {
   return (
     <Container>
       <Success />

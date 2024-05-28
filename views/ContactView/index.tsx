@@ -6,7 +6,7 @@ import Hero from '@/components/core/Contact/Hero';
 import Container from '@/components/system/Container';
 import { useTheme } from '@mui/material/styles';
 
-const ContactView: React.FC = () => {
+const ContactView = () => {
   const theme = useTheme();
 
   return (

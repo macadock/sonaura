@@ -17,7 +17,7 @@ import { ApiUrls, getRoutePath } from '@/appConstants';
 import toast from 'react-hot-toast';
 import FormikSessionStorage from '@/components/system/FormikSessionStorage';
 import CreatePaymentInput from '@/PayPlug/dto/create-payment.input';
-import { getProductsByIds } from '@/lib/supabase/products';
+import { getProductsByIds, Product } from '@/lib/supabase/products';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -27,12 +27,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 export const uniqueName = 'checkout';
 
-const Checkout: React.FC = () => {
+const Checkout = () => {
   const { t } = useTranslation('checkout');
   const router = useRouter();
 
   const [paymentInProgress, setPaymentInProgress] = useState<boolean>(false);
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const { isEmpty, cartTotal, items } = useCart();
 
@@ -46,7 +46,9 @@ const Checkout: React.FC = () => {
     if (!data) return;
 
     const products = items.map((item) => {
-      const product = data.find((product) => product.id === item.id);
+      const product = (data as unknown as Product[]).find(
+        (product) => product.id === item.id,
+      );
 
       return {
         ...item,
@@ -54,24 +56,23 @@ const Checkout: React.FC = () => {
       };
     });
 
-    setProducts(products);
+    setProducts(products as Product[]);
   }, [items]);
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts, items]);
 
-  const productsInCart = useMemo(() => {
-    if (!items) return null;
+  const productsInCart = useMemo<Product[]>(() => {
+    if (!items || !products) return [];
 
     return items.map((item) => {
-      if (!products) return {};
       const product = products.find((product) => product.id === item.id);
 
       return {
         ...item,
         ...product,
-      };
+      } as Product;
     });
   }, [items, products]);
 

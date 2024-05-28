@@ -11,8 +11,9 @@ import NextLink from 'next/link';
 import Price from '@/utils/Price';
 import { getProductsByIds, Product } from '@/lib/supabase/products';
 import supabase from '@/lib/supabase';
+import { pick } from 'lodash';
 
-const Orders: React.FC = () => {
+const Orders = () => {
   const theme = useTheme();
   const { t } = useTranslation('checkout');
   const { removeItem, getItem, items } = useCart();
@@ -32,7 +33,9 @@ const Orders: React.FC = () => {
     }
 
     const products = items.map((item) => {
-      const product = data.find((product) => product.id === item.id);
+      const product = (data as unknown as Product[]).find(
+        (product) => product.id === item.id,
+      );
 
       return {
         ...item,
@@ -62,104 +65,114 @@ const Orders: React.FC = () => {
   }, [items, products]);
 
   const getProductImage = (image: Product['mainImage']): string => {
-    if (!image) return '';
-    const bucket = image['bucket'];
-    const file = image['file'];
+    const bucket = pick(image, 'bucket');
+    const file = pick(image, 'file');
 
-    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+    const { data } = supabase.storage.from(`${bucket}`).getPublicUrl(`${file}`);
     return data.publicUrl;
   };
 
   return (
     <Box>
-      {productsInCart.map((product, i) => (
-        <Box key={product.id}>
-          <Box display={'flex'}>
-            <NextLink
-              href={`/${product.categories?.slug}/${product.slug}`}
-              style={{ textDecoration: 'none' }}
-            >
-              <Box
-                component={'img'}
-                src={getProductImage(product.mainImage)}
-                alt={product.name}
-                sx={{
-                  ':hover': { cursor: 'pointer' },
-                  borderRadius: 2,
-                  width: 1,
-                  height: 1,
-                  maxWidth: { xs: 120, sm: 160 },
-                  marginRight: 2,
-                  filter:
-                    theme.palette.mode === 'dark' ? 'brightness(0.7)' : 'none',
-                }}
-              />
-            </NextLink>
-            <Box
-              display={'flex'}
-              flexDirection={{ xs: 'column', sm: 'row' }}
-              justifyContent={'space-between'}
-              alignItems={'flex-start'}
-              width={1}
-              position={'relative'}
-            >
-              <Box>
-                <Link href={`/${product.categories?.slug}/${product.slug}`}>
-                  <Typography fontWeight={700} gutterBottom>
-                    {product.name}
-                  </Typography>
-                </Link>
-                <Typography sx={{ fontWeight: 'bold' }}>
-                  <Price price={product.price} />
-                </Typography>
-              </Box>
-              <Typography>
-                {`${t('quantity')} : ${getItem(product.id)?.quantity}`}
-              </Typography>
-              <Box
-                sx={{
-                  position: { xs: 'absolute', sm: 'initial' },
-                  right: '2rem',
-                  bottom: '2rem',
-                }}
-                title={t('delete')}
+      {productsInCart.map((product, i) => {
+        if (!product) {
+          return null;
+        }
+        return (
+          <Box key={product.id}>
+            <Box display={'flex'}>
+              <NextLink
+                href={`/${product.categories?.slug}/${product.slug}`}
+                style={{ textDecoration: 'none' }}
               >
-                <Link
-                  onClick={() => {
-                    removeItem(product.id);
-                  }}
-                  underline={'none'}
-                  variant={'subtitle2'}
-                  noWrap={true}
+                {product.mainImage && (
+                  <Box
+                    component={'img'}
+                    src={getProductImage(product.mainImage)}
+                    alt={product.name}
+                    sx={{
+                      ':hover': { cursor: 'pointer' },
+                      borderRadius: 2,
+                      width: 1,
+                      height: 1,
+                      maxWidth: { xs: 120, sm: 160 },
+                      marginRight: 2,
+                      filter:
+                        theme.palette.mode === 'dark'
+                          ? 'brightness(0.7)'
+                          : 'none',
+                    }}
+                  />
+                )}
+              </NextLink>
+              <Box
+                display={'flex'}
+                flexDirection={{ xs: 'column', sm: 'row' }}
+                justifyContent={'space-between'}
+                alignItems={'flex-start'}
+                width={1}
+                position={'relative'}
+              >
+                <Box>
+                  <Link href={`/${product.categories?.slug}/${product.slug}`}>
+                    <Typography fontWeight={700} gutterBottom>
+                      {product.name}
+                    </Typography>
+                  </Link>
+                  {product.price && (
+                    <Typography sx={{ fontWeight: 'bold' }}>
+                      <Price price={product.price} />
+                    </Typography>
+                  )}
+                </Box>
+                <Typography>
+                  {`${t('quantity')} : ${getItem(product.id)?.quantity}`}
+                </Typography>
+                <Box
                   sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    color: 'text.secondary',
-                    '&:hover': {
-                      color: 'primary.main',
-                      cursor: 'pointer',
-                    },
+                    position: { xs: 'absolute', sm: 'initial' },
+                    right: '2rem',
+                    bottom: '2rem',
                   }}
+                  title={t('delete')}
                 >
-                  <Delete />
-                  <Typography
-                    variant={'button'}
-                    display={{ xs: 'none', sm: 'block' }}
+                  <Link
+                    onClick={() => {
+                      removeItem(product.id);
+                    }}
+                    underline={'none'}
+                    variant={'subtitle2'}
+                    noWrap={true}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      color: 'text.secondary',
+                      '&:hover': {
+                        color: 'primary.main',
+                        cursor: 'pointer',
+                      },
+                    }}
                   >
-                    {t('delete')}
-                  </Typography>
-                </Link>
+                    <Delete />
+                    <Typography
+                      variant={'button'}
+                      display={{ xs: 'none', sm: 'block' }}
+                    >
+                      {t('delete')}
+                    </Typography>
+                  </Link>
+                </Box>
               </Box>
             </Box>
+            <Divider
+              sx={{
+                marginY: { xs: 2, sm: 4 },
+                display: i === products.length - 1 ? 'none' : 'block',
+              }}
+            />
           </Box>
-          <Divider
-            sx={{
-              marginY: { xs: 2, sm: 4 },
-              display: i === products.length - 1 ? 'none' : 'block',
-            }}
-          />
-        </Box>
-      ))}
+        );
+      })}
     </Box>
   );
 };

@@ -13,21 +13,24 @@ import CardActions from '@mui/material/CardActions';
 import Price from '@/utils/Price';
 import Button from '@mui/material/Button';
 import Image from 'next/legacy/image';
+import { pick } from 'lodash';
 
 interface Props {
   product: Product;
   index: number;
 }
 
-const ProductItem: React.FC<Props> = ({ product, index }) => {
+const ProductItem = ({ product, index }: Props) => {
   const { t } = useTranslation('homepage', { keyPrefix: 'products' });
   const theme = useTheme();
 
   const getProductMainImage = (product: Product): string => {
     if (!product?.mainImage) return '';
-    const bucket = product.mainImage['bucket'];
-    const file = product.mainImage['file'];
-    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+    const bucket = pick(product.mainImage, 'bucket');
+    const file = pick(product.mainImage, 'file');
+    const { data } = supabase.storage
+      .from(bucket as string)
+      .getPublicUrl(file as string);
     return data.publicUrl;
   };
 

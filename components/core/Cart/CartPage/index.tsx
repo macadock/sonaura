@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 
-const CartPage: React.FC = () => {
+const CartPage = () => {
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
 
   const { totalItems, isEmpty, cartTotal } = useCart();

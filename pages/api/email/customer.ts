@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import SendInBlue from 'SendInBlue';
-import SendCustomerEmailInput from 'SendInBlue/dto/send-customer-email.input';
+import SendInBlue from '@/SendInBlue';
+import SendCustomerEmailInput from '@/SendInBlue/dto/send-customer-email.input';
 
 export default async function handler(
   req: NextApiRequest,

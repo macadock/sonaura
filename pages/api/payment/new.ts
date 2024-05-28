@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import PayPlug from 'PayPlug';
-import CreatePaymentInput from 'PayPlug/dto/create-payment.input';
-import SendInBlue from 'SendInBlue';
+import PayPlug from '@/PayPlug';
+import CreatePaymentInput from '@/PayPlug/dto/create-payment.input';
+import SendInBlue from '@/SendInBlue';
 import SendCustomerEmailInput from '../../../SendInBlue/dto/send-customer-email.input';
 
 export default async function handler(

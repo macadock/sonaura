@@ -17,7 +17,7 @@ const getImage = (name: string): string => {
   return data.publicUrl;
 };
 
-const ProfessionalsView: React.FC = () => {
+const ProfessionalsView = () => {
   useEffect(() => {
     const jarallaxInit = async () => {
       const jarallaxElems = document.querySelectorAll('.jarallax');
@@ -34,12 +34,16 @@ const ProfessionalsView: React.FC = () => {
 
   const scrollTo = (id: string): void => {
     setTimeout(() => {
-      const element: HTMLElement = document.querySelector(`#${id}`);
+      const element = document.querySelector(`#${id}`);
       if (!element) {
         return;
       }
 
-      window.scrollTo({ left: 0, top: element.offsetTop, behavior: 'smooth' });
+      window.scrollTo({
+        left: 0,
+        top: (element as HTMLElement).offsetTop,
+        behavior: 'smooth',
+      });
     });
   };
 
