@@ -18,7 +18,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-const DashboardEditProductView: React.FC = () => {
+const DashboardEditProductView = () => {
   const router = useRouter();
   const productId = `${router.query['id']}`;
   const { t } = useTranslation('dashboard');

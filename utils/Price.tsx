@@ -4,7 +4,7 @@ interface Props {
   price: number;
 }
 
-const Price: React.FC<Props> = ({ price }) => {
+const Price = ({ price }: Props) => {
   const emptyNumber = !(Boolean(price) || Boolean(price));
 
   if (emptyNumber) {

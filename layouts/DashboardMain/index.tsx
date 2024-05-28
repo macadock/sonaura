@@ -16,7 +16,7 @@ interface Props {
   colorInvert?: boolean;
 }
 
-const DashboardMain: React.FC<Props> = ({ children }) => {
+const DashboardMain = ({ children }: Props) => {
   const { t } = useTranslation(['common', 'dashboard']);
   const router = useRouter();
   const session = useSession();

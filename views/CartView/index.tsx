@@ -1,6 +1,6 @@
 import CartPage from '@/components/core/Cart/CartPage';
 
-const CartView: React.FC = () => {
+const CartView = () => {
   return <CartPage />;
 };
 

@@ -18,7 +18,7 @@ interface Props {
   colorInvert?: boolean;
 }
 
-const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
+const Main = ({ children, colorInvert = false }: Props) => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,

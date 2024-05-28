@@ -9,7 +9,7 @@ export default class CreatePaymentInput implements checkoutFormTypes {
   lastName: string;
   phoneNumber: string;
   address: string;
-  country: Country;
+  country: Country | null;
   city: string;
   postalCode: string;
   email: string;

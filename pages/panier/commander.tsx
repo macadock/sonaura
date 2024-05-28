@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import LoadingScreen from '@/components/system/LoadingScreen';
 import { UserConfig } from 'next-i18next';
 
-const CheckoutView = dynamic(() => import('views/CheckoutView'), {
+const CheckoutView = dynamic(() => import('@/views/CheckoutView'), {
   ssr: false,
   loading: () => <LoadingScreen />,
 });

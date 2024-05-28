@@ -20,24 +20,17 @@ import supabase from '@/lib/supabase';
 import { VariantImage, Variant } from '@/types';
 import Chip from '@mui/material/Chip';
 import Image from 'next/legacy/image';
+import { getProductMainImage } from '@/utils/get-product-main-image';
 
 interface Props {
-  product: Product;
+  product: Product | null;
 }
 
-const ProductDetails: React.FC<Props> = ({ product = null }) => {
+const ProductDetails = ({ product = null }: Props) => {
   const { t } = useTranslation('product');
   const theme = useTheme();
   const router = useRouter();
   const categorySlug = router.query.category as string;
-
-  const getProductMainImage = useCallback((): string => {
-    if (!product?.mainImage) return '';
-    const bucket = product.mainImage['bucket'];
-    const file = product.mainImage['file'];
-    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
-    return data.publicUrl;
-  }, [product.mainImage]);
 
   const getProductImage = (image: VariantImage): string => {
     const bucket = image.image['bucket'];
@@ -47,10 +40,12 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   };
 
   const [variants, variantNames] = useMemo(() => {
-    if (product.variants === null) return [[], []];
-    const variants = product.variants as Variant[];
+    if (product?.variants === null) {
+      return [[], []];
+    }
+    const variants = product?.variants as Variant[];
     return [variants, variants.map((variant) => variant.name).sort()];
-  }, [product.variants]);
+  }, [product?.variants]);
 
   const [selectedVariants, setSelectedVariants] = useState<
     { name: string; value: string }[]
@@ -58,8 +53,8 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
   const [variantImages, setVariantImages] = useState<VariantImage[]>([]);
   const mainImage = useMemo(() => {
-    return getProductMainImage();
-  }, [getProductMainImage]);
+    return getProductMainImage(product?.mainImage as string);
+  }, [product?.mainImage]);
   const [current, setCurrent] = useState<string>(mainImage);
 
   const [alreadyAddedToCart, setAlreadyAddedToCart] = useState<boolean>(false);
@@ -76,19 +71,19 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   useEffect(() => {
     if (noOptionSelected || isMissingOptionSelection) {
       setVariantImages([]);
-      setCurrent(getProductMainImage());
+      setCurrent(getProductMainImage(product?.mainImage as string));
       setPriceVariant(undefined);
       return;
     }
 
     const keys = selectedVariants.map((variant) => variant.name);
-    const images = (product.variantsImages as VariantImage[]).filter(
+    const images = (product?.variantsImages as VariantImage[]).filter(
       (variantImage) => {
         const keep: boolean[] = [];
         keys.forEach((key) => {
           const getVariant = selectedVariants.find((s) => s.name === key);
-          const variant = variantImage.variants.find(
-            (variant) => variant.value === getVariant.value,
+          const variant = variantImage?.variants?.find(
+            (variant) => variant.value === getVariant?.value,
           );
           if (variant) {
             keep.push(true);
@@ -97,16 +92,16 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
           }
         });
         const hasFalseValues = keep.find((k) => k === false);
-        return hasFalseValues === undefined ? true : false;
+        return hasFalseValues === undefined;
       },
     );
-    setPriceVariant(parseInt(images[0].price) || undefined);
+    setPriceVariant(parseInt(images[0]?.price as string) || undefined);
     setVariantImages(images);
   }, [
     getProductMainImage,
     isMissingOptionSelection,
     noOptionSelected,
-    product.variantsImages,
+    product?.variantsImages,
     selectedVariants,
   ]);
 
@@ -147,7 +142,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
       return;
     }
     setAlreadyAddedToCart(false);
-  }, [items, product.id]);
+  }, [items, product?.id]);
 
   const handleVariantSelection = (variantName: string, value: string) => {
     setSelectedVariants((prev) => {
@@ -218,7 +213,9 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     borderRadius: 2,
                   },
                 }}
-                onClick={() => setCurrent(getProductMainImage())}
+                onClick={() =>
+                  setCurrent(getProductMainImage(product?.mainImage as string))
+                }
               >
                 <Image
                   src={mainImage}
@@ -289,9 +286,12 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               <Box display={'flex'} alignItems={'baseline'}>
                 {priceVariant || product.price ? (
                   <>
-                    <Typography variant={'h5'} fontWeight={700}>
-                      <Price price={priceVariant || product.price} />
-                    </Typography>
+                    {priceVariant ||
+                      (product?.price && (
+                        <Typography variant={'h5'} fontWeight={700}>
+                          <Price price={priceVariant || product.price} />
+                        </Typography>
+                      ))}
                     {isOccasion ? (
                       <Typography variant="body2" sx={{ marginLeft: '0.5rem' }}>
                         {t('pricePreOwnedConditions')}
@@ -336,7 +336,10 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 <Stack marginTop={3} direction={'column'} spacing={2}>
                   <Button
                     onClick={addToCart}
-                    disabled={alreadyAddedToCart || product.quantity <= 0}
+                    disabled={
+                      alreadyAddedToCart ||
+                      !!(product.quantity && product.quantity <= 0)
+                    }
                     variant={'contained'}
                     color={'primary'}
                     size={'large'}

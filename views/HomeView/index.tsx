@@ -9,7 +9,7 @@ import Container from '@/components/system/Container';
 import React from 'react';
 import PreOwnedProducts from '@/components/core/Home/PreOwnedProducts';
 
-const HomeView: React.FC = () => {
+const HomeView = () => {
   return (
     <React.Fragment>
       <Container>

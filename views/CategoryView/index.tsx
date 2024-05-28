@@ -10,7 +10,7 @@ interface Props {
   products: Product[];
 }
 
-const CategoryView: React.FC<Props> = ({ category, products }) => {
+const CategoryView = ({ category, products }: Props) => {
   const isOccasion = category.slug === 'occasion';
 
   const { t } = useTranslation('common', { keyPrefix: 'preOwned' });

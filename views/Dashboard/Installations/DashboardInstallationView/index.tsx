@@ -6,7 +6,7 @@ import { useTranslation } from 'next-i18next';
 import { Button } from '@mui/material';
 import InstallationTable from '@/components/dashboard/Installations/InstallationTable';
 
-const DashboardInstallationView: React.FC = () => {
+const DashboardInstallationView = () => {
   const router = useRouter();
   const { t } = useTranslation('dashboard');
 

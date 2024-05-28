@@ -9,7 +9,7 @@ interface Props {
   installations: Installation[];
 }
 
-const InstallationView: React.FC<Props> = ({ installations }) => {
+const InstallationView = ({ installations }: Props) => {
   return (
     <React.Fragment>
       <Hero />

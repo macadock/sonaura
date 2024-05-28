@@ -38,7 +38,7 @@ export interface checkoutFormTypes {
   email: string;
   phoneNumber: string;
   address: string;
-  country: Country;
+  country: Country | null;
   city: string;
   postalCode: string;
 }

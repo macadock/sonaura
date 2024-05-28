@@ -3,7 +3,7 @@ import DashboardOrderView from '@/views/Dashboard/Orders/DashboardOrderView';
 import i18nConfig from '../../next-i18next.config';
 import { UserConfig } from 'next-i18next';
 
-const DashboardHome: React.FC = () => {
+const DashboardHome = () => {
   return <DashboardOrderView />;
 };
 

@@ -8,7 +8,7 @@ interface Props {
   shop: Shop;
 }
 
-const Shops: React.FC<Props> = ({ shop }) => {
+const Shops = ({ shop }: Props) => {
   const theme = useTheme();
   const { t } = useTranslation('product');
 

@@ -6,16 +6,14 @@ import { useTranslation } from 'next-i18next';
 import { getProducts, Product } from '@/lib/supabase/products';
 import ProductItem from '@/components/core/Home/ProductItem';
 
-const Products: React.FC<{ productNumberMax?: number }> = ({
-  productNumberMax = 3,
-}) => {
+const Products = ({ productNumberMax = 3 }: { productNumberMax?: number }) => {
   const { t } = useTranslation('homepage', { keyPrefix: 'products' });
   const [products, setProducts] = useState<Product[]>([]);
 
   const fetchProducts = async () => {
     const { data } = await getProducts();
     if (data) {
-      setProducts(data as Product[]);
+      setProducts(data as unknown as Product[]);
     }
   };
 

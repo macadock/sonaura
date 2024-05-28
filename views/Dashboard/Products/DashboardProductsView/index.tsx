@@ -6,7 +6,7 @@ import ProductTable from '@/components/dashboard/Products/ProductTable';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 
-const DashboardProductsView: React.FC = () => {
+const DashboardProductsView = () => {
   const router = useRouter();
   const { t } = useTranslation('dashboard');
 

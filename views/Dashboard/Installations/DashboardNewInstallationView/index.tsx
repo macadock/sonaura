@@ -15,7 +15,7 @@ import InstallationForm, {
   InsertOrUpdateInstallation,
 } from '@/components/dashboard/Installations/InstallationForm';
 
-const DashboardNewInstallationView: React.FC = () => {
+const DashboardNewInstallationView = () => {
   const router = useRouter();
 
   const { t } = useTranslation('dashboard');

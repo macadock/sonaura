@@ -6,7 +6,7 @@ import { useTranslation } from 'next-i18next';
 import { Button } from '@mui/material';
 import OrderTable from '@/components/dashboard/Orders/OrderTable';
 
-const DashboardOrderView: React.FC = () => {
+const DashboardOrderView = () => {
   const router = useRouter();
   const { t } = useTranslation('dashboard');
 

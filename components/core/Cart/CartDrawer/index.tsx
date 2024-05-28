@@ -16,13 +16,15 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import MuiLink from '@mui/material/Link';
 import supabase from '@/lib/supabase';
+import isEmptyLodash from 'lodash/isEmpty';
+import { pick } from 'lodash';
 
 interface Props {
   onClose: () => void;
   open: boolean;
 }
 
-const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
+const CartDrawer = ({ open, onClose }: Props) => {
   const [products, setProducts] = useState<Product[]>([]);
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
   const { isEmpty, items, removeItem, totalItems } = useCart();
@@ -34,13 +36,15 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
 
     const { data } = await getProductsByIds(ids);
 
-    if (!data) {
+    if (isEmptyLodash(data)) {
       setProducts([]);
       return;
     }
 
     const products = items.map((item) => {
-      const product = data.find((product) => product.id === item.id);
+      const product = (data as unknown as Product[])?.find(
+        (product) => product.id === item.id,
+      );
 
       return {
         ...item,
@@ -60,10 +64,10 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
   };
 
   const getProductImage = (image: Product['mainImage']): string => {
-    const bucket = image['bucket'];
-    const file = image['file'];
+    const bucket = pick(image, 'bucket');
+    const file = pick(image, 'file');
 
-    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+    const { data } = supabase.storage.from(`${bucket}`).getPublicUrl(`${file}`);
     return data.publicUrl;
   };
 
@@ -173,9 +177,11 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                             {product.name}
                           </Typography>
                         </Link>
-                        <Typography>
-                          <Price price={product.price} />
-                        </Typography>
+                        {product.price && (
+                          <Typography>
+                            <Price price={product.price} />
+                          </Typography>
+                        )}
                       </Box>
                     </Box>
                   </Box>

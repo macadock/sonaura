@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { Button } from '@mui/material';
 
-const DashboardCategoryView: React.FC = () => {
+const DashboardCategoryView = () => {
   const router = useRouter();
   const { t } = useTranslation('dashboard');
 

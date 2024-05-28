@@ -18,7 +18,7 @@ import {
   UpdateCategoryInput,
 } from '@/lib/supabase/categories';
 
-const DashboardEditCategoryView: React.FC = () => {
+const DashboardEditCategoryView = () => {
   const router = useRouter();
   const categoryId = `${router.query['id']}`;
   const { t } = useTranslation('dashboard');

@@ -1,6 +1,6 @@
 import Checkout from '@/components/core/Checkout';
 
-const CheckoutView: React.FC = () => {
+const CheckoutView = () => {
   return <Checkout />;
 };
 

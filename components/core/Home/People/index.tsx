@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/legacy/image';
 
-const People: React.FC = () => {
+const People = () => {
   const { t } = useTranslation('homepage', { keyPrefix: 'people' });
   return (
     <Box bgcolor={'primary.main'} borderRadius={2} overflow={'hidden'}>
