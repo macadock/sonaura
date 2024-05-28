@@ -1,4 +1,4 @@
-import { InsertOrUpdateProduct } from 'components/dashboard/Products/ProductForm';
+import { InsertOrUpdateProduct } from '@/components/dashboard/Products/ProductForm';
 import * as yup from 'yup';
 
 export const productFrom = yup.object({

@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { Button } from '@mui/material';
-import InstallationTable from 'components/dashboard/Installations/InstallationTable';
+import InstallationTable from '@/components/dashboard/Installations/InstallationTable';
 
 const DashboardInstallationView: React.FC = () => {
   const router = useRouter();

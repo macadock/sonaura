@@ -1,4 +1,4 @@
-import { InsertOrUpdateInstallation } from 'components/dashboard/Installations/InstallationForm';
+import { InsertOrUpdateInstallation } from '@/components/dashboard/Installations/InstallationForm';
 import * as yup from 'yup';
 
 export const installationForm = yup.object({

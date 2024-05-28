@@ -1,8 +1,8 @@
 import { NextPage } from 'next';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import i18nConfig from 'next-i18next.config';
-import DashboardNewShopView from 'views/Dashboard/Shops/DashboardNewShopView';
+import i18nConfig from '@/next-i18next.config';
+import DashboardNewShopView from '@/views/Dashboard/Shops/DashboardNewShopView';
 import { UserConfig } from 'next-i18next';
 
 const DashboardNewShop: NextPage = () => {

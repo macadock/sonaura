@@ -1,7 +1,7 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import i18nConfig from 'next-i18next.config';
+import i18nConfig from '@/next-i18next.config';
 import type { NextPage } from 'next';
-import SuccessCheckoutView from 'views/SuccessCheckoutView';
+import SuccessCheckoutView from '@/views/SuccessCheckoutView';
 import { UserConfig } from 'next-i18next';
 
 const SuccessPage: NextPage = () => {

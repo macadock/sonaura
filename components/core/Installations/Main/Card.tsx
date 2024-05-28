@@ -2,9 +2,9 @@ import { Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Installation } from 'lib/supabase/installations';
-import supabase from 'lib/supabase';
-import { Image } from 'types';
+import { Installation } from '@/lib/supabase/installations';
+import supabase from '@/lib/supabase';
+import { Image } from '@/types';
 import NextImage from 'next/image';
 
 interface Props {

@@ -2,7 +2,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { i18n } from '../next-i18next.config';
 import TIME_TO_INVALIDATE_CACHE_SEC from '../appConstants';
 import type { NextPage } from 'next';
-import HomeView from 'views/HomeView';
+import HomeView from '@/views/HomeView';
 
 const Home: NextPage = () => {
   return <HomeView />;

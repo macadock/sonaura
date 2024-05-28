@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from 'components/system/Container';
+import Container from '@/components/system/Container';
 
 const LegalNoticeView: React.FC = () => {
   return (

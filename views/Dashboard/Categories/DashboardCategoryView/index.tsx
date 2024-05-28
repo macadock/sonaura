@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import CategoryTable from 'components/dashboard/Categories/CategoryTable';
+import CategoryTable from '@/components/dashboard/Categories/CategoryTable';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { Button } from '@mui/material';

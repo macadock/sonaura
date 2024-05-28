@@ -5,8 +5,8 @@ import NavItem from '../NavItem';
 import Link from '@mui/material/Link';
 import { useTranslation } from 'next-i18next';
 
-import { useSiteData } from 'contexts/data';
-import moveCategoryToPage from 'components/system/Topbar/exlude-from-menu';
+import { useSiteData } from '@/contexts/data';
+import moveCategoryToPage from '@/components/system/Topbar/exlude-from-menu';
 
 const SidebarNav: React.FC = () => {
   const { t } = useTranslation('common');

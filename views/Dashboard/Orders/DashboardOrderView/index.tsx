@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { Button } from '@mui/material';
-import OrderTable from 'components/dashboard/Orders/OrderTable';
+import OrderTable from '@/components/dashboard/Orders/OrderTable';
 
 const DashboardOrderView: React.FC = () => {
   const router = useRouter();

@@ -13,10 +13,10 @@ import {
   removeInstallation,
   updateInstallation,
   UpdateInstallationInput,
-} from 'lib/supabase/installations';
+} from '@/lib/supabase/installations';
 import InstallationForm, {
   InsertOrUpdateInstallation,
-} from 'components/dashboard/Installations/InstallationForm';
+} from '@/components/dashboard/Installations/InstallationForm';
 
 const DashboardEditInstallationView: React.FC = () => {
   const router = useRouter();

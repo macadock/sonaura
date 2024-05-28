@@ -6,11 +6,11 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
-import { createShop, CreateShopInput } from 'lib/supabase/shops';
+import { createShop, CreateShopInput } from '@/lib/supabase/shops';
 import ShopForm, {
   InsertOrUpdateShop,
-} from 'components/dashboard/Shops/ShopsForm';
-import { initialValues } from 'components/dashboard/Shops/ShopsForm/shops.validator';
+} from '@/components/dashboard/Shops/ShopsForm';
+import { initialValues } from '@/components/dashboard/Shops/ShopsForm/shops.validator';
 
 const DashboardNewShopView: React.FC = () => {
   const router = useRouter();

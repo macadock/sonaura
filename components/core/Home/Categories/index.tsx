@@ -7,9 +7,9 @@ import Card from '@mui/material/Card';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { useTheme } from '@mui/material/styles';
-import { useSiteData } from 'contexts/data';
-import supabase from 'lib/supabase';
-import { CategoryType } from 'lib/supabase/categories';
+import { useSiteData } from '@/contexts/data';
+import supabase from '@/lib/supabase';
+import { CategoryType } from '@/lib/supabase/categories';
 
 const Categories: React.FC = () => {
   const { categories } = useSiteData();

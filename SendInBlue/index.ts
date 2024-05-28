@@ -5,8 +5,8 @@ import {
   merchantEmail,
   merchantName,
   sendInBlueUrl,
-} from 'appConstants';
-import { formatPhoneNumber } from 'utils/phone-number';
+} from '@/appConstants';
+import { formatPhoneNumber } from '@/utils/phone-number';
 import AddToListInput from './dto/add-to-list.input';
 import NewsletterSubscriptionInput from './dto/newsletter-subscription.input';
 import SendCustomerEmailInput from './dto/send-customer-email.input';

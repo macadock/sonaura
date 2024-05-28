@@ -11,14 +11,14 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'next-i18next';
-import { ApiUrls, getRoutePath } from 'appConstants';
-import SendEmailInput from 'SendInBlue/dto/send-customer-email.input';
+import { ApiUrls, getRoutePath } from '@/appConstants';
+import SendEmailInput from '@/SendInBlue/dto/send-customer-email.input';
 import {
   contactForm,
   contactFormTypes,
   initialValues,
 } from './contact-form.validator';
-import FormikSessionStorage from 'components/system/FormikSessionStorage';
+import FormikSessionStorage from '@/components/system/FormikSessionStorage';
 
 const Form: React.FC = () => {
   const { t } = useTranslation('contact');

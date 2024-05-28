@@ -1,5 +1,5 @@
-import supabase from 'lib/supabase';
-import { Database } from 'types/supabase';
+import supabase from '@/lib/supabase';
+import { Database } from '@/types/supabase';
 
 export type CategoryType = Database['public']['Tables']['categories']['Row'];
 export type CreateCategoryInput =

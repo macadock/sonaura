@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import ProductTable from 'components/dashboard/Products/ProductTable';
+import ProductTable from '@/components/dashboard/Products/ProductTable';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 

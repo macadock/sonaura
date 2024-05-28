@@ -1,5 +1,10 @@
-import { getRoutePath, PagesUrls, payplugApi, payplugKey } from 'appConstants';
-import CreatePaymentInput from 'PayPlug/dto/create-payment.input';
+import {
+  getRoutePath,
+  PagesUrls,
+  payplugApi,
+  payplugKey,
+} from '@/appConstants';
+import CreatePaymentInput from '@/PayPlug/dto/create-payment.input';
 
 export default class PayPlug {
   private static getHeaders(): Headers {

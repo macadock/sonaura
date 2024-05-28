@@ -5,9 +5,9 @@ import Typography from '@mui/material/Typography';
 
 import ProductForm, {
   InsertOrUpdateProduct,
-} from 'components/dashboard/Products/ProductForm';
-import { initialValues } from 'components/dashboard/Products/ProductForm/product.validator';
-import { createProduct, CreateProductInput } from 'lib/supabase/products';
+} from '@/components/dashboard/Products/ProductForm';
+import { initialValues } from '@/components/dashboard/Products/ProductForm/product.validator';
+import { createProduct, CreateProductInput } from '@/lib/supabase/products';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';

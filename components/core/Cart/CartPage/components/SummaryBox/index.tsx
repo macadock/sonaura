@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'next-i18next';
-import Price from 'utils/Price';
+import Price from '@/utils/Price';
 
 interface Props {
   cartTotal: number;

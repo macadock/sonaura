@@ -13,7 +13,7 @@ import { useTranslation } from 'next-i18next';
 import { useCart } from 'react-use-cart';
 import moveCategoryToPage from './exlude-from-menu';
 import { Typography } from '@mui/material';
-import { useSiteData } from 'contexts/data';
+import { useSiteData } from '@/contexts/data';
 
 interface Props {
   onSidebarOpen: () => void;

@@ -7,15 +7,15 @@ import Delete from '@mui/icons-material/Delete';
 
 import Image from 'next/legacy/image';
 import { useTranslation } from 'next-i18next';
-import Price from 'utils/Price';
-import { getProductsByIds, Product } from 'lib/supabase/products';
+import Price from '@/utils/Price';
+import { getProductsByIds, Product } from '@/lib/supabase/products';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import MuiLink from '@mui/material/Link';
-import supabase from 'lib/supabase';
+import supabase from '@/lib/supabase';
 
 interface Props {
   onClose: () => void;

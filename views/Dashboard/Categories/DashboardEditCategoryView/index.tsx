@@ -9,14 +9,14 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CategoryForm, {
   InsertOrUpdateCategory,
-} from 'components/dashboard/Categories/CategoryForm';
+} from '@/components/dashboard/Categories/CategoryForm';
 import {
   CategoryType,
   getCategoryById,
   removeCategory,
   updateCategory,
   UpdateCategoryInput,
-} from 'lib/supabase/categories';
+} from '@/lib/supabase/categories';
 
 const DashboardEditCategoryView: React.FC = () => {
   const router = useRouter();

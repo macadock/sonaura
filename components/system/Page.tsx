@@ -4,11 +4,11 @@ import Paper from '@mui/material/Paper';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from 'styled-components';
 import AOS from 'aos';
-import getTheme from 'theme';
-import Main from 'layouts/Main';
+import getTheme from '@/theme';
+import Main from '@/layouts/Main';
 import { useRouter } from 'next/router';
-import DashboardMain from 'layouts/DashboardMain';
-import { DataProvider } from 'contexts/data';
+import DashboardMain from '@/layouts/DashboardMain';
+import { DataProvider } from '@/contexts/data';
 import { CartProvider } from 'react-use-cart';
 
 export const useDarkMode = (): [string, () => void, boolean] => {
