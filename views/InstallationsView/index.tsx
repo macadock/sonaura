@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Container from '@mui/material/Container';
-import Hero from 'components/core/Installations/Hero';
-import Main from 'components/core/Installations/Main';
-import { Installation } from 'lib/supabase/installations';
+import Hero from '@/components/core/Installations/Hero';
+import Main from '@/components/core/Installations/Main';
+import { Installation } from '@/lib/supabase/installations';
 
 interface Props {
   installations: Installation[];

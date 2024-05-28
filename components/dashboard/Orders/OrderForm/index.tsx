@@ -1,9 +1,9 @@
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
-import supabase from 'lib/supabase';
+import supabase from '@/lib/supabase';
 import {
   CreateCategoryInput,
   UpdateCategoryInput,
-} from 'lib/supabase/categories';
+} from '@/lib/supabase/categories';
 import toast from 'react-hot-toast';
 import React from 'react';
 import Box from '@mui/material/Box';
@@ -11,8 +11,8 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'next-i18next';
-import { categoryForm } from 'components/dashboard/Categories/CategoryForm/category.validator';
-import TextField from 'components/system/Form/TextField';
+import { categoryForm } from '@/components/dashboard/Categories/CategoryForm/category.validator';
+import TextField from '@/components/system/Form/TextField';
 
 export type InsertOrUpdateCategory = CreateCategoryInput | UpdateCategoryInput;
 

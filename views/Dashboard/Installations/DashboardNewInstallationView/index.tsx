@@ -2,7 +2,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { initialValues } from 'components/dashboard/Categories/CategoryForm/category.validator';
+import { initialValues } from '@/components/dashboard/Categories/CategoryForm/category.validator';
 
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -10,10 +10,10 @@ import toast from 'react-hot-toast';
 import {
   createInstallation,
   CreateInstallationInput,
-} from 'lib/supabase/installations';
+} from '@/lib/supabase/installations';
 import InstallationForm, {
   InsertOrUpdateInstallation,
-} from 'components/dashboard/Installations/InstallationForm';
+} from '@/components/dashboard/Installations/InstallationForm';
 
 const DashboardNewInstallationView: React.FC = () => {
   const router = useRouter();

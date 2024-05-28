@@ -1,4 +1,4 @@
-import { InsertOrUpdateCategory } from 'components/dashboard/Categories/CategoryForm';
+import { InsertOrUpdateCategory } from '@/components/dashboard/Categories/CategoryForm';
 import * as yup from 'yup';
 
 export const categoryForm = yup.object({

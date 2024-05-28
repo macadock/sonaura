@@ -1,6 +1,6 @@
 import { globby } from 'globby';
-import { getCategories } from 'lib/supabase/categories';
-import { getProducts } from 'lib/supabase/products';
+import { getCategories } from '@/lib/supabase/categories';
+import { getProducts } from '@/lib/supabase/products';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(

@@ -4,9 +4,9 @@ import Card from '@mui/material/Card';
 import TextField, { OutlinedTextFieldProps } from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Container from 'components/system/Container';
+import Container from '@/components/system/Container';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import { websiteUrl } from 'appConstants';
+import { websiteUrl } from '@/appConstants';
 import { Alert } from '@mui/material';
 import { isEmail } from 'class-validator';
 

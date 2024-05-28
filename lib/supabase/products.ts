@@ -1,6 +1,7 @@
-import supabase from 'lib/supabase';
-import { getCategoryBySlug } from 'lib/supabase/categories';
-import { Database } from 'types/supabase';
+import supabase from '@/lib/supabase';
+import { getCategoryBySlug } from '@/lib/supabase/categories';
+import { Database } from '@/types/supabase';
+import isEmpty from 'lodash/isEmpty';
 
 export type Product = Database['public']['Tables']['products']['Row'] & {
   categories: {
@@ -41,11 +42,15 @@ export async function getPreOwnedProducts() {
     .select('id')
     .eq('slug', 'occasion');
 
+  if (isEmpty(data)) {
+    return [];
+  }
+
   return supabase
     .from('products')
     .select(`*, categories ( slug )`)
     .order('name', { ascending: true })
-    .eq('categoryId', data[0].id);
+    .eq('categoryId', data[0]?.id);
 }
 
 export async function getProductsByCategory(categoryId: string) {

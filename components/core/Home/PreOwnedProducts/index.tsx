@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useTranslation } from 'next-i18next';
-import { getPreOwnedProducts, Product } from 'lib/supabase/products';
-import ProductItem from 'components/core/Home/ProductItem';
+import { getPreOwnedProducts, Product } from '@/lib/supabase/products';
+import ProductItem from '@/components/core/Home/ProductItem';
 
 const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
   productNumberMax = 3,

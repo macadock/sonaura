@@ -6,10 +6,10 @@ import Typography from '@mui/material/Typography';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useTheme } from '@mui/material/styles';
-import Container from 'components/system/Container';
+import Container from '@/components/system/Container';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'next-i18next';
-import { ApiUrls, getRoutePath } from '../../../../appConstants';
+import { ApiUrls, getRoutePath } from '@/appConstants';
 import {
   initialValues,
   newsletterForm,

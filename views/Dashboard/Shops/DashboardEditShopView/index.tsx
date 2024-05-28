@@ -13,10 +13,10 @@ import {
   Shop,
   updateShop,
   UpdateShopInput,
-} from 'lib/supabase/shops';
+} from '@/lib/supabase/shops';
 import ShopForm, {
   InsertOrUpdateShop,
-} from 'components/dashboard/Shops/ShopsForm';
+} from '@/components/dashboard/Shops/ShopsForm';
 
 const DashboardEditShopView: React.FC = () => {
   const router = useRouter();

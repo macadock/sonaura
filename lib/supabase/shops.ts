@@ -1,5 +1,5 @@
-import supabase from 'lib/supabase';
-import { Database } from 'types/supabase';
+import supabase from '@/lib/supabase';
+import { Database } from '@/types/supabase';
 
 export type Shop = Database['public']['Tables']['shops']['Row'];
 export type CreateShopInput = Database['public']['Tables']['shops']['Insert'];

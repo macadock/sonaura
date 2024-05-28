@@ -1,5 +1,5 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import DashboardOrderView from 'views/Dashboard/Orders/DashboardOrderView';
+import DashboardOrderView from '@/views/Dashboard/Orders/DashboardOrderView';
 import i18nConfig from '../../next-i18next.config';
 import { UserConfig } from 'next-i18next';
 

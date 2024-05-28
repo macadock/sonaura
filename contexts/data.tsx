@@ -1,7 +1,7 @@
-import { CategoryType, getCategories } from 'lib/supabase/categories';
-import { getShops, Shop } from 'lib/supabase/shops';
+import { CategoryType, getCategories } from '@/lib/supabase/categories';
+import { getShops, Shop } from '@/lib/supabase/shops';
 import React, { PropsWithChildren, useEffect } from 'react';
-import { NavLink } from 'types';
+import { NavLink } from '@/types';
 
 export interface DataContextValue {
   categories: CategoryType[];

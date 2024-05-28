@@ -11,13 +11,13 @@ import {
   initialValues,
 } from './checkout.validator';
 import { Formik } from 'formik';
-import LoadingScreen from 'components/system/LoadingScreen';
-import { formatPhoneNumber } from 'utils/phone-number';
-import { ApiUrls, getRoutePath } from 'appConstants';
+import LoadingScreen from '@/components/system/LoadingScreen';
+import { formatPhoneNumber } from '@/utils/phone-number';
+import { ApiUrls, getRoutePath } from '@/appConstants';
 import toast from 'react-hot-toast';
-import FormikSessionStorage from 'components/system/FormikSessionStorage';
-import CreatePaymentInput from 'PayPlug/dto/create-payment.input';
-import { getProductsByIds } from 'lib/supabase/products';
+import FormikSessionStorage from '@/components/system/FormikSessionStorage';
+import CreatePaymentInput from '@/PayPlug/dto/create-payment.input';
+import { getProductsByIds } from '@/lib/supabase/products';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';

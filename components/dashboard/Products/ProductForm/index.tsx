@@ -1,13 +1,16 @@
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import { useEffect, useState } from 'react';
 import { productFrom } from './product.validator';
-import { CreateProductInput, UpdateProductInput } from 'lib/supabase/products';
-import supabase from 'lib/supabase';
-import { CategoryType, getCategories } from 'lib/supabase/categories';
-import { getShops, Shop } from 'lib/supabase/shops';
-import NumericField from 'components/system/Form/NumericField';
-import TextField from 'components/system/Form/TextField';
-import SelectField from 'components/system/Form/SelectField';
+import {
+  CreateProductInput,
+  UpdateProductInput,
+} from '@/lib/supabase/products';
+import supabase from '@/lib/supabase';
+import { CategoryType, getCategories } from '@/lib/supabase/categories';
+import { getShops, Shop } from '@/lib/supabase/shops';
+import NumericField from '@/components/system/Form/NumericField';
+import TextField from '@/components/system/Form/TextField';
+import SelectField from '@/components/system/Form/SelectField';
 import toast from 'react-hot-toast';
 import React from 'react';
 import Box from '@mui/material/Box';

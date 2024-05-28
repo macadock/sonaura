@@ -6,16 +6,16 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { isNumberString } from 'class-validator';
-import AttributeDropdown from 'components/dashboard/Products/Variants/VariantsTable/AttributeDropdown';
-import supabase from 'lib/supabase';
+import AttributeDropdown from '@/components/dashboard/Products/Variants/VariantsTable/AttributeDropdown';
+import supabase from '@/lib/supabase';
 import {
   getProductById,
   updateProductVariantsImage,
-} from 'lib/supabase/products';
+} from '@/lib/supabase/products';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { VariantImage, Variant } from 'types';
+import { VariantImage, Variant } from '@/types';
 
 interface Props {
   productId: string;

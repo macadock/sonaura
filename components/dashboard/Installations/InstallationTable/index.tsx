@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { DataGrid } from '@mui/x-data-grid/DataGrid';
 import { GridColDef } from '@mui/x-data-grid/models/colDef';
-import LoadingScreen from 'components/system/LoadingScreen';
-import { getInstallations, Installation } from 'lib/supabase/installations';
+import LoadingScreen from '@/components/system/LoadingScreen';
+import { getInstallations, Installation } from '@/lib/supabase/installations';
 
 const InstallationTable: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);

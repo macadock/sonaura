@@ -11,13 +11,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import VariantsTable from 'components/dashboard/Products/Variants/VariantsTable';
+import VariantsTable from '@/components/dashboard/Products/Variants/VariantsTable';
 
-import { getProductById, updateProductVariants } from 'lib/supabase/products';
+import { getProductById, updateProductVariants } from '@/lib/supabase/products';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Variant } from 'types';
+import { Variant } from '@/types';
 
 interface Props {
   open: boolean;

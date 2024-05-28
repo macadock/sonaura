@@ -1,8 +1,8 @@
 import {
   checkoutFormTypes,
   Country,
-} from 'components/core/Checkout/checkout.validator';
-import { Product } from 'lib/supabase/products';
+} from '@/components/core/Checkout/checkout.validator';
+import { Product } from '@/lib/supabase/products';
 
 export default class CreatePaymentInput implements checkoutFormTypes {
   firstName: string;

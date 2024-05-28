@@ -1,4 +1,4 @@
-import Checkout from 'components/core/Checkout';
+import Checkout from '@/components/core/Checkout';
 
 const CheckoutView: React.FC = () => {
   return <Checkout />;

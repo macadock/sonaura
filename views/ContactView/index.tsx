@@ -1,9 +1,9 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Contact from 'components/core/Contact/Contact';
-import Form from 'components/core/Contact/Form';
-import Hero from 'components/core/Contact/Hero';
-import Container from 'components/system/Container';
+import Contact from '@/components/core/Contact/Contact';
+import Form from '@/components/core/Contact/Form';
+import Hero from '@/components/core/Contact/Hero';
+import Container from '@/components/system/Container';
 import { useTheme } from '@mui/material/styles';
 
 const ContactView: React.FC = () => {

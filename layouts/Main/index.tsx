@@ -6,11 +6,11 @@ import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 
-import Container from 'components/system/Container';
+import Container from '@/components/system/Container';
 
-import Topbar from 'components/system/Topbar';
-import Sidebar from 'components/system/Sidebar';
-import Footer from 'components/system/Footer';
+import Topbar from '@/components/system/Topbar';
+import Sidebar from '@/components/system/Sidebar';
+import Footer from '@/components/system/Footer';
 import { Typography } from '@mui/material';
 
 interface Props {

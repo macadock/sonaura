@@ -3,14 +3,14 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/material/styles';
-import supabase from 'lib/supabase';
-import { Product } from 'lib/supabase/products';
+import supabase from '@/lib/supabase';
+import { Product } from '@/lib/supabase/products';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
-import Price from 'utils/Price';
+import Price from '@/utils/Price';
 import Button from '@mui/material/Button';
 import Image from 'next/legacy/image';
 
@@ -86,13 +86,17 @@ const ProductItem: React.FC<Props> = ({ product, index }) => {
                 <Typography sx={{ fontWeight: 700 }} color={'primary'}>
                   <Price price={product.price} />
                 </Typography>
-              ) : false}
+              ) : (
+                false
+              )}
               {product.fromPrice ? (
                 <Typography sx={{ fontWeight: 700 }} color={'primary'}>
                   {t('fromPrice')}
                   <Price price={product.fromPrice} />
                 </Typography>
-              ) : false}
+              ) : (
+                false
+              )}
               <Link
                 href={`/${product.categories.slug}/${product.slug}`}
                 style={{ textDecoration: 'none' }}

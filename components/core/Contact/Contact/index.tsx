@@ -8,9 +8,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import { useTheme } from '@mui/material/styles';
 
-import Container from 'components/system/Container';
+import Container from '@/components/system/Container';
 import { useTranslation } from 'next-i18next';
-import { useSiteData } from 'contexts/data';
+import { useSiteData } from '@/contexts/data';
 
 const Contact: React.FC = () => {
   const { shops } = useSiteData();

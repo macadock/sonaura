@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { InsertOrUpdateShop } from 'components/dashboard/Shops/ShopsForm';
+import { InsertOrUpdateShop } from '@/components/dashboard/Shops/ShopsForm';
 
 export const shopForm = yup.object({
   address: yup.string().trim().required(),

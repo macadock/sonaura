@@ -1,4 +1,4 @@
-import CartPage from 'components/core/Cart/CartPage';
+import CartPage from '@/components/core/Cart/CartPage';
 
 const CartView: React.FC = () => {
   return <CartPage />;

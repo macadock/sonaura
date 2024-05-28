@@ -12,12 +12,12 @@ import ShoppingCartTwoTone from '@mui/icons-material/ShoppingCartTwoTone';
 import { useTranslation } from 'next-i18next';
 import toast from 'react-hot-toast';
 import Grid from '@mui/material/Grid';
-import Price from 'utils/Price';
+import Price from '@/utils/Price';
 
-import { Product } from 'lib/supabase/products';
+import { Product } from '@/lib/supabase/products';
 import { useRouter } from 'next/router';
-import supabase from 'lib/supabase';
-import { VariantImage, Variant } from 'types';
+import supabase from '@/lib/supabase';
+import { VariantImage, Variant } from '@/types';
 import Chip from '@mui/material/Chip';
 import Image from 'next/legacy/image';
 

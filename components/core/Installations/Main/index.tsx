@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { Installation } from 'lib/supabase/installations';
-import Card from 'components/core/Installations/Main/Card';
+import { Installation } from '@/lib/supabase/installations';
+import Card from '@/components/core/Installations/Main/Card';
 
 interface Props {
   installations: Installation[];

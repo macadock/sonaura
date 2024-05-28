@@ -4,15 +4,15 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ProductForm, {
   InsertOrUpdateProduct,
-} from 'components/dashboard/Products/ProductForm';
-import VariantsDialog from 'components/dashboard/Products/Variants/VariantsDialog';
+} from '@/components/dashboard/Products/ProductForm';
+import VariantsDialog from '@/components/dashboard/Products/Variants/VariantsDialog';
 import {
   getProductById,
   Product,
   removeProduct,
   updateProduct,
   UpdateProductInput,
-} from 'lib/supabase/products';
+} from '@/lib/supabase/products';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';

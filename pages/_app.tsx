@@ -3,7 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import React, { FC, StrictMode } from 'react';
 import Head from 'next/head';
 
-import Page from 'components/system/Page';
+import Page from '@/components/system/Page';
 
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import 'slick-carousel/slick/slick.css';
@@ -14,7 +14,7 @@ import './styles.css';
 import { appWithTranslation } from 'next-i18next';
 
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
-import supabase from 'lib/supabase';
+import supabase from '@/lib/supabase';
 import { useRouter } from 'next/router';
 import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script';

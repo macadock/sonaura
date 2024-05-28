@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { Shop, ShopHours } from 'lib/supabase/shops';
+import { Shop, ShopHours } from '@/lib/supabase/shops';
 import { useTranslation } from 'next-i18next';
 
 interface Props {

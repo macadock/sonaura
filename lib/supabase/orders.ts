@@ -2,9 +2,9 @@ import {
   RealtimePostgresInsertPayload,
   RealtimePostgresUpdatePayload,
 } from '@supabase/supabase-js';
-import supabase from 'lib/supabase';
+import supabase from '@/lib/supabase';
 import { useCallback, useMemo } from 'react';
-import { Database } from 'types/supabase';
+import { Database } from '@/types/supabase';
 
 export type Order = Database['public']['Tables']['orders']['Row'];
 export type CreateOrderInput = Database['public']['Tables']['orders']['Insert'];

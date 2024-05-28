@@ -1,8 +1,8 @@
 import { GetServerSideProps, NextPage } from 'next';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import i18nConfig from 'next-i18next.config';
-import DashboardEditProductView from 'views/Dashboard/Products/DashboardEditProductView';
+import i18nConfig from '@/next-i18next.config';
+import DashboardEditProductView from '@/views/Dashboard/Products/DashboardEditProductView';
 import { UserConfig } from 'next-i18next';
 
 const DashboardEditProduct: NextPage = () => {

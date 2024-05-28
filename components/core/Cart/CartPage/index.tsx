@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next';
 import { useCart } from 'react-use-cart';
-import Container from 'components/system/Container';
+import Container from '@/components/system/Container';
 import Orders from './components/Orders';
 import SummaryBox from './components/SummaryBox';
 import Box from '@mui/material/Box';

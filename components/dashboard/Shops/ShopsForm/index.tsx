@@ -1,5 +1,5 @@
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
-import supabase from 'lib/supabase';
+import supabase from '@/lib/supabase';
 import toast from 'react-hot-toast';
 import React from 'react';
 import Box from '@mui/material/Box';
@@ -7,9 +7,9 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'next-i18next';
-import TextField from 'components/system/Form/TextField';
-import { CreateShopInput, UpdateShopInput } from 'lib/supabase/shops';
-import { shopForm } from 'components/dashboard/Shops/ShopsForm/shops.validator';
+import TextField from '@/components/system/Form/TextField';
+import { CreateShopInput, UpdateShopInput } from '@/lib/supabase/shops';
+import { shopForm } from '@/components/dashboard/Shops/ShopsForm/shops.validator';
 
 export type InsertOrUpdateShop = CreateShopInput | UpdateShopInput;
 
