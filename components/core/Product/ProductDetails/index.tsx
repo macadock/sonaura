@@ -118,13 +118,18 @@ const ProductDetails = ({ product = null }: Props) => {
   const { addItem, items } = useCart();
 
   const addToCart = () => {
-    addItem({
-      id: product.id,
-      price: priceVariant || product?.price,
-      quantity: 1,
-    });
-    setAlreadyAddedToCart(true);
-    toast.success(t('addedToCart'));
+    if (!product) {
+      return;
+    }
+    if (priceVariant || product?.price) {
+      addItem({
+        id: product.id,
+        price: priceVariant || product?.price,
+        quantity: 1,
+      });
+      setAlreadyAddedToCart(true);
+      toast.success(t('addedToCart'));
+    }
   };
 
   const openDialog = () => {
