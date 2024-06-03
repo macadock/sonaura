@@ -42,8 +42,8 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
   });
 
   const today = new Date();
-  const endDate = new Date(2024, 5, 1, 9, 0); // 01/06/2024 9:00 UTC+2
-  const displayClosedMessage = today <= endDate;
+  const endDate = null;
+  const displayClosedMessage = endDate ? today <= endDate : true;
 
   return (
     <Box>
@@ -80,10 +80,10 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
             color={theme.palette.primary.contrastText}
             sx={{
               fontSize: { xs: '0.875rem', md: '1rem' },
-fontWeight: 700
+              fontWeight: 700,
             }}
           >
-            Ouverture de notre nouveau point de vente à Annecy - Printemps 2024
+            Nouvelle boutique au 4 passage Vaugelas, Annecy
           </Typography>
         </Box>
       ) : null}
