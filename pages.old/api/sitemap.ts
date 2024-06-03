@@ -51,11 +51,11 @@ export default async function handler(
   async function generateSitemap() {
     // Ignore Next.js specific files (e.g., _app.js) and API routes.
     const pages = await globby([
-      'src/pages/**/*{.tsx,.mdx}',
-      '!src/pages/_*.tsx',
-      '!src/pages/api',
-      '!src/pages/panier',
-      '!src/pages/404.tsx',
+      'src/pages.old/**/*{.tsx,.mdx}',
+      '!src/pages.old/_*.tsx',
+      '!src/pages.old/api',
+      '!src/pages.old/panier',
+      '!src/pages.old/404.tsx',
     ]);
 
     const products = await fetchProducts();
