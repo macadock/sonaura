@@ -8,14 +8,10 @@ import Products from 'components/core/Home/Products';
 import Container from 'components/system/Container';
 import React from 'react';
 import PreOwnedProducts from 'components/core/Home/PreOwnedProducts';
-import ExceptionalOffer from 'components/core/Home/ExceptionalOffer';
 
 const HomeView: React.FC = () => {
   return (
     <React.Fragment>
-      <Container>
-        <ExceptionalOffer />
-      </Container>
       <Container>
         <Hero />
       </Container>
