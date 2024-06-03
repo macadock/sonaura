@@ -95,7 +95,7 @@ const Topbar: React.FC<Props> = ({ onSidebarOpen, colorInvert = false }) => {
           <Box>
             <NavItem
               title={t('categories.title')}
-              id={'categories-pages'}
+              id={'categories-pages.old'}
               items={customCategories}
               colorInvert={colorInvert}
             />

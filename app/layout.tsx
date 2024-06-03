@@ -1,8 +1,8 @@
 import { Montserrat } from 'next/font/google';
 
 import { PropsWithChildren } from 'react';
-import './globals.css';
 import { BreakpointsHelper } from '@/components/common';
+import './globals.css';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
