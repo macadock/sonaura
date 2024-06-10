@@ -1,7 +1,6 @@
 import { Database } from '@/types/supabase';
 import { createClient } from '@/lib/supabase/server';
 import type { cookies } from 'next/headers';
-import isEmpty from 'lodash/isEmpty';
 
 export const getPage = async ({
   url,
@@ -15,7 +14,11 @@ export const getPage = async ({
   return supabase.from('pages').select('*').eq('slug', url).limit(1).single();
 };
 
-export const getPages = (cookieStore: ReturnType<typeof cookies>) => {
+export const getPages = ({
+  cookieStore,
+}: {
+  cookieStore: ReturnType<typeof cookies>;
+}) => {
   const supabase = createClient(cookieStore);
   return supabase.from('pages').select('*');
 };
@@ -35,40 +38,4 @@ export type Button = {
 export type Video = {
   url: string;
   poster: string;
-};
-
-export type HomePageContent = {
-  hero: {
-    video: Video;
-    title: string;
-    subtitle: string;
-    button: Button;
-  };
-  categories: {
-    title: string;
-    subtitle: string;
-  };
-  people: {
-    title: string;
-    subtitle: string;
-    images: Image[];
-  };
-  advices: {
-    title: string;
-    subtitle: string;
-    button: Button;
-    image: Image;
-  };
-  new: {
-    title: string;
-    subtitle: string;
-    description: string;
-    id: string;
-  };
-  preOwned: {
-    title: string;
-    subtitle: string;
-    description: string;
-    id: string;
-  };
 };

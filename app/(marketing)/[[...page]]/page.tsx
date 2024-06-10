@@ -23,8 +23,8 @@ export const metadata: Metadata = {
 
 export default async function Home({ params }: PageProps) {
   const cookieStore = cookies();
-  const categories = await getCategories(cookieStore);
-  const products = await getProducts(cookieStore);
+  const categories = await getCategories({ cookieStore });
+  const products = await getProducts({ cookieStore });
 
   const { url, categorySlug, productSlug } = getPageUrl({
     params,

@@ -4,8 +4,8 @@ import { getContacts } from '@/utils/data';
 import { cookies } from 'next/headers';
 
 const DashboardContact = async () => {
-  const cookiesStore = cookies();
-  const { data } = await getContacts(cookiesStore);
+  const cookieStore = cookies();
+  const { data } = await getContacts({ cookieStore });
 
   if (!data) {
     return null;

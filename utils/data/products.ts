@@ -1,12 +1,17 @@
-import { categories, products } from '@/app/(marketing)/mocks';
 import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
+import { Database } from '@/types/supabase';
 
-export const getProducts = async (cookieStore: ReturnType<typeof cookies>) => {
-  // const supabase = createClient(cookiesStore);
-  // const { data } = await supabase.from('products').select('*');
-  // return data;
-  return products;
+export type Product = Database['public']['Tables']['products']['Row'];
+
+export const getProducts = async ({
+  cookieStore,
+}: {
+  cookieStore: ReturnType<typeof cookies>;
+}) => {
+  const supabase = createClient(cookieStore);
+  const { data } = await supabase.from('products').select('*');
+  return data || [];
 };
 
 export const getProductsByCategory = async ({
@@ -16,16 +21,15 @@ export const getProductsByCategory = async ({
   categorySlug: string;
   cookieStore: ReturnType<typeof cookies>;
 }) => {
-  // const supabase = createClient(cookiesStore);
-  // const { data } = await supabase
-  //   .from('products')
-  //   .select('*')
-  //   .eq('category', category);
-  // return data;
-  const category = categories.find(
-    (category) => category.slug === categorySlug,
-  );
-  return products.filter((product) => product.categoryId === category?.id);
+  const supabase = createClient(cookieStore);
+
+  const { data } = await supabase
+    .from('categories')
+    .select(`slug, products(*)`)
+    .eq('slug', categorySlug)
+    .single();
+
+  return data?.products || [];
 };
 
 export const getProductBySlug = async ({
@@ -35,13 +39,14 @@ export const getProductBySlug = async ({
   productSlug: string;
   cookieStore: ReturnType<typeof cookies>;
 }) => {
-  // const supabase = createClient(cookiesStore);
-  // const { data } = await supabase
-  //   .from('products')
-  //   .select('*')
-  //   .eq('slug', productSlug);
-  // return data;
-  return products.find((product) => product.slug === productSlug);
+  const supabase = createClient(cookieStore);
+  const { data } = await supabase
+    .from('products')
+    .select('*')
+    .eq('slug', productSlug)
+    .single();
+
+  return data;
 };
 
 export const getProductById = async ({
@@ -59,11 +64,13 @@ export const getProductById = async ({
   return data;
 };
 
-export const getPreOwnedProducts = async (
-  cookieStore: ReturnType<typeof cookies>,
-) => {
-  const category = categories.find((category) => category.slug === 'occasions');
-  return (
-    products.filter((product) => product.categoryId === category?.id) || []
-  );
+export const getPreOwnedProducts = ({
+  cookieStore,
+}: {
+  cookieStore: ReturnType<typeof cookies>;
+}) => {
+  return getProductsByCategory({
+    categorySlug: 'occasion',
+    cookieStore,
+  });
 };

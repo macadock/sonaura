@@ -1,14 +1,17 @@
-import { categories } from '@/app/(marketing)/mocks';
 import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
+import { Database } from '@/types/supabase';
 
-export const getCategories = async (
-  cookieStore: ReturnType<typeof cookies>,
-) => {
-  // const supabase = createClient(cookieStore);
-  // const { data } = await supabase.from('categories').select('*');
-  // return data;
-  return categories;
+export type Category = Database['public']['Tables']['categories']['Row'];
+
+export const getCategories = async ({
+  cookieStore,
+}: {
+  cookieStore: ReturnType<typeof cookies>;
+}) => {
+  const supabase = createClient(cookieStore);
+  const { data } = await supabase.from('categories').select('*');
+  return data || [];
 };
 
 export const getCategoryBySlug = async ({
@@ -18,11 +21,11 @@ export const getCategoryBySlug = async ({
   categorySlug: string;
   cookieStore: ReturnType<typeof cookies>;
 }) => {
-  // const supabase = createClient(cookieStore);
-  // const { data } = await supabase
-  //   .from('categories')
-  //   .select('*')
-  //   .eq('id', categoryId);
-  // return data;
-  return categories.find((category) => category.slug === categorySlug);
+  const supabase = createClient(cookieStore);
+  const { data } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('slug', categorySlug)
+    .single();
+  return data;
 };

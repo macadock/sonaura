@@ -1,7 +1,8 @@
-import { categories } from '@/app/(marketing)/mocks';
 import { DesktopMenu } from '@/components/common/Header/DesktopMenu';
 import { MobileMenu } from '@/components/common/Header/MobileMenu';
 import Image from 'next/image';
+import { getCategories } from '@/utils/data';
+import { cookies } from 'next/headers';
 
 type ItemCommon = {
   title: string;
@@ -21,42 +22,45 @@ type MenuItem = ItemCommon & {
 
 export type Item = PageItem | MenuItem;
 
-const Items: Item[] = [
-  {
-    href: '/categories',
-    title: 'Catégories',
-    type: 'menu',
-    subMenu: categories.map((category) => ({
-      href: `/${category.slug}`,
-      title: category.name,
-      type: 'page',
-      hideOnDesktop: category.name.includes('Occasions'),
-    })),
-  },
-  {
-    href: '/occasions',
-    title: 'Occasions',
-    type: 'page',
-    hideOnMobile: true,
-  },
-  {
-    href: '/professionnels',
-    title: 'Professionnels',
-    type: 'page',
-  },
-  {
-    href: '/realisations',
-    title: 'Réalisations',
-    type: 'page',
-  },
-  {
-    href: '/contact',
-    title: 'Contact',
-    type: 'page',
-  },
-];
+export const Header = async () => {
+  const cookieStore = cookies();
+  const categories = await getCategories({ cookieStore });
 
-export const Header = () => {
+  const items: Item[] = [
+    {
+      href: '/categories',
+      title: 'Catégories',
+      type: 'menu',
+      subMenu: categories.map((category) => ({
+        href: `/${category.slug}`,
+        title: category.name,
+        type: 'page',
+        hideOnDesktop: category.name.includes('Occasions'),
+      })),
+    },
+    {
+      href: '/occasions',
+      title: 'Occasions',
+      type: 'page',
+      hideOnMobile: true,
+    },
+    {
+      href: '/professionnels',
+      title: 'Professionnels',
+      type: 'page',
+    },
+    {
+      href: '/realisations',
+      title: 'Réalisations',
+      type: 'page',
+    },
+    {
+      href: '/contact',
+      title: 'Contact',
+      type: 'page',
+    },
+  ];
+
   return (
     <header className="w-full flex items-center justify-between p-4 md:px-8 border-b sticky top-0 bg-background z-10 h-[var(--headerHeight)]">
       <div className="flex-grow flex gap-2 justify-between items-center max-w-7xl m-auto">
@@ -73,8 +77,8 @@ export const Header = () => {
             Distributeur Bang &amp; Olufsen Auvergne Rhône-Alpes
           </p>
         </a>
-        <DesktopMenu items={[]} />
-        <MobileMenu items={[]} />
+        <DesktopMenu items={items} />
+        <MobileMenu items={items} />
       </div>
     </header>
   );
