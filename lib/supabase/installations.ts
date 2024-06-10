@@ -5,7 +5,7 @@ export type Installation = Database['public']['Tables']['installations']['Row'];
 export type CreateInstallationInput =
   Database['public']['Tables']['installations']['Insert'];
 export type UpdateInstallationInput =
-  Database['public']['Tables']['installations']['Update'];
+  Database['public']['Tables']['installations']['Update'] & { id: string };
 
 export async function getInstallations() {
   return supabase
@@ -25,7 +25,7 @@ export async function createInstallation(
 }
 
 export async function updateInstallation(
-  installation: UpdateInstallationInput,
+  installation: UpdateInstallationInput & { id: string },
 ) {
   return supabase
     .from('installations')

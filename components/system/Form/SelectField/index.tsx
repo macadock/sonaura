@@ -5,20 +5,20 @@ import Select, { SelectProps } from '@mui/material/Select';
 import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'next-i18next';
 
-interface Props<T> {
+type Props<T = any> = {
   name: string;
   datas: T[];
   menuId?: string;
   menuName?: string;
-}
+} & SelectProps;
 
-export function SelectField<T extends Props<T> & SelectProps>({
-  name,
+export function SelectField({
+  name = '',
   datas,
   menuId = 'id',
   menuName = 'name',
   ...props
-}) {
+}: Props) {
   const { t } = useTranslation('dashboard');
   return (
     <Field name={name}>

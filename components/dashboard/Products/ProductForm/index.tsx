@@ -1,5 +1,5 @@
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
-import { useEffect, useState } from 'react';
+import { ComponentProps, useEffect, useState } from 'react';
 import { productFrom } from './product.validator';
 import {
   CreateProductInput,
@@ -18,8 +18,8 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'next-i18next';
-
-export type InsertOrUpdateProduct = CreateProductInput | UpdateProductInput;
+import { pick } from 'lodash';
+import { FormikConfig } from 'formik/dist/types';
 
 const getImageUrl = (value: string | object): string => {
   let image: object;
@@ -28,22 +28,29 @@ const getImageUrl = (value: string | object): string => {
   } catch (e) {
     return '';
   }
-  const bucket = image['bucket'];
-  const file = image['file'];
+  const { bucket, file } = pick(image, ['bucket', 'file']) as unknown as {
+    bucket: string;
+    file: string;
+  };
   const { data } = supabase.storage.from(bucket).getPublicUrl(file);
   return data ? data.publicUrl : '';
 };
 
-interface Props {
-  formMode: 'create' | 'edit';
-  initialValues: InsertOrUpdateProduct;
-  onSubmit: (
-    values: InsertOrUpdateProduct,
-    actions?: FormikHelpers<InsertOrUpdateProduct>,
-  ) => void;
+type Props = {
   leftButtons?: React.ReactNode;
   rightButtons?: React.ReactNode;
-}
+} & (
+  | {
+      formMode: 'create';
+      initialValues: CreateProductInput;
+      onSubmit: (values: CreateProductInput) => void;
+    }
+  | {
+      formMode: 'edit';
+      initialValues: UpdateProductInput;
+      onSubmit: (values: UpdateProductInput) => void;
+    }
+);
 
 const ProductForm: React.FC<Props> = ({
   formMode,
@@ -59,14 +66,14 @@ const ProductForm: React.FC<Props> = ({
   const fetchCategories = async () => {
     const { data } = await getCategories();
     if (data) {
-      setCategories(data);
+      setCategories(data as unknown as CategoryType[]);
     }
   };
 
   const fetchShops = async () => {
     const { data } = await getShops();
     if (data) {
-      setShops(data);
+      setShops(data as unknown as Shop[]);
     }
   };
 
@@ -75,7 +82,12 @@ const ProductForm: React.FC<Props> = ({
     fetchShops();
   }, []);
 
-  const uploadImage = async (files: FileList): Promise<object> => {
+  const uploadImage = async (
+    files: FileList | null,
+  ): Promise<object | void> => {
+    if (!files || files.length === 0) {
+      return {};
+    }
     const bucket = 'products';
     const fileName = crypto.randomUUID();
     const { error } = await supabase.storage
@@ -92,10 +104,19 @@ const ProductForm: React.FC<Props> = ({
     };
   };
 
+  const handleSubmit = (values: CreateProductInput | UpdateProductInput) => {
+    if (formMode === 'edit') {
+      onSubmit(values as UpdateProductInput);
+    }
+    if (formMode === 'create') {
+      onSubmit(values as CreateProductInput);
+    }
+  };
+
   return (
-    <Formik<InsertOrUpdateProduct>
+    <Formik<CreateProductInput | UpdateProductInput>
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       validationSchema={productFrom}
     >
       {({ isValid, dirty, handleSubmit }) => (
@@ -187,7 +208,9 @@ const ProductForm: React.FC<Props> = ({
                         type="file"
                         onChange={async (e) => {
                           const image = await uploadImage(e.target.files);
-                          setFieldValue(name, image);
+                          if (image) {
+                            setFieldValue(name, image);
+                          }
                         }}
                       />
                     </Button>

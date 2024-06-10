@@ -17,7 +17,7 @@ export default class SendInBlue {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
-    headers.append('api-key', sendInBlueKey);
+    headers.append('api-key', sendInBlueKey as string);
     return headers;
   }
 
@@ -159,7 +159,7 @@ export default class SendInBlue {
       }
     } catch (e) {
       throw new Error(
-        `Error while adding email ${email} to listId ${includeListIds.toString()} `,
+        `Error while adding email ${email} to listId ${includeListIds?.toString()} `,
       );
     }
 

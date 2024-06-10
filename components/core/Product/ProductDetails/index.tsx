@@ -43,7 +43,12 @@ const ProductDetails = ({ product = null }: Props) => {
     if (product?.variants === null) {
       return [[], []];
     }
-    const variants = product?.variants as Variant[];
+    const variants = (product?.variants || []) as Variant[];
+
+    if (!variants) {
+      return [[], []];
+    }
+
     return [variants, variants.map((variant) => variant.name).sort()];
   }, [product?.variants]);
 
@@ -121,10 +126,13 @@ const ProductDetails = ({ product = null }: Props) => {
     if (!product) {
       return;
     }
-    if (priceVariant || product?.price) {
+
+    const price = priceVariant || product?.price;
+
+    if (price) {
       addItem({
         id: product.id,
-        price: priceVariant || product?.price,
+        price,
         quantity: 1,
       });
       setAlreadyAddedToCart(true);
@@ -141,6 +149,9 @@ const ProductDetails = ({ product = null }: Props) => {
   };
 
   useEffect(() => {
+    if (!product) {
+      return;
+    }
     const item = items.find((item) => item.id === product.id);
     if (item) {
       setAlreadyAddedToCart(true);
@@ -397,7 +408,7 @@ const ProductDetails = ({ product = null }: Props) => {
                 >
                   {variants
                     .find((v) => v.name === variantName)
-                    .values.map((value) => (
+                    ?.values.map((value) => (
                       <Chip
                         label={value}
                         key={value}
@@ -420,7 +431,7 @@ const ProductDetails = ({ product = null }: Props) => {
                             ? () => {
                                 handleVariantDeletion(variantName);
                               }
-                            : null
+                            : undefined
                         }
                       />
                     ))}

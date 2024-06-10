@@ -38,7 +38,7 @@ export async function createOrder(order: CreateOrderInput) {
   return supabase.from('orders').insert([order]);
 }
 
-export async function updateOrder(order: UpdateOrderInput) {
+export async function updateOrder(order: UpdateOrderInput & { id: string }) {
   return supabase
     .from('orders')
     .update({

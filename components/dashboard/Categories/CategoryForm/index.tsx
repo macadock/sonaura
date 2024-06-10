@@ -5,7 +5,7 @@ import {
   UpdateCategoryInput,
 } from '@/lib/supabase/categories';
 import toast from 'react-hot-toast';
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -13,8 +13,12 @@ import Button from '@mui/material/Button';
 import { useTranslation } from 'next-i18next';
 import { categoryForm } from '@/components/dashboard/Categories/CategoryForm/category.validator';
 import TextField from '@/components/system/Form/TextField';
-
-export type InsertOrUpdateCategory = CreateCategoryInput | UpdateCategoryInput;
+import { pick } from 'lodash';
+import {
+  CreateProductInput,
+  UpdateProductInput,
+} from '@/lib/supabase/products';
+import { FormikConfig } from 'formik/dist/types';
 
 const getImageUrl = (value: string | object): string => {
   let image: object;
@@ -23,22 +27,27 @@ const getImageUrl = (value: string | object): string => {
   } catch (e) {
     return '';
   }
-  const bucket = image['bucket'];
-  const file = image['file'];
+  const bucket = pick(image, 'bucket') as unknown as string;
+  const file = pick(image, 'file') as unknown as string;
   const { data } = supabase.storage.from(bucket).getPublicUrl(file);
   return data ? data.publicUrl : '';
 };
 
-interface Props {
-  formMode: 'create' | 'edit';
-  initialValues: InsertOrUpdateCategory;
-  onSubmit: (
-    values: InsertOrUpdateCategory,
-    actions?: FormikHelpers<InsertOrUpdateCategory>,
-  ) => void;
+type Props = {
   leftButtons?: React.ReactNode;
   rightButtons?: React.ReactNode;
-}
+} & (
+  | {
+      formMode: 'create';
+      initialValues: CreateCategoryInput;
+      onSubmit: (values: CreateCategoryInput) => void;
+    }
+  | {
+      formMode: 'edit';
+      initialValues: UpdateCategoryInput;
+      onSubmit: (values: UpdateCategoryInput) => void;
+    }
+);
 
 const CategoryForm: React.FC<Props> = ({
   formMode,
@@ -49,7 +58,13 @@ const CategoryForm: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation('dashboard');
 
-  const uploadImage = async (files: FileList): Promise<object> => {
+  const uploadImage = async (
+    files: FileList | null,
+  ): Promise<object | void> => {
+    if (!files || files.length === 0) {
+      return;
+    }
+
     const bucket = 'categories';
     const fileName = crypto.randomUUID();
     const { error } = await supabase.storage
@@ -66,10 +81,19 @@ const CategoryForm: React.FC<Props> = ({
     };
   };
 
+  const handleSubmit = (values: CreateCategoryInput | UpdateCategoryInput) => {
+    if (formMode === 'edit') {
+      onSubmit(values as UpdateCategoryInput);
+    }
+    if (formMode === 'create') {
+      onSubmit(values as CreateCategoryInput);
+    }
+  };
+
   return (
-    <Formik<InsertOrUpdateCategory>
+    <Formik<CreateCategoryInput | UpdateCategoryInput>
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       validationSchema={categoryForm}
     >
       {({ isValid, dirty, handleSubmit }) => (
@@ -130,7 +154,9 @@ const CategoryForm: React.FC<Props> = ({
                         type="file"
                         onChange={async (e) => {
                           const image = await uploadImage(e.target.files);
-                          setFieldValue(name, image);
+                          if (image) {
+                            setFieldValue(name, image);
+                          }
                         }}
                       />
                     </Button>

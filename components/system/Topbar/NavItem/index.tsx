@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, MouseEvent } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { alpha, useTheme } from '@mui/material/styles';
@@ -25,11 +25,14 @@ const NavItem: React.FC<Props> = ({
   const router = useRouter();
   const theme = useTheme();
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [openedPopoverId, setOpenedPopoverId] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [openedPopoverId, setOpenedPopoverId] = useState<string | null>(null);
 
-  const handleClick = (event, popoverId) => {
-    setAnchorEl(event.target);
+  const handleClick = (
+    event: MouseEvent<HTMLDivElement>,
+    popoverId: string,
+  ) => {
+    setAnchorEl(event.target as HTMLElement);
     setOpenedPopoverId(popoverId);
   };
 

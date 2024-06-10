@@ -19,7 +19,7 @@ const ProductTable: React.FC = () => {
   const fetchProducts = async () => {
     const { data } = await getProducts();
     if (data) {
-      setProducts(data as Product[]);
+      setProducts(data as unknown as Product[]);
     }
     setLoading(false);
   };
@@ -27,14 +27,14 @@ const ProductTable: React.FC = () => {
   const fetchCategories = async () => {
     const { data } = await getCategories();
     if (data) {
-      setCategories(data);
+      setCategories(data as unknown as CategoryType[]);
     }
   };
 
   const fetchShops = async () => {
     const { data } = await getShops();
     if (data) {
-      setShops(data);
+      setShops(data as unknown as Shop[]);
     }
   };
 

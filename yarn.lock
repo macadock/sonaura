@@ -2097,6 +2097,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "@hookform/resolvers@npm:3.6.0"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: 10c0/3577949a82b02b823b81592ec44630d28dc8748e9c42e57d8a19046670bb6d270d5e2c4780d65193c206bc18abb5575a0a5e261fa7aac17198faee1823208be6
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.14":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
@@ -4016,6 +4025,13 @@ __metadata:
     "@types/qs": "npm:*"
     "@types/serve-static": "npm:*"
   checksum: 10c0/12e562c4571da50c7d239e117e688dc434db1bac8be55613294762f84fd77fbd0658ccd553c7d3ab02408f385bc93980992369dd30e2ecd2c68c358e6af8fabf
+  languageName: node
+  linkType: hard
+
+"@types/google-libphonenumber@npm:^7.4.30":
+  version: 7.4.30
+  resolution: "@types/google-libphonenumber@npm:7.4.30"
+  checksum: 10c0/f81803dc061b775d981a04e99dfe9ee124b9e73ced6f0298928c0ff73fea4b34bc50b9c58f3235ee5c3c08a940a27bad20fcb9f4c25ba31698f1a64b98768306
   languageName: node
   linkType: hard
 
@@ -6092,6 +6108,13 @@ __metadata:
   version: 9.1.0
   resolution: "credit-card-type@npm:9.1.0"
   checksum: 10c0/6671ce4d835a4b71e43592729f026e94213e020c0848432a3105dee9e4792bdcb3445c3f5822a40ec733fa17611281cf9d62a46cc9f1992803ef963b263bcd95
+  languageName: node
+  linkType: hard
+
+"cropperjs@npm:^1.5.13":
+  version: 1.6.2
+  resolution: "cropperjs@npm:1.6.2"
+  checksum: 10c0/5002e0cc3a491ceb8a104b2cb7a7c335a03e109fe590653f3aeefa27ca7115466edae62afc8ba21105bbaad4134583f5057ebbf5e8d843c7b2c1c1f0779630e9
   languageName: node
   linkType: hard
 
@@ -10636,6 +10659,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-cropper@npm:^2.3.3":
+  version: 2.3.3
+  resolution: "react-cropper@npm:2.3.3"
+  dependencies:
+    cropperjs: "npm:^1.5.13"
+  peerDependencies:
+    react: ">=17.0.2"
+  checksum: 10c0/86c09cf35705e853e7fec510b4e65b5030d3f90b537c0c8e0626db584e270a4ae4025e7ba4b5c6b07635c68904bd00b134c8586ce88658a421ced1bb054ab9ef
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:^18.3.1":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
@@ -10652,6 +10686,15 @@ __metadata:
   version: 2.0.4
   resolution: "react-fast-compare@npm:2.0.4"
   checksum: 10c0/f0300c677e95198b5f993cbb8a983dab09586157dc678f9e2b5b29ff941b6677a8776fbbdc425ce102fad86937e36bb45cfcfd797f006270b97ccf287ebfb885
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.51.5":
+  version: 7.51.5
+  resolution: "react-hook-form@npm:7.51.5"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 10c0/5b13f99a125d92ee618f2d4e218d5ec854f8cac1b568e83b4b125efb002cc79eef0f5c06b54015c78e16a830cf1ea356a646e8c6abb00b7ca8225dba9a92091e
   languageName: node
   linkType: hard
 
@@ -11649,6 +11692,7 @@ __metadata:
     "@emotion/react": "npm:^11.11.4"
     "@emotion/server": "npm:^11.11.0"
     "@emotion/styled": "npm:^11.11.5"
+    "@hookform/resolvers": "npm:^3.6.0"
     "@mui/base": "npm:^5.0.0-beta.46"
     "@mui/icons-material": "npm:^5.15.18"
     "@mui/material": "npm:^5.15.18"
@@ -11666,6 +11710,7 @@ __metadata:
     "@supabase/ssr": "npm:^0.3.0"
     "@supabase/supabase-js": "npm:^2.43.4"
     "@types/aos": "npm:^3.0.7"
+    "@types/google-libphonenumber": "npm:^7.4.30"
     "@types/lodash": "npm:^4"
     "@types/node": "npm:^20.12.12"
     "@types/react": "npm:^18.3.2"
@@ -11714,7 +11759,9 @@ __metadata:
     prettier-eslint-cli: "npm:^8.0.1"
     react: "npm:^18.3.1"
     react-countup: "npm:^6.5.3"
+    react-cropper: "npm:^2.3.3"
     react-dom: "npm:^18.3.1"
+    react-hook-form: "npm:^7.51.5"
     react-hot-toast: "npm:^2.4.1"
     react-i18next: "npm:^14.1.2"
     react-image-lightbox: "npm:^5.1.4"
@@ -11728,7 +11775,7 @@ __metadata:
     rimraf: "npm:^5.0.7"
     slick-carousel: "npm:^1.8.1"
     styled-components: "npm:^6.1.11"
-    supabase: "npm:^1.169.2"
+    supabase: "npm:1.172.2"
     tailwind-merge: "npm:^2.3.0"
     tailwindcss: "npm:^3.4.3"
     tailwindcss-animate: "npm:^1.0.7"
@@ -12091,17 +12138,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supabase@npm:^1.169.2":
-  version: 1.169.2
-  resolution: "supabase@npm:1.169.2"
+"supabase@npm:1.172.2":
+  version: 1.172.2
+  resolution: "supabase@npm:1.172.2"
   dependencies:
     bin-links: "npm:^4.0.3"
     https-proxy-agent: "npm:^7.0.2"
     node-fetch: "npm:^3.3.2"
-    tar: "npm:7.1.0"
+    tar: "npm:7.2.0"
   bin:
     supabase: bin/supabase
-  checksum: 10c0/f0c86f293c1c55c67dc60d5bd8c27bc35026e46f5bbffce6d08eaeda5e348ebf85046565285dd051c06eae991d0f1912853d2fc5f686b5c110ca32aa771cdf4e
+  checksum: 10c0/ee9f6ddaf574f79781e87ff7cefd238370c188129c83219c9632c65a5ddd9bad662163c3a0e29ad3f9cf3d4e9bf0ae00efb71b5b3d51434d9b5a22d7cd7c9332
   languageName: node
   linkType: hard
 
@@ -12205,9 +12252,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar@npm:7.1.0":
-  version: 7.1.0
-  resolution: "tar@npm:7.1.0"
+"tar@npm:7.2.0":
+  version: 7.2.0
+  resolution: "tar@npm:7.2.0"
   dependencies:
     "@isaacs/fs-minipass": "npm:^4.0.0"
     chownr: "npm:^3.0.0"
@@ -12215,7 +12262,7 @@ __metadata:
     minizlib: "npm:^3.0.1"
     mkdirp: "npm:^3.0.1"
     yallist: "npm:^5.0.0"
-  checksum: 10c0/08d85076820a2885855e581623c9c41e17a9ca47ca203e073e4612ccbcecc9e963134a48ff4a392a12d5d2184ebe5f7ed1e4a68d964193cbb52514aa858a0d2a
+  checksum: 10c0/f19b86df7e25e0d8743a6364e16e704b302497f141e829d551c1f0b9bbbd8d3202aec85bec8c796f2cc9eddf9fe17505cd70afade64faebeb88f3704195fa4f2
   languageName: node
   linkType: hard
 

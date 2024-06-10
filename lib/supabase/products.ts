@@ -2,6 +2,7 @@ import supabase from '@/lib/supabase';
 import { getCategoryBySlug } from '@/lib/supabase/categories';
 import { Database } from '@/types/supabase';
 import isEmpty from 'lodash/isEmpty';
+import category from '@/components/core/Category';
 
 export type Product = Database['public']['Tables']['products']['Row'] & {
   categories: {
@@ -11,7 +12,7 @@ export type Product = Database['public']['Tables']['products']['Row'] & {
 export type CreateProductInput =
   Database['public']['Tables']['products']['Insert'];
 export type UpdateProductInput =
-  Database['public']['Tables']['products']['Update'];
+  Database['public']['Tables']['products']['Update'] & { id: string };
 
 export async function getProductById(id: string) {
   return supabase
@@ -36,17 +37,12 @@ export async function getProducts() {
     .order('name', { ascending: true });
 }
 
-export async function getPreOwnedProducts() {
-  const { data } = await supabase
-    .from('categories')
-    .select('id')
-    .eq('slug', 'occasion');
-
+export function getPreOwnedProducts() {
   return supabase
-    .from('products')
-    .select(`*, categories ( slug )`)
-    .order('name', { ascending: true })
-    .eq('categoryId', (data[0] as unknown as Product)?.id || '');
+    .from('categories')
+    .select(`* ( categories ( slug ))`)
+    .eq(`( categories (slug) )`, 'occasion')
+    .order('name', { ascending: true });
 }
 
 export async function getProductsByCategory(categoryId: string) {
@@ -57,13 +53,17 @@ export async function getProductsByCategory(categoryId: string) {
     .eq('categoryId', categoryId);
 }
 
-export async function getProductsBySlugAndCategory(slug, categorySlug: string) {
+export async function getProductsBySlugAndCategory(
+  slug: string,
+  categorySlug: string,
+) {
   const { data } = await getCategoryBySlug(categorySlug);
+  if (!data) return null;
   return supabase
     .from('products')
     .select('*')
     .eq('slug', slug)
-    .eq('categoryId', data.id)
+    .eq('categoryId', data?.id)
     .order('name', { ascending: true });
 }
 
@@ -71,7 +71,9 @@ export async function createProduct(product: CreateProductInput) {
   return supabase.from('products').insert([product]);
 }
 
-export async function updateProduct(product: UpdateProductInput) {
+export async function updateProduct(
+  product: UpdateProductInput & { id: string },
+) {
   return supabase
     .from('products')
     .update({

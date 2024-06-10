@@ -12,7 +12,9 @@ const FormikSessionStorage = ({ uniqueName }: Props) => {
   useEffect(() => {
     if (sessionStorage) {
       const a = sessionStorage.getItem(uniqueName);
-      setSavedValues(JSON.parse(a));
+      if (a) {
+        setSavedValues(JSON.parse(a));
+      }
     }
   }, [uniqueName]);
 

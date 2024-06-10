@@ -1,5 +1,5 @@
-import { InsertOrUpdateInstallation } from '@/components/dashboard/Installations/InstallationForm';
 import * as yup from 'yup';
+import { CreateInstallationInput } from '@/lib/supabase/installations';
 
 export const installationForm = yup.object({
   title: yup.string().trim().required(),
@@ -7,7 +7,7 @@ export const installationForm = yup.object({
   images: yup.object().required(),
 });
 
-export const initialValues: InsertOrUpdateInstallation = {
+export const initialValues: CreateInstallationInput = {
   title: '',
   description: '',
 };

@@ -5,7 +5,7 @@ export type CategoryType = Database['public']['Tables']['categories']['Row'];
 export type CreateCategoryInput =
   Database['public']['Tables']['categories']['Insert'];
 export type UpdateCategoryInput =
-  Database['public']['Tables']['categories']['Update'];
+  Database['public']['Tables']['categories']['Update'] & { id: string };
 
 export async function getCategoryBySlug(slug: string) {
   return supabase.from('categories').select('*').eq('slug', slug).single();
@@ -23,16 +23,19 @@ export async function getCategories() {
 }
 
 export async function createCategory(category: CreateCategoryInput) {
-  return supabase.from('categories').insert([category]);
+  return supabase.from('categories').insert([category]).select('*');
 }
 
-export async function updateCategory(category: UpdateCategoryInput) {
+export async function updateCategory(
+  category: UpdateCategoryInput & { id: string },
+) {
   return supabase
     .from('categories')
     .update({
       ...category,
     })
-    .eq('id', category.id);
+    .eq('id', category.id)
+    .select('*');
 }
 
 export async function removeCategory(id: string) {

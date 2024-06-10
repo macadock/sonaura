@@ -1,7 +1,7 @@
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import supabase from '@/lib/supabase';
 import toast from 'react-hot-toast';
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -10,8 +10,8 @@ import { useTranslation } from 'next-i18next';
 import TextField from '@/components/system/Form/TextField';
 import { CreateShopInput, UpdateShopInput } from '@/lib/supabase/shops';
 import { shopForm } from '@/components/dashboard/Shops/ShopsForm/shops.validator';
-
-export type InsertOrUpdateShop = CreateShopInput | UpdateShopInput;
+import { pick } from 'lodash';
+import { CreateProductInput } from '@/lib/supabase/products';
 
 const getImageUrl = (value: string | object): string => {
   let image: object;
@@ -20,22 +20,37 @@ const getImageUrl = (value: string | object): string => {
   } catch (e) {
     return '';
   }
-  const bucket = image['bucket'];
-  const file = image['file'];
+
+  const { bucket, file } = pick(image, ['bucket', 'file']) as {
+    bucket: string;
+    file: string;
+  };
+
   const { data } = supabase.storage.from(bucket).getPublicUrl(file);
   return data ? data.publicUrl : '';
 };
 
-interface Props {
-  formMode: 'create' | 'edit';
-  initialValues: InsertOrUpdateShop;
-  onSubmit: (
-    values: InsertOrUpdateShop,
-    actions?: FormikHelpers<InsertOrUpdateShop>,
-  ) => void;
+type Props = {
   leftButtons?: React.ReactNode;
   rightButtons?: React.ReactNode;
-}
+} & (
+  | {
+      formMode: 'create';
+      initialValues: CreateShopInput;
+      onSubmit: (
+        values: CreateShopInput,
+        actions?: FormikHelpers<CreateShopInput>,
+      ) => void;
+    }
+  | {
+      formMode: 'edit';
+      initialValues: UpdateShopInput;
+      onSubmit: (
+        values: UpdateShopInput,
+        actions?: FormikHelpers<UpdateShopInput>,
+      ) => void;
+    }
+);
 
 const ShopForm: React.FC<Props> = ({
   formMode,
@@ -46,7 +61,13 @@ const ShopForm: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation('dashboard');
 
-  const uploadImage = async (files: FileList): Promise<object> => {
+  const uploadImage = async (
+    files: FileList | null,
+  ): Promise<object | void> => {
+    if (!files || files.length === 0) {
+      return;
+    }
+
     const bucket = 'shops';
     const fileName = crypto.randomUUID();
     const { error } = await supabase.storage
@@ -64,9 +85,11 @@ const ShopForm: React.FC<Props> = ({
   };
 
   return (
-    <Formik<InsertOrUpdateShop>
+    <Formik<CreateShopInput | UpdateShopInput>
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={
+        onSubmit as unknown as ComponentProps<typeof Formik>['onSubmit']
+      }
       validationSchema={shopForm}
     >
       {({ isValid, dirty, handleSubmit, errors }) => (
@@ -142,7 +165,9 @@ const ShopForm: React.FC<Props> = ({
                         type="file"
                         onChange={async (e) => {
                           const image = await uploadImage(e.target.files);
-                          setFieldValue(name, image);
+                          if (image) {
+                            setFieldValue(name, image);
+                          }
                         }}
                       />
                     </Button>

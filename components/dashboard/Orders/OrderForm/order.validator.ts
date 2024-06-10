@@ -1,5 +1,8 @@
-import { InsertOrUpdateCategory } from '@/components/dashboard/Categories/CategoryForm';
 import * as yup from 'yup';
+import {
+  CreateCategoryInput,
+  UpdateCategoryInput,
+} from '@/lib/supabase/categories';
 
 export const categoryForm = yup.object({
   name: yup.string().trim().required(),
@@ -10,7 +13,7 @@ export const categoryForm = yup.object({
     .required(),
 });
 
-export const initialValues: InsertOrUpdateCategory = {
+export const initialValues = {
   name: '',
   slug: '',
   icon: '',

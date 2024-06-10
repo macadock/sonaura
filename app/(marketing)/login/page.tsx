@@ -35,7 +35,7 @@ export default async function Login({
         />
         <Button type="submit">Se connecter</Button>
         <Button formAction={handleSignUp} variant={'outline'}>
-          S'inscrire
+          {"S'inscrire"}
         </Button>
 
         {searchParams?.message && (

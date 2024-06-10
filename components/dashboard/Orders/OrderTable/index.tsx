@@ -41,7 +41,7 @@ const OrderTable: React.FC = () => {
   const fetchOrders = async () => {
     const { data } = await getOrders();
     if (data) {
-      setOrders(data);
+      setOrders(data as unknown as Order[]);
     }
     setLoading(false);
   };

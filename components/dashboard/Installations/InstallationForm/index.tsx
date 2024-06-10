@@ -1,7 +1,7 @@
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import supabase from '@/lib/supabase';
 import toast from 'react-hot-toast';
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -13,10 +13,9 @@ import {
   UpdateInstallationInput,
 } from '@/lib/supabase/installations';
 import { installationForm } from '@/components/dashboard/Installations/InstallationForm/installation.validator';
-
-export type InsertOrUpdateInstallation =
-  | CreateInstallationInput
-  | UpdateInstallationInput;
+import { pick } from 'lodash';
+import { UpdateProductInput } from '@/lib/supabase/products';
+import { FormikConfig } from 'formik/dist/types';
 
 const getImageUrl = (value: string | object): string => {
   let image: object;
@@ -25,22 +24,27 @@ const getImageUrl = (value: string | object): string => {
   } catch (e) {
     return '';
   }
-  const bucket = image['bucket'];
-  const file = image['file'];
+  const bucket = pick(image, ['bucket']) as unknown as string;
+  const file = pick(image, ['file']) as unknown as string;
   const { data } = supabase.storage.from(bucket).getPublicUrl(file);
   return data ? data.publicUrl : '';
 };
 
-interface Props {
-  formMode: 'create' | 'edit';
-  initialValues: InsertOrUpdateInstallation;
-  onSubmit: (
-    values: InsertOrUpdateInstallation,
-    actions?: FormikHelpers<InsertOrUpdateInstallation>,
-  ) => void;
+type Props = {
   leftButtons?: React.ReactNode;
   rightButtons?: React.ReactNode;
-}
+} & (
+  | {
+      formMode: 'create';
+      initialValues: CreateInstallationInput;
+      onSubmit: FormikConfig<CreateInstallationInput>['onSubmit'];
+    }
+  | {
+      formMode: 'edit';
+      initialValues: UpdateInstallationInput;
+      onSubmit: FormikConfig<UpdateInstallationInput>['onSubmit'];
+    }
+);
 
 const InstallationForm: React.FC<Props> = ({
   formMode,
@@ -51,7 +55,13 @@ const InstallationForm: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation('dashboard');
 
-  const uploadImage = async (files: FileList): Promise<object> => {
+  const uploadImage = async (
+    files: FileList | null,
+  ): Promise<object | void> => {
+    if (!files || files.length === 0) {
+      return;
+    }
+
     const bucket = 'installations';
     const fileName = crypto.randomUUID();
     const { error } = await supabase.storage
@@ -69,9 +79,9 @@ const InstallationForm: React.FC<Props> = ({
   };
 
   return (
-    <Formik<InsertOrUpdateInstallation>
+    <Formik<CreateInstallationInput | UpdateInstallationInput>
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={onSubmit as ComponentProps<typeof Formik>['onSubmit']}
       validationSchema={installationForm}
     >
       {({ isValid, dirty, handleSubmit }) => (
@@ -132,7 +142,9 @@ const InstallationForm: React.FC<Props> = ({
                         type="file"
                         onChange={async (e) => {
                           const image = await uploadImage(e.target.files);
-                          setFieldValue(name, image);
+                          if (image) {
+                            setFieldValue(name, image);
+                          }
                         }}
                       />
                     </Button>

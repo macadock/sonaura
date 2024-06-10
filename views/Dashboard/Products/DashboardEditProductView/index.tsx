@@ -2,9 +2,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import Delete from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import ProductForm, {
-  InsertOrUpdateProduct,
-} from '@/components/dashboard/Products/ProductForm';
+import ProductForm from '@/components/dashboard/Products/ProductForm';
 import VariantsDialog from '@/components/dashboard/Products/Variants/VariantsDialog';
 import {
   getProductById,
@@ -34,7 +32,7 @@ const DashboardEditProductView = () => {
   const fetchProduct = useCallback(async () => {
     const { data } = await getProductById(productId);
     if (data) {
-      setProduct(data as Product);
+      setProduct(data as unknown as Product);
     }
   }, [productId]);
 
@@ -64,7 +62,7 @@ const DashboardEditProductView = () => {
     router.push('/dashboard/products');
   };
 
-  const sanitizeNumber = (number: number): number => {
+  const sanitizeNumber = (number: string | number | null): number | null => {
     try {
       if (typeof number === 'string') {
         number = parseInt(number);
@@ -76,7 +74,7 @@ const DashboardEditProductView = () => {
     return number;
   };
 
-  const onSubmit = (values: InsertOrUpdateProduct) => {
+  const onSubmit = (values: UpdateProductInput) => {
     const {
       id,
       name,
@@ -94,9 +92,9 @@ const DashboardEditProductView = () => {
       id,
       name,
       description,
-      fromPrice: sanitizeNumber(fromPrice),
-      price: sanitizeNumber(price),
-      quantity: sanitizeNumber(quantity),
+      fromPrice: sanitizeNumber(fromPrice || null),
+      price: sanitizeNumber(price || null),
+      quantity: sanitizeNumber(quantity || null),
       slug,
       categoryId,
       shopId: shopId === '' ? null : shopId,

@@ -7,9 +7,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import Delete from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import CategoryForm, {
-  InsertOrUpdateCategory,
-} from '@/components/dashboard/Categories/CategoryForm';
+import CategoryForm from '@/components/dashboard/Categories/CategoryForm';
 import {
   CategoryType,
   getCategoryById,
@@ -28,7 +26,7 @@ const DashboardEditCategoryView = () => {
   const fetchCategory = useCallback(async () => {
     const { data } = await getCategoryById(categoryId);
     if (data) {
-      setCategory(data);
+      setCategory(data as CategoryType);
     }
   }, [categoryId]);
 
@@ -58,7 +56,7 @@ const DashboardEditCategoryView = () => {
     router.push('/dashboard/categories');
   };
 
-  const onSubmit = (values: InsertOrUpdateCategory) => {
+  const onSubmit = (values: UpdateCategoryInput) => {
     const { id, name, slug, icon } = values;
 
     const input = {

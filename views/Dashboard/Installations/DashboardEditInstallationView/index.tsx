@@ -14,9 +14,8 @@ import {
   updateInstallation,
   UpdateInstallationInput,
 } from '@/lib/supabase/installations';
-import InstallationForm, {
-  InsertOrUpdateInstallation,
-} from '@/components/dashboard/Installations/InstallationForm';
+import InstallationForm from '@/components/dashboard/Installations/InstallationForm';
+import { UpdateCategoryInput } from '@/lib/supabase/categories';
 
 const DashboardEditInstallationView = () => {
   const router = useRouter();
@@ -28,7 +27,7 @@ const DashboardEditInstallationView = () => {
   const fetchInstallation = useCallback(async () => {
     const { data } = await getInstallationById(installationId);
     if (data) {
-      setInstallation(data);
+      setInstallation(data as Installation);
     }
   }, [installationId]);
 
@@ -58,14 +57,9 @@ const DashboardEditInstallationView = () => {
     router.push('/dashboard/installations');
   };
 
-  const onSubmit = (values: InsertOrUpdateInstallation) => {
-    const { id, title, description, images } = values;
-
+  const onSubmit = (values: UpdateCategoryInput) => {
     const input = {
-      id,
-      title,
-      description,
-      images,
+      ...values,
     };
 
     update(input);

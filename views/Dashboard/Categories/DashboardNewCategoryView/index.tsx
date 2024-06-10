@@ -3,9 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { initialValues } from '@/components/dashboard/Categories/CategoryForm/category.validator';
-import CategoryForm, {
-  InsertOrUpdateCategory,
-} from '@/components/dashboard/Categories/CategoryForm';
+import CategoryForm from '@/components/dashboard/Categories/CategoryForm';
 
 import { createCategory, CreateCategoryInput } from '@/lib/supabase/categories';
 import { useTranslation } from 'next-i18next';
@@ -28,7 +26,7 @@ const DashboardNewCategoryView = () => {
     router.push('/dashboard/categories');
   };
 
-  const onSubmit = (values: InsertOrUpdateCategory) => {
+  const onSubmit = (values: CreateCategoryInput) => {
     const { name, slug, icon } = values;
 
     const input = {

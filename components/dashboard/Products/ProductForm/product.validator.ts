@@ -1,5 +1,5 @@
-import { InsertOrUpdateProduct } from '@/components/dashboard/Products/ProductForm';
 import * as yup from 'yup';
+import { CreateProductInput } from '@/lib/supabase/products';
 
 export const productFrom = yup.object({
   name: yup.string().trim().required(),
@@ -17,7 +17,7 @@ export const productFrom = yup.object({
   mainImage: yup.object().optional(),
 });
 
-export const initialValues: InsertOrUpdateProduct = {
+export const initialValues: CreateProductInput = {
   name: '',
   description: '',
   slug: '',

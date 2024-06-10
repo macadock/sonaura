@@ -15,7 +15,7 @@ const InstallationTable: React.FC = () => {
   const fetchInstallations = async () => {
     const { data } = await getInstallations();
     if (data) {
-      setInstallations(data);
+      setInstallations(data as unknown as Installation[]);
     }
     setLoading(false);
   };

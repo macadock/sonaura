@@ -3,14 +3,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
-import { VariantImage, Variant } from 'types';
+import { VariantImage, Variant, VariantImageOption } from 'types';
 
 interface Props {
   variant: Variant;
-  image: VariantImage;
+  image: VariantImage | undefined;
   handleChange: (
     image: VariantImage,
-    option: VariantImage['variants'][number],
+    option: VariantImageOption,
   ) => Promise<void>;
 }
 const AttributeDropdown: React.FC<Props> = ({
@@ -21,7 +21,7 @@ const AttributeDropdown: React.FC<Props> = ({
   const { t } = useTranslation('dashboard');
   const { name, values } = variant;
   const defaultValue =
-    image.variants?.find((option) => option.name === name)?.value || '';
+    image?.variants?.find((option) => option.name === name)?.value || '';
   const [selectedValue, setSelectedValue] = useState<string>(defaultValue);
 
   return (
@@ -31,7 +31,9 @@ const AttributeDropdown: React.FC<Props> = ({
         value={selectedValue}
         onChange={(e) => {
           setSelectedValue(e.target.value);
-          handleChange(image, { name, value: e.target.value });
+          if (image) {
+            handleChange(image, { name, value: e.target.value });
+          }
         }}
       >
         <MenuItem disabled key="">

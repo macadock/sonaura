@@ -3,7 +3,8 @@ import { Database } from '@/types/supabase';
 
 export type Shop = Database['public']['Tables']['shops']['Row'];
 export type CreateShopInput = Database['public']['Tables']['shops']['Insert'];
-export type UpdateShopInput = Database['public']['Tables']['shops']['Update'];
+export type UpdateShopInput =
+  Database['public']['Tables']['shops']['Update'] & { id: string };
 
 export interface ShopHours {
   friday: Day;
@@ -37,7 +38,7 @@ export async function createShop(shop: CreateShopInput) {
   return supabase.from('shops').insert([shop]);
 }
 
-export async function updateShop(shop: UpdateShopInput) {
+export async function updateShop(shop: UpdateShopInput & { id: string }) {
   return supabase
     .from('shops')
     .update({
