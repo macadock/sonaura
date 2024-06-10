@@ -4,9 +4,11 @@ import { handleSignIn, redirectUserToPage } from '@/utils/auth';
 export default async function Login({
   searchParams,
 }: {
-  searchParams: { message: string };
+  searchParams: { message: string; email_sent?: string };
 }) {
   await redirectUserToPage();
+
+  const { message, email_sent } = searchParams;
 
   return (
     <div className="flex flex-col w-full p-8 max-w-md justify-center gap-2 m-auto">
@@ -25,11 +27,13 @@ export default async function Login({
           required
         />
 
-        <Button type="submit">Demander lien de connexion</Button>
+        <Button type="submit" disabled={!!email_sent}>
+          Demander lien de connexion
+        </Button>
 
-        {searchParams?.message && (
+        {message && (
           <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-            {searchParams.message}
+            {message}
           </p>
         )}
       </form>
