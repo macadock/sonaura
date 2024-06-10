@@ -20,7 +20,7 @@ import supabase from '@/lib/supabase';
 import { VariantImage, Variant } from '@/types';
 import Chip from '@mui/material/Chip';
 import Image from 'next/legacy/image';
-import { getProductMainImage } from '@/utils/get-product-main-image';
+import { getImageUrl } from '@/utils/image/get-product-main-image';
 
 interface Props {
   product: Product | null;
@@ -58,7 +58,7 @@ const ProductDetails = ({ product = null }: Props) => {
 
   const [variantImages, setVariantImages] = useState<VariantImage[]>([]);
   const mainImage = useMemo(() => {
-    return getProductMainImage(product?.mainImage as string);
+    return getImageUrl(product?.mainImage);
   }, [product?.mainImage]);
   const [current, setCurrent] = useState<string>(mainImage);
 
@@ -76,7 +76,7 @@ const ProductDetails = ({ product = null }: Props) => {
   useEffect(() => {
     if (noOptionSelected || isMissingOptionSelection) {
       setVariantImages([]);
-      setCurrent(getProductMainImage(product?.mainImage as string));
+      setCurrent(getImageUrl(product?.mainImage as string));
       setPriceVariant(undefined);
       return;
     }
@@ -103,7 +103,6 @@ const ProductDetails = ({ product = null }: Props) => {
     setPriceVariant(parseInt(images[0]?.price as string) || undefined);
     setVariantImages(images);
   }, [
-    getProductMainImage,
     isMissingOptionSelection,
     noOptionSelected,
     product?.variantsImages,
@@ -230,7 +229,7 @@ const ProductDetails = ({ product = null }: Props) => {
                   },
                 }}
                 onClick={() =>
-                  setCurrent(getProductMainImage(product?.mainImage as string))
+                  setCurrent(getImageUrl(product?.mainImage as string))
                 }
               >
                 <Image
