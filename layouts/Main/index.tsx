@@ -43,7 +43,7 @@ const Main = ({ children, colorInvert = false }: Props) => {
 
   const today = new Date();
   const endDate = null;
-  const displayClosedMessage = endDate ? today <= endDate : true;
+  const displayClosedMessage = endDate ? today.getTime() <= endDate : true;
 
   return (
     <Box>
