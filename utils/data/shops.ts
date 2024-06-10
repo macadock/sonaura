@@ -1,9 +1,15 @@
 import { cookies } from 'next/headers';
-import { shops } from '@/app/(marketing)/mocks';
+import { createClient } from '@/lib/supabase/server';
+import { Database } from '@/types/supabase';
 
-export const getShops = async (cookieStore: ReturnType<typeof cookies>) => {
-  // const supabase = createClient(cookiesStore);
-  // const { data } = await supabase.from('installations').select('*');
-  // return data;
-  return shops;
+export type Shop = Database['public']['Tables']['shops']['Row'];
+
+export const getShops = async ({
+  cookieStore,
+}: {
+  cookieStore: ReturnType<typeof cookies>;
+}) => {
+  const supabase = createClient(cookieStore);
+  const { data } = await supabase.from('installations').select('*');
+  return data || [];
 };

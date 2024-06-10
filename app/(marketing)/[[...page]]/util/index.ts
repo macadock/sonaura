@@ -1,5 +1,5 @@
-import { categories, products } from '@/app/(marketing)/mocks';
 import isEmpty from 'lodash/isEmpty';
+import { Category, Product } from '@/utils/data';
 
 export enum SpecialPage {
   PRODUCT = '[product]',
@@ -8,8 +8,8 @@ export enum SpecialPage {
 
 export type getPageUrlProps = {
   params: { page: string[] };
-  products: typeof products;
-  categories: typeof categories;
+  products: Array<Product>;
+  categories: Array<Category>;
 };
 
 export const getPageUrl = ({

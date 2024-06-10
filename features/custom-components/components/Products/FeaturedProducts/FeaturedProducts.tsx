@@ -1,18 +1,17 @@
-import { categories, products } from '@/app/(marketing)/mocks';
 import { Card, CardContent } from '@/components/ui/card';
 import { FeaturedProductsSchema } from '@/features/custom-components/components/Products/FeaturedProducts/schema';
-import { PropsNameEnum, asyncDataMapping } from '@/features/page-editor';
-import { getCategories, getProducts } from '@/utils/data';
+import { PropsNameEnum } from '@/features/page-editor';
 import Image from 'next/image';
 import Link from 'next/link';
 import zod from 'zod';
+import { Category, Product } from '@/utils/data';
 
 export type FeaturedProductsProps = {
   id?: string;
   content: zod.infer<typeof FeaturedProductsSchema>;
   isPreview?: boolean;
-  [PropsNameEnum.PRODUCTS]: typeof products;
-  [PropsNameEnum.CATEGORIES]: typeof categories;
+  [PropsNameEnum.PRODUCTS]: Array<Product>;
+  [PropsNameEnum.CATEGORIES]: Array<Category>;
 };
 
 export const FeaturedProducts = ({

@@ -1,11 +1,11 @@
-import { categories, products } from '@/app/(marketing)/mocks';
 import { FeaturedProducts } from '@/features/custom-components/components/Products/FeaturedProducts';
 import { PropsNameEnum } from '@/features/page-editor';
+import { Category, Product } from '@/utils/data';
 
 export type ProductsListByCategoryProps = {
   isPreview?: boolean;
-  [PropsNameEnum.PRODUCTS]: typeof products;
-  [PropsNameEnum.CATEGORY]: (typeof categories)[number];
+  [PropsNameEnum.PRODUCTS]: Array<Product>;
+  [PropsNameEnum.CATEGORY]: Category;
 };
 
 export const ProductsListByCategory = ({

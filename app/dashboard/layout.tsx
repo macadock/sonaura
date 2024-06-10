@@ -84,7 +84,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           <div className="w-52 flex flex-col gap-2">
             <a href={'/dashboard'}>
               <Image
-                src="/logos/logo.svg"
+                src="/assets/logos/logo.svg"
                 alt="Sonaura"
                 loading={'eager'}
                 width="180"

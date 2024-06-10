@@ -1,10 +1,10 @@
-import { categories, products } from '@/app/(marketing)/mocks';
 import { PropsNameEnum } from '@/features/page-editor';
 import Image from 'next/image';
+import { Category, Product } from '@/utils/data';
 
 export type ProductPageProps = {
-  [PropsNameEnum.PRODUCT]: (typeof products)[number];
-  [PropsNameEnum.CATEGORY]: (typeof categories)[number];
+  [PropsNameEnum.PRODUCT]: Product;
+  [PropsNameEnum.CATEGORY]: Category;
   isPreview?: boolean;
 };
 

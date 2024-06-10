@@ -5,8 +5,8 @@ import { cookies } from 'next/headers';
 import Link from 'next/link';
 
 const ContentSettingsPage = async () => {
-  const cookiesStore = cookies();
-  const { data } = await getPages(cookiesStore);
+  const cookieStore = cookies();
+  const { data } = await getPages({ cookieStore });
 
   if (!data) {
     return null;

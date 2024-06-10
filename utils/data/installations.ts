@@ -9,7 +9,7 @@ export const getInstallations = async ({
 }) => {
   const supabase = createClient(cookieStore);
   const { data } = await supabase.from('installations').select('*');
-  return data;
+  return data || [];
 };
 
 export const getInstallationById = async ({
