@@ -1,3 +1,5 @@
+'use server';
+
 import { Button } from '@/components/ui/button';
 import { handleSignIn, redirectUserToPage } from '@/utils/auth';
 
