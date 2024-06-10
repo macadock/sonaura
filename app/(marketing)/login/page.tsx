@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { handleSignIn, handleSignUp, redirectUserToPage } from '@/utils/auth';
+import { handleSignIn, redirectUserToPage } from '@/utils/auth';
 
 export default async function Login({
   searchParams,
@@ -21,22 +21,11 @@ export default async function Login({
           className="rounded-md px-4 py-2 bg-inherit border mb-6"
           name="email"
           autoComplete={'email'}
+          type={'email'}
           required
         />
-        <label className="text-md" htmlFor="password">
-          Mot de passe
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          type="password"
-          name="password"
-          autoComplete={'current-password'}
-          required
-        />
-        <Button type="submit">Se connecter</Button>
-        <Button formAction={handleSignUp} variant={'outline'}>
-          {"S'inscrire"}
-        </Button>
+
+        <Button type="submit">Demander lien de connexion</Button>
 
         {searchParams?.message && (
           <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
