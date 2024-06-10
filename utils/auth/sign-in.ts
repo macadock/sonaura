@@ -1,5 +1,3 @@
-'use server';
-
 import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { websiteUrl } from '@/appConstants';
@@ -15,7 +13,7 @@ export const handleSignIn = async (formData: FormData) => {
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${websiteUrl}/login`,
+      emailRedirectTo: `${websiteUrl}/auth/callback`,
     },
   });
 
