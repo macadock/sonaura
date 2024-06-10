@@ -19,7 +19,12 @@ export const Footer = () => {
   return (
     <footer className="flex flex-col justify-center items-center md:items-stretch gap-6 p-8 border-t mt-auto">
       <div className="flex flex-col md:flex-row gap-4 items-center md:justify-between max-w-7xl m-auto md:w-full">
-        <Image src="/logos/logo.svg" alt="Sonaura" width="130" height="130" />
+        <Image
+          src="/assets/logos/logo.svg"
+          alt="Sonaura"
+          width="130"
+          height="130"
+        />
         <nav className="flex flex-col md:flex-row items-center text-sm gap-4">
           {Items.map(({ href, title }) => (
             <a key={title} href={href}>

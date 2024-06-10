@@ -3,9 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import ProductForm, {
-  InsertOrUpdateProduct,
-} from '@/components/dashboard/Products/ProductForm';
+import ProductForm from '@/components/dashboard/Products/ProductForm';
 import { initialValues } from '@/components/dashboard/Products/ProductForm/product.validator';
 import { createProduct, CreateProductInput } from '@/lib/supabase/products';
 import { useTranslation } from 'next-i18next';
@@ -28,7 +26,7 @@ const DashboardNewProductView = () => {
     router.push('/dashboard/products');
   };
 
-  const sanitizeNumber = (number: number): number => {
+  const sanitizeNumber = (number: string | number | null): number | null => {
     try {
       if (typeof number === 'string') {
         number = parseInt(number);
@@ -40,7 +38,7 @@ const DashboardNewProductView = () => {
     return number;
   };
 
-  const onSubmit = (values: InsertOrUpdateProduct) => {
+  const onSubmit = (values: CreateProductInput) => {
     const {
       name,
       description,
@@ -56,15 +54,14 @@ const DashboardNewProductView = () => {
     const input = {
       name,
       description,
-      fromPrice: sanitizeNumber(fromPrice),
-      price: sanitizeNumber(price),
-      quantity: sanitizeNumber(quantity),
+      fromPrice: sanitizeNumber(fromPrice || null),
+      price: sanitizeNumber(price || null),
+      quantity: sanitizeNumber(quantity || null),
       slug,
       categoryId,
       shopId: shopId === '' ? null : shopId,
       mainImage,
     };
-
     create(input);
   };
 

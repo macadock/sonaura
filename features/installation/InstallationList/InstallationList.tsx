@@ -36,20 +36,17 @@ export const InstallationList = async () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {installations.map(
-            ({ id, title, image, description, updated_at }) => (
-              <TableRow key={id}>
-                <TableCell>
-                  <Link key={id} href={`/dashboard/installations/${id}`}>
-                    <Edit strokeWidth="0.0625rem" />
-                  </Link>
-                </TableCell>
-                <TableCell>{title}</TableCell>
-                <TableCell>{description}</TableCell>
-                <TableCell>{updated_at}</TableCell>
-              </TableRow>
-            ),
-          )}
+          {installations.map(({ id, title, description }) => (
+            <TableRow key={id}>
+              <TableCell>
+                <Link key={id} href={`/dashboard/installations/${id}`}>
+                  <Edit strokeWidth="0.0625rem" />
+                </Link>
+              </TableCell>
+              <TableCell>{title}</TableCell>
+              <TableCell>{description}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>

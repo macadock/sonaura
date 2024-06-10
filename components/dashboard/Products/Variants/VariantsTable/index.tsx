@@ -15,21 +15,21 @@ import {
 import { useTranslation } from 'next-i18next';
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { VariantImage, Variant } from '@/types';
+import { VariantImage, Variant, VariantImageOption } from '@/types';
 
 interface Props {
   productId: string;
   variants: Variant[];
 }
 
-const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
+const VariantsTable = ({ productId, variants }: Props) => {
   const { t } = useTranslation('dashboard');
 
   const [images, setImages] = useState<VariantImage[]>([]);
 
   const fetchProduct = useCallback(async () => {
     const { data } = await getProductById(productId);
-    if (data?.variantsImages) {
+    if (data && 'variantsImages' in data) {
       setImages(data.variantsImages as VariantImage[]);
     }
   }, [productId]);
@@ -38,7 +38,11 @@ const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
     fetchProduct();
   }, [fetchProduct]);
 
-  const handleImageUpload = async (files: FileList) => {
+  const handleImageUpload = async (files: FileList | null) => {
+    if (!files || files.length === 0) {
+      return;
+    }
+
     const bucket = 'products';
     const fileName = crypto.randomUUID();
     const { error } = await supabase.storage
@@ -61,7 +65,7 @@ const VariantsTable: React.FC<Props> = ({ productId, variants }) => {
 
   const handleImageVariant = async (
     image: VariantImage,
-    option: VariantImage['variants'][number],
+    option: VariantImageOption,
   ) => {
     let variant = images.find(
       ({ image: im }) =>

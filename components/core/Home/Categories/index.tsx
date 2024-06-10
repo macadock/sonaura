@@ -77,8 +77,8 @@ const CategoryItem = ({ category, index }: Props) => {
     const bucket = pick(category.icon, 'bucket');
     const file = pick(category.icon, 'file');
     const { data } = supabase.storage
-      .from(bucket as string)
-      .getPublicUrl(file as string);
+      .from(bucket as unknown as string)
+      .getPublicUrl(file as unknown as string);
     return data.publicUrl;
   };
 

@@ -1,13 +1,12 @@
-'use server';
+'use client';
+
 import { PropsNameEnum } from '@/features/page-editor';
-import { installations } from '@/app/(marketing)/mocks';
 import Image from 'next/image';
 
-import './installations-grid.css';
 import { Installation } from '@/utils/data';
-import { cookies } from 'next/headers';
-import { createClient } from '@/lib/supabase/server';
-import { BUCKET_NAME } from '@/features/config';
+import { pick } from 'lodash';
+import './installations-grid.css';
+import { createClient } from '@/lib/supabase/client';
 
 export type InstallationsGridProps = {
   [PropsNameEnum.INSTALLATIONS]: Array<Installation>;
@@ -22,8 +21,7 @@ export const InstallationsGrid = ({
     return null;
   }
 
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   return (
     <div
@@ -31,11 +29,11 @@ export const InstallationsGrid = ({
       className="p-8 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:max-w-7xl xl:m-auto"
     >
       {installations.map((item, index) => {
-        const { data } = supabase.storage
-          .from(BUCKET_NAME)
-          .getPublicUrl(item.image as string);
-
-        console.log(data);
+        const { bucket, file } = pick(item, ['bucket', 'file']) as {
+          bucket: string;
+          file: string;
+        };
+        const { data } = supabase.storage.from(bucket).getPublicUrl(file);
 
         return (
           <div key={item.id} className="rounded-lg shadow-lg">
@@ -44,7 +42,7 @@ export const InstallationsGrid = ({
                 src={data.publicUrl}
                 width={1080}
                 height={1080}
-                alt={item.title}
+                alt={item.title || ''}
                 loading={index <= 6 ? 'eager' : 'lazy'}
               />
             ) : (
@@ -52,7 +50,7 @@ export const InstallationsGrid = ({
                 src={data.publicUrl}
                 width={1080}
                 height={1080}
-                alt={item.title}
+                alt={item.title || ''}
                 loading={index <= 6 ? 'eager' : 'lazy'}
               />
             )}

@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import { useTranslation } from 'next-i18next';
 import { categoryForm } from '@/components/dashboard/Categories/CategoryForm/category.validator';
 import TextField from '@/components/system/Form/TextField';
+import { pick } from 'lodash';
 
 export type InsertOrUpdateCategory = CreateCategoryInput | UpdateCategoryInput;
 
@@ -23,8 +24,8 @@ const getImageUrl = (value: string | object): string => {
   } catch (e) {
     return '';
   }
-  const bucket = image['bucket'];
-  const file = image['file'];
+  const bucket = pick(image, 'bucket') as unknown as string;
+  const file = pick(image, 'file') as unknown as string;
   const { data } = supabase.storage.from(bucket).getPublicUrl(file);
   return data ? data.publicUrl : '';
 };
@@ -49,7 +50,13 @@ const OrderForm: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation('dashboard');
 
-  const uploadImage = async (files: FileList): Promise<object> => {
+  const uploadImage = async (
+    files: FileList | null,
+  ): Promise<object | void> => {
+    if (!files || files.length === 0) {
+      return;
+    }
+
     const bucket = 'categories';
     const fileName = crypto.randomUUID();
     const { error } = await supabase.storage
@@ -130,7 +137,9 @@ const OrderForm: React.FC<Props> = ({
                         type="file"
                         onChange={async (e) => {
                           const image = await uploadImage(e.target.files);
-                          setFieldValue(name, image);
+                          if (image) {
+                            setFieldValue(name, image);
+                          }
                         }}
                       />
                     </Button>

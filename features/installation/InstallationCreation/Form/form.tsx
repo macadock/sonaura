@@ -11,12 +11,14 @@ import { Label } from '@/components/ui/label';
 import 'cropperjs/dist/cropper.css';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ImageCropper } from '@/components/common';
+import { ImageCropper } from '@/components/common/ImageCropper';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Installation } from '@/utils/data';
 import isEqual from 'lodash/isEqual';
-import { BUCKET_NAME } from '@/features/config';
+import { pick } from 'lodash';
+
+const BUCKET_NAME = 'installations';
 
 export type InstallationFormProps = {
   installation?: Installation;
@@ -32,40 +34,40 @@ export const InstallationForm = ({ installation }: InstallationFormProps) => {
 
   const { control, handleSubmit, setValue } = useForm<InstallationFormType>({
     resolver: zodResolver(InstallationFormSchema),
-    defaultValues:
-      isUpdating && installation
-        ? {
-            id: installation.id,
-            title: installation.title,
-            description: installation.description,
-          }
-        : undefined,
   });
+
   const getImage = async () => {
     if (!isUpdating || !installation) {
       return;
     }
 
-    const { data, error } = await supabase.storage
-      .from(BUCKET_NAME)
-      .download(installation.image as string);
+    const { bucket, image } = pick(installation, ['bucket', 'image']) as {
+      bucket: string;
+      image: string;
+    };
+
+    const { data, error } = await supabase.storage.from(bucket).download(image);
 
     if (data) {
-      setValue('image', new File([data], installation.image as string));
+      setValue('image', new File([data], image));
     }
   };
 
   useEffect(() => {
     getImage();
-  }, []);
+  }, [getImage]);
 
   const onSubmit = async (formData: InstallationFormType) => {
     const supabase = createClient();
 
-    const isImageEqual = isEqual(
-      formData.image.name,
-      installation?.image as string,
-    );
+    const { bucket, image: imageName } = pick(installation, [
+      'bucket',
+      'image',
+    ]) as {
+      bucket: string;
+      image: string;
+    };
+    const isImageEqual = isEqual(formData.image.name, imageName);
 
     const image = isImageUpdated
       ? {
@@ -164,7 +166,7 @@ export const InstallationForm = ({ installation }: InstallationFormProps) => {
                         setIsOpenImageCropper(true);
                       }}
                     >
-                      Editer l'image
+                      {"Editer l'image"}
                     </Button>
                   )}
                 </div>

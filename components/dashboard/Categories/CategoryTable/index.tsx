@@ -15,7 +15,7 @@ const CategoryTable: React.FC = () => {
   const fetchCategories = async () => {
     const { data } = await getCategories();
     if (data) {
-      setCategories(data);
+      setCategories(data as unknown as CategoryType[]);
     }
     setLoading(false);
   };

@@ -11,9 +11,7 @@ import {
   createInstallation,
   CreateInstallationInput,
 } from '@/lib/supabase/installations';
-import InstallationForm, {
-  InsertOrUpdateInstallation,
-} from '@/components/dashboard/Installations/InstallationForm';
+import InstallationForm from '@/components/dashboard/Installations/InstallationForm';
 
 const DashboardNewInstallationView = () => {
   const router = useRouter();
@@ -31,7 +29,7 @@ const DashboardNewInstallationView = () => {
     router.push('/dashboard/installations');
   };
 
-  const onSubmit = (values: InsertOrUpdateInstallation) => {
+  const onSubmit = (values: CreateInstallationInput) => {
     const { title, description, images } = values;
 
     const input = {

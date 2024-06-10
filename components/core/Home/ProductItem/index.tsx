@@ -29,8 +29,8 @@ const ProductItem = ({ product, index }: Props) => {
     const bucket = pick(product.mainImage, 'bucket');
     const file = pick(product.mainImage, 'file');
     const { data } = supabase.storage
-      .from(bucket as string)
-      .getPublicUrl(file as string);
+      .from(bucket as unknown as string)
+      .getPublicUrl(file as unknown as string);
     return data.publicUrl;
   };
 

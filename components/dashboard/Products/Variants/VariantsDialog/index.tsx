@@ -41,7 +41,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
   const { t } = useTranslation('dashboard');
 
   const handleMenu = (event?: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(!openMenu ? event?.currentTarget : null);
+    setAnchorEl(!openMenu ? (event?.currentTarget as HTMLElement) : null);
     setOpenMenu((prev) => !prev);
   };
 
@@ -49,7 +49,7 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
     const { data } = await getProductById(productId);
     if (data) {
       setVariants(
-        data.variants === null ? [] : Array.from(data.variants as Variant[]),
+        'variants' in data ? Array.from(data.variants as Variant[]) : [],
       );
     } else {
       setVariants([]);
@@ -88,14 +88,14 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
     setVariants((prev) => {
       const attr = prev.find((a) => a.name === attrName);
 
-      const values = attr.values.filter((val) => val !== value);
+      const values = attr?.values.filter((val) => val !== value) || [];
       values.push(value);
 
       return [
         ...prev.filter((a) => a.name !== attrName),
         {
           name: attrName,
-          id: attr.id,
+          id: attr?.id || '',
           values,
         },
       ];
@@ -106,13 +106,13 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
     setVariants((prev) => {
       const attr = prev.find((a) => a.name === attrName);
 
-      const values = attr.values.filter((val) => val !== value);
+      const values = attr?.values.filter((val) => val !== value) || [];
 
       return [
         ...prev.filter((a) => a.name !== attrName),
         {
           name: attrName,
-          id: attr.id,
+          id: attr?.id || '',
           values,
         },
       ];
@@ -132,7 +132,9 @@ const VariantsDialog: React.FC<Props> = ({ open, handleClose, productId }) => {
           <Menu
             open={openMenu}
             anchorEl={anchorEl}
-            onClose={handleMenu}
+            onClose={() => {
+              handleMenu();
+            }}
             MenuListProps={{
               'aria-labelledby': 'basic-button',
             }}

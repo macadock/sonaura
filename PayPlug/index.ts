@@ -46,7 +46,7 @@ export default class PayPlug {
       address1: address,
       postcode: postalCode,
       city: city,
-      country: country.code,
+      country: country?.code,
       language: 'fr',
     };
 

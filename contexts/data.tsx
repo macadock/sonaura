@@ -37,12 +37,12 @@ export const DataProvider = (props: PropsWithChildren) => {
   const fetch = async () => {
     const { data: category } = await getCategories();
     if (category) {
-      setCategories(category);
+      setCategories(category as unknown as CategoryType[]);
     }
 
     const { data: shop } = await getShops();
     if (shop) {
-      setShops(shop);
+      setShops(shop as unknown as Shop[]);
     }
   };
 

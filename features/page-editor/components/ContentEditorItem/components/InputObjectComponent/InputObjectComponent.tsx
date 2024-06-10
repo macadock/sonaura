@@ -8,7 +8,7 @@ export const InputObjectComponent = (props: InputObjectProps) => {
       <h1>{name}</h1>
       <div className="flex gap-2">
         {components.map((component) => {
-          return <Inputs input={component} />;
+          return <Inputs key={component.name} input={component} />;
         })}
       </div>
     </div>

@@ -20,7 +20,7 @@ export const getPages = (cookieStore: ReturnType<typeof cookies>) => {
   return supabase.from('pages').select('*');
 };
 
-export type Page = Database['public']['Tables']['pages.old']['Row'];
+export type Page = Database['public']['Tables']['pages']['Row'];
 
 export type Image = {
   url: string;

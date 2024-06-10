@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { InsertOrUpdateShop } from '@/components/dashboard/Shops/ShopsForm';
+import { CreateShopInput } from '@/lib/supabase/shops';
 
 export const shopForm = yup.object({
   address: yup.string().trim().required(),
@@ -13,7 +13,7 @@ export const shopForm = yup.object({
   googleMapsUrl: yup.string().url().required(),
 });
 
-export const initialValues: InsertOrUpdateShop = {
+export const initialValues: CreateShopInput = {
   address: '',
   postalCode: '',
   city: '',
