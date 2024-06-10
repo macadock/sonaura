@@ -17,10 +17,18 @@ export const handleSignIn = async (formData: FormData) => {
     },
   });
 
-  // if (error) {
-  //   console.error(`Error at login for ${email},`, error);
-  //   redirect('/login?message=Erreur de connexion, merci de réessayer');
-  // }
-  //
-  // redirect('/login?message=Email envoyé&email_sent=true');
+  const urlSearchParams = new URLSearchParams();
+
+  if (error) {
+    console.error(`Error at login for ${email},`, error);
+    urlSearchParams.append(
+      'message',
+      'Erreur de connexion, merci de réessayer',
+    );
+  } else {
+    urlSearchParams.append('message', 'Email envoyé');
+    urlSearchParams.append('email_sent', 'true');
+  }
+
+  redirect(`/login?${urlSearchParams.toString()}`);
 };
