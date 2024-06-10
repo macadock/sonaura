@@ -18,8 +18,8 @@ export const handleSignIn = async (formData: FormData) => {
   });
 
   if (error) {
-    redirect('/login?message=Erreur de connexion, merci de réessayer');
     console.error(`Error at login for ${email},`, error);
+    redirect('/login?message=Erreur de connexion, merci de réessayer');
   }
 
   redirect('/login?message=Email envoyé&email_sent=true');
