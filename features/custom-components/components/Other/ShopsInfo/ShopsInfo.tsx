@@ -29,7 +29,7 @@ export const ShopsInfo = ({ shops }: ShopsInfoProps) => {
               <div className="flex flex-col">
                 <p className="text-base font-medium">Téléphone</p>
                 <a
-                  href={`tel:${phoneNumber.replaceAll(' ', '')}`}
+                  href={`tel:${phoneNumber?.replaceAll(' ', '')}`}
                   className="text-base"
                 >
                   {phoneNumber}
@@ -50,7 +50,7 @@ export const ShopsInfo = ({ shops }: ShopsInfoProps) => {
               style={{
                 minHeight: '25rem',
               }}
-              src={googleMapsUrl}
+              src={googleMapsUrl || ''}
               loading={'lazy'}
             />
           </div>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import zod from 'zod';
 import { Category, Product } from '@/utils/data';
+import { getImageUrl } from '@/utils/image/get-product-main-image';
 
 export type FeaturedProductsProps = {
   id?: string;
@@ -59,14 +60,14 @@ export const FeaturedProducts = ({
                 <CardContent className="h-full flex flex-col justify-center items-center gap-3 p-6">
                   {isPreview ? (
                     <img
-                      src={product.image}
+                      src={getImageUrl(product.mainImage)}
                       alt={product.name}
                       className="h-full w-full object-cover"
                     />
                   ) : (
                     <Image
                       className="h-full w-full object-cover"
-                      src={product.image}
+                      src={getImageUrl(product.mainImage)}
                       alt={product.name}
                       width={300}
                       height={300}

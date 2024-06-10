@@ -1,14 +1,15 @@
-import { categories } from '@/app/(marketing)/mocks';
 import { Card, CardContent } from '@/components/ui/card';
 import { ListCategoriesSchema } from '@/features/custom-components/components/Categories/ListCategories/schema';
 import { PropsNameEnum } from '@/features/page-editor';
 import Link from 'next/link';
 import zod from 'zod';
+import { Category } from '@/utils/data';
+import { getImageUrl } from '@/utils/image/get-product-main-image';
 
 export type ListCategoriesProps = {
   content: zod.infer<typeof ListCategoriesSchema>;
   isPreview?: boolean;
-  [PropsNameEnum.CATEGORIES]: typeof categories;
+  [PropsNameEnum.CATEGORIES]: Array<Category>;
 };
 
 export const ListCategories = ({
@@ -39,7 +40,7 @@ export const ListCategories = ({
           <Link key={category.id} href={`/${category.slug}`}>
             <Card className="h-full hover:shadow-lg transition-all duration-300">
               <CardContent className="h-full flex flex-col justify-center items-center gap-3 p-6">
-                <img src={category.image} alt={category.name} />
+                <img src={getImageUrl(category.icon)} alt={category.name} />
                 <h3>{category.name}</h3>
               </CardContent>
             </Card>
