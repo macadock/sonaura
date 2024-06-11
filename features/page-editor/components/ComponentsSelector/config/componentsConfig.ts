@@ -13,7 +13,10 @@ import {
   HeroText,
   HeroTextSchema,
   HeroImage,
-  HeroImageSchema, ShopsInfo, ContactPageForm, ContactPageFormSchema,
+  HeroImageSchema,
+  ShopsInfo,
+  ContactPageForm,
+  ContactPageFormSchema,
 } from '@/features/custom-components';
 import { ProductPage } from '@/features/custom-components/components/Products/ProductPage';
 import { ProductsListByCategory } from '@/features/custom-components/components/Products/ProductsListByCategory';
@@ -27,13 +30,16 @@ import {
   getProductsByCategory,
   getProducts,
   getProductBySlug,
-  getCategoryBySlug, getShops, getPreOwnedProducts,
+  getCategoryBySlug,
+  getShops,
+  getPreOwnedProducts,
+  getNewProducts,
+  getFeaturedProducts,
 } from '@/utils/data';
 import { cookies } from 'next/headers';
-import {
-  InstallationsGrid,
-} from '@/features/custom-components/components/Other/InstallationsGrid';
+import { InstallationsGrid } from '@/features/custom-components/components/Other/InstallationsGrid';
 import { getInstallations } from '@/utils/data/installations';
+import { ProductGrid } from '@/features/custom-components/components/Products/ProductGrid';
 
 export const componentsMapping: {
   [K in ComponentsEnum]: ComponentMappingData;
@@ -58,8 +64,7 @@ export const componentsMapping: {
     getConfig: () => ({
       schema: FeaturedProductsSchema,
       asyncData: {
-        [AsyncDataEnum.GET_CATEGORIES]: true,
-        [AsyncDataEnum.GET_PRODUCTS]: true,
+        [AsyncDataEnum.GET_FEATURED_PRODUCTS]: true,
       },
     }),
   },
@@ -119,7 +124,7 @@ export const componentsMapping: {
       schema: null,
       asyncData: {
         [AsyncDataEnum.GET_INSTALLATIONS]: true,
-      }
+      },
     }),
   },
   [ComponentsEnum.SHOPS_INFO]: {
@@ -127,11 +132,11 @@ export const componentsMapping: {
     getConfig: () => ({
       schema: null,
       asyncData: {
-        [AsyncDataEnum.GET_SHOPS]: true
-      }
-    })
+        [AsyncDataEnum.GET_SHOPS]: true,
+      },
+    }),
   },
-[ComponentsEnum.CONTACT_FORM]: {
+  [ComponentsEnum.CONTACT_FORM]: {
     component: ContactPageForm,
     getConfig: () => ({
       schema: ContactPageFormSchema,
@@ -139,15 +144,13 @@ export const componentsMapping: {
   },
 };
 
-
-
 export enum PropsNameEnum {
   CATEGORIES = 'categories',
   PRODUCTS = 'products',
   CATEGORY = 'category',
   PRODUCT = 'product',
   INSTALLATIONS = 'installations',
-  SHOPS = 'shops'
+  SHOPS = 'shops',
 }
 
 export type AsyncDataProps<T = any> = {
@@ -186,10 +189,18 @@ export const asyncDataMapping: {
   },
   [AsyncDataEnum.GET_SHOPS]: {
     function: getShops,
-    propsName: PropsNameEnum.SHOPS
+    propsName: PropsNameEnum.SHOPS,
   },
   [AsyncDataEnum.GET_PREOWNED_PRODUCTS]: {
     function: getPreOwnedProducts,
     propsName: PropsNameEnum.PRODUCTS,
-  }
+  },
+  [AsyncDataEnum.GET_NEW_PRODUCTS]: {
+    function: getNewProducts,
+    propsName: PropsNameEnum.PRODUCTS,
+  },
+  [AsyncDataEnum.GET_FEATURED_PRODUCTS]: {
+    function: getFeaturedProducts,
+    propsName: PropsNameEnum.PRODUCTS,
+  },
 };
