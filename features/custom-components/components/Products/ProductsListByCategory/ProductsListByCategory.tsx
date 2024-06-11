@@ -18,7 +18,6 @@ export const ProductsListByCategory = ({
 
   return (
     <FeaturedProducts
-      categories={[category]}
       products={products}
       content={{
         title: category.name,

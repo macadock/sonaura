@@ -39,7 +39,6 @@ import {
 import { cookies } from 'next/headers';
 import { InstallationsGrid } from '@/features/custom-components/components/Other/InstallationsGrid';
 import { getInstallations } from '@/utils/data/installations';
-import { ProductGrid } from '@/features/custom-components/components/Products/ProductGrid';
 
 export const componentsMapping: {
   [K in ComponentsEnum]: ComponentMappingData;

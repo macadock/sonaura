@@ -12,7 +12,9 @@ export const getProducts = async ({
   cookieStore: ReturnType<typeof cookies>;
 }) => {
   const supabase = createClient(cookieStore);
-  const { data } = await supabase.from('products').select('*');
+  const { data } = await supabase
+    .from('products')
+    .select('*, categories(slug)');
   return data || [];
 };
 

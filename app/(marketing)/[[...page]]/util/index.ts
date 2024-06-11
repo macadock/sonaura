@@ -1,5 +1,5 @@
 import isEmpty from 'lodash/isEmpty';
-import { Category, Product } from '@/utils/data';
+import { Category, getProducts, Product } from '@/utils/data';
 
 export enum SpecialPage {
   PRODUCT = '[product]',
@@ -8,7 +8,7 @@ export enum SpecialPage {
 
 export type getPageUrlProps = {
   params: { page: string[] };
-  products: Array<Product>;
+  products: Awaited<ReturnType<typeof getProducts>>;
   categories: Array<Category>;
 };
 
