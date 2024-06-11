@@ -13,7 +13,7 @@ export enum ComponentsEnum {
   PRODUCT_LIST_BY_CATEGORY = 'product-list-by-category',
   PRODUCT_PAGE = 'product-page',
   INSTALLATIONS_GRID = 'installations-grid',
-  SHOPS_INFO = 'shops-info'
+  SHOPS_INFO = 'shops-info',
 }
 
 export type ComponentMappingData = {
@@ -41,7 +41,9 @@ export enum AsyncDataEnum {
   GET_PRODUCT_BY_SLUG = 'getProductBySlug',
   GET_INSTALLATIONS = 'getInstallations',
   GET_SHOPS = 'getShops',
-  GET_PREOWNED_PRODUCTS = 'getPreOwnedProducts'
+  GET_PREOWNED_PRODUCTS = 'getPreOwnedProducts',
+  GET_NEW_PRODUCTS = 'getNewProducts',
+  GET_FEATURED_PRODUCTS = 'getFeaturedProducts',
 }
 
 export type AsyncData = {
