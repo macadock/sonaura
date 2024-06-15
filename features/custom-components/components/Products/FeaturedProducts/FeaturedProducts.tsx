@@ -4,7 +4,7 @@ import zod from 'zod';
 import { Product } from '@/utils/data';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
-import { getImageUrl } from '@/utils/image/get-product-main-image';
+import { getImageUrl } from '@/utils/image/get-image-url';
 import Image from 'next/image';
 import { getFormattedPrice } from '@/utils/price';
 

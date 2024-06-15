@@ -4,7 +4,7 @@ import { PropsNameEnum } from '@/features/page-editor';
 import Link from 'next/link';
 import zod from 'zod';
 import { Category } from '@/utils/data';
-import { getImageUrl } from '@/utils/image/get-product-main-image';
+import { getImageUrl } from '@/utils/image/get-image-url';
 
 export type ListCategoriesProps = {
   content: zod.infer<typeof ListCategoriesSchema>;

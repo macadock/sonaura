@@ -20,7 +20,7 @@ import supabase from '@/lib/supabase';
 import { VariantImage, Variant } from '@/types';
 import Chip from '@mui/material/Chip';
 import Image from 'next/legacy/image';
-import { getImageUrl } from '@/utils/image/get-product-main-image';
+import { getImageUrl } from '@/utils/image/get-image-url';
 
 interface Props {
   product: Product | null;
