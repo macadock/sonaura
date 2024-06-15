@@ -9,7 +9,7 @@ import CardMedia from '@mui/material/CardMedia';
 
 import Container from '@/components/system/Container';
 import { useTranslation } from 'next-i18next';
-import Price from '@/utils/Price';
+import OldPriceComponent from '@/utils/OldPriceComponent';
 import { Product } from '@/lib/supabase/products';
 import { useRouter } from 'next/router';
 import supabase from '@/lib/supabase';
@@ -128,7 +128,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                 >
                   {product.price ? (
                     <Typography fontWeight={700}>
-                      <Price price={product.price} />
+                      <OldPriceComponent price={product.price} />
                     </Typography>
                   ) : (
                     false
@@ -137,7 +137,7 @@ const ProductGrid: React.FC<Props> = ({ products }) => {
                   {product.fromPrice ? (
                     <Typography fontWeight={700}>
                       {t('fromPrice')}
-                      <Price price={product.fromPrice} />
+                      <OldPriceComponent price={product.fromPrice} />
                     </Typography>
                   ) : (
                     false

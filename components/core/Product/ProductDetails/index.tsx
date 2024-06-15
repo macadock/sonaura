@@ -12,7 +12,7 @@ import ShoppingCartTwoTone from '@mui/icons-material/ShoppingCartTwoTone';
 import { useTranslation } from 'next-i18next';
 import toast from 'react-hot-toast';
 import Grid from '@mui/material/Grid';
-import Price from '@/utils/Price';
+import OldPriceComponent from '@/utils/OldPriceComponent';
 
 import { Product } from '@/lib/supabase/products';
 import { useRouter } from 'next/router';
@@ -304,7 +304,9 @@ const ProductDetails = ({ product = null }: Props) => {
                     {priceVariant ||
                       (product?.price && (
                         <Typography variant={'h5'} fontWeight={700}>
-                          <Price price={priceVariant || product.price} />
+                          <OldPriceComponent
+                            price={priceVariant || product.price}
+                          />
                         </Typography>
                       ))}
                     {isOccasion ? (
@@ -322,7 +324,7 @@ const ProductDetails = ({ product = null }: Props) => {
                   <>
                     <Typography variant={'h5'} fontWeight={700}>
                       {t('fromPrice')}
-                      <Price price={product.fromPrice} />
+                      <OldPriceComponent price={product.fromPrice} />
                     </Typography>
                   </>
                 ) : (

@@ -28,9 +28,10 @@ const componentsCategories: {
   ],
   categories: [ComponentsEnum.CATEGORIES],
   products: [
-    ComponentsEnum.PRODUCTS,
+    ComponentsEnum.FEATURED_PRODUCTS,
     ComponentsEnum.PRODUCT_LIST_BY_CATEGORY,
     ComponentsEnum.PRODUCT_PAGE,
+    ComponentsEnum.FEATURED_PREOWNED_PRODUCTS,
   ],
   other: [
     ComponentsEnum.ADVICES,
