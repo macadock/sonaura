@@ -39,6 +39,7 @@ import {
 import { cookies } from 'next/headers';
 import { InstallationsGrid } from '@/features/custom-components/components/Other/InstallationsGrid';
 import { getInstallations } from '@/utils/data/installations';
+import { FeaturedPreOwnedProducts } from '@/features/custom-components/components/Products/FeaturedPreOwnedProducts';
 
 export const componentsMapping: {
   [K in ComponentsEnum]: ComponentMappingData;
@@ -58,12 +59,21 @@ export const componentsMapping: {
       },
     }),
   },
-  [ComponentsEnum.PRODUCTS]: {
+  [ComponentsEnum.FEATURED_PRODUCTS]: {
     component: FeaturedProducts,
     getConfig: () => ({
       schema: FeaturedProductsSchema,
       asyncData: {
         [AsyncDataEnum.GET_FEATURED_PRODUCTS]: true,
+      },
+    }),
+  },
+  [ComponentsEnum.FEATURED_PREOWNED_PRODUCTS]: {
+    component: FeaturedPreOwnedProducts,
+    getConfig: () => ({
+      schema: FeaturedProductsSchema,
+      asyncData: {
+        [AsyncDataEnum.GET_PREOWNED_PRODUCTS]: true,
       },
     }),
   },
@@ -146,6 +156,7 @@ export const componentsMapping: {
 export enum PropsNameEnum {
   CATEGORIES = 'categories',
   PRODUCTS = 'products',
+  PREOWNED_PRODUCTS = 'preOwnedProducts',
   CATEGORY = 'category',
   PRODUCT = 'product',
   INSTALLATIONS = 'installations',
@@ -192,7 +203,7 @@ export const asyncDataMapping: {
   },
   [AsyncDataEnum.GET_PREOWNED_PRODUCTS]: {
     function: getPreOwnedProducts,
-    propsName: PropsNameEnum.PRODUCTS,
+    propsName: PropsNameEnum.PREOWNED_PRODUCTS,
   },
   [AsyncDataEnum.GET_NEW_PRODUCTS]: {
     function: getNewProducts,

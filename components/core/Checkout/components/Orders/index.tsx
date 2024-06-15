@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import { useCart } from 'react-use-cart';
 import { useTranslation } from 'next-i18next';
-import Price from '@/utils/Price';
+import OldPriceComponent from '@/utils/OldPriceComponent';
 import { useFormikContext } from 'formik';
 import { getProductsByIds, Product } from '@/lib/supabase/products';
 import supabase from '@/lib/supabase';
@@ -100,7 +100,7 @@ const Orders = (): JSX.Element => {
                     {product.price && (
                       <Box>
                         <Typography fontWeight={700} variant={'subtitle2'}>
-                          <Price price={product.price} />
+                          <OldPriceComponent price={product.price} />
                         </Typography>
                       </Box>
                     )}
@@ -118,13 +118,13 @@ const Orders = (): JSX.Element => {
             <Box display={'flex'} justifyContent={'space-between'}>
               <Typography color={'text.secondary'}>{t('subtotal')}</Typography>
               <Typography color={'text.secondary'} fontWeight={700}>
-                <Price price={cartTotal} />
+                <OldPriceComponent price={cartTotal} />
               </Typography>
             </Box>
             <Box display={'flex'} justifyContent={'space-between'}>
               <Typography color={'text.secondary'}>{t('vat')}</Typography>
               <Typography color={'text.secondary'} fontWeight={700}>
-                <Price price={vat} />
+                <OldPriceComponent price={vat} />
               </Typography>
             </Box>
             <Divider />
@@ -133,7 +133,7 @@ const Orders = (): JSX.Element => {
                 {t('total')}
               </Typography>
               <Typography variant={'h6'} fontWeight={700}>
-                <Price price={cartTotal} />
+                <OldPriceComponent price={cartTotal} />
               </Typography>
             </Box>
             <Button

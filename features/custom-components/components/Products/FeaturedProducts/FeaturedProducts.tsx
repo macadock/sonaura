@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { getImageUrl } from '@/utils/image/get-product-main-image';
 import Image from 'next/image';
+import { getFormattedPrice } from '@/utils/price';
 
 export type FeaturedProductsProps = {
   id?: string;
@@ -75,7 +76,12 @@ export const FeaturedProducts = ({
 
                   <h3 className="text-lg font-medium">{product.name}</h3>
 
-                  <p className="text-primary">{`${product.price} €`}</p>
+                  {product.price && (
+                    <p className="text-primary">{`${getFormattedPrice(product.price)}`}</p>
+                  )}
+                  {product.fromPrice && (
+                    <p className="text-primary">{`À partir de ${getFormattedPrice(product.fromPrice)}`}</p>
+                  )}
                 </CardContent>
               </Card>
             </Link>

@@ -8,7 +8,7 @@ import { useCart } from 'react-use-cart';
 import { useTranslation } from 'next-i18next';
 import Delete from '@mui/icons-material/Delete';
 import NextLink from 'next/link';
-import Price from '@/utils/Price';
+import OldPriceComponent from '@/utils/OldPriceComponent';
 import { getProductsByIds, Product } from '@/lib/supabase/products';
 import supabase from '@/lib/supabase';
 import { pick } from 'lodash';
@@ -121,7 +121,7 @@ const Orders = () => {
                   </Link>
                   {product.price && (
                     <Typography sx={{ fontWeight: 'bold' }}>
-                      <Price price={product.price} />
+                      <OldPriceComponent price={product.price} />
                     </Typography>
                   )}
                 </Box>

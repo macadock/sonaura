@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'next-i18next';
-import Price from '@/utils/Price';
+import OldPriceComponent from '@/utils/OldPriceComponent';
 
 interface Props {
   cartTotal: number;
@@ -36,13 +36,13 @@ const SummaryBox = ({ cartTotal }: Props) => {
         <Box display={'flex'} justifyContent={'space-between'}>
           <Typography color={'text.secondary'}>{t('subtotal')}</Typography>
           <Typography color={'text.secondary'} fontWeight={700}>
-            <Price price={cartTotal} />
+            <OldPriceComponent price={cartTotal} />
           </Typography>
         </Box>
         <Box display={'flex'} justifyContent={'space-between'}>
           <Typography color={'text.secondary'}>{t('vat')}</Typography>
           <Typography color={'text.secondary'} fontWeight={700}>
-            <Price price={vat} />
+            <OldPriceComponent price={vat} />
           </Typography>
         </Box>
         <Divider />
@@ -51,7 +51,7 @@ const SummaryBox = ({ cartTotal }: Props) => {
             {t('total')}
           </Typography>
           <Typography variant={'h6'} fontWeight={700}>
-            <Price price={cartTotal} />
+            <OldPriceComponent price={cartTotal} />
           </Typography>
         </Box>
         <Button

@@ -7,7 +7,7 @@ import Delete from '@mui/icons-material/Delete';
 
 import Image from 'next/legacy/image';
 import { useTranslation } from 'next-i18next';
-import Price from '@/utils/Price';
+import OldPriceComponent from '@/utils/OldPriceComponent';
 import { getProductsByIds, Product } from '@/lib/supabase/products';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -179,7 +179,7 @@ const CartDrawer = ({ open, onClose }: Props) => {
                         </Link>
                         {product.price && (
                           <Typography>
-                            <Price price={product.price} />
+                            <OldPriceComponent price={product.price} />
                           </Typography>
                         )}
                       </Box>

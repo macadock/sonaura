@@ -10,7 +10,7 @@ import { useTranslation } from 'next-i18next';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
-import Price from '@/utils/Price';
+import OldPriceComponent from '@/utils/OldPriceComponent';
 import Button from '@mui/material/Button';
 import Image from 'next/legacy/image';
 import { pick } from 'lodash';
@@ -87,7 +87,7 @@ const ProductItem = ({ product, index }: Props) => {
             <CardActions sx={{ justifyContent: 'space-between' }}>
               {product.price ? (
                 <Typography sx={{ fontWeight: 700 }} color={'primary'}>
-                  <Price price={product.price} />
+                  <OldPriceComponent price={product.price} />
                 </Typography>
               ) : (
                 false
@@ -95,7 +95,7 @@ const ProductItem = ({ product, index }: Props) => {
               {product.fromPrice ? (
                 <Typography sx={{ fontWeight: 700 }} color={'primary'}>
                   {t('fromPrice')}
-                  <Price price={product.fromPrice} />
+                  <OldPriceComponent price={product.fromPrice} />
                 </Typography>
               ) : (
                 false

@@ -4,7 +4,7 @@ interface Props {
   price: number;
 }
 
-const Price = ({ price }: Props) => {
+const OldPriceComponent = ({ price }: Props) => {
   const emptyNumber = !(Boolean(price) || Boolean(price));
 
   if (emptyNumber) {
@@ -22,4 +22,4 @@ const Price = ({ price }: Props) => {
   );
 };
 
-export default Price;
+export default OldPriceComponent;
