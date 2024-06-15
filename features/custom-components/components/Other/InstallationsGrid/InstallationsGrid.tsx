@@ -7,6 +7,8 @@ import { Installation } from '@/utils/data';
 import { pick } from 'lodash';
 import './installations-grid.css';
 import { createClient } from '@/lib/supabase/client';
+import { getImageUrl } from '@/utils/image/get-image-url';
+import isEmpty from 'lodash/isEmpty';
 
 export type InstallationsGridProps = {
   [PropsNameEnum.INSTALLATIONS]: Array<Installation>;
@@ -29,17 +31,16 @@ export const InstallationsGrid = ({
       className="p-8 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:max-w-7xl xl:m-auto"
     >
       {installations.map((item, index) => {
-        const { bucket, file } = pick(item, ['bucket', 'file']) as {
-          bucket: string;
-          file: string;
-        };
-        const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+        if (!item.images) {
+          return null;
+        }
+        const src = getImageUrl(item.images);
 
         return (
           <div key={item.id} className="rounded-lg shadow-lg">
             {isPreview ? (
               <img
-                src={data.publicUrl}
+                src={src}
                 width={1080}
                 height={1080}
                 alt={item.title || ''}
@@ -47,7 +48,7 @@ export const InstallationsGrid = ({
               />
             ) : (
               <Image
-                src={data.publicUrl}
+                src={src}
                 width={1080}
                 height={1080}
                 alt={item.title || ''}

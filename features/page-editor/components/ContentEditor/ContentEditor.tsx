@@ -19,6 +19,7 @@ import isEqual from 'lodash/isEqual';
 import { Save } from 'lucide-react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 export type ContentType = Array<ComponentConfig> & {
   class?: string;
@@ -34,6 +35,7 @@ export const ContentEditor = ({
   componentsList,
   pageData,
 }: ContentEditorProps) => {
+  const router = useRouter();
   const supabase = createClient();
   const [blocks, setBlocks] = useState<ContentType>(
     ((pageData.content as unknown as { blocks: ContentType })?.blocks).map(
@@ -102,10 +104,13 @@ export const ContentEditor = ({
       }),
       class: getValues('class'),
     } as Json;
-    await supabase
+    const { error } = await supabase
       .from('pages')
       .update({ content, slug: getValues('slug'), title: getValues('title') })
       .eq('id', pageData.id);
+    if (!error) {
+      router.push('/dashboard/contents');
+    }
   };
 
   const handleUpdateOrder = (id: string, direction: 'up' | 'down') => {
@@ -133,7 +138,7 @@ export const ContentEditor = ({
           handleComponentSelected={handleAddComponent}
         />
         <Button onClick={handleSave}>
-          <Save strokeWidth={'0.0625rem'} /> Enregistrer
+          <Save strokeWidth={'0.0625rem'} /> {'Enregistrer'}
         </Button>
       </div>
       <div className="flex flex-1 flex-col gap-4 overflow-y-auto">
