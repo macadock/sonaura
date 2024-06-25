@@ -70,7 +70,7 @@ export const DrawerComponentsSelector = ({
           Ajouter un composant
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="max-h-fullPageWithoutHeader">
+      <DrawerContent className="max-h-fullPageWithoutHeader w-full">
         <DrawerHeader>
           <DrawerTitle>Ajouter un nouveau composant</DrawerTitle>
           <DrawerDescription>

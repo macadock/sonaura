@@ -1,6 +1,7 @@
 import { Item } from '@/components/common/Header';
 
 import { MobileMenuItem } from '@/components/common/Header/MobileMenu/MobileMenuItem';
+import { Cart } from '@/components/common/Header/Cart';
 import './mobile-menu.css';
 
 type MobileMenuProps = {
@@ -11,7 +12,8 @@ const MENU_ID = 'mobile-menu-toggle';
 
 export const MobileMenu = ({ items }: MobileMenuProps) => {
   return (
-    <>
+    <div className={'flex gap-4 items-center lg:hidden'}>
+      <Cart />
       <label role="button" htmlFor={MENU_ID} className="px-1 py-2 lg:hidden">
         Menu
       </label>
@@ -24,6 +26,6 @@ export const MobileMenu = ({ items }: MobileMenuProps) => {
           ))}
         </nav>
       </div>
-    </>
+    </div>
   );
 };
