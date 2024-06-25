@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useCallback, useEffect, useState } from 'react';
-import Drawer from '@mui/material/Drawer';
+import MuiDrawer from '@mui/material/Drawer';
 
 import { useCart } from 'react-use-cart';
 import Close from '@mui/icons-material/Close';
@@ -19,12 +21,12 @@ import supabase from '@/lib/supabase';
 import isEmptyLodash from 'lodash/isEmpty';
 import { pick } from 'lodash';
 
-interface Props {
-  onClose: () => void;
+interface CartDrawerProps {
   open: boolean;
+  onClose: () => void;
 }
 
-const CartDrawer = ({ open, onClose }: Props) => {
+const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
   const { isEmpty, items, removeItem, totalItems } = useCart();
@@ -72,7 +74,7 @@ const CartDrawer = ({ open, onClose }: Props) => {
   };
 
   return (
-    <Drawer
+    <MuiDrawer
       anchor="right"
       onClose={onClose}
       open={open}
@@ -237,7 +239,7 @@ const CartDrawer = ({ open, onClose }: Props) => {
           </Button>
         </Stack>
       </Box>
-    </Drawer>
+    </MuiDrawer>
   );
 };
 

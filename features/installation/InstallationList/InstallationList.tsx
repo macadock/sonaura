@@ -22,9 +22,11 @@ export const InstallationList = async () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <Link className="p-4" href={'/dashboard/installations/add'}>
-        <Button>Ajouter</Button>
-      </Link>
+      <div className={'p-4'}>
+        <Link href={'/dashboard/installations/add'}>
+          <Button>Ajouter</Button>
+        </Link>
+      </div>
 
       <Table>
         <TableHeader>

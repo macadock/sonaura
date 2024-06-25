@@ -14,9 +14,11 @@ const ContentSettingsPage = async () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <Link className="p-4" href={'/dashboard/contents/add'}>
-        <Button>Créer une page</Button>
-      </Link>
+      <div className={'p-4'}>
+        <Link href={'/dashboard/contents/add'}>
+          <Button>Créer une page</Button>
+        </Link>
+      </div>
       <PagesTable pages={data} />
     </div>
   );

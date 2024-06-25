@@ -1,65 +1,11 @@
-import { Item } from '@/components/common/Header';
-import { DesktopMenu } from '@/components/common/Header/DesktopMenu';
-import { LogoutButton } from '@/components/common/LogoutButton';
+import { PrivateProviders } from '@/components/system/Providers';
 
 import { Roles, getUser, getUserRole } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
-import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
 import { PropsWithChildren } from 'react';
-
-const Items: Item[] = [
-  {
-    href: '/dashboard/contact',
-    title: 'Contact',
-    type: 'page',
-  },
-  {
-    href: '/dashboard/contents',
-    title: 'Contenus',
-    type: 'page',
-  },
-  {
-    href: '/dashboard/installations',
-    title: 'Réalisations',
-    type: 'page',
-  },
-  {
-    type: 'menu',
-    title: 'Produits',
-    href: '/dashboard/products',
-    subMenu: [
-      {
-        href: '/dashboard/products/list',
-        title: 'Neufs',
-        type: 'page',
-      },
-      {
-        href: '/dashboard/products/pre-owned',
-        title: 'Occasions',
-        type: 'page',
-      },
-    ],
-  },
-  {
-    type: 'menu',
-    title: 'Paramètres',
-    href: '/dashboard/settings',
-    subMenu: [
-      {
-        href: '/dashboard/settings/categories',
-        title: 'Catégories',
-        type: 'page',
-      },
-      {
-        href: '/dashboard/settings/shops',
-        title: 'Magasins',
-        type: 'page',
-      },
-    ],
-  },
-];
+import { DashboardHeader } from '@/components/dashboard';
 
 const allowedRoles: Roles[] = ['ADMIN', 'EDITOR'];
 
@@ -78,31 +24,15 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   }
 
   return (
-    <>
-      <header className="w-full flex items-center justify-between p-4 md:px-8 border-b sticky top-0 bg-background z-10 h-[var(--headerHeight)]">
-        <div className="flex-grow flex gap-2 justify-between items-center max-w-7xl m-auto">
-          <div className="w-52 flex flex-col gap-2">
-            <a href={'/dashboard'}>
-              <Image
-                src="/assets/logos/logo.svg"
-                alt="Sonaura"
-                loading={'eager'}
-                width="180"
-                height="22"
-                className="dark:invert"
-              />
-            </a>
-            <a className="text-xs" href="/" target="_blank">
-              Voir le site
-            </a>
-          </div>
-          <div className="flex items-center gap-2">
-            <DesktopMenu items={Items} prefix="dashboard/" />
-            <LogoutButton />
-          </div>
+    <PrivateProviders>
+      <div className="flex min-h-screen w-full flex-col bg-muted/40">
+        <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+          <DashboardHeader />
+          <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+            {children}
+          </main>
         </div>
-      </header>
-      <main>{children}</main>
-    </>
+      </div>
+    </PrivateProviders>
   );
 }
