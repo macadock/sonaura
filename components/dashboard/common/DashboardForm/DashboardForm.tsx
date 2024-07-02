@@ -113,7 +113,7 @@ export const DashboardForm = ({
                   return (
                     <div className="grid gap-2">
                       {field.value ? (
-                        <Image
+                        <img
                           alt={imagesSettings.alt}
                           className="aspect-square w-full rounded-md object-cover"
                           height="300"
@@ -121,7 +121,7 @@ export const DashboardForm = ({
                           width="300"
                         />
                       ) : (
-                        <Image
+                        <img
                           alt={imagesSettings.alt}
                           className="aspect-square w-full rounded-md object-cover"
                           height="300"
