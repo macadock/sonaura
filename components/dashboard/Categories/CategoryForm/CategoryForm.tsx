@@ -71,7 +71,11 @@ export const CategoryForm = ({ category }: CategoryFormProps) => {
         onImageUploaded={(image) => {
           form.setValue('icon', image);
         }}
-        bucket={'categories'}
+        imagesSettings={{
+          bucket: 'categories',
+          name: 'icon',
+          alt: 'Icone de la catégorie',
+        }}
       >
         <Controller
           control={form.control}
