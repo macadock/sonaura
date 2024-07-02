@@ -2,21 +2,21 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 
-import Container from 'components/system/Container';
+import Container from '@/components/system/Container';
 import { useTranslation } from 'next-i18next';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import { useRouter } from 'next/router';
 import { useSession } from '@supabase/auth-helpers-react';
-import Login from 'components/dashboard/Login';
-import supabase from 'lib/supabase';
+import Login from '@/components/dashboard/Login';
+import supabase from '@/lib/supabase';
 
 interface Props {
   children: React.ReactNode;
   colorInvert?: boolean;
 }
 
-const DashboardMain: React.FC<Props> = ({ children }) => {
+const DashboardMain = ({ children }: Props) => {
   const { t } = useTranslation(['common', 'dashboard']);
   const router = useRouter();
   const session = useSession();

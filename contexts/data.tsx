@@ -1,7 +1,7 @@
-import { CategoryType, getCategories } from 'lib/supabase/categories';
-import { getShops, Shop } from 'lib/supabase/shops';
+import { CategoryType, getCategories } from '@/lib/supabase/categories';
+import { getShops, Shop } from '@/lib/supabase/shops';
 import React, { PropsWithChildren, useEffect } from 'react';
-import { NavLink } from 'types';
+import { NavLink } from '@/types';
 
 export interface DataContextValue {
   categories: CategoryType[];
@@ -37,12 +37,12 @@ export const DataProvider = (props: PropsWithChildren) => {
   const fetch = async () => {
     const { data: category } = await getCategories();
     if (category) {
-      setCategories(category);
+      setCategories(category as unknown as CategoryType[]);
     }
 
     const { data: shop } = await getShops();
     if (shop) {
-      setShops(shop);
+      setShops(shop as unknown as Shop[]);
     }
   };
 

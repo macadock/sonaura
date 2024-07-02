@@ -6,11 +6,11 @@ import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 
-import Container from 'components/system/Container';
+import Container from '@/components/system/Container';
 
-import Topbar from 'components/system/Topbar';
-import Sidebar from 'components/system/Sidebar';
-import Footer from 'components/system/Footer';
+import Topbar from '@/components/system/Topbar';
+import Sidebar from '@/components/system/Sidebar';
+import Footer from '@/components/system/Footer';
 import { Typography } from '@mui/material';
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
   colorInvert?: boolean;
 }
 
-const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
+const Main = ({ children, colorInvert = false }: Props) => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
@@ -43,7 +43,7 @@ const Main: React.FC<Props> = ({ children, colorInvert = false }) => {
 
   const today = new Date();
   const endDate = null;
-  const displayClosedMessage = endDate ? today <= endDate : true;
+  const displayClosedMessage = endDate ? today.getTime() <= endDate : true;
 
   return (
     <Box>

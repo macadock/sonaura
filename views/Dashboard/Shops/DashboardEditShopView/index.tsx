@@ -13,12 +13,10 @@ import {
   Shop,
   updateShop,
   UpdateShopInput,
-} from 'lib/supabase/shops';
-import ShopForm, {
-  InsertOrUpdateShop,
-} from 'components/dashboard/Shops/ShopsForm';
+} from '@/lib/supabase/shops';
+import ShopForm from '@/components/dashboard/Shops/ShopsForm';
 
-const DashboardEditShopView: React.FC = () => {
+const DashboardEditShopView = () => {
   const router = useRouter();
   const shopId = `${router.query['id']}`;
   const { t } = useTranslation('dashboard');
@@ -28,7 +26,7 @@ const DashboardEditShopView: React.FC = () => {
   const fetchShop = useCallback(async () => {
     const { data } = await getShopById(shopId);
     if (data) {
-      setShop(data);
+      setShop(data as unknown as Shop);
     }
   }, [shopId]);
 
@@ -58,7 +56,7 @@ const DashboardEditShopView: React.FC = () => {
     router.push('/dashboard/shops');
   };
 
-  const onSubmit = (values: InsertOrUpdateShop) => {
+  const onSubmit = (values: UpdateShopInput) => {
     const {
       id,
       city,

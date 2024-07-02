@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next';
 import { useCart } from 'react-use-cart';
-import Container from 'components/system/Container';
+import Container from '@/components/system/Container';
 import Orders from './components/Orders';
 import SummaryBox from './components/SummaryBox';
 import Box from '@mui/material/Box';
@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 
-const CartPage: React.FC = () => {
+const CartPage = () => {
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
 
   const { totalItems, isEmpty, cartTotal } = useCart();

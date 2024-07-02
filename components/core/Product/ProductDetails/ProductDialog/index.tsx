@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Product } from 'lib/supabase/products';
+import { Product } from '@/lib/supabase/products';
 import ProductForm from '../ProductForm';
 
 interface Props {

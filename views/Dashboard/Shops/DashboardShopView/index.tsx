@@ -1,12 +1,12 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import ShopsTable from 'components/dashboard/Shops/ShopsTable';
+import ShopsTable from '@/components/dashboard/Shops/ShopsTable';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import Button from '@mui/material/Button';
 
-const DashboardShopView: React.FC = () => {
+const DashboardShopView = () => {
   const router = useRouter();
   const { t } = useTranslation('dashboard');
 

@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useCallback, useEffect, useState } from 'react';
-import Drawer from '@mui/material/Drawer';
+import MuiDrawer from '@mui/material/Drawer';
 
 import { useCart } from 'react-use-cart';
 import Close from '@mui/icons-material/Close';
@@ -7,22 +9,24 @@ import Delete from '@mui/icons-material/Delete';
 
 import Image from 'next/legacy/image';
 import { useTranslation } from 'next-i18next';
-import Price from 'utils/Price';
-import { getProductsByIds, Product } from 'lib/supabase/products';
+import OldPriceComponent from '@/utils/OldPriceComponent';
+import { getProductsByIds, Product } from '@/lib/supabase/products';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import MuiLink from '@mui/material/Link';
-import supabase from 'lib/supabase';
+import supabase from '@/lib/supabase';
+import isEmptyLodash from 'lodash/isEmpty';
+import { pick } from 'lodash';
 
-interface Props {
-  onClose: () => void;
+interface CartDrawerProps {
   open: boolean;
+  onClose: () => void;
 }
 
-const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
+const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const { t } = useTranslation('common', { keyPrefix: 'cart' });
   const { isEmpty, items, removeItem, totalItems } = useCart();
@@ -34,13 +38,15 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
 
     const { data } = await getProductsByIds(ids);
 
-    if (!data) {
+    if (isEmptyLodash(data)) {
       setProducts([]);
       return;
     }
 
     const products = items.map((item) => {
-      const product = data.find((product) => product.id === item.id);
+      const product = (data as unknown as Product[])?.find(
+        (product) => product.id === item.id,
+      );
 
       return {
         ...item,
@@ -60,15 +66,15 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
   };
 
   const getProductImage = (image: Product['mainImage']): string => {
-    const bucket = image['bucket'];
-    const file = image['file'];
+    const bucket = pick(image, 'bucket');
+    const file = pick(image, 'file');
 
-    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+    const { data } = supabase.storage.from(`${bucket}`).getPublicUrl(`${file}`);
     return data.publicUrl;
   };
 
   return (
-    <Drawer
+    <MuiDrawer
       anchor="right"
       onClose={onClose}
       open={open}
@@ -173,9 +179,11 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
                             {product.name}
                           </Typography>
                         </Link>
-                        <Typography>
-                          <Price price={product.price} />
-                        </Typography>
+                        {product.price && (
+                          <Typography>
+                            <OldPriceComponent price={product.price} />
+                          </Typography>
+                        )}
                       </Box>
                     </Box>
                   </Box>
@@ -231,7 +239,7 @@ const CartDrawer: React.FC<Props> = ({ open, onClose }) => {
           </Button>
         </Stack>
       </Box>
-    </Drawer>
+    </MuiDrawer>
   );
 };
 

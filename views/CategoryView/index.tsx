@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import ProductGrid from 'components/core/Category';
-import { CategoryType } from 'lib/supabase/categories';
-import { Product } from 'lib/supabase/products';
+import ProductGrid from '@/components/core/Category';
+import { CategoryType } from '@/lib/supabase/categories';
+import { Product } from '@/lib/supabase/products';
 import { useTranslation } from 'next-i18next';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   products: Product[];
 }
 
-const CategoryView: React.FC<Props> = ({ category, products }) => {
+const CategoryView = ({ category, products }: Props) => {
   const isOccasion = category.slug === 'occasion';
 
   const { t } = useTranslation('common', { keyPrefix: 'preOwned' });

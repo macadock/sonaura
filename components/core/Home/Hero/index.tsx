@@ -5,9 +5,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'next-i18next';
-import supabase from 'lib/supabase';
+import supabase from '@/lib/supabase';
 
-const Hero: React.FC = () => {
+const Hero = () => {
   const { t } = useTranslation('homepage', { keyPrefix: 'hero' });
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {

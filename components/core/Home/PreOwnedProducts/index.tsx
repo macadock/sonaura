@@ -3,11 +3,13 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useTranslation } from 'next-i18next';
-import { getPreOwnedProducts, Product } from 'lib/supabase/products';
-import ProductItem from 'components/core/Home/ProductItem';
+import { getPreOwnedProducts, Product } from '@/lib/supabase/products';
+import ProductItem from '@/components/core/Home/ProductItem';
 
-const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
+const PreOwnedProducts = ({
   productNumberMax = 3,
+}: {
+  productNumberMax?: number;
 }) => {
   const { t } = useTranslation('homepage', { keyPrefix: 'preOwned' });
   const [products, setProducts] = useState<Product[]>([]);
@@ -15,7 +17,7 @@ const PreOwnedProducts: React.FC<{ productNumberMax?: number }> = ({
   const fetchProducts = async () => {
     const { data } = await getPreOwnedProducts();
     if (data) {
-      setProducts(data as Product[]);
+      setProducts(data as unknown as Product[]);
     }
   };
 

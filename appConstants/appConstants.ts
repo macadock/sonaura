@@ -1,4 +1,4 @@
-import { websiteUrl } from 'appConstants';
+import { websiteUrl } from '@/appConstants';
 
 export enum PagesUrls {
   HOMEPAGE = '/',

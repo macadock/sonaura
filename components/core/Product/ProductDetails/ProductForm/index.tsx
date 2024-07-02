@@ -1,16 +1,16 @@
 import axios from 'axios';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'next-i18next';
-import { ApiUrls, getRoutePath, PagesUrls } from 'appConstants';
-import FormikSessionStorage from 'components/system/FormikSessionStorage';
+import { ApiUrls, getRoutePath, PagesUrls } from '@/appConstants';
+import FormikSessionStorage from '@/components/system/FormikSessionStorage';
 import {
   productFormSchema,
   initialValues,
   productFormTypes,
 } from './productForm.validator';
-import SendEmailInput from 'SendInBlue/dto/send-customer-email.input';
+import SendEmailInput from '@/SendInBlue/dto/send-customer-email.input';
 import toast from 'react-hot-toast';
-import { Product } from 'lib/supabase/products';
+import { Product } from '@/lib/supabase/products';
 import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';

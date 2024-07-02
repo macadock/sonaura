@@ -7,11 +7,12 @@ import Card from '@mui/material/Card';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { useTheme } from '@mui/material/styles';
-import { useSiteData } from 'contexts/data';
-import supabase from 'lib/supabase';
-import { CategoryType } from 'lib/supabase/categories';
+import { useSiteData } from '@/contexts/data';
+import supabase from '@/lib/supabase';
+import { CategoryType } from '@/lib/supabase/categories';
+import { pick } from 'lodash';
 
-const Categories: React.FC = () => {
+const Categories = () => {
   const { categories } = useSiteData();
   const { t } = useTranslation('homepage', { keyPrefix: 'categories' });
 
@@ -68,14 +69,16 @@ interface Props {
   index: number;
 }
 
-const CategoryItem: React.FC<Props> = ({ category, index }) => {
+const CategoryItem = ({ category, index }: Props) => {
   const theme = useTheme();
   const { mode } = theme.palette;
 
   const getCategoryIcon = (): string => {
-    const bucket = category.icon['bucket'];
-    const file = category.icon['file'];
-    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+    const bucket = pick(category.icon, 'bucket');
+    const file = pick(category.icon, 'file');
+    const { data } = supabase.storage
+      .from(bucket as unknown as string)
+      .getPublicUrl(file as unknown as string);
     return data.publicUrl;
   };
 

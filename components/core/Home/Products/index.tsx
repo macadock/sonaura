@@ -3,19 +3,17 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useTranslation } from 'next-i18next';
-import { getProducts, Product } from 'lib/supabase/products';
-import ProductItem from 'components/core/Home/ProductItem';
+import { getProducts, Product } from '@/lib/supabase/products';
+import ProductItem from '@/components/core/Home/ProductItem';
 
-const Products: React.FC<{ productNumberMax?: number }> = ({
-  productNumberMax = 3,
-}) => {
+const Products = ({ productNumberMax = 3 }: { productNumberMax?: number }) => {
   const { t } = useTranslation('homepage', { keyPrefix: 'products' });
   const [products, setProducts] = useState<Product[]>([]);
 
   const fetchProducts = async () => {
     const { data } = await getProducts();
     if (data) {
-      setProducts(data as Product[]);
+      setProducts(data as unknown as Product[]);
     }
   };
 
@@ -65,7 +63,9 @@ const Products: React.FC<{ productNumberMax?: number }> = ({
                 <React.Fragment key={product.id}>
                   {i < productNumberMax ? (
                     <ProductItem product={product} index={i} />
-                  ) : false}
+                  ) : (
+                    false
+                  )}
                 </React.Fragment>
               ))
           : null}

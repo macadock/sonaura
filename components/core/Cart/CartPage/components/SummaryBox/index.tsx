@@ -5,13 +5,13 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'next-i18next';
-import Price from 'utils/Price';
+import OldPriceComponent from '@/utils/OldPriceComponent';
 
 interface Props {
   cartTotal: number;
 }
 
-const SummaryBox: React.FC<Props> = ({ cartTotal }) => {
+const SummaryBox = ({ cartTotal }: Props) => {
   const { t } = useTranslation('checkout');
 
   const vat = cartTotal * 0.2;
@@ -36,13 +36,13 @@ const SummaryBox: React.FC<Props> = ({ cartTotal }) => {
         <Box display={'flex'} justifyContent={'space-between'}>
           <Typography color={'text.secondary'}>{t('subtotal')}</Typography>
           <Typography color={'text.secondary'} fontWeight={700}>
-            <Price price={cartTotal} />
+            <OldPriceComponent price={cartTotal} />
           </Typography>
         </Box>
         <Box display={'flex'} justifyContent={'space-between'}>
           <Typography color={'text.secondary'}>{t('vat')}</Typography>
           <Typography color={'text.secondary'} fontWeight={700}>
-            <Price price={vat} />
+            <OldPriceComponent price={vat} />
           </Typography>
         </Box>
         <Divider />
@@ -51,7 +51,7 @@ const SummaryBox: React.FC<Props> = ({ cartTotal }) => {
             {t('total')}
           </Typography>
           <Typography variant={'h6'} fontWeight={700}>
-            <Price price={cartTotal} />
+            <OldPriceComponent price={cartTotal} />
           </Typography>
         </Box>
         <Button

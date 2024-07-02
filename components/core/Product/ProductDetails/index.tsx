@@ -12,32 +12,25 @@ import ShoppingCartTwoTone from '@mui/icons-material/ShoppingCartTwoTone';
 import { useTranslation } from 'next-i18next';
 import toast from 'react-hot-toast';
 import Grid from '@mui/material/Grid';
-import Price from 'utils/Price';
+import OldPriceComponent from '@/utils/OldPriceComponent';
 
-import { Product } from 'lib/supabase/products';
+import { Product } from '@/lib/supabase/products';
 import { useRouter } from 'next/router';
-import supabase from 'lib/supabase';
-import { VariantImage, Variant } from 'types';
+import supabase from '@/lib/supabase';
+import { VariantImage, Variant } from '@/types';
 import Chip from '@mui/material/Chip';
 import Image from 'next/legacy/image';
+import { getImageUrl } from '@/utils/image/get-image-url';
 
 interface Props {
-  product: Product;
+  product: Product | null;
 }
 
-const ProductDetails: React.FC<Props> = ({ product = null }) => {
+const ProductDetails = ({ product = null }: Props) => {
   const { t } = useTranslation('product');
   const theme = useTheme();
   const router = useRouter();
   const categorySlug = router.query.category as string;
-
-  const getProductMainImage = useCallback((): string => {
-    if (!product?.mainImage) return '';
-    const bucket = product.mainImage['bucket'];
-    const file = product.mainImage['file'];
-    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
-    return data.publicUrl;
-  }, [product.mainImage]);
 
   const getProductImage = (image: VariantImage): string => {
     const bucket = image.image['bucket'];
@@ -47,10 +40,17 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   };
 
   const [variants, variantNames] = useMemo(() => {
-    if (product.variants === null) return [[], []];
-    const variants = product.variants as Variant[];
+    if (product?.variants === null) {
+      return [[], []];
+    }
+    const variants = (product?.variants || []) as Variant[];
+
+    if (!variants) {
+      return [[], []];
+    }
+
     return [variants, variants.map((variant) => variant.name).sort()];
-  }, [product.variants]);
+  }, [product?.variants]);
 
   const [selectedVariants, setSelectedVariants] = useState<
     { name: string; value: string }[]
@@ -58,8 +58,8 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
 
   const [variantImages, setVariantImages] = useState<VariantImage[]>([]);
   const mainImage = useMemo(() => {
-    return getProductMainImage();
-  }, [getProductMainImage]);
+    return getImageUrl(product?.mainImage);
+  }, [product?.mainImage]);
   const [current, setCurrent] = useState<string>(mainImage);
 
   const [alreadyAddedToCart, setAlreadyAddedToCart] = useState<boolean>(false);
@@ -76,19 +76,19 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   useEffect(() => {
     if (noOptionSelected || isMissingOptionSelection) {
       setVariantImages([]);
-      setCurrent(getProductMainImage());
+      setCurrent(getImageUrl(product?.mainImage as string));
       setPriceVariant(undefined);
       return;
     }
 
     const keys = selectedVariants.map((variant) => variant.name);
-    const images = (product.variantsImages as VariantImage[]).filter(
+    const images = (product?.variantsImages as VariantImage[]).filter(
       (variantImage) => {
         const keep: boolean[] = [];
         keys.forEach((key) => {
           const getVariant = selectedVariants.find((s) => s.name === key);
-          const variant = variantImage.variants.find(
-            (variant) => variant.value === getVariant.value,
+          const variant = variantImage?.variants?.find(
+            (variant) => variant.value === getVariant?.value,
           );
           if (variant) {
             keep.push(true);
@@ -97,16 +97,15 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
           }
         });
         const hasFalseValues = keep.find((k) => k === false);
-        return hasFalseValues === undefined ? true : false;
+        return hasFalseValues === undefined;
       },
     );
-    setPriceVariant(parseInt(images[0].price) || undefined);
+    setPriceVariant(parseInt(images[0]?.price as string) || undefined);
     setVariantImages(images);
   }, [
-    getProductMainImage,
     isMissingOptionSelection,
     noOptionSelected,
-    product.variantsImages,
+    product?.variantsImages,
     selectedVariants,
   ]);
 
@@ -123,13 +122,21 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   const { addItem, items } = useCart();
 
   const addToCart = () => {
-    addItem({
-      id: product.id,
-      price: priceVariant || product?.price,
-      quantity: 1,
-    });
-    setAlreadyAddedToCart(true);
-    toast.success(t('addedToCart'));
+    if (!product) {
+      return;
+    }
+
+    const price = priceVariant || product?.price;
+
+    if (price) {
+      addItem({
+        id: product.id,
+        price,
+        quantity: 1,
+      });
+      setAlreadyAddedToCart(true);
+      toast.success(t('addedToCart'));
+    }
   };
 
   const openDialog = () => {
@@ -141,13 +148,16 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
   };
 
   useEffect(() => {
+    if (!product) {
+      return;
+    }
     const item = items.find((item) => item.id === product.id);
     if (item) {
       setAlreadyAddedToCart(true);
       return;
     }
     setAlreadyAddedToCart(false);
-  }, [items, product.id]);
+  }, [items, product?.id]);
 
   const handleVariantSelection = (variantName: string, value: string) => {
     setSelectedVariants((prev) => {
@@ -218,7 +228,9 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                     borderRadius: 2,
                   },
                 }}
-                onClick={() => setCurrent(getProductMainImage())}
+                onClick={() =>
+                  setCurrent(getImageUrl(product?.mainImage as string))
+                }
               >
                 <Image
                   src={mainImage}
@@ -289,9 +301,14 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
               <Box display={'flex'} alignItems={'baseline'}>
                 {priceVariant || product.price ? (
                   <>
-                    <Typography variant={'h5'} fontWeight={700}>
-                      <Price price={priceVariant || product.price} />
-                    </Typography>
+                    {priceVariant ||
+                      (product?.price && (
+                        <Typography variant={'h5'} fontWeight={700}>
+                          <OldPriceComponent
+                            price={priceVariant || product.price}
+                          />
+                        </Typography>
+                      ))}
                     {isOccasion ? (
                       <Typography variant="body2" sx={{ marginLeft: '0.5rem' }}>
                         {t('pricePreOwnedConditions')}
@@ -307,7 +324,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                   <>
                     <Typography variant={'h5'} fontWeight={700}>
                       {t('fromPrice')}
-                      <Price price={product.fromPrice} />
+                      <OldPriceComponent price={product.fromPrice} />
                     </Typography>
                   </>
                 ) : (
@@ -336,7 +353,10 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 <Stack marginTop={3} direction={'column'} spacing={2}>
                   <Button
                     onClick={addToCart}
-                    disabled={alreadyAddedToCart || product.quantity <= 0}
+                    disabled={
+                      alreadyAddedToCart ||
+                      !!(product.quantity && product.quantity <= 0)
+                    }
                     variant={'contained'}
                     color={'primary'}
                     size={'large'}
@@ -389,7 +409,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                 >
                   {variants
                     .find((v) => v.name === variantName)
-                    .values.map((value) => (
+                    ?.values.map((value) => (
                       <Chip
                         label={value}
                         key={value}
@@ -412,7 +432,7 @@ const ProductDetails: React.FC<Props> = ({ product = null }) => {
                             ? () => {
                                 handleVariantDeletion(variantName);
                               }
-                            : null
+                            : undefined
                         }
                       />
                     ))}

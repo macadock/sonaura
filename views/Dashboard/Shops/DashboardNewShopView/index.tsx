@@ -6,13 +6,15 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
-import { createShop, CreateShopInput } from 'lib/supabase/shops';
-import ShopForm, {
-  InsertOrUpdateShop,
-} from 'components/dashboard/Shops/ShopsForm';
-import { initialValues } from 'components/dashboard/Shops/ShopsForm/shops.validator';
+import {
+  createShop,
+  CreateShopInput,
+  UpdateShopInput,
+} from '@/lib/supabase/shops';
+import ShopForm from '@/components/dashboard/Shops/ShopsForm';
+import { initialValues } from '@/components/dashboard/Shops/ShopsForm/shops.validator';
 
-const DashboardNewShopView: React.FC = () => {
+const DashboardNewShopView = () => {
   const router = useRouter();
 
   const { t } = useTranslation('dashboard');
@@ -28,7 +30,7 @@ const DashboardNewShopView: React.FC = () => {
     router.push('/dashboard/shops');
   };
 
-  const onSubmit = (values: InsertOrUpdateShop) => {
+  const onSubmit = (values: CreateShopInput | UpdateShopInput) => {
     const {
       city,
       address,

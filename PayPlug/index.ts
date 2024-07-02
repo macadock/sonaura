@@ -1,5 +1,10 @@
-import { getRoutePath, PagesUrls, payplugApi, payplugKey } from 'appConstants';
-import CreatePaymentInput from 'PayPlug/dto/create-payment.input';
+import {
+  getRoutePath,
+  PagesUrls,
+  payplugApi,
+  payplugKey,
+} from '@/appConstants';
+import CreatePaymentInput from '@/PayPlug/dto/create-payment.input';
 
 export default class PayPlug {
   private static getHeaders(): Headers {
@@ -41,7 +46,7 @@ export default class PayPlug {
       address1: address,
       postcode: postalCode,
       city: city,
-      country: country.code,
+      country: country?.code,
       language: 'fr',
     };
 

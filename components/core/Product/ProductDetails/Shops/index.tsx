@@ -1,14 +1,14 @@
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { Shop, ShopHours } from 'lib/supabase/shops';
+import { Shop, ShopHours } from '@/lib/supabase/shops';
 import { useTranslation } from 'next-i18next';
 
 interface Props {
   shop: Shop;
 }
 
-const Shops: React.FC<Props> = ({ shop }) => {
+const Shops = ({ shop }: Props) => {
   const theme = useTheme();
   const { t } = useTranslation('product');
 

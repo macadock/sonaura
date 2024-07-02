@@ -6,10 +6,10 @@ import Typography from '@mui/material/Typography';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useTheme } from '@mui/material/styles';
-import Container from 'components/system/Container';
+import Container from '@/components/system/Container';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'next-i18next';
-import { ApiUrls, getRoutePath } from '../../../../appConstants';
+import { ApiUrls, getRoutePath } from '@/appConstants';
 import {
   initialValues,
   newsletterForm,
@@ -17,7 +17,7 @@ import {
 } from './newsletterForm.validator';
 import { Field, FieldProps, Formik, FormikHelpers } from 'formik';
 
-const Newsletter: React.FC = () => {
+const Newsletter = () => {
   const { t } = useTranslation('homepage', { keyPrefix: 'newsletter' });
   const theme = useTheme();
 
