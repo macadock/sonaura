@@ -18,7 +18,11 @@ export type DashboardFormProps = {
   onClickBackButton: () => void;
   onSubmit: (form: unknown) => void | Promise<void>;
   onImageUploaded: (image: ImageType) => void;
-  bucket: string;
+  imagesSettings: {
+    bucket: string;
+    name: string;
+    alt: string;
+  };
 };
 
 export const DashboardForm = ({
@@ -27,7 +31,7 @@ export const DashboardForm = ({
   onClickBackButton,
   onSubmit,
   onImageUploaded,
-  bucket,
+  imagesSettings,
 }: PropsWithChildren<DashboardFormProps>) => {
   const { control, handleSubmit } = useFormContext();
   const supabase = createClient();
@@ -37,6 +41,7 @@ export const DashboardForm = ({
         return;
       }
 
+      const { bucket } = imagesSettings;
       const fileName = crypto.randomUUID();
       const uploadFile = supabase.storage
         .from(bucket)
@@ -103,13 +108,13 @@ export const DashboardForm = ({
             <CardContent>
               <Controller
                 control={control}
-                name={'images'}
+                name={imagesSettings.name}
                 render={({ field, fieldState: { error } }) => {
                   return (
                     <div className="grid gap-2">
                       {field.value ? (
                         <Image
-                          alt="Product image"
+                          alt={imagesSettings.alt}
                           className="aspect-square w-full rounded-md object-cover"
                           height="300"
                           src={getImageUrl(field.value)}
@@ -117,7 +122,7 @@ export const DashboardForm = ({
                         />
                       ) : (
                         <Image
-                          alt="Product image"
+                          alt={imagesSettings.alt}
                           className="aspect-square w-full rounded-md object-cover"
                           height="300"
                           src="/placeholder.svg"

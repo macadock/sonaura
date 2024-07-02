@@ -68,7 +68,11 @@ export const InstallationForm = ({ installation }: InstallationFormProps) => {
         onImageUploaded={(image) => {
           form.setValue('images', image);
         }}
-        bucket={'installations'}
+        imagesSettings={{
+          bucket: 'installations',
+          name: 'images',
+          alt: "Image de l'installation",
+        }}
       >
         <Controller
           control={form.control}
