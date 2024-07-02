@@ -29,3 +29,19 @@ export const getCategoryBySlug = async ({
     .single();
   return data;
 };
+
+export const getCategoryById = async ({
+  categoryId,
+  cookieStore,
+}: {
+  categoryId: string;
+  cookieStore: ReturnType<typeof cookies>;
+}) => {
+  const supabase = createClient(cookieStore);
+  const { data } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('id', categoryId)
+    .single();
+  return data;
+};

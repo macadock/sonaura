@@ -45,7 +45,7 @@ export const Cart = () => {
                 setOpen(false);
               }}
             >
-              Découvrez nos produits d'occasion
+              {"Découvrez nos produits d'occasion"}
             </Button>
           </div>
         ) : (

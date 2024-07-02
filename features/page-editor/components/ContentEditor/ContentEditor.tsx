@@ -1,10 +1,5 @@
 'use client';
 
-import {
-  ContentPageInputs,
-  schemaPageInformation,
-  SchemaPageInformationType,
-} from '@/app/dashboard/contents/add/components/NewContentPageForm';
 import { getComponentConfig } from '@/features/page-editor/components/ComponentsSelector';
 import { DrawerComponentsSelector } from '@/features/page-editor/components/ComponentsSelector/components/DrawerComponentsSelector';
 import { ContentEditorItem } from '@/features/page-editor/components';
@@ -20,6 +15,11 @@ import { Save } from 'lucide-react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import {
+  ContentPageInputs,
+  schemaPageInformation,
+  SchemaPageInformationType,
+} from '@/app/(dashboard)/dashboard/contents/add/components/NewContentPageForm';
 
 export type ContentType = Array<ComponentConfig> & {
   class?: string;

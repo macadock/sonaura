@@ -1,8 +1,6 @@
 import { createClient } from '@/lib/supabase/client';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Database } from '@/types/supabase';
-
-const DEFAULT_PAGE_SIZE = 10;
 
 export type UseSupabaseQueryProps = {
   table: keyof Database['public']['Tables'];
@@ -10,33 +8,27 @@ export type UseSupabaseQueryProps = {
   pageSize?: number;
 };
 
-export const useSupabaseQuery = ({
+export const useSupabaseQuery = <T extends object>({
   table,
   select,
-  pageSize = DEFAULT_PAGE_SIZE,
 }: UseSupabaseQueryProps) => {
   const supabase = createClient();
 
-  const [data, setData] = useState<Array<unknown> | undefined>(undefined);
+  const [data, setData] = useState<Array<T> | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [count, setCount] = useState<number | null>(null);
 
   const fetchData = useCallback(async () => {
-    const { data, count, error } = await supabase
-      .from(table)
-      .select(select)
-      .limit(pageSize);
+    const { data, count, error } = await supabase.from(table).select(select);
     if (error) {
       setIsError(true);
     } else {
-      setData(data);
-      setCount(count);
+      setData(data as unknown as Array<T>);
     }
     setIsLoading(false);
   }, [supabase, table, select]);
 
-  useMemo(() => {
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -45,8 +37,8 @@ export const useSupabaseQuery = ({
       data,
       isError,
       isLoading,
-      count,
+      refetch: fetchData,
     }),
-    [data, isLoading, isError, count],
+    [data, isLoading, isError, fetchData],
   );
 };
