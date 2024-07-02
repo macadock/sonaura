@@ -3,17 +3,17 @@
 import { DataTableColumnHeader } from 'components/common/Dashboard';
 import { useSupabaseQuery } from '@/features/dashboard/hooks';
 import { ColumnDef } from '@tanstack/table-core';
-import { Installation } from '@/utils/data';
+import { Category, Installation } from '@/utils/data';
 import { createClient } from '@/lib/supabase/client';
 import { toast } from 'sonner';
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { DashboardDataTable } from '@/components/dashboard/common/DashboardDataTable/DashboardDataTable';
 
-export const InstallationTable = () => {
+export const CategoryTable = () => {
   const supabase = createClient();
-  const { data, isLoading, isError, refetch } = useSupabaseQuery<Installation>({
-    table: 'installations',
+  const { data, isLoading, isError, refetch } = useSupabaseQuery<Category>({
+    table: 'categories',
     select: '*',
   });
 
@@ -25,32 +25,26 @@ export const InstallationTable = () => {
         return;
       }
       const { error } = await supabase
-        .from('installations')
+        .from('categories')
         .delete()
         .eq('id', itemId);
       if (error) {
         toast.error(
-          'Erreur lors de la suppression de la réalisation. Merci de réessayer',
+          'Erreur lors de la suppression de la catégorie. Merci de réessayer',
         );
       } else {
-        toast.success('Réalisation supprimée');
+        toast.success('Catégorie supprimée');
         await refetch();
       }
     },
     [refetch, supabase],
   );
 
-  const columns: Array<ColumnDef<Installation>> = [
+  const columns: Array<ColumnDef<Category>> = [
     {
-      accessorKey: 'title',
+      accessorKey: 'name',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Titre" />
-      ),
-    },
-    {
-      accessorKey: 'description',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Description" />
+        <DataTableColumnHeader column={column} title="Nom" />
       ),
     },
     {
@@ -69,7 +63,7 @@ export const InstallationTable = () => {
       isLoading={isLoading}
       isError={isError}
       onClickEdit={(id) => {
-        router.push(`/dashboard/installations/${id}`);
+        router.push(`/dashboard/categories/${id}`);
       }}
       onClickRemove={handleDelete}
     />
