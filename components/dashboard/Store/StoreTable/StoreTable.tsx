@@ -3,16 +3,16 @@
 import { DataTableColumnHeader } from 'components/common/Dashboard';
 import { useSupabaseQuery } from '@/features/dashboard/hooks';
 import { ColumnDef } from '@tanstack/table-core';
-import { Category, Installation, Shop } from '@/utils/data';
+import { Store } from '@/utils/data';
 import { createClient } from '@/lib/supabase/client';
 import { toast } from 'sonner';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { DashboardDataTable } from '@/components/dashboard/common/DashboardDataTable/DashboardDataTable';
 
 export const StoreTable = () => {
   const supabase = createClient();
-  const { data, isLoading, isError, refetch } = useSupabaseQuery<Shop>({
+  const { data, isLoading, isError, refetch } = useSupabaseQuery<Store>({
     table: 'shops',
     select: '*',
   });
@@ -37,7 +37,7 @@ export const StoreTable = () => {
     [refetch, supabase],
   );
 
-  const columns: Array<ColumnDef<Shop>> = [
+  const columns: Array<ColumnDef<Store>> = [
     {
       accessorKey: 'city',
       header: ({ column }) => (

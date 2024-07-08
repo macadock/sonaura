@@ -31,7 +31,7 @@ import {
   getProducts,
   getProductBySlug,
   getCategoryBySlug,
-  getShops,
+  getStores,
   getPreOwnedProducts,
   getNewProducts,
   getFeaturedProducts,
@@ -198,7 +198,7 @@ export const asyncDataMapping: {
     propsName: PropsNameEnum.INSTALLATIONS,
   },
   [AsyncDataEnum.GET_SHOPS]: {
-    function: getShops,
+    function: getStores,
     propsName: PropsNameEnum.SHOPS,
   },
   [AsyncDataEnum.GET_PREOWNED_PRODUCTS]: {

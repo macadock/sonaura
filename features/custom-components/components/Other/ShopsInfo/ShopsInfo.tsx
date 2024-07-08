@@ -1,8 +1,8 @@
 import { PropsNameEnum } from '@/features/page-editor';
-import { Shop } from '@/utils/data';
+import { Store } from '@/utils/data';
 
 export type ShopsInfoProps = {
-  [PropsNameEnum.SHOPS]: Array<Shop>;
+  [PropsNameEnum.SHOPS]: Array<Store>;
   isPreview?: boolean;
 };
 
