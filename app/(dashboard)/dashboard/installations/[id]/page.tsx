@@ -2,13 +2,11 @@ import { InstallationForm } from '@/components/dashboard/Installations/Installat
 import { getInstallationById } from '@/utils/data';
 import { cookies } from 'next/headers';
 
-export type InstallationUpdatePageProps = {
+export type EditInstallationPageProps = {
   params: { id: string };
 };
 
-const EditInstallationPage = async ({
-  params,
-}: InstallationUpdatePageProps) => {
+const EditInstallationPage = async ({ params }: EditInstallationPageProps) => {
   const cookieStore = cookies();
 
   const installation = await getInstallationById({

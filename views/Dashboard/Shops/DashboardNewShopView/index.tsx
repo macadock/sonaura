@@ -11,8 +11,8 @@ import {
   CreateShopInput,
   UpdateShopInput,
 } from '@/lib/supabase/shops';
-import ShopForm from '@/components/dashboard/Shops/ShopsForm';
-import { initialValues } from '@/components/dashboard/Shops/ShopsForm/shops.validator';
+import ShopForm from '@/components/dashboard/Store/ShopsForm';
+import { initialValues } from '@/components/dashboard/Store/ShopsForm/shops.validator';
 
 const DashboardNewShopView = () => {
   const router = useRouter();

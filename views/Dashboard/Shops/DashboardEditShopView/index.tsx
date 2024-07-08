@@ -14,7 +14,7 @@ import {
   updateShop,
   UpdateShopInput,
 } from '@/lib/supabase/shops';
-import ShopForm from '@/components/dashboard/Shops/ShopsForm';
+import ShopForm from '@/components/dashboard/Store/ShopsForm';
 
 const DashboardEditShopView = () => {
   const router = useRouter();

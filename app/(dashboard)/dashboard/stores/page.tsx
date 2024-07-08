@@ -9,16 +9,16 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { CategoryTable } from '@/components/dashboard/Categories/CategoryTable/CategoryTable';
+import { StoreTable } from '@/components/dashboard/Store/StoreTable';
 
-export default function InstallationDashboard() {
+export default function StoreDashboard() {
   return (
     <Card className={'flex flex-col overflow-hidden h-full w-full'}>
       <div className={'flex gap-2 items-center justify-between'}>
         <CardHeader>
-          <CardTitle>Catégories</CardTitle>
+          <CardTitle>Magasins</CardTitle>
           <CardDescription>
-            Ajouter ou mettre à jour des catégories.
+            Ajouter ou mettre à jour des magasins.
           </CardDescription>
         </CardHeader>
         <CardHeader>
@@ -29,14 +29,14 @@ export default function InstallationDashboard() {
             <Button size="sm" className="gap-1">
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Ajouter une catégorie
+                Ajouter un magasin
               </span>
             </Button>
           </Link>
         </CardHeader>
       </div>
       <CardContent className={'flex overflow-hidden'}>
-        <CategoryTable />
+        <StoreTable />
       </CardContent>
     </Card>
   );

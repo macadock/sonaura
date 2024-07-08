@@ -11,6 +11,7 @@ import {
   Package,
   PackageCheck,
   Settings,
+  Store,
   Tags,
   User,
   Users2,
@@ -47,6 +48,11 @@ const items = {
       title: 'Catégories',
       href: '/dashboard/categories',
       icon: Tags,
+    },
+    {
+      title: 'Magasins',
+      href: '/dashboard/stores',
+      icon: Store,
     },
     {
       title: 'Contacts',
