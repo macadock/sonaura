@@ -1,10 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { toast } from 'sonner';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -21,15 +21,18 @@ export const PagesForm = ({ page }: PagesFormProps) => {
   const router = useRouter();
   const supabase = createClient();
 
+  const searchParams = useSearchParams();
+  const showAdvancedOptions = searchParams.get('advanced') === 'true';
+
   const form = useForm<PageType>({
     resolver: zodResolver(pageSchema),
     defaultValues: {
-      id: page?.id || '',
+      id: page?.id,
       title: page?.title || '',
       slug: page?.slug || '',
       content: (page?.content as PageType['content']) || {
         blocks: [],
-        class: '',
+        class: 'flex flex-col gap-8 p-4 md:p-8',
       },
     },
   });
@@ -41,6 +44,9 @@ export const PagesForm = ({ page }: PagesFormProps) => {
   const handleSave = useCallback(
     async (form: any) => {
       const payload = { ...form };
+      if (!payload.id) {
+        delete payload.id;
+      }
 
       const { error } = await supabase.from('pages').upsert([payload]);
       if (error) {
@@ -55,84 +61,99 @@ export const PagesForm = ({ page }: PagesFormProps) => {
 
   return (
     <FormProvider {...form}>
-      <DashboardForm
-        cardTitle={page?.id ? 'Mettre à jour une page' : 'Nouvelle page'}
-        onClickBackButton={handleBackButton}
-        onSubmit={handleSave}
-      >
-        <Controller
-          control={form.control}
-          name={'title'}
-          render={({ field, fieldState: { error } }) => (
-            <div className={'flex flex-col gap-2'}>
-              <Label htmlFor={field.name}>Nom de la page</Label>
-              <Input
-                id={field.name}
-                type="text"
-                className="w-full"
-                {...field}
-                error={error ? 'Nom de la page manquant' : undefined}
-              />
-            </div>
-          )}
-        />
-        <Controller
-          control={form.control}
-          name={'slug'}
-          render={({ field, fieldState: { error } }) => (
-            <div className={'flex flex-col gap-2'}>
-              <Label htmlFor={field.name}>URL de la page</Label>
-              <Input
-                id={field.name}
-                type="text"
-                className="w-full"
-                {...field}
-                error={error ? 'URL manquante' : undefined}
-              />
-            </div>
-          )}
-        />
-        <Controller
-          name={'content'}
-          control={form.control}
-          render={({ field, fieldState: { error } }) => {
-            return (
-              <div>
-                <div className={'flex flex-col gap-2'}>
-                  <Label htmlFor={field.name}>
-                    Classes Tailwind (technique)
-                  </Label>
+      <div className={'flex flex-col gap-2 w-full'}>
+        <DashboardForm
+          cardTitle={page?.id ? 'Mettre à jour une page' : 'Nouvelle page'}
+          onClickBackButton={handleBackButton}
+          onSubmit={handleSave}
+          allowCardCollapse
+        >
+          <div className={'flex gap-2 w-full mt-2'}>
+            <Controller
+              control={form.control}
+              name={'title'}
+              render={({ field, fieldState: { error } }) => (
+                <div className={'flex flex-col gap-2 w-full'}>
+                  <Label htmlFor={field.name}>Nom de la page</Label>
                   <Input
                     id={field.name}
                     type="text"
                     className="w-full"
                     {...field}
-                    onChange={(event) => {
-                      field.onChange({
-                        ...field.value,
-                        class: event.target.value,
-                      });
-                    }}
-                    value={field.value.class}
-                    error={
-                      error ? 'Erreur sur les classes Tailwind' : undefined
-                    }
+                    error={error ? 'Nom de la page manquant' : undefined}
                   />
                 </div>
-                <ContentEditor
-                  content={field.value.blocks}
-                  onChange={(blocks) => {
-                    field.onChange({
-                      ...field.value,
-                      blocks,
-                    });
-                  }}
-                />
-              </div>
+              )}
+            />
+            <Controller
+              control={form.control}
+              name={'slug'}
+              render={({ field, fieldState: { error } }) => (
+                <div className={'flex flex-col gap-2 w-full'}>
+                  <Label htmlFor={field.name}>URL de la page</Label>
+                  <Input
+                    id={field.name}
+                    type="text"
+                    className="w-full"
+                    {...field}
+                    error={error ? 'URL manquante' : undefined}
+                  />
+                </div>
+              )}
+            />
+          </div>
+          <Controller
+            name={'content'}
+            control={form.control}
+            render={({ field, fieldState: { error } }) => {
+              return (
+                <>
+                  {showAdvancedOptions && (
+                    <div className={'flex flex-col gap-2'}>
+                      <Label htmlFor={field.name}>
+                        Tailwind classes (advanced)
+                      </Label>
+                      <Input
+                        id={field.name}
+                        type="text"
+                        className="w-full"
+                        {...field}
+                        onChange={(event) => {
+                          field.onChange({
+                            ...field.value,
+                            class: event.target.value,
+                          });
+                        }}
+                        value={field.value.class}
+                        error={
+                          error ? 'Erreur sur les classes Tailwind' : undefined
+                        }
+                      />
+                    </div>
+                  )}
+                </>
+              );
+            }}
+          />
+        </DashboardForm>
+        <Controller
+          name={'content'}
+          control={form.control}
+          render={({ field }) => {
+            return (
+              <ContentEditor
+                content={field.value.blocks}
+                onChange={(blocks) => {
+                  field.onChange({
+                    ...field.value,
+                    blocks,
+                  });
+                }}
+              />
             );
           }}
         />
-      </DashboardForm>
+      </div>
     </FormProvider>
   );
 };

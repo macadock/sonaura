@@ -3,8 +3,15 @@ import { DrawerComponentsSelector } from '@/features/page-editor/components/Comp
 import { ContentEditorItem } from '@/features/page-editor/components';
 import { ComponentConfig, ComponentsEnum } from '@/features/page-editor/types';
 import isEqual from 'lodash/isEqual';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { PageType } from '@/app/(dashboard)/dashboard/pages/schema';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
+import { ChevronsUpDown } from 'lucide-react';
 
 type ContentType = PageType['content']['blocks'];
 
@@ -72,30 +79,51 @@ export const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 max-h-fullPageWithoutHeader overflow-hidden">
-      <div className="flex items-center justify-end sticky top-0 border-b p-4">
-        <DrawerComponentsSelector
-          handleComponentSelected={handleAddComponent}
-        />
-      </div>
-      <div className="flex flex-1 flex-col gap-4 overflow-y-auto">
-        {blocks.map((block, index, array) => {
-          const isLast = index === array.length - 1;
-          const isFirst = index === 0;
+    <Collapsible defaultOpen={true}>
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <div className={'flex justify-between'}>
+              <div className={'flex items-center gap-2'}>
+                <CollapsibleTrigger>
+                  <ChevronsUpDown />
+                </CollapsibleTrigger>
+                {'Composants de la page'}
+              </div>
+              <DrawerComponentsSelector
+                handleComponentSelected={handleAddComponent}
+              />
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CollapsibleContent>
+          <CardContent>
+            <div className="flex flex-1 flex-col gap-4 overflow-y-auto">
+              {blocks.map((block, index, array) => {
+                const isLast = index === array.length - 1;
+                const isFirst = index === 0;
 
-          return (
-            <ContentEditorItem
-              key={block.id}
-              {...block}
-              handleDelete={handleDeleteComponent}
-              handleUpdateProps={handleUpdateProps}
-              handleUpdateOrder={handleUpdateOrder}
-              isLast={isLast}
-              isFirst={isFirst}
-            />
-          );
-        })}
-      </div>
-    </div>
+                return (
+                  <ContentEditorItem
+                    key={block.id}
+                    {...block}
+                    handleDelete={handleDeleteComponent}
+                    handleUpdateProps={handleUpdateProps}
+                    handleUpdateOrder={handleUpdateOrder}
+                    isLast={isLast}
+                    isFirst={isFirst}
+                  />
+                );
+              })}
+            </div>
+            {blocks.length === 0 && (
+              <div className="flex items-center justify-center h-40">
+                Aucun composant ajouté
+              </div>
+            )}
+          </CardContent>
+        </CollapsibleContent>
+      </Card>
+    </Collapsible>
   );
 };

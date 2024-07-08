@@ -1,7 +1,7 @@
 import zod from 'zod';
 
 export const pageSchema = zod.object({
-  id: zod.string().uuid().optional(),
+  id: zod.string().optional(),
   title: zod.string(),
   slug: zod.string(),
   content: zod.object({
@@ -9,7 +9,7 @@ export const pageSchema = zod.object({
       zod.object({
         id: zod.string(),
         name: zod.string(),
-        content: zod.object({}),
+        content: zod.unknown(),
         order: zod.number().optional(),
       }),
     ),

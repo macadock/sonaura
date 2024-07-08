@@ -17,6 +17,11 @@ import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
 import { Inputs } from '@/features/page-editor/components/ContentEditorItem/components';
 import { ComponentConfig, ComponentsEnum } from '@/features/page-editor/types';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 
 export type ContentEditorItem = {
   name: ComponentsEnum;
@@ -94,16 +99,15 @@ export const ContentEditorItem = ({
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="overflow-hidden">
-        <DisplayedComponent content={{ ...watch() }} isPreview />
-      </CardContent>
-      <CardFooter>
+      <CardContent>
         <div className="flex flex-col gap-2">
           {inputsArray.map((input) => {
             return <Inputs key={input.name} input={input} control={control} />;
           })}
         </div>
-      </CardFooter>
+        <DisplayedComponent content={{ ...watch() }} isPreview />
+      </CardContent>
+      <CardFooter></CardFooter>
     </Card>
   );
 };

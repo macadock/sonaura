@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, Upload } from 'lucide-react';
+import { ChevronLeft, ChevronsUpDown, Upload } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Controller, useFormContext } from 'react-hook-form';
 import { getImageUrl } from '@/utils/image/get-image-url';
@@ -7,6 +7,11 @@ import React, { PropsWithChildren, useCallback } from 'react';
 import { toast } from 'sonner';
 import { createClient } from '@/lib/supabase/client';
 import { clsx } from 'clsx';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 
 type ImageType = {
   file: string;
@@ -23,6 +28,7 @@ export type DashboardFormProps = {
     name: string;
     alt: string;
   };
+  allowCardCollapse?: boolean;
 };
 
 export const DashboardForm = ({
@@ -32,6 +38,7 @@ export const DashboardForm = ({
   onSubmit,
   onImageUploaded,
   imagesSettings,
+  allowCardCollapse = false,
 }: PropsWithChildren<DashboardFormProps>) => {
   const {
     control,
@@ -85,7 +92,7 @@ export const DashboardForm = ({
           >
             Annuler
           </Button>
-          <Button onClick={handleSubmit(onSubmit)} size="sm">
+          <Button onClick={handleSubmit(onSubmit, console.error)} size="sm">
             Enregistrer
           </Button>
         </div>
@@ -96,18 +103,32 @@ export const DashboardForm = ({
           'md:grid-cols-[1fr_250px] lg:grid-cols-3': imagesSettings,
         })}
       >
-        <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+        <Collapsible
+          defaultOpen={true}
+          className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8"
+        >
           <Card>
             <CardHeader>
-              <CardTitle>{cardTitle}</CardTitle>
+              <CardTitle>
+                <div className={'flex items-center gap-2'}>
+                  {allowCardCollapse && (
+                    <CollapsibleTrigger>
+                      <ChevronsUpDown />
+                    </CollapsibleTrigger>
+                  )}
+                  {cardTitle}
+                </div>
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid gap-6">
-                <div className="grid gap-3">{children}</div>
-              </div>
-            </CardContent>
+            <CollapsibleContent>
+              <CardContent>
+                <div className="grid gap-6">
+                  <div className="grid gap-3">{children}</div>
+                </div>
+              </CardContent>
+            </CollapsibleContent>
           </Card>
-        </div>
+        </Collapsible>
         {imagesSettings && (
           <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
             <Card className="overflow-hidden">
