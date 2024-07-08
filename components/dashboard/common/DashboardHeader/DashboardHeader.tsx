@@ -60,8 +60,8 @@ const items = {
       icon: Users2,
     },
     {
-      title: 'Contenus',
-      href: '/dashboard/contents',
+      title: 'Pages',
+      href: '/dashboard/pages',
       icon: Layers,
     },
   ],

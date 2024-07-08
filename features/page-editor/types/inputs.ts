@@ -1,7 +1,10 @@
+import { Control } from 'react-hook-form';
+
 export type InputType = 'string' | 'array' | 'object' | 'boolean';
 
 type CommonProps = {
   optional: boolean;
+  control?: Control;
 };
 
 export type InputStringProps = {
@@ -27,5 +30,8 @@ export type InputObjectProps = {
   components: Array<InputObjectType>;
 } & CommonProps;
 
-
-export type InputObjectType = InputStringProps | InputArrayProps | InputObjectProps | InputBooleanProps;
+export type InputObjectType =
+  | InputStringProps
+  | InputArrayProps
+  | InputObjectProps
+  | InputBooleanProps;

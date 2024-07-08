@@ -61,7 +61,7 @@ export const StoreForm = ({ store }: StoreFormProps) => {
       if (error) {
         toast.error('Erreur lors de la sauvegarde');
       } else {
-        toast.success('Catégorie enregistrée avec succès');
+        toast.success('Magasin enregistré avec succès');
         router.push('/dashboard/stores');
       }
     },

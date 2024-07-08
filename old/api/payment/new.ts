@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import PayPlug from '@/PayPlug';
-import CreatePaymentInput from '@/PayPlug/dto/create-payment.input';
 import SendInBlue from '@/SendInBlue';
 import SendCustomerEmailInput from '../../../SendInBlue/dto/send-customer-email.input';
 
@@ -10,7 +9,7 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     try {
-      let createPaymentInput: CreatePaymentInput;
+      let createPaymentInput;
 
       try {
         createPaymentInput = JSON.parse(req.body);

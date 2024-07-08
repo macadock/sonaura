@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, Upload } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Controller, useFormContext } from 'react-hook-form';
-import Image from 'next/image';
 import { getImageUrl } from '@/utils/image/get-image-url';
 import React, { PropsWithChildren, useCallback } from 'react';
 import { toast } from 'sonner';
@@ -34,7 +33,11 @@ export const DashboardForm = ({
   onImageUploaded,
   imagesSettings,
 }: PropsWithChildren<DashboardFormProps>) => {
-  const { control, handleSubmit } = useFormContext();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useFormContext();
   const supabase = createClient();
   const handleUploadImage = useCallback(
     (files: FileList | null) => {
@@ -63,14 +66,11 @@ export const DashboardForm = ({
         loading: 'Enregistrement du fichier en cours...',
       });
     },
-    [onImageUploaded, supabase.storage],
+    [imagesSettings, onImageUploaded, supabase.storage],
   );
 
   return (
-    <form
-      className="flex flex-col mx-auto max-w-[59rem] flex-1 gap-4"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <div className="flex flex-col flex-1 gap-4">
       <div className="flex items-center gap-4">
         <Button type={'button'} variant="link" onClick={onClickBackButton}>
           <ChevronLeft className="h-4 w-4" />
@@ -85,7 +85,7 @@ export const DashboardForm = ({
           >
             Annuler
           </Button>
-          <Button type={'submit'} size="sm">
+          <Button onClick={handleSubmit(onSubmit)} size="sm">
             Enregistrer
           </Button>
         </div>
@@ -169,6 +169,6 @@ export const DashboardForm = ({
           </div>
         )}
       </div>
-    </form>
+    </div>
   );
 };

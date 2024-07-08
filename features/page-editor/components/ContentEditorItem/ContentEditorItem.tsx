@@ -1,8 +1,9 @@
-'use client';
-
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { getComponent } from '@/features/page-editor/components/ComponentsSelector';
+import {
+  getComponent,
+  getComponentConfig,
+} from '@/features/page-editor/components/ComponentsSelector';
 import { getInputs } from '@/features/page-editor/components/ContentEditorItem/util';
 import {
   Card,
@@ -15,42 +16,46 @@ import { ArrowDown, ArrowUp, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
 import { Inputs } from '@/features/page-editor/components/ContentEditorItem/components';
-import { ComponentConfig } from '@/features/page-editor/types';
+import { ComponentConfig, ComponentsEnum } from '@/features/page-editor/types';
 
-export type ContentEditorItem = ComponentConfig & {
+export type ContentEditorItem = {
+  name: ComponentsEnum;
+  id: string;
   handleDelete: (id: string) => void;
   handleUpdateProps: (id: string, props: object) => void;
   handleUpdateOrder: (id: string, direction: 'up' | 'down') => void;
-  defaultValues?: object;
+  content?: object;
   isLast: boolean;
   isFirst: boolean;
 };
 
 export const ContentEditorItem = ({
-  schema,
   id,
   name,
+  content,
   handleDelete,
   handleUpdateProps,
   handleUpdateOrder,
-  defaultValues,
   isFirst,
   isLast,
 }: ContentEditorItem) => {
-  const formMethods = useForm({
+  const config = getComponentConfig(name);
+  const schema = config.schema;
+
+  const { control, watch } = useForm({
     resolver: schema ? zodResolver(schema) : undefined,
-    defaultValues,
+    defaultValues: content,
   });
 
   const DisplayedComponent = getComponent(name);
 
   const inputsArray = schema ? getInputs({ schema }) : [];
 
-  const values = formMethods.watch();
+  const values = watch();
 
   useEffect(() => {
     handleUpdateProps(id, values);
-  }, [values]);
+  }, [handleUpdateProps, id, values]);
 
   return (
     <Card>
@@ -90,16 +95,14 @@ export const ContentEditorItem = ({
         </div>
       </CardHeader>
       <CardContent className="overflow-hidden">
-        <DisplayedComponent content={{ ...formMethods.watch() }} isPreview />
+        <DisplayedComponent content={{ ...watch() }} isPreview />
       </CardContent>
       <CardFooter>
-        <FormProvider {...formMethods}>
-          <div className="flex flex-col gap-2">
-            {inputsArray.map((input) => {
-              return <Inputs key={input.name} input={input} />;
-            })}
-          </div>
-        </FormProvider>
+        <div className="flex flex-col gap-2">
+          {inputsArray.map((input) => {
+            return <Inputs key={input.name} input={input} control={control} />;
+          })}
+        </div>
       </CardFooter>
     </Card>
   );

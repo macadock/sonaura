@@ -4,7 +4,6 @@ import {
   payplugApi,
   payplugKey,
 } from '@/appConstants';
-import CreatePaymentInput from '@/PayPlug/dto/create-payment.input';
 
 export default class PayPlug {
   private static getHeaders(): Headers {
@@ -17,9 +16,7 @@ export default class PayPlug {
     return headers;
   }
 
-  public static makePayment(
-    createPaymentInput: CreatePaymentInput,
-  ): Promise<Response> {
+  public static makePayment(createPaymentInput: any): Promise<Response> {
     const url = `${payplugApi}/payments`;
     const cancelUrl = getRoutePath({ page: PagesUrls.CHECKOUT_PAGE });
     const returnUrl = getRoutePath({ page: PagesUrls.SUCCESS_PAYMENT_PAGE });

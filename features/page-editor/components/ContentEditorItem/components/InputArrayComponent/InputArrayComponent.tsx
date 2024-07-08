@@ -7,8 +7,7 @@ import { ChangeEvent } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 export const InputArrayComponent = (props: InputArrayProps) => {
-  const { control } = useFormContext();
-  const { elements, name } = props;
+  const { elements, name, control } = props;
 
   return (
     <div className="flex items-center gap-2">

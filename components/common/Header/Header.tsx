@@ -3,7 +3,6 @@ import { MobileMenu } from '@/components/common/Header/MobileMenu';
 import Image from 'next/image';
 import { getCategories } from '@/utils/data';
 import { cookies } from 'next/headers';
-import CartDrawer from '@/components/core/Cart/CartDrawer';
 import React from 'react';
 
 type ItemCommon = {
