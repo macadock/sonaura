@@ -5,8 +5,8 @@ import {
   merchantEmail,
   merchantName,
   sendInBlueUrl,
-} from 'appConstants';
-import { formatPhoneNumber } from 'utils/phone-number';
+} from '@/appConstants';
+import { formatPhoneNumber } from '@/utils/phone-number';
 import AddToListInput from './dto/add-to-list.input';
 import NewsletterSubscriptionInput from './dto/newsletter-subscription.input';
 import SendCustomerEmailInput from './dto/send-customer-email.input';
@@ -17,7 +17,7 @@ export default class SendInBlue {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
-    headers.append('api-key', sendInBlueKey);
+    headers.append('api-key', sendInBlueKey as string);
     return headers;
   }
 
@@ -159,7 +159,7 @@ export default class SendInBlue {
       }
     } catch (e) {
       throw new Error(
-        `Error while adding email ${email} to listId ${includeListIds.toString()} `,
+        `Error while adding email ${email} to listId ${includeListIds?.toString()} `,
       );
     }
 

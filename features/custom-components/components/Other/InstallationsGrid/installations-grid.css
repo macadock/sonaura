@@ -1,0 +1,36 @@
+:root {
+    --realizations-transition-duration: 0.4s;
+}
+
+#installations-container {
+    > div {
+        position: relative;
+        overflow: hidden;
+
+        &:hover {
+            .installations-content {
+                visibility: visible;
+                bottom: 0;
+            }
+
+            > img {
+                transform: scale(1.25);
+            }
+        }
+
+        > img {
+            object-fit: cover;
+            aspect-ratio: 1/1;
+            transition: transform var(--realizations-transition-duration);
+        }
+    }
+}
+
+.installations-content {
+    position: absolute;
+    visibility: hidden;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    transition: bottom var(--realizations-transition-duration);
+}
