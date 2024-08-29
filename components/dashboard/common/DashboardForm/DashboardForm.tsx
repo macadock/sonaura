@@ -147,7 +147,10 @@ export const DashboardForm = ({
                             alt={imagesSettings.alt}
                             className="aspect-square w-full rounded-md object-cover"
                             height="300"
-                            src={getImageUrl(field.value)}
+                            src={getImageUrl(field.value, {
+                              width: 300,
+                              height: 300,
+                            })}
                             width="300"
                           />
                         ) : (

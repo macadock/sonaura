@@ -32,7 +32,7 @@ export const InstallationsGrid = ({
         if (!item.images) {
           return null;
         }
-        const src = getImageUrl(item.images);
+        const src = getImageUrl(item.images, { width: 1080, height: 1080 });
 
         return (
           <div key={item.id} className="rounded-lg shadow-lg">

@@ -33,7 +33,7 @@ export const ProductPage = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 md:pt-8">
         <img
-          src={getImageUrl(product.mainImage)}
+          src={getImageUrl(product.mainImage, { width: 600, height: 600 })}
           alt={product.name}
           width={600}
           height={600}

@@ -4,8 +4,8 @@ import { Json } from '@/types/supabase';
 
 export type GetImageUrlOptions = {
   quality?: number;
-  width?: number;
-  height?: number;
+  width: number;
+  height: number;
 };
 
 export const getImageUrl = (
@@ -24,6 +24,7 @@ export const getImageUrl = (
     transform: {
       quality: 75,
       width: 1920,
+      height: 1920,
       ...options,
     },
   });
