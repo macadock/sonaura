@@ -1,7 +1,7 @@
 import {
   getInstallationById,
   getProductById,
-  getProductBySlug,
+  getProductBySlugAndCategorySlug,
 } from '@/utils/data';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';

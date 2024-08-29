@@ -66,8 +66,9 @@ export const getComponentAsyncData = async ({
       props['categorySlug'] = categorySlug;
     }
 
-    if (key === AsyncDataEnum.GET_PRODUCT_BY_SLUG) {
+    if (key === AsyncDataEnum.GET_PRODUCT_BY_SLUG_AND_CATEGORY_SLUG) {
       props['productSlug'] = productSlug;
+      props['categorySlug'] = categorySlug;
     }
 
     return asyncData.function({ cookieStore, ...props });

@@ -39,7 +39,7 @@ export enum AsyncDataEnum {
   GET_CATEGORY_BY_SLUG = 'getCategoryBySlug',
   GET_PRODUCTS = 'getProducts',
   GET_PRODUCTS_BY_CATEGORY = 'getProductsByCategory',
-  GET_PRODUCT_BY_SLUG = 'getProductBySlug',
+  GET_PRODUCT_BY_SLUG_AND_CATEGORY_SLUG = 'getProductBySlugAndCategorySlug',
   GET_INSTALLATIONS = 'getInstallations',
   GET_SHOPS = 'getShops',
   GET_PREOWNED_PRODUCTS = 'getPreOwnedProducts',

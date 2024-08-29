@@ -4077,15 +4077,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supabase/ssr@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "@supabase/ssr@npm:0.3.0"
+"@supabase/ssr@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@supabase/ssr@npm:0.5.1"
   dependencies:
-    cookie: "npm:^0.5.0"
-    ramda: "npm:^0.29.0"
+    cookie: "npm:^0.6.0"
   peerDependencies:
-    "@supabase/supabase-js": ^2.33.1
-  checksum: 10c0/c2e1df6b98b3cbb57c663771ea26b9afe2cf9037fde33d142d7552b740dcafe3110b5be8d15fc0c6612b8803176606fbab867235d745ee47d63d038511768dc6
+    "@supabase/supabase-js": ^2.43.4
+  checksum: 10c0/f0aaca9e013ff8c0e1ed2729245cd7cae89e380fdc08ff63175ebd0bac185800575377e10348590997297cb4fa436989851013df25461d6b468bb3325d238b87
   languageName: node
   linkType: hard
 
@@ -6102,10 +6101,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "cookie@npm:0.5.0"
-  checksum: 10c0/c01ca3ef8d7b8187bae434434582288681273b5a9ed27521d4d7f9f7928fe0c920df0decd9f9d3bbd2d14ac432b8c8cf42b98b3bdd5bfe0e6edddeebebe8b61d
+"cookie@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "cookie@npm:0.6.0"
+  checksum: 10c0/f2318b31af7a31b4ddb4a678d024514df5e705f9be5909a192d7f116cfb6d45cbacf96a473fa733faa95050e7cff26e7832bb3ef94751592f1387b71c8956686
   languageName: node
   linkType: hard
 
@@ -10514,13 +10513,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ramda@npm:^0.29.0":
-  version: 0.29.1
-  resolution: "ramda@npm:0.29.1"
-  checksum: 10c0/5de53a07400959c1a704c366ec52b1b8cd9a444dc1f9cdf17d607e0b9eeaa38cbaea309d43e59dbd7f36731ba977a64d40092555c0e7c2d4a41e8e922239c0ba
-  languageName: node
-  linkType: hard
-
 "raw-body@npm:2.4.1":
   version: 2.4.1
   resolution: "raw-body@npm:2.4.1"
@@ -11468,7 +11460,7 @@ __metadata:
     "@radix-ui/react-toggle-group": "npm:^1.1.0"
     "@radix-ui/react-tooltip": "npm:^1.1.1"
     "@sentry/nextjs": "npm:^8.3.0"
-    "@supabase/ssr": "npm:^0.3.0"
+    "@supabase/ssr": "npm:^0.5.1"
     "@supabase/supabase-js": "npm:^2.43.4"
     "@tanstack/react-table": "npm:^8.17.3"
     "@types/aos": "npm:^3.0.7"
@@ -11530,7 +11522,7 @@ __metadata:
     react-visibility-sensor: "npm:^5.1.1"
     rimraf: "npm:^5.0.7"
     sonner: "npm:^1.5.0"
-    supabase: "npm:1.178.2"
+    supabase: "npm:1.191.3"
     tailwind-merge: "npm:^2.3.0"
     tailwindcss: "npm:^3.4.4"
     tailwindcss-animate: "npm:^1.0.7"
@@ -11853,17 +11845,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supabase@npm:1.178.2":
-  version: 1.178.2
-  resolution: "supabase@npm:1.178.2"
+"supabase@npm:1.191.3":
+  version: 1.191.3
+  resolution: "supabase@npm:1.191.3"
   dependencies:
     bin-links: "npm:^4.0.3"
     https-proxy-agent: "npm:^7.0.2"
     node-fetch: "npm:^3.3.2"
-    tar: "npm:7.4.0"
+    tar: "npm:7.4.3"
   bin:
     supabase: bin/supabase
-  checksum: 10c0/946c93b939886242aa3281b3578ad059e6c5d4df924b5ce4f8c9208f01be27f91866470cf00306d852f0ab607da25b10c310134f81d3dbc68ffab37696c272b2
+  checksum: 10c0/09fc29c582fb1e53550f29be1e235c401077f4bf75a31708a91ed2fa48464f07a26590fd60663fa37ec991ee277cc6cbf32ce422493aac6c260148977e57e956
   languageName: node
   linkType: hard
 
@@ -11967,9 +11959,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar@npm:7.4.0":
-  version: 7.4.0
-  resolution: "tar@npm:7.4.0"
+"tar@npm:7.4.3":
+  version: 7.4.3
+  resolution: "tar@npm:7.4.3"
   dependencies:
     "@isaacs/fs-minipass": "npm:^4.0.0"
     chownr: "npm:^3.0.0"
@@ -11977,7 +11969,7 @@ __metadata:
     minizlib: "npm:^3.0.1"
     mkdirp: "npm:^3.0.1"
     yallist: "npm:^5.0.0"
-  checksum: 10c0/f4bab85fd101585f2cececc41eb8706191052ab65cc33f1a798198e0c7905f41b06ae3d6731fb2b6084847c53bc1e2265b77e05a105c0c44afaf6cb7a08ddf14
+  checksum: 10c0/d4679609bb2a9b48eeaf84632b6d844128d2412b95b6de07d53d8ee8baf4ca0857c9331dfa510390a0727b550fd543d4d1a10995ad86cdf078423fbb8d99831d
   languageName: node
   linkType: hard
 

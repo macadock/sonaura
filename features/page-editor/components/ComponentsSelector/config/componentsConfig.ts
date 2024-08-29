@@ -29,7 +29,7 @@ import {
   getCategories,
   getProductsByCategory,
   getProducts,
-  getProductBySlug,
+  getProductBySlugAndCategorySlug,
   getCategoryBySlug,
   getStores,
   getPreOwnedProducts,
@@ -110,7 +110,7 @@ export const componentsMapping: {
     getConfig: () => ({
       schema: null,
       asyncData: {
-        [AsyncDataEnum.GET_PRODUCT_BY_SLUG]: true,
+        [AsyncDataEnum.GET_PRODUCT_BY_SLUG_AND_CATEGORY_SLUG]: true,
         [AsyncDataEnum.GET_CATEGORY_BY_SLUG]: true,
       },
     }),
@@ -189,8 +189,8 @@ export const asyncDataMapping: {
     function: getProductsByCategory,
     propsName: PropsNameEnum.PRODUCTS,
   },
-  [AsyncDataEnum.GET_PRODUCT_BY_SLUG]: {
-    function: getProductBySlug,
+  [AsyncDataEnum.GET_PRODUCT_BY_SLUG_AND_CATEGORY_SLUG]: {
+    function: getProductBySlugAndCategorySlug,
     propsName: PropsNameEnum.PRODUCT,
   },
   [AsyncDataEnum.GET_INSTALLATIONS]: {

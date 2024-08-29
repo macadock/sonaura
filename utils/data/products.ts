@@ -43,18 +43,21 @@ export const getProductsByCategory = async ({
   );
 };
 
-export const getProductBySlug = async ({
+export const getProductBySlugAndCategorySlug = async ({
   productSlug,
+  categorySlug,
   cookieStore,
 }: {
   productSlug: string;
+  categorySlug: string;
   cookieStore: ReturnType<typeof cookies>;
 }) => {
   const supabase = createClient(cookieStore);
   const { data } = await supabase
     .from('products')
-    .select('*')
+    .select('*, categories(slug)')
     .eq('slug', productSlug)
+    .eq('categories.slug', categorySlug)
     .single();
 
   return data;
