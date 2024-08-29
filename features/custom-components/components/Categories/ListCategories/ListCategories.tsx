@@ -40,7 +40,11 @@ export const ListCategories = ({
           <Link key={category.id} href={`/${category.slug}`}>
             <Card className="h-full hover:shadow-lg transition-all duration-300">
               <CardContent className="h-full flex flex-col justify-center items-center gap-3 p-6">
-                <img src={getImageUrl(category.icon)} alt={category.name} />
+                <img
+                  src={getImageUrl(category.icon)}
+                  alt={category.name}
+                  width={'100%'}
+                />
                 <h3>{category.name}</h3>
               </CardContent>
             </Card>

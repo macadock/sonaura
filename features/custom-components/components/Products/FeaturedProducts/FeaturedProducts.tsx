@@ -5,7 +5,6 @@ import { Product } from '@/utils/data';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { getImageUrl } from '@/utils/image/get-image-url';
-import Image from 'next/image';
 import { getFormattedPrice } from '@/utils/price';
 
 export type FeaturedProductsProps = {
@@ -58,21 +57,13 @@ export const FeaturedProducts = ({
             >
               <Card className="w-full h-full hover:shadow-lg transition-all duration-300">
                 <CardContent className="h-full flex flex-col justify-center items-center gap-3 p-6">
-                  {isPreview ? (
-                    <img
-                      src={getImageUrl(product.mainImage)}
-                      alt={product.name}
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <Image
-                      className="h-full w-full object-cover"
-                      src={getImageUrl(product.mainImage)}
-                      alt={product.name}
-                      width={300}
-                      height={300}
-                    />
-                  )}
+                  <img
+                    src={getImageUrl(product.mainImage, { width: 300 })}
+                    alt={product.name}
+                    className="h-full w-full object-cover"
+                    width={300}
+                    height={300}
+                  />
 
                   <h3 className="text-lg font-medium">{product.name}</h3>
 

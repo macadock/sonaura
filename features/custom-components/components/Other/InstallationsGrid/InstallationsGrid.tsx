@@ -1,10 +1,8 @@
 'use client';
 
 import { PropsNameEnum } from '@/features/page-editor';
-import Image from 'next/image';
 
 import { Installation } from '@/utils/data';
-import { pick } from 'lodash';
 import './installations-grid.css';
 import { createClient } from '@/lib/supabase/client';
 import { getImageUrl } from '@/utils/image/get-image-url';
@@ -38,23 +36,13 @@ export const InstallationsGrid = ({
 
         return (
           <div key={item.id} className="rounded-lg shadow-lg">
-            {isPreview ? (
-              <img
-                src={src}
-                width={1080}
-                height={1080}
-                alt={item.title || ''}
-                loading={index <= 6 ? 'eager' : 'lazy'}
-              />
-            ) : (
-              <Image
-                src={src}
-                width={1080}
-                height={1080}
-                alt={item.title || ''}
-                loading={index <= 6 ? 'eager' : 'lazy'}
-              />
-            )}
+            <img
+              src={src}
+              width={1080}
+              height={1080}
+              alt={item.title || ''}
+              loading={index <= 6 ? 'eager' : 'lazy'}
+            />
             <div className="installations-content bg-white p-4 flex flex-col gap-2">
               <h3 className="text-lg font-semibold">{item.title}</h3>
               <p className="text-base">{item.description}</p>

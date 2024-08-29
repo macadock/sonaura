@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { AdvicesSchema } from '@/features/custom-components/components/Other/Advices/schema';
-import Image from 'next/image';
 import Link from 'next/link';
 import zod from 'zod';
 
@@ -33,21 +32,13 @@ export const Advices = ({ content, isPreview = false }: AdvicesProps) => {
           </div>
         </div>
 
-        {isPreview ? (
-          <img
-            src={image.url}
-            alt={image.alt}
-            className="hidden md:block w-1/2 object-cover -mt-20 -mb-36"
-          />
-        ) : (
-          <Image
-            src={image.url}
-            alt={image.alt}
-            width={2048}
-            height={1365}
-            className="hidden md:block w-1/2 object-cover -mt-20 -mb-36"
-          />
-        )}
+        <img
+          src={image.url}
+          alt={image.alt}
+          width={2048}
+          height={1365}
+          className="hidden md:block w-1/2 object-cover -mt-20 -mb-36"
+        />
       </div>
     </div>
   );

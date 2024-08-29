@@ -1,5 +1,4 @@
 import { PropsNameEnum } from '@/features/page-editor';
-import Image from 'next/image';
 import { Category, Product } from '@/utils/data';
 import { getImageUrl } from '@/utils/image/get-image-url';
 
@@ -33,24 +32,14 @@ export const ProductPage = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 md:pt-8">
-        {isPreview ? (
-          <img
-            alt={product.name}
-            width={600}
-            height={600}
-            className="md:sticky top-8"
-            loading="eager"
-          />
-        ) : (
-          <Image
-            src={getImageUrl(product.mainImage)}
-            alt={product.name}
-            width={600}
-            height={600}
-            className="md:sticky top-8"
-            loading="eager"
-          />
-        )}
+        <img
+          src={getImageUrl(product.mainImage)}
+          alt={product.name}
+          width={600}
+          height={600}
+          className="md:sticky top-8"
+          loading="eager"
+        />
         <div className="flex flex-col gap-8">
           <h1 className="text-4xl font-medium">{product.name}</h1>
           <p className="text-xl">{product.description}</p>

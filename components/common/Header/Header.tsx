@@ -1,6 +1,5 @@
 import { DesktopMenu } from '@/components/common/Header/DesktopMenu';
 import { MobileMenu } from '@/components/common/Header/MobileMenu';
-import Image from 'next/image';
 import { getCategories } from '@/utils/data';
 import { cookies } from 'next/headers';
 import React from 'react';
@@ -66,7 +65,7 @@ export const Header = async () => {
     <header className="w-full flex items-center justify-between p-4 md:px-8 border-b sticky top-0 bg-background z-10 h-[var(--headerHeight)]">
       <div className="flex-grow flex gap-2 justify-between items-center max-w-7xl m-auto">
         <a className="w-52 flex flex-col gap-2" href={'/'}>
-          <Image
+          <img
             src="/assets/logos/logo.svg"
             alt="Sonaura"
             loading={'eager'}
