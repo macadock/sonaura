@@ -18,7 +18,14 @@ export const HeroVideo = ({ content, isPreview }: HeroVideoProps) => {
   const { title, subtitle, button, video } = content;
   return (
     <div className="rounded-lg overflow-hidden relative xl:max-w-7xl xl:m-auto">
-      <video autoPlay loop muted poster={video.poster} className="rounded-lg">
+      <video
+        autoPlay
+        loop
+        muted
+        poster={video.poster}
+        className="rounded-lg"
+        width={'100%'}
+      >
         <source src={video.url} type="video/mp4" />
       </video>
       <div className="right-0 top-0 bottom-0 md:bg-slate-100 md:bg-opacity-70 md:rounded-lg mt-4 md:m-4 md:w-1/2 md:absolute md:p-4 md:pl-10 md:text-right font-medium flex flex-col gap-4 xl:gap-10">
