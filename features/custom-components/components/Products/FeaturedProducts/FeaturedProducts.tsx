@@ -63,7 +63,6 @@ export const FeaturedProducts = ({
                       height: 300,
                     })}
                     alt={product.name}
-                    className="h-full w-full object-cover"
                     width={300}
                     height={300}
                   />
