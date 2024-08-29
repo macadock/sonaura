@@ -58,7 +58,10 @@ export const FeaturedProducts = ({
               <Card className="w-full h-full hover:shadow-lg transition-all duration-300">
                 <CardContent className="h-full flex flex-col justify-center items-center gap-3 p-6">
                   <img
-                    src={getImageUrl(product.mainImage, { width: 300 })}
+                    src={getImageUrl(product.mainImage, {
+                      width: 300,
+                      height: 300,
+                    })}
                     alt={product.name}
                     className="h-full w-full object-cover"
                     width={300}
