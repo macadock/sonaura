@@ -1,3 +1,9 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Politique de confidentialité | Sonaura',
+};
+
 const PrivacyPolicy = () => {
   return (
     <div className="flex flex-col gap-4 p-4 md:gap-8 md:p-8 xl:max-w-7xl xl:m-auto">

@@ -1,7 +1,10 @@
-'use server';
-
 import { Button } from '@/components/ui/button';
 import { handleSignIn, redirectUserToPage } from '@/utils/auth';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Connexion | Sonaura',
+};
 
 export default async function Login({
   searchParams,

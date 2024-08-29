@@ -1,4 +1,4 @@
-import { getPageUrl } from '@/app/(marketing)/[[...page]]/util';
+import { getPageUrl, SpecialPage } from '@/app/(marketing)/[[...page]]/util';
 import {
   asyncDataMapping,
   getComponent,
@@ -8,7 +8,7 @@ import {
 import { ComponentConfig } from '@/features/page-editor/types';
 
 import { getCategories, getPage, getProducts } from '@/utils/data';
-import { Metadata } from 'next';
+import { Metadata, ResolvingMetadata } from 'next';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { clsx } from 'clsx';
@@ -17,9 +17,51 @@ export type PageProps = {
   params: { page: string[] };
 };
 
-export const metadata: Metadata = {
-  title: 'Distributeur Bang & Olufsen Auvergne Rhône-Alpes | Sonaura',
-};
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const cookieStore = cookies();
+  const categories = await getCategories({ cookieStore });
+  const products = await getProducts({ cookieStore });
+
+  const { url, categorySlug, productSlug } = getPageUrl({
+    params,
+    categories,
+    products,
+  });
+
+  if (url === SpecialPage.PRODUCT) {
+    const product = products.find((product) => product.slug === productSlug);
+
+    if (product) {
+      return {
+        title: `${product.name} | Sonaura`,
+      };
+    }
+  }
+
+  if (url === SpecialPage.CATEGORY) {
+    const category = categories.find(
+      (category) => category.slug === categorySlug,
+    );
+
+    if (category) {
+      return {
+        title: `${category.name} | Sonaura`,
+      };
+    }
+  }
+
+  const { data } = await getPage({ url, cookieStore });
+
+  if (data) {
+    return {
+      title: `${data.title} | Sonaura`,
+    };
+  }
+
+  return {};
+}
 
 export default async function Home({ params }: PageProps) {
   const cookieStore = cookies();

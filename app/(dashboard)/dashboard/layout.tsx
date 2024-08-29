@@ -7,6 +7,11 @@ import { redirect } from 'next/navigation';
 import { PropsWithChildren } from 'react';
 import { DashboardHeader } from '@/components/dashboard/common';
 import { Toaster } from '@/components/ui/sonner';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Dashboard | Sonaura',
+};
 
 const allowedRoles: Roles[] = ['ADMIN', 'EDITOR'];
 

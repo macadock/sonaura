@@ -3,6 +3,11 @@ import { Montserrat } from 'next/font/google';
 import { PropsWithChildren } from 'react';
 import { BreakpointsHelper } from '@/components/common';
 import './globals.css';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Distributeur Bang & Olufsen Auvergne Rhône-Alpes | Sonaura',
+};
 
 const montserrat = Montserrat({
   subsets: ['latin'],
