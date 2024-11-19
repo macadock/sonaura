@@ -16,7 +16,7 @@ const montserrat = Montserrat({
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="fr">
-      <body className={`min-h-screen ${montserrat.className}`}>
+      <body className={`min-h-screen ${montserrat.className} text-balance`}>
         {children}
         <BreakpointsHelper />
       </body>

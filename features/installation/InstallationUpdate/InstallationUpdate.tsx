@@ -4,7 +4,6 @@ import {
   getProductBySlugAndCategorySlug,
 } from '@/utils/data';
 import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
 import { InstallationForm } from '@/features/installation/InstallationCreation/Form/form';
 import { createClient } from '@/lib/supabase/server';
 
@@ -17,13 +16,8 @@ export const InstallationUpdate = async ({ id }: InstallationUpdateProps) => {
     redirect('/dashboard/installations');
   }
 
-  console.log(id);
-
-  const cookieStore = cookies();
-
   const installation = await getInstallationById({
     installationId: id,
-    cookieStore,
   });
 
   if (!installation) {

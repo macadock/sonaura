@@ -1,25 +1,18 @@
-import { cookies } from 'next/headers';
 import { createClient } from '@/lib/supabase/server';
 import { Database } from '@/types/supabase';
 
-export const getInstallations = async ({
-  cookieStore,
-}: {
-  cookieStore: ReturnType<typeof cookies>;
-}) => {
-  const supabase = createClient(cookieStore);
+export const getInstallations = async () => {
+  const supabase = await createClient();
   const { data } = await supabase.from('installations').select('*');
   return data || [];
 };
 
 export const getInstallationById = async ({
   installationId,
-  cookieStore,
 }: {
   installationId: string;
-  cookieStore: ReturnType<typeof cookies>;
 }) => {
-  const supabase = createClient(cookieStore);
+  const supabase = await createClient();
   const { data } = await supabase
     .from('installations')
     .select('*')

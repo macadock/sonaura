@@ -1,7 +1,6 @@
 import { PrivateProviders } from '@/components/system/Providers';
 
 import { Roles, getUser, getUserRole } from '@/lib/supabase/server';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { PropsWithChildren } from 'react';
@@ -16,14 +15,13 @@ export const metadata: Metadata = {
 const allowedRoles: Roles[] = ['ADMIN', 'EDITOR'];
 
 export default async function RootLayout({ children }: PropsWithChildren) {
-  const cookiesStore = cookies();
-  const { user } = await getUser(cookiesStore);
+  const { user } = await getUser();
 
   if (!user) {
     redirect(encodeURI('/login'));
   }
 
-  const userRole = await getUserRole(cookiesStore);
+  const userRole = await getUserRole();
 
   if (userRole && !allowedRoles.includes(userRole)) {
     redirect(encodeURI('/'));

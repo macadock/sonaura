@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 export default async function Login({
   searchParams,
 }: {
-  searchParams: { message: string; email_sent?: string };
+  searchParams: Promise<{ message: string; email_sent?: string }>;
 }) {
   await redirectUserToPage();
 
-  const { message, email_sent } = searchParams;
+  const { message, email_sent } = await searchParams;
 
   return (
     <div className="flex flex-col w-full p-8 max-w-md justify-center gap-2 m-auto">

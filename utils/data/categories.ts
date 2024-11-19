@@ -4,24 +4,18 @@ import { Database } from '@/types/supabase';
 
 export type Category = Database['public']['Tables']['categories']['Row'];
 
-export const getCategories = async ({
-  cookieStore,
-}: {
-  cookieStore: ReturnType<typeof cookies>;
-}) => {
-  const supabase = createClient(cookieStore);
+export const getCategories = async () => {
+  const supabase = await createClient();
   const { data } = await supabase.from('categories').select('*');
   return data || [];
 };
 
 export const getCategoryBySlug = async ({
   categorySlug,
-  cookieStore,
 }: {
   categorySlug: string;
-  cookieStore: ReturnType<typeof cookies>;
 }) => {
-  const supabase = createClient(cookieStore);
+  const supabase = await createClient();
   const { data } = await supabase
     .from('categories')
     .select('*')
@@ -32,12 +26,10 @@ export const getCategoryBySlug = async ({
 
 export const getCategoryById = async ({
   categoryId,
-  cookieStore,
 }: {
   categoryId: string;
-  cookieStore: ReturnType<typeof cookies>;
 }) => {
-  const supabase = createClient(cookieStore);
+  const supabase = await createClient();
   const { data } = await supabase
     .from('categories')
     .select('*')

@@ -29,12 +29,10 @@ export const getComponentConfig: (
 
 export const getComponentAsyncData = async ({
   components = [],
-  cookieStore,
   categorySlug,
   productSlug,
 }: {
   components: ComponentsEnum[];
-  cookieStore: ReturnType<typeof cookies>;
   productSlug: string | null;
   categorySlug: string | null;
 }): Promise<{ [key: string]: () => Promise<any> } | null> => {
@@ -71,7 +69,7 @@ export const getComponentAsyncData = async ({
       props['categorySlug'] = categorySlug;
     }
 
-    return asyncData.function({ cookieStore, ...props });
+    return asyncData.function({ ...props });
   });
 
   const response = await Promise.allSettled(promises);

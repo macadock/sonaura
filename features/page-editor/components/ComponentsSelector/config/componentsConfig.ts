@@ -163,9 +163,7 @@ export enum PropsNameEnum {
   SHOPS = 'shops',
 }
 
-export type AsyncDataProps<T = any> = {
-  cookieStore: ReturnType<typeof cookies>;
-} & T;
+export type AsyncDataProps<T = any> = T;
 
 export const asyncDataMapping: {
   [K in AsyncDataEnum]: {

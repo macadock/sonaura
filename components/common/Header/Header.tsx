@@ -1,7 +1,6 @@
 import { DesktopMenu } from '@/components/common/Header/DesktopMenu';
 import { MobileMenu } from '@/components/common/Header/MobileMenu';
 import { getCategories } from '@/utils/data';
-import { cookies } from 'next/headers';
 import React from 'react';
 
 type ItemCommon = {
@@ -23,8 +22,7 @@ type MenuItem = ItemCommon & {
 export type Item = PageItem | MenuItem;
 
 export const Header = async () => {
-  const cookieStore = cookies();
-  const categories = await getCategories({ cookieStore });
+  const categories = await getCategories();
 
   const items: Item[] = [
     {

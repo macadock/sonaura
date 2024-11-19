@@ -1,17 +1,15 @@
-import { cookies } from 'next/headers';
 import { getStoreById } from '@/utils/data';
 import { StoreForm } from '@/components/dashboard/Store/StoreForm';
 
 export type EditStorePageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 const EditStorePage = async ({ params }: EditStorePageProps) => {
-  const cookieStore = cookies();
+  const { id } = await params;
 
   const store = await getStoreById({
-    cookieStore,
-    storeId: params.id,
+    storeId: id,
   });
 
   return <StoreForm store={store} />;

@@ -8,21 +8,19 @@ import {
 import { ComponentConfig } from '@/features/page-editor/types';
 
 import { getCategories, getPage, getProducts } from '@/utils/data';
-import { Metadata, ResolvingMetadata } from 'next';
-import { cookies } from 'next/headers';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { clsx } from 'clsx';
 
 export type PageProps = {
-  params: { page: string[] };
+  params: Promise<{ page: string[] }>;
 };
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const cookieStore = cookies();
-  const categories = await getCategories({ cookieStore });
-  const products = await getProducts({ cookieStore });
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const categories = await getCategories();
+  const products = await getProducts();
+
+  const params = await props.params;
 
   const { url, categorySlug, productSlug } = getPageUrl({
     params,
@@ -52,7 +50,7 @@ export async function generateMetadata({
     }
   }
 
-  const { data } = await getPage({ url, cookieStore });
+  const { data } = await getPage({ url });
 
   if (data) {
     return {
@@ -63,10 +61,11 @@ export async function generateMetadata({
   return {};
 }
 
-export default async function Home({ params }: PageProps) {
-  const cookieStore = cookies();
-  const categories = await getCategories({ cookieStore });
-  const products = await getProducts({ cookieStore });
+export default async function Home(props: PageProps) {
+  const categories = await getCategories();
+  const products = await getProducts();
+
+  const params = await props.params;
 
   const { url, categorySlug, productSlug } = getPageUrl({
     params,
@@ -74,7 +73,7 @@ export default async function Home({ params }: PageProps) {
     products,
   });
 
-  const { data } = await getPage({ url, cookieStore });
+  const { data } = await getPage({ url });
 
   if (!data) {
     return notFound();
@@ -94,7 +93,6 @@ export default async function Home({ params }: PageProps) {
     components: orderedBlocks.map((block) => block.name),
     categorySlug,
     productSlug,
-    cookieStore,
   });
 
   return (

@@ -1,13 +1,8 @@
 import { Database } from '@/types/supabase';
 import { createClient } from '@/lib/supabase/server';
-import type { cookies } from 'next/headers';
 
-export const getContacts = ({
-  cookieStore,
-}: {
-  cookieStore: ReturnType<typeof cookies>;
-}) => {
-  const supabase = createClient(cookieStore);
+export const getContacts = async () => {
+  const supabase = await createClient();
   return supabase
     .from('contacts')
     .select('*')

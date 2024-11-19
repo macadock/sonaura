@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { cookies } from 'next/headers';
 import { getInstallations } from '@/utils/data';
 import {
   Table,
@@ -13,8 +12,7 @@ import {
 import { Edit } from 'lucide-react';
 
 export const InstallationList = async () => {
-  const cookieStore = cookies();
-  const installations = await getInstallations({ cookieStore });
+  const installations = await getInstallations();
 
   if (!installations) {
     return null;

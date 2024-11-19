@@ -1,17 +1,15 @@
 import { getCategoryById } from '@/utils/data';
-import { cookies } from 'next/headers';
 import { CategoryForm } from '@/components/dashboard/Categories/CategoryForm/CategoryForm';
 
 export type EditCategoryProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 const EditCategoryPage = async ({ params }: EditCategoryProps) => {
-  const cookieStore = cookies();
+  const { id } = await params;
 
   const category = await getCategoryById({
-    cookieStore,
-    categoryId: params.id,
+    categoryId: id,
   });
 
   return <CategoryForm category={category} />;

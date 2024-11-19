@@ -1,7 +1,6 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-import { cookies } from 'next/headers';
 import { z } from 'zod';
 
 export const handleContactForm = async (formData: FormData) => {
@@ -24,8 +23,7 @@ export const handleContactForm = async (formData: FormData) => {
 
   const data = parse.data;
 
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = await createClient();
 
   const { firstName, lastName, email, message, phone, postalCode } = data;
 

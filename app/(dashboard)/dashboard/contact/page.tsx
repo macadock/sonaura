@@ -1,11 +1,9 @@
 import { ContactsTable } from './components/ContactsTable';
 
 import { getContacts } from '@/utils/data';
-import { cookies } from 'next/headers';
 
 const DashboardContact = async () => {
-  const cookieStore = cookies();
-  const { data } = await getContacts({ cookieStore });
+  const { data } = await getContacts();
 
   if (!data) {
     return null;
