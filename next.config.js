@@ -10,6 +10,7 @@ const { i18n } = require('./next-i18next.config');
 const moduleExports = {
   reactStrictMode: true,
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         hostname: 'omzwibopitojmqdieuml.supabase.co',
