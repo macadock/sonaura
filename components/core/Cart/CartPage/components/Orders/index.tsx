@@ -8,9 +8,9 @@ import { useCart } from 'react-use-cart';
 import { useTranslation } from 'next-i18next';
 import Delete from '@mui/icons-material/Delete';
 import NextLink from 'next/link';
-import Price from 'utils/Price';
 import { getProductsByIds, Product } from 'lib/supabase/products';
 import supabase from 'lib/supabase';
+import Price from '@/utils/price';
 
 const Orders: React.FC = () => {
   const theme = useTheme();

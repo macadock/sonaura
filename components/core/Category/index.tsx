@@ -9,11 +9,11 @@ import CardMedia from '@mui/material/CardMedia';
 
 import Container from 'components/system/Container';
 import { useTranslation } from 'next-i18next';
-import Price from 'utils/Price';
 import { Product } from 'lib/supabase/products';
 import { useRouter } from 'next/router';
 import supabase from 'lib/supabase';
 import Image from 'next/legacy/image';
+import Price from '@/utils/price';
 
 interface Props {
   products: Product[];

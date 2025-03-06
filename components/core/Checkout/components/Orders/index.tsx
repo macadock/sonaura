@@ -8,10 +8,10 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import { useCart } from 'react-use-cart';
 import { useTranslation } from 'next-i18next';
-import Price from 'utils/Price';
 import { useFormikContext } from 'formik';
 import { getProductsByIds, Product } from 'lib/supabase/products';
 import supabase from 'lib/supabase';
+import Price from '@/utils/price';
 
 const Orders = (): JSX.Element => {
   const theme = useTheme();
