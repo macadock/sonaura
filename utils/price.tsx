@@ -4,7 +4,7 @@ interface Props {
   price: number;
 }
 
-const Price: React.FC<Props> = ({ price }) => {
+export const Price: React.FC<Props> = ({ price }) => {
   const emptyNumber = !(Boolean(price) || Boolean(price));
 
   if (emptyNumber) {
@@ -23,3 +23,12 @@ const Price: React.FC<Props> = ({ price }) => {
 };
 
 export default Price;
+
+export const getFormattedPrice = (price: number) => {
+  return new Intl.NumberFormat('fr-FR', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(price);
+};

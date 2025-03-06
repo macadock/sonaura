@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { Card, CardContent } from '@/components/ui/card';
-import { getFormattedPrice } from '@/utils/price';
 import { Price } from '@/components/marketing/price';
 import Image from 'next/image';
 
