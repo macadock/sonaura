@@ -1,3 +1,7 @@
+import * as React from 'react';
+import Link from 'next/link';
+
+import { cn } from '@/lib/utils';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -7,10 +11,9 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 
-export const DesktopMenu = async () => {
+export async function DesktopMenu() {
   const supabaseClient = await createClient();
   const { data } = await supabaseClient.from('categories').select('*');
   const categories = (data || []).filter(
@@ -20,29 +23,20 @@ export const DesktopMenu = async () => {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        {categories.length > 0 && (
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Catégories</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              {categories.map((category) => {
-                return (
-                  <Link
-                    key={category.id}
-                    href={`/${category.slug}`}
-                    legacyBehavior
-                    passHref
-                  >
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      {category.name}
-                    </NavigationMenuLink>
-                  </Link>
-                );
-              })}
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        )}
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Catégories</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-3 p-4 md:grid-cols-2 ">
+              {categories.map((category) => (
+                <ListItem
+                  key={category.id}
+                  title={category.name}
+                  href={`/${category.slug}`}
+                />
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/occasion" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -74,4 +68,27 @@ export const DesktopMenu = async () => {
       </NavigationMenuList>
     </NavigationMenu>
   );
-};
+}
+
+const ListItem = React.forwardRef<
+  React.ElementRef<'a'>,
+  React.ComponentPropsWithoutRef<'a'>
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+            className,
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = 'ListItem';

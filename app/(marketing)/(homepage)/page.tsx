@@ -53,6 +53,7 @@ export default async function Homepage() {
         }}
       />
       <FeaturedProducts
+        id={'products'}
         variant={'featured'}
         title={'Produits mis en avant'}
         subtitle={'Produits'}
