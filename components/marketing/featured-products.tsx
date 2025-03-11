@@ -53,7 +53,7 @@ export const FeaturedProducts = async ({
   return (
     <div
       id={id}
-      className="flex flex-col gap-6 justify-center text-center md:px-9 xl:max-w-7xl xl:m-auto"
+      className="flex flex-col gap-6 justify-center text-center md:px-9 xl:max-w-7xl xl:m-auto px-6"
     >
       <div className="flex flex-col gap-2">
         {subtitle && <p className="uppercase text-base">{subtitle}</p>}

@@ -1,5 +1,15 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { createClient } from '@/lib/supabase/server';
+import { Phone, ArrowRightIcon, Mail, MapPin } from 'lucide-react';
+import { ReviewStars } from '@/components/marketing/ReviewStars';
 
 export interface HeroVideoProps {
   title: string;
@@ -14,37 +24,152 @@ export interface HeroVideoProps {
   };
 }
 
-export const HeroVideo = ({
+const notes: {
+  [key: string]: {
+    note: number;
+    googleMapsLink: string;
+  };
+} = {
+  annecy: {
+    note: 5,
+    googleMapsLink: 'https://maps.app.goo.gl/dE4Apdcc3RsSXp2G7',
+  },
+  lyon: {
+    note: 4.6,
+    googleMapsLink: 'https://maps.app.goo.gl/DWtqKP368EehfFsv8',
+  },
+};
+
+export const HeroVideo = async ({
   title,
   subtitle,
   button,
   video,
 }: HeroVideoProps) => {
+  const supabaseClient = await createClient();
+
+  const { data: shops } = await supabaseClient.from('shops').select('*');
+
   return (
-    <div className="rounded-lg overflow-hidden relative xl:max-w-7xl xl:m-auto">
+    <div
+      className={
+        'relative md:h-lvh w-full bg-slate-200/70 flex flex-col md:items-center md:justify-center gap-8 p-6 lg:p-10'
+      }
+    >
+      <div
+        className={
+          'w-full md:w-3/4 lg:w-2/3 mx-auto max-w-7xl flex flex-col gap-16'
+        }
+      >
+        <div className={'flex flex-col gap-8'}>
+          <h1 className={'text-3xl md:text-5xl font-medium leading-snug'}>
+            {title}
+          </h1>
+          <h2 className={'text-lg md:text-2xl text-gray-700'}>{subtitle}</h2>
+          <div className={'flex'}>
+            <Button size={'lg'}>
+              <Link href={button.href} className={'flex items-center gap-2'}>
+                {button.label}
+                <ArrowRightIcon className={'size-4'} />
+              </Link>
+            </Button>
+          </div>
+        </div>
+        <Card className={'bg-white/50'}>
+          <CardHeader>
+            <CardTitle>Nos magasins</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {shops && (
+              <div className={'grid md:grid-cols-2 gap-4 w-full'}>
+                {shops.map((shop) => (
+                  <Card key={shop.id} className={'bg-white/50'}>
+                    <CardHeader>
+                      <CardTitle>
+                        {shop.city && (
+                          <a
+                            href={
+                              notes[shop.city.toLocaleLowerCase()]
+                                .googleMapsLink
+                            }
+                            target={'_blank'}
+                            className={'flex justify-between'}
+                          >
+                            {shop.city}
+                            <ReviewStars
+                              note={notes[shop.city.toLocaleLowerCase()].note}
+                              totalStars={5}
+                              className={
+                                'size-4 text-primary data-[fill=true]:fill-primary'
+                              }
+                            />
+                          </a>
+                        )}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className={'text-sm'}>
+                      <div className={'flex flex-col gap-2'}>
+                        {shop.phoneNumber && (
+                          <a
+                            href={`tel:${shop.phoneNumber}`}
+                            className={'flex gap-2 items-center'}
+                          >
+                            <Phone className={'size-3'} />
+                            <span>{shop.phoneNumber}</span>
+                          </a>
+                        )}
+                        {shop.email && (
+                          <a
+                            href={`mailto:${shop.email}`}
+                            className={'flex gap-2 items-center'}
+                          >
+                            <Mail className={'size-3'} />
+                            <span>{shop.email}</span>
+                          </a>
+                        )}
+                        {shop.address && shop.postalCode && shop.city && (
+                          <a
+                            href={
+                              notes[shop.city.toLocaleLowerCase()]
+                                .googleMapsLink
+                            }
+                            target={'_blank'}
+                            className={'flex gap-2 items-center'}
+                          >
+                            <MapPin className={'size-3'} />
+                            <span>{`${shop.address}, ${shop.postalCode} ${shop.city}`}</span>
+                          </a>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </CardContent>
+          <CardFooter>
+            <Button variant={'secondary'}>
+              <Link href={'/contact'}>
+                <div className={'flex gap-2 items-center'}>
+                  {'Voir la page contact'}
+                  <ArrowRightIcon />
+                </div>
+              </Link>
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
       <video
         autoPlay
         loop
         muted
         poster={video.poster}
-        className="rounded-lg"
-        width={'100%'}
+        className={
+          'absolute top-0 bottom-0 start-0 end-0 -z-1 object-cover w-full h-full'
+        }
       >
         <source src={video.url} type="video/mp4" />
       </video>
-      <div className="right-0 top-0 bottom-0 md:bg-slate-100 md:bg-opacity-70 md:rounded-lg mt-4 md:m-4 md:w-1/2 md:absolute md:p-4 md:pl-10 md:text-right font-medium flex flex-col gap-4 xl:gap-10">
-        <h1 className="text-2xl md:text-3xl lg:text-5xl text-primary leading-snug font-semibold tracking-wider">
-          {title}
-        </h1>
-        <p className="text-md md:text-lg lg:text-xl font-light">{subtitle}</p>
-        <div className="flex md:justify-end mt-8 md:mt-0">
-          {button && (
-            <Button size={'lg'}>
-              <Link href={button.href}>{button.label}</Link>
-            </Button>
-          )}
-        </div>
-      </div>
     </div>
   );
 };

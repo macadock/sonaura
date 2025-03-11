@@ -6,9 +6,11 @@ import { Header } from '@/components/common/header';
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <PublicProviders>
-      <Header />
-      <main>{children}</main>
-      <Footer />
+      <div className={'flex flex-col min-h-screen'}>
+        <Header />
+        <main className={'flex-1'}>{children}</main>
+        <Footer />
+      </div>
     </PublicProviders>
   );
 }
