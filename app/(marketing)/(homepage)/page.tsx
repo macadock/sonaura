@@ -69,7 +69,7 @@ export default async function Homepage() {
           'Prolongez la vie de produits Bang & Olufsen tout en vous faisant plaisir.'
         }
       />
-      <div className={'px-6'}>
+      <div className={'p-6'}>
         <Newsletter />
       </div>
     </div>
