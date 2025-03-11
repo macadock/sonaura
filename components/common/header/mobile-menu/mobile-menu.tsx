@@ -1,24 +1,21 @@
-'use client';
-
 import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
-  useSidebar,
+  SidebarProvider,
 } from '@/components/ui/sidebar';
-import { Menu, SquareChevronLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { PropsWithChildren } from 'react';
+import { SidebarTrigger } from '@/components/common/sidebar/sidebar-trigger';
+import { Menu } from 'lucide-react';
 
 export const MobileMenu = ({ children }: PropsWithChildren) => {
-  const { toggleSidebar } = useSidebar();
   return (
-    <>
-      <Button size={'icon'} onClick={toggleSidebar}>
+    <SidebarProvider>
+      <SidebarTrigger>
         <Menu />
-      </Button>
-      <Sidebar collapsible="icon">
+      </SidebarTrigger>
+      <Sidebar>
         <SidebarHeader>
           <div className={'flex items-center justify-between p-2 gap-2'}>
             <Image
@@ -27,13 +24,10 @@ export const MobileMenu = ({ children }: PropsWithChildren) => {
               width={180}
               height={22}
             />
-            <Button size={'icon'} variant={'outline'} onClick={toggleSidebar}>
-              <SquareChevronLeft />
-            </Button>
           </div>
         </SidebarHeader>
         <SidebarContent>{children}</SidebarContent>
       </Sidebar>
-    </>
+    </SidebarProvider>
   );
 };

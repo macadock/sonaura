@@ -2,15 +2,16 @@ import { PropsWithChildren } from 'react';
 import { PublicProviders } from '@/components/system/providers/public-providers';
 import { Footer } from '@/components/common/footer';
 import { Header } from '@/components/common/header';
+import { CartSidebar } from '@/components/common/cart-sidebar/cart-sidebar';
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <PublicProviders>
-      <div className={'flex flex-col min-h-screen'}>
+      <CartSidebar>
         <Header />
         <main className={'flex-1'}>{children}</main>
         <Footer />
-      </div>
+      </CartSidebar>
     </PublicProviders>
   );
 }

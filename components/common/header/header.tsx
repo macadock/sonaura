@@ -6,7 +6,8 @@ import {
   MobileMenu,
   Pages,
 } from '@/components/common/header/mobile-menu';
-import { SidebarProvider } from '@/components/ui/sidebar';
+import { ShoppingCart } from 'lucide-react';
+import { SidebarTrigger } from '@/components/common/sidebar/sidebar-trigger';
 
 export const Header = async () => {
   return (
@@ -20,16 +21,19 @@ export const Header = async () => {
             Distributeur Bang &amp; Olufsen Auvergne Rhône-Alpes
           </p>
         </Link>
-        <div className={'hidden md:block'}>
-          <DesktopMenu />
-        </div>
-        <div className={'md:hidden'}>
-          <SidebarProvider defaultOpen={false}>
+        <div className={'flex items-center gap-2'}>
+          <div className={'hidden md:block'}>
+            <DesktopMenu />
+          </div>
+          <div className={'md:hidden'}>
             <MobileMenu>
               <Categories />
               <Pages />
             </MobileMenu>
-          </SidebarProvider>
+          </div>
+          <SidebarTrigger>
+            <ShoppingCart />
+          </SidebarTrigger>
         </div>
       </div>
     </header>
