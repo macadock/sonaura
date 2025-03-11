@@ -4725,6 +4725,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.67.2":
+  version: 5.67.2
+  resolution: "@tanstack/query-core@npm:5.67.2"
+  checksum: 10c0/1824fbd72d07a575a71565d7fd975270b51bdf311dcfcafe21cf83c4b704af06962bbdd49019994a27edb32013aef51180bf412cca8399ac2d4cf0dc6cc8993c
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.67.2":
+  version: 5.67.2
+  resolution: "@tanstack/react-query@npm:5.67.2"
+  dependencies:
+    "@tanstack/query-core": "npm:5.67.2"
+  peerDependencies:
+    react: ^18 || ^19
+  checksum: 10c0/70665f0fb9668475948dd285542eb7c2b15fb9ee6e25dd4c710ce1db4a5bfa5a879983b05d5462b72e4782a09ac2fb5550486592dabb0d37544fdc5e65bafdc3
+  languageName: node
+  linkType: hard
+
 "@types/aos@npm:^3.0.7":
   version: 3.0.7
   resolution: "@types/aos@npm:3.0.7"
@@ -6135,6 +6153,7 @@ __metadata:
     "@supabase/ssr": "npm:^0.5.2"
     "@supabase/supabase-js": "npm:^2.49.1"
     "@tailwindcss/postcss": "npm:^4.0.9"
+    "@tanstack/react-query": "npm:^5.67.2"
     "@types/aos": "npm:^3.0.7"
     "@types/node": "npm:^20.12.12"
     "@types/react": "npm:^18.3.2"
@@ -6201,6 +6220,7 @@ __metadata:
     tailwind-merge: "npm:^3.0.2"
     tailwindcss: "npm:^4.0.9"
     tailwindcss-animate: "npm:^1.0.7"
+    type-fest: "npm:^4.37.0"
     typescript: "npm:^5.8.2"
     yup: "npm:^1.4.0"
     yup-phone-lite: "npm:^2.0.1"
@@ -13154,6 +13174,13 @@ __metadata:
   version: 4.18.2
   resolution: "type-fest@npm:4.18.2"
   checksum: 10c0/5e669128bf7cbc9f9cea4e4862c974517a1d9f77652589c2ac0908a8be5d852d4e52593ed14f4d8a44a604fb5e8a8ec1b658e461acd8bb7592f5e5265a04cbab
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.37.0":
+  version: 4.37.0
+  resolution: "type-fest@npm:4.37.0"
+  checksum: 10c0/5bad189f66fbe3431e5d36befa08cab6010e56be68b7467530b7ef94c3cf81ef775a8ac3047c8bbda4dd3159929285870357498d7bc1df062714f9c5c3a84926
   languageName: node
   linkType: hard
 
