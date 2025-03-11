@@ -17,7 +17,6 @@ export const ReviewStars = ({
       <div className={'flex items-center'}>
         {Array.from({ length: totalStars }).map((_, index) => {
           const filled = index + 1 <= note;
-          console.log('filled', filled);
           return (
             <Star className={className} key={index} data-fill={`${filled}`} />
           );

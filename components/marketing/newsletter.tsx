@@ -1,18 +1,82 @@
+'use client';
+
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import axios from 'axios';
+import { ApiUrls, getRoutePath } from '@/appConstants';
+
+const formSchema = z.object({
+  email: z.string().email({
+    message: 'Veuillez entrer une adresse email valide',
+  }),
+});
+
 export const Newsletter = () => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { email } = values;
+
+    await axios.post(getRoutePath({ api: ApiUrls.SUBSCRIBE_NEWSLETTER }), {
+      email,
+    });
+
+    form.reset();
+  }
+
   return (
-    <div className="bg-primary w-full text-white rounded-lg p-4 md:px-8 md:py-14 text-center flex flex-col justify-center items-center gap-6 xl:max-w-7xl xl:m-auto">
-      <h2 className="text-xl md:text-3xl">
+    <div className="bg-primary w-full rounded-lg p-4 md:px-8 md:py-14 text-center flex flex-col justify-center items-center gap-6 xl:max-w-7xl xl:m-auto">
+      <h2 className="text-xl md:text-3xl font-medium">
         Inscrivez-vous à la newsletter Sonaura
       </h2>
       <p className="text-base md:text-xl">Tenez-vous informé</p>
 
-      <form className="flex gap-2 w-full md:w-1/2">
-        <input
-          type="email"
-          placeholder="Votre adresse email"
-          className="border border-white text-sm md:text-base p-4 rounded-lg w-full text-white placeholder:text-white bg-primary"
-        />
-      </form>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={'w-full md:w-1/2 flex flex-col gap-2'}
+        >
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    className={'placeholder:text-gray-300 text-white'}
+                    placeholder="Votre adresse email"
+                    type={'email'}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            type={'submit'}
+            variant={'ghost'}
+            className={'cursor-pointer text-white'}
+          >
+            {"S'inscrire"}
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 };
