@@ -23,7 +23,7 @@ export const ListCategories = async ({
   }
 
   return (
-    <div className="flex flex-col gap-6 justify-center text-center md:px-9">
+    <div className="flex flex-col gap-6 justify-center text-center md:px-9 px-6">
       <div className="flex flex-col gap-2">
         <p className="uppercase text-base">{title}</p>
         <h2 className="text-xl md:text-3xl font-semibold tracking-wider">

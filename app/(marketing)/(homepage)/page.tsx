@@ -7,20 +7,20 @@ import { FeaturedProducts } from '@/components/marketing/featured-products';
 
 export default async function Homepage() {
   return (
-    <div className={'flex flex-col gap-8 p-4 md:p-8'}>
+    <div className={'flex flex-col gap-8'}>
       <HeroVideo
-        title={'Vivez une expérience audiovisuelle comme jamais auparavant.'}
-        subtitle={
-          'Nous vous aidons à trouver la solution adaptée à vos besoins.'
+        title={
+          'Sonaura vous accompagne pour votre installation audiovisuelle personnalisée.'
         }
+        subtitle={'Nos équipes se déplacent à votre domicile.'}
         button={{
-          label: 'Découvrez les produits',
-          href: '#products',
+          label: 'Prendre rendez-vous avec nos experts',
+          href: '/projet',
         }}
         video={{
           url: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video',
           poster:
-            'http://localhost:54321/storage/v1/object/public/test/banner_image.webp',
+            'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/professionnals/slide-1',
         }}
       />
       <People

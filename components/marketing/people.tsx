@@ -15,7 +15,7 @@ export interface PeopleProps {
 
 export const People = ({ title, subtitle, image1, image2 }: PeopleProps) => {
   return (
-    <div className="flex flex-col sm:flex-row rounded-lg overflow-hidden bg-primary text-white xl:max-w-7xl xl:m-auto">
+    <div className="mx-6 xl:mx-auto xl:w-full flex flex-col sm:flex-row rounded-lg overflow-hidden bg-primary text-white max-w-7xl xl:m-auto">
       {image1 && (
         <div className={'relative h-72 sm:h-auto sm:w-1/3'}>
           <Image
