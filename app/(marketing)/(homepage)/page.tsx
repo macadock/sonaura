@@ -9,10 +9,8 @@ export default async function Homepage() {
   return (
     <div className={'flex flex-col gap-8'}>
       <HeroVideo
-        title={
-          'Sonaura vous accompagne pour votre installation audiovisuelle personnalisée.'
-        }
-        subtitle={'Nos équipes se déplacent à votre domicile.'}
+        title={'Bang & Olufsen vous accompagne dans votre projet audiovisuel.'}
+        subtitle={'Devis et visite à domicile gratuit.'}
         button={{
           label: 'Prendre rendez-vous avec nos experts',
           href: '/projet',
@@ -22,6 +20,15 @@ export default async function Homepage() {
           poster:
             'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/professionnals/slide-1',
         }}
+        tags={[
+          'TV',
+          'Enceintes nomades',
+          'Home cinéma',
+          'Salle de cinéma privée',
+          'Vidéoprojecteur',
+          'Domotique',
+          'Toutes marques',
+        ]}
       />
       <People
         title={'Passionnés'}
