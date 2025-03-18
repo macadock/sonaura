@@ -23,7 +23,6 @@ export enum ApiUrls {
   SUBSCRIBE_NEWSLETTER = '/api/newsletter/subscribe',
   SEND_CUSTOMER_EMAIL = '/api/email/customer',
   SEND_MERCHANT_EMAIL = '/api/email/merchant',
-  GRAPHQL_ENDPOINT = '/api/graphql',
 }
 
 interface Props {
