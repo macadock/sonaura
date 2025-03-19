@@ -65,7 +65,7 @@ export const HeroVideo = async ({
     <div className={'relative w-full md:h-lvh flex'}>
       <div
         className={
-          'h-full w-full bg-slate-200/70 z-1 flex flex-col md:items-center md:justify-center gap-8 p-6 lg:p-10'
+          'h-full w-full bg-slate-200/60 z-1 flex flex-col md:items-center md:justify-center gap-8 p-6 lg:p-10'
         }
       >
         <div className={'w-full max-w-7xl flex flex-col gap-16'}>
