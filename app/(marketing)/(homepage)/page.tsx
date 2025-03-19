@@ -12,7 +12,7 @@ export default async function Homepage() {
         title={
           <h1
             className={
-              'text-xl sm:text-3xl md:text-5xl leading-snug md:leading-relaxed'
+              'text-2xl sm:text-3xl md:text-5xl leading-snug md:leading-relaxed'
             }
           >
             {'Sonaura, '}
