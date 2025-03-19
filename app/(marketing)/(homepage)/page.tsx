@@ -9,14 +9,33 @@ export default async function Homepage() {
   return (
     <div className={'flex flex-col gap-8'}>
       <HeroVideo
-        title={'Bang & Olufsen vous accompagne dans votre projet audiovisuel.'}
+        title={
+          <h1
+            className={
+              'text-xl sm:text-3xl md:text-5xl leading-snug md:leading-relaxed'
+            }
+          >
+            {'Sonaura, '}
+            <span className={'bg-slate-200 font-medium px-1 md:p-2 rounded-xl'}>
+              distributeur{' '}
+              <span className={'whitespace-nowrap'}>Bang & Olufsen</span> et
+              toutes marques
+            </span>
+            {', vous accompagne dans votre projet audiovisuel.'}
+          </h1>
+        }
         subtitle={'Devis et visite à domicile gratuit.'}
         button={{
           label: 'Prendre rendez-vous avec nos experts',
           href: '/projet',
         }}
         video={{
-          url: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video',
+          url: {
+            h264: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video_h264.mp4',
+            h265: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video_h265.mp4',
+            webm: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video_vp9.webm',
+            av1: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video_av1.mp4',
+          },
           poster:
             'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/professionnals/slide-1',
         }}

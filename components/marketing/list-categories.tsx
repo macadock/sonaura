@@ -30,7 +30,7 @@ export const ListCategories = async ({
           {subtitle}
         </h2>
       </div>
-      <div className="grid grid-cols-2 md:grid-flow-col md:auto-cols-fr gap-8 xl:max-w-5xl xl:m-auto">
+      <div className="grid sm:grid-cols-2 md:grid-flow-col md:auto-cols-fr gap-8 xl:max-w-5xl xl:m-auto">
         {categories.map((category) => {
           const { bucket, file } = category.icon as {
             bucket: string;

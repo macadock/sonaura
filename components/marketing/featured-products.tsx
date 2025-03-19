@@ -91,8 +91,8 @@ export const FeaturedProducts = async ({
                 className={'w-full h-full'}
               >
                 <Card className="w-full h-full hover:shadow-lg transition-all duration-300">
-                  <CardContent className="h-full flex flex-col justify-center items-center gap-3 p-6">
-                    <div className={'relative size-48'}>
+                  <CardContent className="h-full flex flex-col justify-center items-center gap-3 p-6 overflow-hidden">
+                    <div className={'relative size-48 max-w-full'}>
                       <Image
                         src={publicUrl}
                         alt={product.name}
