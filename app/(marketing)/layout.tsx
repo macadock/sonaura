@@ -9,7 +9,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <PublicProviders>
       <CartSidebar>
         <Header />
-        <main className={'flex-1'}>{children}</main>
+        {children}
         <Footer />
       </CartSidebar>
     </PublicProviders>

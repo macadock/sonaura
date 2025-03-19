@@ -14,7 +14,7 @@ import { CartFooter } from '@/components/common/cart-sidebar/cart-footer';
 export const CartSidebar = ({ children }: PropsWithChildren) => {
   return (
     <SidebarProvider defaultOpen={false}>
-      <SidebarInset>{children}</SidebarInset>
+      <SidebarInset className={'min-h-lvh'}>{children}</SidebarInset>
       <Sidebar side={'right'}>
         <SidebarHeader>
           <CartHeader />
