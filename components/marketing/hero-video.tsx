@@ -11,18 +11,26 @@ import { createClient } from '@/lib/supabase/server';
 import { Phone, ArrowRightIcon, Mail, MapPin } from 'lucide-react';
 import { ReviewStars } from '@/components/marketing/ReviewStars';
 import { Badge } from '@/components/ui/badge';
+import { ReactNode } from 'react';
+
+type Video = {
+  url: {
+    h264: string;
+    h265: string;
+    webm: string;
+    av1: string;
+  };
+  poster: string;
+};
 
 export interface HeroVideoProps {
-  title: string;
-  subtitle: string;
+  title: ReactNode;
+  subtitle: ReactNode;
   button: {
     label: string;
     href: string;
   };
-  video: {
-    url: string;
-    poster: string;
-  };
+  video: Video;
   tags: Array<string>;
 }
 
@@ -60,16 +68,10 @@ export const HeroVideo = async ({
           'h-full w-full bg-slate-200/70 z-1 flex flex-col md:items-center md:justify-center gap-8 p-6 lg:p-10'
         }
       >
-        <div
-          className={
-            'w-full md:w-3/4 lg:w-2/3 mx-auto max-w-7xl flex flex-col gap-16'
-          }
-        >
-          <div className={'flex flex-col gap-8'}>
+        <div className={'w-full max-w-7xl flex flex-col gap-16'}>
+          <div className={'flex flex-col items-start gap-8'}>
             <div className={'flex flex-col gap-1'}>
-              <h1 className={'text-3xl md:text-5xl font-medium leading-snug'}>
-                {title}
-              </h1>
+              {title}
               <div className={'flex gap-2 items-center flex-wrap'}>
                 {tags.map((word) => (
                   <Badge
@@ -83,14 +85,12 @@ export const HeroVideo = async ({
               </div>
             </div>
             <h2 className={'text-lg md:text-2xl text-gray-700'}>{subtitle}</h2>
-            <div className={'flex'}>
-              <Button size={'lg'}>
-                <Link href={button.href} className={'flex items-center gap-2'}>
-                  {button.label}
-                  <ArrowRightIcon className={'size-4'} />
-                </Link>
-              </Button>
-            </div>
+            <Button size={'lg'} asChild>
+              <Link href={button.href} className={'overflow-hidden'}>
+                {button.label}
+                <ArrowRightIcon className={'size-4'} />
+              </Link>
+            </Button>
           </div>
           <Card className={'bg-white/50'}>
             <CardHeader>
@@ -98,9 +98,14 @@ export const HeroVideo = async ({
             </CardHeader>
             <CardContent>
               {shops && (
-                <div className={'grid md:grid-cols-2 gap-4 w-full'}>
+                <div
+                  className={'grid md:grid-cols-2 gap-4 w-full overflow-hidden'}
+                >
                   {shops.map((shop) => (
-                    <Card key={shop.id} className={'bg-white/50'}>
+                    <Card
+                      key={shop.id}
+                      className={'bg-white/50 overflow-hidden'}
+                    >
                       <CardHeader>
                         <CardTitle>
                           {shop.city && (
@@ -110,7 +115,9 @@ export const HeroVideo = async ({
                                   .googleMapsLink
                               }
                               target={'_blank'}
-                              className={'flex justify-between'}
+                              className={
+                                'flex flex-col gap-2 sm:flex-row justify-between'
+                              }
                             >
                               {shop.city}
                               <ReviewStars
@@ -125,23 +132,31 @@ export const HeroVideo = async ({
                         </CardTitle>
                       </CardHeader>
                       <CardContent className={'text-sm'}>
-                        <div className={'flex flex-col gap-2'}>
+                        <div className={'flex flex-col gap-2 overflow-hidden'}>
                           {shop.phoneNumber && (
                             <a
                               href={`tel:${shop.phoneNumber}`}
-                              className={'flex gap-2 items-center'}
+                              className={
+                                'flex gap-2 items-center overflow-hidden'
+                              }
+                              title={shop.phoneNumber}
                             >
                               <Phone className={'size-3'} />
-                              <span>{shop.phoneNumber}</span>
+                              <span className={'truncate'}>
+                                {shop.phoneNumber}
+                              </span>
                             </a>
                           )}
                           {shop.email && (
                             <a
                               href={`mailto:${shop.email}`}
-                              className={'flex gap-2 items-center'}
+                              className={
+                                'flex gap-2 items-center overflow-hidden'
+                              }
+                              title={shop.email}
                             >
                               <Mail className={'size-3'} />
-                              <span>{shop.email}</span>
+                              <span className={'truncate'}>{shop.email}</span>
                             </a>
                           )}
                           {shop.address && shop.postalCode && shop.city && (
@@ -151,6 +166,7 @@ export const HeroVideo = async ({
                                   .googleMapsLink
                               }
                               target={'_blank'}
+                              title={`${shop.address}, ${shop.postalCode} ${shop.city}`}
                               className={'flex gap-2 items-center'}
                             >
                               <MapPin className={'size-3'} />
@@ -165,12 +181,10 @@ export const HeroVideo = async ({
               )}
             </CardContent>
             <CardFooter>
-              <Button variant={'secondary'}>
+              <Button size={'lg'} variant={'secondary'} asChild>
                 <Link href={'/contact'}>
-                  <div className={'flex gap-2 items-center'}>
-                    {'Voir la page contact'}
-                    <ArrowRightIcon />
-                  </div>
+                  {'Voir la page contact'}
+                  <ArrowRightIcon />
                 </Link>
               </Button>
             </CardFooter>
@@ -185,7 +199,10 @@ export const HeroVideo = async ({
         poster={video.poster}
         className={'absolute z-0 object-cover w-full h-full'}
       >
-        <source src={video.url} type="video/mp4" />
+        <source src={video.url.av1} type="video/mp4; codecs=av01" />
+        <source src={video.url.webm} type="video/webm; codecs=vp9" />
+        <source src={video.url.h265} type="video/mp4; codecs=hev1" />
+        <source src={video.url.h264} type="video/mp4; codecs=avc1" />
       </video>
     </div>
   );
