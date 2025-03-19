@@ -51,7 +51,7 @@ export const FeaturedProducts = async ({
   const products = await getProducts(variant);
 
   return (
-    <div
+    <section
       id={id}
       className="flex flex-col gap-6 justify-center text-center md:px-9 xl:max-w-7xl xl:m-auto px-6"
     >
@@ -118,6 +118,6 @@ export const FeaturedProducts = async ({
           })}
         </div>
       )}
-    </div>
+    </section>
   );
 };

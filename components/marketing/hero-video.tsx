@@ -62,7 +62,7 @@ export const HeroVideo = async ({
   const { data: shops } = await supabaseClient.from('shops').select('*');
 
   return (
-    <div className={'relative w-full md:h-lvh flex'}>
+    <section className={'relative md:h-screen-without-header flex'}>
       <div
         className={
           'h-full w-full bg-slate-200/60 z-1 flex flex-col md:items-center md:justify-center gap-8 p-6 lg:p-10'
@@ -70,9 +70,8 @@ export const HeroVideo = async ({
       >
         <div className={'w-full max-w-7xl flex flex-col gap-16'}>
           <div className={'flex flex-col items-start gap-8'}>
-            <div className={'flex flex-col gap-1'}>
-              {title}
-              <div className={'flex gap-2 items-center flex-wrap'}>
+            <div className={'flex flex-col gap-8'}>
+              <div className={'flex gap-2 items-center flex-wrap w-full'}>
                 {tags.map((word) => (
                   <Badge
                     key={word}
@@ -83,8 +82,12 @@ export const HeroVideo = async ({
                   </Badge>
                 ))}
               </div>
+              <div className={'flex flex-col gap-2'}>
+                {title}
+                {subtitle}
+              </div>
             </div>
-            <h2 className={'text-lg md:text-2xl text-gray-700'}>{subtitle}</h2>
+
             <Button size={'lg'} asChild>
               <Link href={button.href} className={'overflow-hidden'}>
                 {button.label}
@@ -204,6 +207,6 @@ export const HeroVideo = async ({
         <source src={video.url.h265} type="video/mp4; codecs=hev1" />
         <source src={video.url.h264} type="video/mp4; codecs=avc1" />
       </video>
-    </div>
+    </section>
   );
 };

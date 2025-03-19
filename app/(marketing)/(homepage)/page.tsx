@@ -10,17 +10,17 @@ export default async function Homepage() {
     <div className={'flex flex-col gap-8'}>
       <HeroVideo
         title={
-          <h1
-            className={
-              'text-2xl sm:text-3xl md:text-5xl leading-snug font-medium'
-            }
-          >
+          <h1 className={'text-2xl md:text-4xl font-medium leading-snug'}>
             {'Sonaura, distributeur '}
             <span className={'whitespace-nowrap'}>Bang & Olufsen</span>
             {' et multimarques, vous accompagne dans votre projet audiovisuel.'}
           </h1>
         }
-        subtitle={'Devis et visite à domicile gratuit.'}
+        subtitle={
+          <h2 className={'text-lg md:text-2xl text-gray-700'}>
+            {'Devis et visite à domicile gratuit.'}
+          </h2>
+        }
         button={{
           label: 'Prendre rendez-vous avec nos experts',
           href: '/projet',
@@ -36,10 +36,10 @@ export default async function Homepage() {
             'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/professionnals/slide-1',
         }}
         tags={[
-          'TV',
-          'Enceintes nomades',
-          'Home cinéma',
           'Salle de cinéma privée',
+          'Téléviseurs',
+          'Home cinéma',
+          'Enceintes nomades',
           'Vidéoprojecteur',
           'Domotique',
           'Toutes marques',
@@ -91,9 +91,7 @@ export default async function Homepage() {
           'Prolongez la vie de produits Bang & Olufsen tout en vous faisant plaisir.'
         }
       />
-      <div className={'p-6'}>
-        <Newsletter />
-      </div>
+      <Newsletter />
     </div>
   );
 }

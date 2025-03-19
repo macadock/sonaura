@@ -17,7 +17,7 @@ export interface AdvicesProps {
 
 export const Advices = ({ title, subtitle, image, button }: AdvicesProps) => {
   return (
-    <div className=" bg-tertiary overflow-hidden">
+    <section className=" bg-tertiary overflow-hidden">
       <div className="flex flex-row gap-6 items-center px-6 my-8 md:my-0 xl:max-w-7xl xl:m-auto">
         <div className="flex flex-1 flex-col gap-4 items-stretch justify-stretch">
           <p className="text-2xl md:text-3xl font-semibold tracking-wider">
@@ -46,6 +46,6 @@ export const Advices = ({ title, subtitle, image, button }: AdvicesProps) => {
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
