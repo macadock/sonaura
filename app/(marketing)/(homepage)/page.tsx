@@ -12,16 +12,12 @@ export default async function Homepage() {
         title={
           <h1
             className={
-              'text-2xl sm:text-3xl md:text-5xl leading-snug md:leading-relaxed'
+              'text-2xl sm:text-3xl md:text-5xl leading-snug font-medium'
             }
           >
-            {'Sonaura, '}
-            <span className={'bg-slate-200 font-medium px-1 md:p-2 rounded-xl'}>
-              distributeur{' '}
-              <span className={'whitespace-nowrap'}>Bang & Olufsen</span> et
-              toutes marques
-            </span>
-            {', vous accompagne dans votre projet audiovisuel.'}
+            {'Sonaura, distributeur '}
+            <span className={'whitespace-nowrap'}>Bang & Olufsen</span>
+            {' et multimarques, vous accompagne dans votre projet audiovisuel.'}
           </h1>
         }
         subtitle={'Devis et visite à domicile gratuit.'}
