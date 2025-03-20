@@ -28,7 +28,10 @@ export default async function Homepage() {
         video={{
           url: {
             h264: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video_h264.mp4',
-            h265: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video_h265.mp4',
+            h265_hvc1:
+              'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video_h265_hvc1.mp4',
+            h265_hev1:
+              'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video_h265_hev1.mp4',
             webm: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video_vp9.webm',
             av1: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/home_video_av1.mp4',
           },
