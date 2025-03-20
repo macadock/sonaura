@@ -10,7 +10,7 @@ export default function ProjectPage() {
           "Laissez-nous vos coordonnées et nos équipes d'expert vous contacterons."
         }
         image={{
-          url: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/professionnals/slide-1',
+          url: '/assets/image/projet/hero_projet.webp',
         }}
       />
       <div className={'w-full max-w-7xl m-auto p-8'}>
