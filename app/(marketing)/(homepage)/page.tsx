@@ -45,12 +45,12 @@ export default async function Homepage() {
           'Vos boutiques de Lyon et Annecy sont gérées par des passionnés qui sont présents pour partager leur passion Bang & Olufsen et leur savoir-faire.'
         }
         image2={{
-          url: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/gerant_grenoble',
-          alt: 'Gérant Grenoble',
+          url: '/assets/image/home/gerant_annecy.webp',
+          alt: "Gérant du magasin d'Annecy",
         }}
         image1={{
-          url: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/gerant_lyon',
-          alt: 'Gérant Lyon',
+          url: '/assets/image/home/gerant_lyon.webp',
+          alt: 'Gérant du magasin de Lyon',
         }}
       />
       <ListCategories title={'Catégories'} subtitle={'Explorez nos produits'} />
@@ -60,7 +60,7 @@ export default async function Homepage() {
           'Toutes nos équipes vous conseillent les produits Bang & Olufsen qui répondront à vos besoins.'
         }
         image={{
-          url: 'https://omzwibopitojmqdieuml.supabase.co/storage/v1/object/public/marketing/banner_image',
+          url: '/assets/image/home/banner.webp',
           alt: 'TV',
         }}
         button={{
