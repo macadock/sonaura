@@ -14,13 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { ReactNode } from 'react';
 
 type Video = {
-  url: {
-    h264: string;
-    h265_hvc1: string;
-    h265_hev1: string;
-    webm: string;
-    av1: string;
-  };
+  baseUrl: string;
   poster: string;
 };
 
@@ -203,11 +197,27 @@ export const HeroVideo = async ({
         poster={video.poster}
         className={'absolute z-0 object-cover w-full h-full'}
       >
-        <source src={video.url.av1} type="video/mp4; codecs=av01" />
-        <source src={video.url.h265_hvc1} type="video/mp4; codecs=hvc1" />
-        <source src={video.url.h265_hev1} type="video/mp4; codecs=hev1" />
-        <source src={video.url.webm} type="video/webm; codecs=vp9" />
-        <source src={video.url.h264} type="video/mp4; codecs=avc1" />
+        <source
+          src={`${video.baseUrl}_av1.mp4`}
+          type="video/mp4; codecs=av01"
+        />
+
+        <source
+          src={`${video.baseUrl}_h265_hvc1.mp4`}
+          type="video/mp4; codecs=hvc1"
+        />
+        <source
+          src={`${video.baseUrl}_h265_hev1.mp4`}
+          type="video/mp4; codecs=hev1"
+        />
+        <source
+          src={`${video.baseUrl}_vp9.webm`}
+          type="video/webm; codecs=vp9"
+        />
+        <source
+          src={`${video.baseUrl}_h264.mp4`}
+          type="video/mp4; codecs=avc1"
+        />
       </video>
     </section>
   );

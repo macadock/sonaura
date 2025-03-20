@@ -39,3 +39,10 @@ yarn-error.log*
 
 # Sentry
 .sentryclirc
+
+# Ignore everything within the script folder
+/script/*
+
+# Do not ignore .sh files in the script folder
+!/script/**/*.sh
+
