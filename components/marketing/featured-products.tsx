@@ -97,7 +97,7 @@ export const FeaturedProducts = async ({
                         src={publicUrl}
                         alt={product.name}
                         fill
-                        objectFit={'contain'}
+                        className={'object-contain'}
                       />
                     </div>
 
@@ -109,7 +109,6 @@ export const FeaturedProducts = async ({
                         price={product.fromPrice}
                         formatting={(price) => `À partir de ${price}`}
                       />
-                      // <p className="text-primary">{`À partir de ${getFormattedPrice(product.fromPrice)}`}</p>
                     )}
                   </CardContent>
                 </Card>
