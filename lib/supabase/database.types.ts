@@ -14,6 +14,14 @@ export type Database = MergeDeep<
             };
           };
         };
+        installations: {
+          Row: {
+            images: {
+              bucket: string;
+              file: string;
+            };
+          };
+        };
       };
     };
   }
