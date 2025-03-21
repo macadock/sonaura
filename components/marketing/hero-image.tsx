@@ -1,14 +1,21 @@
 import { clsx } from 'clsx';
+import { ReactNode } from 'react';
 
 export interface HeroImageProps {
-  title: string;
-  subtitle: string;
+  title: ReactNode;
+  subtitle: ReactNode;
   image: {
     url: string;
   };
+  fullHeight?: boolean;
 }
 
-export const HeroImage = ({ title, subtitle, image }: HeroImageProps) => {
+export const HeroImage = ({
+  title,
+  subtitle,
+  image,
+  fullHeight,
+}: HeroImageProps) => {
   return (
     <div
       style={{
@@ -18,11 +25,14 @@ export const HeroImage = ({ title, subtitle, image }: HeroImageProps) => {
       }}
       className={clsx(
         'bg-cover flex flex-col justify-stretch items-stretch aspect-square md:aspect-video lg:aspect-auto lg:h-96',
+        {
+          'h-screen-without-header bg-fixed': fullHeight,
+        },
       )}
     >
       <div className="flex flex-col flex-grow justify-center items-center gap-6 h-full bg-white/50 text-center p-4">
-        <h2 className="text-4xl md:text-6xl font-medium">{title}</h2>
-        <p className="text-lg md:text-xl">{subtitle}</p>
+        {title}
+        {subtitle}
       </div>
     </div>
   );

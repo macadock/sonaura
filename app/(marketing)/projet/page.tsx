@@ -5,9 +5,17 @@ export default function ProjectPage() {
   return (
     <div className={'flex flex-col gap-4'}>
       <HeroImage
-        title={'Votre projet sur mesure'}
+        title={
+          <h1 className={'text-4xl md:text-6xl font-medium'}>
+            Votre projet sur mesure
+          </h1>
+        }
         subtitle={
-          "Laissez-nous vos coordonnées et nos équipes d'expert vous contacterons."
+          <p className={'text-lg md:text-xl'}>
+            {
+              "Laissez - nous vos coordonnées et nos équipes d'expert vous contacterons."
+            }
+          </p>
         }
         image={{
           url: '/assets/image/projet/hero_projet.webp',
