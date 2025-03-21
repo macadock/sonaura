@@ -69,10 +69,7 @@ export const FeaturedProducts = async ({
       {products && (
         <div className="grid gap-8 auto-cols-fr sm:grid-cols-2 md:grid-cols-3">
           {products.map((product) => {
-            const { bucket, file } = product.mainImage as {
-              bucket: string;
-              file: string;
-            };
+            const { bucket, file } = product.mainImage;
 
             const {
               data: { publicUrl },
