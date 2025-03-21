@@ -17,13 +17,12 @@ export const People = ({ title, subtitle, image1, image2 }: PeopleProps) => {
   return (
     <section className="mx-6 xl:mx-auto xl:w-full flex flex-col sm:flex-row rounded-lg overflow-hidden bg-primary text-white max-w-7xl xl:m-auto">
       {image1 && (
-        <div className={'relative h-72 sm:h-auto sm:w-1/3'}>
+        <div className={'relative h-72 sm:w-1/3 sm:aspect-[2/1]'}>
           <Image
             src={image1.url}
             alt={image1.alt}
             loading="eager"
-            objectFit={'cover'}
-            objectPosition={'top'}
+            className={'object-cover object-top'}
             fill
           />
         </div>
@@ -35,12 +34,12 @@ export const People = ({ title, subtitle, image1, image2 }: PeopleProps) => {
         <p>{subtitle}</p>
       </div>
       {image2 && (
-        <div className={'relative h-72 sm:h-auto sm:w-1/3'}>
+        <div className={'relative h-72 sm:w-1/3 sm:aspect-[2/1]'}>
           <Image
             src={image2.url}
             alt={image2.alt}
             loading="eager"
-            objectFit={'cover'}
+            className={'object-cover'}
             fill
           />
         </div>
