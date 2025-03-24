@@ -1,15 +1,15 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import i18nConfig from 'next-i18next.config';
+import i18nConfig from '@/next-i18next.config';
 import { GetStaticPropsContext, NextPage } from 'next';
-import TIME_TO_INVALIDATE_CACHE_SEC from '../../appConstants';
-import ProductView from 'views/ProductView';
+import TIME_TO_INVALIDATE_CACHE_SEC from '../../../appConstants';
+import ProductView from '@/views/ProductView';
 import Head from 'next/head';
 import {
   getProducts,
   getProductsBySlugAndCategory,
   Product,
-} from 'lib/supabase/products';
-import { getCategories } from 'lib/supabase/categories';
+} from '@/lib/supabase/products';
+import { getCategories } from '@/lib/supabase/categories';
 import { UserConfig } from 'next-i18next';
 
 const ProductPage: NextPage<{

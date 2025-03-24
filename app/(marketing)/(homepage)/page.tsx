@@ -3,9 +3,36 @@ import { ListCategories } from '@/components/marketing/list-categories';
 import { People } from '@/components/marketing/people';
 import { Advices } from '@/components/marketing/advices';
 import { Newsletter } from '@/components/marketing/newsletter';
-import { FeaturedProducts } from '@/components/marketing/featured-products';
+import { ProductsGrid } from '@/components/marketing/products-grid';
+import { createClient } from '@/lib/supabase/server';
 
 export default async function Homepage() {
+  const supabaseClient = await createClient();
+
+  async function getFeaturedProducts() {
+    const { data } = await supabaseClient
+      .from('products')
+      .select('*, categories(slug)')
+      .eq('onHomepage', true)
+      .order('created_at', { ascending: false })
+      .limit(3);
+
+    return data || [];
+  }
+
+  async function getPreOwnedProducts() {
+    const { data } = await supabaseClient
+      .from('products')
+      .select('*, categories(slug)')
+      .order('created_at', { ascending: false });
+
+    return (
+      data
+        ?.filter((product) => product.categories.slug === 'occasion')
+        .slice(0, 3) || []
+    );
+  }
+
   return (
     <div className={'flex flex-col gap-8'}>
       <HeroVideo
@@ -68,22 +95,35 @@ export default async function Homepage() {
           label: 'Contactez nos magasins',
         }}
       />
-      <FeaturedProducts
+      <ProductsGrid
         id={'products'}
-        variant={'featured'}
-        title={'Produits mis en avant'}
-        subtitle={'Produits'}
-        description={
-          'Vivez une expérience audiovisuelle comme jamais auparavant.'
+        title={
+          <h2 className="text-xl md:text-3xl font-semibold tracking-wider">
+            Produits mis en avant
+          </h2>
         }
+        subtitle={<p className="uppercase text-base">Produits</p>}
+        description={
+          <p className="text-base md:text-xl font-light">
+            Vivez une expérience audiovisuelle comme jamais auparavant.
+          </p>
+        }
+        products={await getFeaturedProducts()}
       />
-      <FeaturedProducts
-        variant={'pre-owned'}
-        title={"Produits d'occasion"}
-        subtitle={'Occasion'}
-        description={
-          'Prolongez la vie de produits Bang & Olufsen tout en vous faisant plaisir.'
+      <ProductsGrid
+        title={
+          <h2 className="text-xl md:text-3xl font-semibold tracking-wider">
+            Produits d'occasion
+          </h2>
         }
+        subtitle={<p className="uppercase text-base">Occasion</p>}
+        description={
+          <p className="text-base md:text-xl font-light">
+            Prolongez la vie de produits Bang & Olufsen tout en vous faisant
+            plaisir.
+          </p>
+        }
+        products={await getPreOwnedProducts()}
       />
       <Newsletter />
     </div>

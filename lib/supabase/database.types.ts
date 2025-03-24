@@ -12,6 +12,22 @@ export type Database = MergeDeep<
               bucket: string;
               file: string;
             };
+            variants: Array<{
+              id?: string;
+              name: string;
+              values: Array<string>;
+            }> | null;
+            variantsImages: Array<{
+              image: {
+                bucket: string;
+                file: string;
+              };
+              price?: string;
+              variants: Array<{
+                name: string;
+                value: string;
+              }>;
+            }> | null;
           };
         };
         installations: {

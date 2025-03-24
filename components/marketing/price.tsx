@@ -1,6 +1,9 @@
+import { clsx } from 'clsx';
+
 export interface PriceProps {
   price: number;
   formatting?: (price: string) => string;
+  className?: string;
 }
 
 const defaultFormatting = (price: string) => price;
@@ -8,6 +11,7 @@ const defaultFormatting = (price: string) => price;
 export const Price = ({
   price,
   formatting = defaultFormatting,
+  className,
 }: PriceProps) => {
   const formattedPrice = new Intl.NumberFormat('fr-FR', {
     style: 'currency',
@@ -16,5 +20,9 @@ export const Price = ({
     maximumFractionDigits: 2,
   }).format(price);
 
-  return <p className="text-primary">{formatting(formattedPrice)}</p>;
+  return (
+    <p className={clsx('text-primary', className)}>
+      {formatting(formattedPrice)}
+    </p>
+  );
 };

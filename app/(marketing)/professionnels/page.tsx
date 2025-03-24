@@ -37,7 +37,7 @@ export default function ProfessionalsPage() {
           url: '/assets/image/professionals/integration.webp',
         }}
         fullHeight
-      />{' '}
+      />
       <HeroImage
         title={
           <h2 className="text-4xl md:text-6xl font-medium uppercase">Design</h2>

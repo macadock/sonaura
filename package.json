@@ -65,6 +65,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.11",
+    "embla-carousel-react": "^8.5.2",
     "formik": "^2.4.6",
     "globby": "^14.0.1",
     "google-libphonenumber": "^3.2.34",

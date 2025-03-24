@@ -17,23 +17,21 @@ export const HeroImage = ({
   fullHeight,
 }: HeroImageProps) => {
   return (
-    <div
+    <section
       style={{
         backgroundImage: `url(${image.url})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
       }}
-      className={clsx(
-        'bg-cover flex flex-col justify-stretch items-stretch aspect-square md:aspect-video lg:aspect-auto lg:h-96',
-        {
-          'h-screen-without-header bg-fixed': fullHeight,
-        },
-      )}
+      className={clsx('bg-cover flex flex-col justify-stretch items-stretch', {
+        'h-screen-without-header bg-fixed': fullHeight,
+        'h-96 aspect-square md:aspect-video lg:aspect-auto': !fullHeight,
+      })}
     >
       <div className="flex flex-col flex-grow justify-center items-center gap-6 h-full bg-white/50 text-center p-4">
         {title}
         {subtitle}
       </div>
-    </div>
+    </section>
   );
 };
