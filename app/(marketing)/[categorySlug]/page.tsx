@@ -1,9 +1,30 @@
 import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { ProductsGrid } from '@/components/marketing/products-grid';
+import type { Metadata } from 'next';
 
 export type PageProps = {
   params: Promise<{ categorySlug: string }>;
+};
+
+export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
+  const supabaseClient = await createClient();
+  const { categorySlug } = await props.params;
+
+  const { data: category } = await supabaseClient
+    .from('categories')
+    .select('*')
+    .limit(1)
+    .eq('slug', categorySlug)
+    .maybeSingle();
+
+  if (!category) {
+    return {};
+  }
+
+  return {
+    title: `${category.name}`,
+  };
 };
 
 export default async function CategoryPage(props: PageProps) {

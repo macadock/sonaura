@@ -1,5 +1,10 @@
 import { HeroText } from '@/components/marketing/hero-text';
 import { HeroImage } from '@/components/marketing/hero-image';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Professionels',
+};
 
 export default function ProfessionalsPage() {
   return (

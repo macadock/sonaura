@@ -1,3 +1,9 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Mentions légales',
+};
+
 export default function LegalNoticePage() {
   return (
     <div className={'flex flex-col gap-8 p-6 max-w-7xl m-auto'}>

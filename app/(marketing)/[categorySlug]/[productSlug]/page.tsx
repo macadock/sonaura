@@ -5,9 +5,41 @@ import { ProductBreadcrumb } from '@/app/(marketing)/[categorySlug]/[productSlug
 import { ProductDescription } from '@/app/(marketing)/[categorySlug]/[productSlug]/components/description';
 import { ProductVariantPicker } from '@/app/(marketing)/[categorySlug]/[productSlug]/components/variant-picker';
 import { VariantProvider } from '@/app/(marketing)/[categorySlug]/[productSlug]/components/variant-provider';
+import type { Metadata } from 'next';
 
 export type PageProps = {
   params: Promise<{ categorySlug: string; productSlug: string }>;
+};
+
+export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
+  const supabaseClient = await createClient();
+  const { categorySlug, productSlug } = await props.params;
+
+  const { data: category } = await supabaseClient
+    .from('categories')
+    .select('*')
+    .limit(1)
+    .eq('slug', categorySlug)
+    .maybeSingle();
+
+  if (!category) {
+    return {};
+  }
+
+  const { data: product } = await supabaseClient
+    .from('products')
+    .select('*, categories (slug)')
+    .eq('categoryId', category.id)
+    .eq('slug', productSlug)
+    .maybeSingle();
+
+  if (!product) {
+    return {};
+  }
+
+  return {
+    title: `${product.name}`,
+  };
 };
 
 export default async function ProductPage({ params }: PageProps) {
