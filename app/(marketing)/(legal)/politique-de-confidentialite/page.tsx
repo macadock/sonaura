@@ -13,15 +13,14 @@ export default function PrivacyPolicyPage() {
         <section className={'flex flex-col gap-4'}>
           <h1 className="text-2xl font-bold">Rappel sur le RGPD</h1>
           <p>
-            Depuis le 25 mai 2018, la loi « Informatique et Libertés » a évolué,
-            avec l’entrée en vigueur du nouveau Règlement Général sur la
-            Protection des Données personnelles.
+            {
+              'Depuis le 25 mai 2018, la loi « Informatique et Libertés » a évolué, avec l’entrée en vigueur du nouveau Règlement Général sur la Protection des Données personnelles.'
+            }
           </p>
           <p>
-            L’utilisation et la sécurisation de vos données à caractère
-            personnel sont encadrées. Le règlement en assure une meilleure
-            protection. Nous sommes conscients de l’importance que représente le
-            respect de la confidentialité à vos yeux.
+            {
+              'L’utilisation et la sécurisation de vos données à caractère personnel sont encadrées. Le règlement en assure une meilleure protection. Nous sommes conscients de l’importance que représente le respect de la confidentialité à vos yeux.'
+            }
           </p>
           <p>
             C’est pourquoi, nous souhaitons être les plus transparents
@@ -153,7 +152,9 @@ export default function PrivacyPolicyPage() {
               <strong>Soit par courriel électronique</strong> : frank@sonaura.fr
             </li>
             <li>
-              <strong>Soit par courrier postal à l'adresse suivante :</strong>
+              <strong>
+                {"Soit par courrier postal à l'adresse suivante :"}
+              </strong>
               <br />
               SONAURA
               <br /> M. Frank VILIN

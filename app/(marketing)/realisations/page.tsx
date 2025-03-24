@@ -17,7 +17,7 @@ export default function InstallationsPage() {
         }
         subtitle={
           <p className={'text-lg md:text-xl'}>
-            Vous aussi profitez d'une installation sur mesure
+            {"Vous aussi profitez d'une installation sur mesure"}
           </p>
         }
         image={{
