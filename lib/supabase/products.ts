@@ -1,6 +1,6 @@
 import supabase from 'lib/supabase';
 import { getCategoryBySlug } from 'lib/supabase/categories';
-import { Database } from 'types/supabase';
+import { Database } from './database.types';
 
 export type Product = Database['public']['Tables']['products']['Row'] & {
   categories: {

@@ -16,9 +16,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { ApiUrls, getRoutePath } from '@/appConstants';
-import SendEmailInput from '@/SendInBlue/dto/send-customer-email.input';
 import { CheckCircle } from 'lucide-react';
+import SendEmailInput from '@/SendInBlue/dto/send-customer-email.input';
+import { ApiUrls, getRoutePath } from '@/appConstants';
+import { Product } from '@/lib/supabase/products';
+import { ReactNode } from 'react';
 
 const formSchema = z.object({
   firstName: z.string().min(2, {
@@ -39,8 +41,18 @@ const formSchema = z.object({
   }),
 });
 
-export const ProjectForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+export type ContactFormValues = z.infer<typeof formSchema>;
+
+export interface ContactFormProps {
+  product?: Product;
+  onSubmitSuccessful?: () => void;
+}
+
+export const ContactForm = ({
+  product,
+  onSubmitSuccessful,
+}: ContactFormProps) => {
+  const form = useForm<ContactFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: '',
@@ -52,13 +64,14 @@ export const ProjectForm = () => {
   });
 
   const isSubmitting = form.formState.isSubmitting;
-  const isSubmitted = form.formState.isSubmitted;
+  const isSubmitted = form.formState.isSubmitSuccessful;
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: ContactFormValues) {
     const { firstName, lastName, email, phoneNumber, message, shop } = values;
 
     const messageBody = `
-    Boutique sélectionnée: ${shop} \n
+    Boutique sélectionnée: ${shop} \n\n
+    ${product ? `Produit choisi : ${product.name} \n\n` : ''}
     ${message}
     `;
 
@@ -83,6 +96,7 @@ export const ProjectForm = () => {
 
     if (response.ok) {
       form.reset();
+      onSubmitSuccessful?.();
     }
   }
 
