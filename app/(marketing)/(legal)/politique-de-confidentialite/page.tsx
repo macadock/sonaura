@@ -1,3 +1,9 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Politique de confidentialité',
+};
+
 export default function PrivacyPolicyPage() {
   return (
     <div className={'flex flex-col gap-8 p-6 max-w-7xl m-auto'}>

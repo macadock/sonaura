@@ -1,5 +1,10 @@
 import { HeroImage } from '@/components/marketing/hero-image';
 import { InstallationGrid } from '@/components/marketing/installation-grid';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Réalisations',
+};
 
 export default function InstallationsPage() {
   return (

@@ -4,7 +4,10 @@ import './globals.css';
 import { Montserrat } from 'next/font/google';
 
 export const metadata: Metadata = {
-  title: 'Distributeur Bang & Olufsen Auvergne Rhône-Alpes | Sonaura',
+  title: {
+    template: '%s | Sonaura',
+    default: 'Distributeur Bang & Olufsen Auvergne Rhône-Alpes | Sonaura',
+  },
 };
 
 const montserrat = Montserrat({
