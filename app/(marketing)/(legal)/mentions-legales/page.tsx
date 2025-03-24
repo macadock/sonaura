@@ -13,10 +13,9 @@ export default function LegalNoticePage() {
         <section className={'flex flex-col gap-4'}>
           <h1 className="text-2xl font-bold">1. Présentation du site.</h1>
           <p>
-            En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour
-            la confiance dans l'économie numérique, il est précisé aux
-            utilisateurs du site sonaura.fr l'identité des différents
-            intervenants dans le cadre de sa réalisation et de son suivi :
+            {
+              "En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site sonaura.fr l'identité des différents intervenants dans le cadre de sa réalisation et de son suivi :"
+            }
           </p>
           <ul className="list-disc pl-6 space-y-2">
             <li>
@@ -162,26 +161,19 @@ export default function LegalNoticePage() {
             7. Gestion des données personnelles.
           </h2>
           <p>
-            En France, les données personnelles sont notamment protégées par la
-            loi n° 78-87 du 6 janvier 1978, la loi n° 2004-801 du 6 août 2004,
-            l'article L. 226-13 du Code pénal et la Directive Européenne du 24
-            octobre 1995.
+            {
+              "En France, les données personnelles sont notamment protégées par la loi n° 78-87 du 6 janvier 1978, la loi n° 2004-801 du 6 août 2004, l'article L. 226-13 du Code pénal et la Directive Européenne du 24 octobre 1995."
+            }
           </p>
           <p>
-            A l'occasion de l'utilisation du site sonaura.fr, peuvent êtres
-            recueillies : l'URL des liens par l'intermédiaire desquels
-            l'utilisateur a accédé au site sonaura.fr, le fournisseur d'accès de
-            l'utilisateur, l'adresse de protocole Internet (IP) de
-            l'utilisateur.
+            {
+              "A l'occasion de l'utilisation du site sonaura.fr, peuvent êtres recueillies : l'URL des liens par l'intermédiaire desquels l'utilisateur a accédé au site sonaura.fr, le fournisseur d'accès de l'utilisateur, l'adresse de protocole Internet (IP) de l'utilisateur."
+            }
           </p>
           <p>
-            En tout état de cause SONAURA ne collecte des informations
-            personnelles relatives à l'utilisateur que pour le besoin de
-            certains services proposés par le site sonaura.fr. L'utilisateur
-            fournit ces informations en toute connaissance de cause, notamment
-            lorsqu'il procède par lui-même à leur saisie. Il est alors précisé à
-            l'utilisateur du site sonaura.fr l’obligation ou non de fournir ces
-            informations.
+            {
+              "En tout état de cause SONAURA ne collecte des informations personnelles relatives à l'utilisateur que pour le besoin de certains services proposés par le site sonaura.fr. L'utilisateur fournit ces informations en toute connaissance de cause, notamment lorsqu'il procède par lui-même à leur saisie. Il est alors précisé à l'utilisateur du site sonaura.fr l’obligation ou non de fournir ces informations."
+            }
           </p>
           <p>
             Conformément aux dispositions des articles 38 et suivants de la loi
@@ -194,13 +186,9 @@ export default function LegalNoticePage() {
             envoyée.
           </p>
           <p>
-            Aucune information personnelle de l'utilisateur du site sonaura.fr
-            n'est publiée à l'insu de l'utilisateur, échangée, transférée, cédée
-            ou vendue sur un support quelconque à des tiers. Seule l'hypothèse
-            du rachat de SONAURA et de ses droits permettrait la transmission
-            des dites informations à l'éventuel acquéreur qui serait à son tour
-            tenu de la même obligation de conservation et de modification des
-            données vis à vis de l'utilisateur du site sonaura.fr.
+            {
+              "Aucune information personnelle de l'utilisateur du site sonaura.fr n'est publiée à l'insu de l'utilisateur, échangée, transférée, cédée ou vendue sur un support quelconque à des tiers. Seule l'hypothèse du rachat de SONAURA et de ses droits permettrait la transmission des dites informations à l'éventuel acquéreur qui serait à son tour tenu de la même obligation de conservation et de modification des données vis à vis de l'utilisateur du site sonaura.fr."
+            }
           </p>
           <p>
             Le site susnommé est dispensé de déclaration à la CNIL selon la
@@ -254,25 +242,19 @@ export default function LegalNoticePage() {
               et choisissez Bloquer tous les cookies. Validez sur Ok.
             </li>
             <li>
-              Firefox : en haut de la fenêtre du navigateur, cliquez sur le
-              bouton Firefox, puis aller dans l'onglet Options. Cliquer sur
-              l'onglet Vie privée. Paramétrez les Règles de conservation sur :
-              utiliser les paramètres personnalisés pour l'historique. Enfin
-              décochez-la pour désactiver les cookies.
+              {
+                "Firefox : en haut de la fenêtre du navigateur, cliquez sur le bouton Firefox, puis aller dans l'onglet Options. Cliquer sur l'onglet Vie privée. Paramétrez les Règles de conservation sur : utiliser les paramètres personnalisés pour l'historique. Enfin décochez-la pour désactiver les cookies."
+              }
             </li>
             <li>
-              Safari : Cliquez en haut à droite du navigateur sur le pictogramme
-              de menu (symbolisé par un rouage). Sélectionnez Paramètres.
-              Cliquez sur Afficher les paramètres avancés. Dans la section
-              "Confidentialité", cliquez sur Paramètres de contenu. Dans la
-              section "Cookies", vous pouvez bloquer les cookies.
+              {
+                "Safari : Cliquez en haut à droite du navigateur sur le pictogramme de menu (symbolisé par un rouage). Sélectionnez Paramètres. Cliquez sur Afficher les paramètres avancés. Dans la section 'Confidentialité', cliquez sur Paramètres de contenu. Dans la section 'Cookies', vous pouvez bloquer les cookies."
+              }
             </li>
             <li>
-              Chrome : Cliquez en haut à droite du navigateur sur le pictogramme
-              de menu (symbolisé par trois lignes horizontales). Sélectionnez
-              Paramètres. Cliquez sur Afficher les paramètres avancés. Dans la
-              section "Confidentialité", cliquez sur préférences. Dans l'onglet
-              "Confidentialité", vous pouvez bloquer les cookies.
+              {
+                "Chrome : Cliquez en haut à droite du navigateur sur le pictogramme de menu (symbolisé par trois lignes horizontales). Sélectionnez Paramètres. Cliquez sur Afficher les paramètres avancés. Dans la section 'Confidentialité', cliquez sur préférences. Dans l'onglet 'Confidentialité', vous pouvez bloquer les cookies."
+              }
             </li>
           </ul>
         </section>
@@ -294,13 +276,14 @@ export default function LegalNoticePage() {
             10. Les principales lois concernées.
           </h2>
           <p>
-            Loi n° 78-17 du 6 janvier 1978, notamment modifiée par la loi n°
-            2004-801 du 6 août 2004 relative à l'informatique, aux fichiers et
-            aux libertés.
+            {
+              "Loi n° 78-17 du 6 janvier 1978, notamment modifiée par la loi n° 2004-801 du 6 août 2004 relative à l'informatique, aux fichiers et aux libertés."
+            }
           </p>
           <p>
-            Loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie
-            numérique.
+            {
+              "Loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique."
+            }
           </p>
         </section>
 
@@ -310,10 +293,9 @@ export default function LegalNoticePage() {
             Utilisateur : Internaute se connectant, utilisant le site susnommé.
           </p>
           <p>
-            Informations personnelles : « les informations qui permettent, sous
-            quelque forme que ce soit, directement ou non, l'identification des
-            personnes physiques auxquelles elles s'appliquent » (article 4 de la
-            loi n° 78-17 du 6 janvier 1978).
+            {
+              "Informations personnelles : « les informations qui permettent, sous quelque forme que ce soit, directement ou non, l'identification des personnes physiques auxquelles elles s'appliquent » (article 4 de la loi n° 78-17 du 6 janvier 1978)."
+            }
           </p>
         </section>
       </div>

@@ -113,7 +113,7 @@ export default async function Homepage() {
       <ProductsGrid
         title={
           <h2 className="text-xl md:text-3xl font-semibold tracking-wider">
-            Produits d'occasion
+            {"Produits d'occasion"}
           </h2>
         }
         subtitle={<p className="uppercase text-base">Occasion</p>}
