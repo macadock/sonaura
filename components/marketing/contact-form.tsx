@@ -1,5 +1,7 @@
 'use client';
 
+import { sendGTMEvent } from '@next/third-parties/google';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -20,7 +22,6 @@ import { CheckCircle } from 'lucide-react';
 import SendEmailInput from '@/SendInBlue/dto/send-customer-email.input';
 import { ApiUrls, getRoutePath } from '@/appConstants';
 import { Product } from '@/lib/supabase/products';
-import { ReactNode } from 'react';
 
 const formSchema = z.object({
   firstName: z.string().min(2, {
@@ -96,6 +97,7 @@ export const ContactForm = ({
 
     if (response.ok) {
       form.reset();
+      sendGTMEvent('contact_form_submitted');
       onSubmitSuccessful?.();
     }
   }
