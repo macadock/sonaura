@@ -74,11 +74,6 @@ const CategoryDescription = ({ isPreowned }: { isPreowned: boolean }) => {
       <div className={'flex flex-col gap-2 text-base md:text-xl font-light'}>
         <p>
           {
-            "Le prix de nos produits d'occasion inclus l'expédition partout en France. Pour la livraison et/ou l'installation merci de nous contacter."
-          }
-        </p>
-        <p>
-          {
             "Nos produits d'occasion sont garantis 3 mois, sauf exception mentionnée en description du produit d'occasion et produits d'exposition."
           }
         </p>
