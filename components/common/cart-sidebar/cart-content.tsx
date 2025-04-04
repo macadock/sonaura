@@ -10,9 +10,11 @@ import Image from 'next/image';
 import React, { useEffect } from 'react';
 import supabase from '@/lib/supabase';
 import { Card, CardContent } from '@/components/ui/card';
+import { useSidebar } from '@/components/ui/sidebar';
 
 export const CartContent = () => {
   const { isEmpty, items, removeItem, totalItems } = useCart();
+  const { toggleSidebar } = useSidebar();
 
   const {
     data: products,
@@ -42,12 +44,14 @@ export const CartContent = () => {
         }
       >
         <p>Votre panier est vide.</p>
-        <Link
-          href={'/occasion'}
-          className={'text-primary underline decoration-primary text-center'}
-        >
-          {"Découvrez nos produits d'occasion"}
-        </Link>
+        <Button size={'lg'} onClick={toggleSidebar} asChild>
+          <Link
+            href={'/occasion'}
+            className={'text-primary underline decoration-primary text-center'}
+          >
+            {"Découvrez nos produits d'occasion"}
+          </Link>
+        </Button>
       </div>
     );
   }
