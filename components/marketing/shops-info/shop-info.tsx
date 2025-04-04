@@ -7,7 +7,7 @@ export interface ShopInfoProps {
 
 export const ShopInfo = ({ shops }: ShopInfoProps) => {
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 p-4 lg:p-8">
+    <section className="grid grid-cols-1 lg:grid-cols-2">
       {shops.map((shop) => (
         <ShopItem key={shop.id} shop={shop} />
       ))}
