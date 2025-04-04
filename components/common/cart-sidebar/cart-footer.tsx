@@ -35,7 +35,7 @@ export const CartFooter = () => {
         <Button
           size={'lg'}
           disabled={isEmpty}
-          onClick={() => router.push('/panier/commande')}
+          onClick={() => router.push('/panier/commander')}
         >
           Poursuvre la commande
         </Button>

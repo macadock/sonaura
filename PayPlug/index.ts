@@ -27,7 +27,6 @@ export default class PayPlug {
       address,
       city,
       postalCode,
-      country,
       amount,
     } = createPaymentInput;
 
@@ -41,7 +40,7 @@ export default class PayPlug {
       address1: address,
       postcode: postalCode,
       city: city,
-      country: country.code,
+      country: 'FR',
       language: 'fr',
     };
 

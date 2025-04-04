@@ -8,13 +8,15 @@ import { Trash2 } from 'lucide-react';
 import { Price } from '@/components/marketing/price';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
-import supabase from '@/lib/supabase';
 import { Card, CardContent } from '@/components/ui/card';
 import { useSidebar } from '@/components/ui/sidebar';
+import { createClient } from '@/lib/supabase/client';
 
 export const CartContent = () => {
   const { isEmpty, items, removeItem, totalItems } = useCart();
   const { toggleSidebar } = useSidebar();
+
+  const supabaseClient = createClient();
 
   const {
     data: products,
@@ -32,7 +34,7 @@ export const CartContent = () => {
     const bucket = image['bucket'];
     const file = image['file'];
 
-    const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+    const { data } = supabaseClient.storage.from(bucket).getPublicUrl(file);
     return data.publicUrl;
   };
 

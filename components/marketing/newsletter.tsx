@@ -12,7 +12,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import axios from 'axios';
 import { ApiUrls, getRoutePath } from '@/appConstants';
 
 const formSchema = z.object({
@@ -32,8 +31,11 @@ export const Newsletter = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { email } = values;
 
-    await axios.post(getRoutePath({ api: ApiUrls.SUBSCRIBE_NEWSLETTER }), {
-      email,
+    const url = getRoutePath({ api: ApiUrls.SUBSCRIBE_NEWSLETTER });
+
+    await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({ email }),
     });
 
     form.reset();

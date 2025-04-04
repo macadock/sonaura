@@ -159,7 +159,7 @@ export default class SendInBlue {
       }
     } catch (e) {
       throw new Error(
-        `Error while adding email ${email} to listId ${includeListIds.toString()} `,
+        `Error while adding email ${email} to listId ${includeListIds?.toString()} `,
       );
     }
 
