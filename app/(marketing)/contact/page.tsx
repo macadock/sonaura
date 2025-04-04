@@ -9,7 +9,7 @@ export default async function ContactPage() {
   const { data: shops } = await supabaseClient.from('shops').select('*');
 
   return (
-    <div className={'flex flex-col gap-12 '}>
+    <div className={'flex flex-col gap-12'}>
       <div className={'p-4 md:p-8 bg-tertiary'}>
         <HeroText
           title={
@@ -25,7 +25,9 @@ export default async function ContactPage() {
           }
         />
       </div>
-      {shops && <ShopInfo shops={shops} />}
+      <div className={'max-w-7xl m-auto w-full p-4 lg:p-8'}>
+        {shops && <ShopInfo shops={shops} />}
+      </div>
       <div className={'p-4 md:p-8 flex flex-col gap-6 max-w-7xl m-auto'}>
         <h2 className={'text-2xl md:text-3xl font-semibold leading-snug'}>
           Vous ne trouvez pas de réponse à vos questions ?
